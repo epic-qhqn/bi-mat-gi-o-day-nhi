@@ -23,6 +23,6 @@
 - [x] Sub-phase 4.3: Nhúng ngọn cỏ 4 lá may mắn vào giai đoạn mầm sống và quà tặng thư bí mật.
 
 ## Phase 5: Tổng Duyệt Toàn Diện, Git Sync & Nghiệm Thu Bàn Giao
-- [ ] Sub-phase 5.1: Kiểm tra toàn diện responsive trên mobile dọc, ngang và desktop.
-- [ ] Sub-phase 5.2: Chạy kiểm tra cú pháp toàn bộ 15 file JS bằng `node -c`.
-- [ ] Sub-phase 5.3: Đồng bộ Git an toàn, dọn dẹp file tạm, bàn giao website tĩnh 100%.
+- [x] Sub-phase 5.1: Kiểm tra toàn diện responsive trên mobile dọc, ngang và desktop.
+- [x] Sub-phase 5.2: Chạy kiểm tra cú pháp toàn bộ 15 file JS bằng `node -c`.
+- [x] Sub-phase 5.3: Đồng bộ Git an toàn, dọn dẹp file tạm, bàn giao website tĩnh 100%.
