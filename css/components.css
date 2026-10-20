@@ -4694,15 +4694,15 @@ body.sky-night .found-letter-slot.filled {
 /* Action Button inside Bottom System Dock */
 .open-boarding-pass-btn {
   position: relative;
-  background: var(--text-navy);
+  background: linear-gradient(135deg, #D47A88 0%, #C06170 100%);
   color: #FFFFFF;
-  border: 1.5px solid var(--border-card);
+  border: 1.5px solid rgba(255, 255, 255, 0.4);
   padding: 10px 20px;
-  border-radius: 999px;
+  border-radius: 12px;
   font-family: 'Outfit', sans-serif;
   font-size: 13.5px;
   font-weight: 700;
-  box-shadow: 0 8px 24px rgba(19, 28, 78, 0.22);
+  box-shadow: 0 8px 20px rgba(212, 122, 136, 0.32);
   display: inline-flex;
   align-items: center;
   gap: 8px;
@@ -4715,14 +4715,14 @@ body.sky-night .found-letter-slot.filled {
 }
 
 .open-boarding-pass-btn:hover {
-  background: #0B1130;
-  transform: translateY(-3px) scale(1.04);
-  box-shadow: 0 12px 28px rgba(19, 28, 78, 0.32);
+  background: linear-gradient(135deg, #DF8B98 0%, #D47A88 100%);
+  transform: translateY(-3px) scale(1.03);
+  box-shadow: 0 12px 28px rgba(212, 122, 136, 0.42);
 }
 
 .open-boarding-pass-btn:active {
   transform: translateY(0) scale(var(--scale-active, 0.97));
-  box-shadow: 0 4px 12px rgba(19, 28, 78, 0.2);
+  box-shadow: 0 4px 12px rgba(212, 122, 136, 0.25);
 }
 
 .open-boarding-pass-btn.attention-pulse {
@@ -4731,15 +4731,15 @@ body.sky-night .found-letter-slot.filled {
 
 @keyframes pulse-boarding-btn {
   0% {
-    box-shadow: 0 0 0 0 rgba(245, 206, 86, 0.7);
+    box-shadow: 0 0 0 0 rgba(212, 122, 136, 0.7);
     transform: translateY(0) scale(1);
   }
   50% {
-    box-shadow: 0 0 0 14px rgba(245, 206, 86, 0);
-    transform: translateY(-3px) scale(1.05);
+    box-shadow: 0 0 0 12px rgba(212, 122, 136, 0);
+    transform: translateY(-3px) scale(1.04);
   }
   100% {
-    box-shadow: 0 0 0 0 rgba(245, 206, 86, 0);
+    box-shadow: 0 0 0 0 rgba(212, 122, 136, 0);
     transform: translateY(0) scale(1);
   }
 }
@@ -4885,49 +4885,81 @@ body.sky-night .found-letter-slot.filled {
   transition: transform 0.45s cubic-bezier(0.2, 0.9, 0.3, 1.2), margin-bottom 0.45s ease, box-shadow 0.45s ease;
 }
 
-/* Checked In Stamp in Ticket Header */
+/* Postal Postmark Cancellation Stamp in Ticket Header (Dấu Bưu Điện Đồng Nội) */
 .checked-in-stamp {
   position: absolute;
-  top: 18px;
-  left: 24px;
-  border: 2.5px dashed #16A34A;
-  border-radius: 12px;
-  padding: 4px 12px;
-  color: #16A34A;
-  text-align: center;
-  transform: rotate(-12deg) scale(1);
-  background: rgba(240, 253, 244, 0.92);
-  backdrop-filter: blur(4px);
+  top: 14px;
+  left: 20px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  transform: rotate(-10deg) scale(1);
   z-index: 12;
-  box-shadow: 0 4px 14px rgba(22, 163, 74, 0.25);
-  animation: stamp-pop 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  animation: stamp-pop 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  pointer-events: none;
 }
 
-.checked-in-stamp span {
+.postmark-circle {
+  border: 2px solid #C53030;
+  border-radius: 50%;
+  width: 74px;
+  height: 74px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: #C53030;
+  text-align: center;
+  background: rgba(255, 245, 245, 0.88);
+  backdrop-filter: blur(4px);
+  box-shadow: 0 4px 14px rgba(197, 48, 48, 0.2), inset 0 0 0 2px rgba(197, 48, 48, 0.3);
+  padding: 4px;
+  box-sizing: border-box;
+}
+
+.postmark-circle span {
   display: block;
-  font-size: 8px;
+  font-size: 7px;
   font-weight: 800;
-  letter-spacing: 1px;
+  letter-spacing: 0.8px;
+  line-height: 1.1;
 }
 
-.checked-in-stamp strong {
+.postmark-circle strong {
   display: block;
-  font-size: 13px;
+  font-size: 8.5px;
   font-weight: 900;
-  letter-spacing: 0.5px;
+  letter-spacing: 0.3px;
+  line-height: 1.2;
 }
 
-.checked-in-stamp small {
+.postmark-circle small {
   display: block;
-  font-size: 7.5px;
+  font-size: 6.5px;
   font-weight: 700;
+  opacity: 0.9;
+  line-height: 1.1;
+}
+
+.postmark-waves {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.postmark-waves span {
+  display: block;
+  width: 48px;
+  height: 2px;
+  background: repeating-linear-gradient(90deg, #C53030 0, #C53030 4px, transparent 4px, transparent 7px);
+  border-radius: 1px;
   opacity: 0.85;
 }
 
 @keyframes stamp-pop {
-  0% { transform: rotate(-12deg) scale(2.2); opacity: 0; }
-  70% { transform: rotate(-12deg) scale(0.92); opacity: 1; }
-  100% { transform: rotate(-12deg) scale(1); }
+  0% { transform: rotate(-10deg) scale(2.2); opacity: 0; }
+  70% { transform: rotate(-10deg) scale(0.92); opacity: 1; }
+  100% { transform: rotate(-10deg) scale(1); }
 }
 
 .checked-in-stamp.hidden {
@@ -5532,7 +5564,7 @@ body.sky-night .found-letter-slot.filled {
   border-radius: var(--radius-inner);
   padding: 10px 8px;
   text-align: center;
-  box-shadow: 0 2px 6px rgba(19, 28, 78, 0.04);
+  box-shadow: 0 2px 6px rgba(74, 55, 40, 0.04);
 }
 
 .frame-content {
@@ -5545,6 +5577,15 @@ body.sky-night .found-letter-slot.filled {
 .frame-emoji {
   font-size: 22px;
   line-height: 1;
+}
+
+.frame-aodai-thumb {
+  width: 36px;
+  height: 36px;
+  object-fit: contain;
+  border-radius: 6px;
+  filter: drop-shadow(0 2px 5px rgba(212, 122, 136, 0.25));
+  margin-bottom: 2px;
 }
 
 .frame-caption {
@@ -5575,7 +5616,7 @@ body.sky-night .found-letter-slot.filled {
   letter-spacing: 0.5px;
 }
 
-/* Ticket Footer: Barcode & Wax Seal (Option 3) */
+/* Postcard Footer: Vintage Postage Stamp & Traditional Triện Son */
 .ticket-footer {
   display: flex;
   align-items: center;
@@ -5585,6 +5626,87 @@ body.sky-night .found-letter-slot.filled {
   border-top: 1.5px solid var(--border-card);
 }
 
+/* Con Tem Bưu Chính Hoa Sen Cổ Điển */
+.vintage-stamp-wrap {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.vintage-postage-stamp {
+  display: inline-flex;
+  padding: 4px;
+  background: #FFFFFF;
+  border: 2px dashed #D47A88;
+  border-radius: 6px;
+  box-shadow: 0 2px 8px rgba(74, 55, 40, 0.08);
+  position: relative;
+  max-width: 175px;
+}
+
+.stamp-inner {
+  border: 1px solid rgba(212, 122, 136, 0.4);
+  border-radius: 3px;
+  padding: 4px 10px;
+  background: #FFFDF9;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.stamp-top-text {
+  font-size: 7.5px;
+  font-weight: 800;
+  color: #D47A88;
+  letter-spacing: 0.8px;
+  text-transform: uppercase;
+}
+
+.stamp-art {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  margin: 2px 0;
+}
+
+.stamp-lotus-icon {
+  font-size: 18px;
+  line-height: 1;
+}
+
+.stamp-value {
+  font-family: 'Outfit', sans-serif;
+  font-size: 12.5px;
+  font-weight: 900;
+  color: #4A3728;
+}
+
+.stamp-value small {
+  font-size: 8px;
+  font-weight: 700;
+  color: #D47A88;
+  margin-left: 1px;
+}
+
+.stamp-bottom-text {
+  font-size: 7px;
+  font-weight: 700;
+  color: #6A8D73;
+  letter-spacing: 0.5px;
+}
+
+.stamp-postal-code {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 700;
+  color: #8C7A6B;
+  letter-spacing: 0.8px;
+}
+
+/* Fallback barcode for legacy compatibility */
 .barcode-wrap {
   display: flex;
   flex-direction: column;
@@ -5596,16 +5718,16 @@ body.sky-night .found-letter-slot.filled {
   height: 38px;
   background: repeating-linear-gradient(
     90deg,
-    #131C4E 0,
-    #131C4E 2px,
+    #4A3728 0,
+    #4A3728 2px,
     transparent 2px,
     transparent 4px,
-    #131C4E 4px,
-    #131C4E 7px,
+    #4A3728 4px,
+    #4A3728 7px,
     transparent 7px,
     transparent 9px,
-    #131C4E 9px,
-    #131C4E 10px,
+    #4A3728 9px,
+    #4A3728 10px,
     transparent 10px,
     transparent 14px
   );
@@ -5619,16 +5741,17 @@ body.sky-night .found-letter-slot.filled {
   letter-spacing: 1px;
 }
 
+/* Mộc Triện Son Đỏ Truyền Thống */
 .wax-seal-badge {
-  width: 64px;
-  height: 64px;
+  width: 66px;
+  height: 66px;
   border-radius: 50%;
-  background: #C53030;
-  border: var(--border-width-atelier) dashed #FED7D7;
+  background: #B91C1C;
+  border: 2px dashed #FEF08A;
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 4px 14px rgba(197, 48, 48, 0.35);
+  box-shadow: 0 4px 16px rgba(185, 28, 28, 0.35);
   transform: rotate(-8deg);
   cursor: pointer;
   transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.25s ease;
@@ -5637,7 +5760,7 @@ body.sky-night .found-letter-slot.filled {
 
 .wax-seal-badge:hover {
   transform: rotate(-14deg) scale(1.15);
-  box-shadow: 0 8px 24px rgba(197, 48, 48, 0.5);
+  box-shadow: 0 8px 24px rgba(185, 28, 28, 0.5);
 }
 
 .wax-seal-badge:active {
@@ -5653,9 +5776,9 @@ body.sky-night .found-letter-slot.filled {
   text-align: center;
 }
 
-.seal-circle span { font-size: 8px; font-weight: 700; }
+.seal-circle span { font-size: 8px; font-weight: 700; color: #FEF08A; }
 .seal-circle strong { font-size: 10px; font-weight: 900; letter-spacing: 0.5px; }
-.seal-circle small { font-size: 7.5px; font-weight: 600; opacity: 0.9; }
+.seal-circle small { font-size: 7.5px; font-weight: 600; opacity: 0.95; }
 
 /* Actions Bar */
 .ticket-actions-bar {

@@ -719,11 +719,11 @@
 
     <!-- BOTTOM-RIGHT ZONE: Unified System Dock (BGM Audio + Boarding Pass) -->
     <div id="bottom-system-dock" class="bottom-system-dock">
-        <!-- Nút mở Vé Du Hành & Thẻ Hoa 20/10 -->
-        <button id="open-boarding-pass-btn" class="open-boarding-pass-btn hidden" title="Mở Vé Du Hành & Thẻ Định Danh Hoa 20/10">
-            <span class="btn-icon">🎫</span>
-            <span class="btn-text">Vé Du Hành 20/10</span>
-            <span class="btn-sparkle">✨</span>
+        <!-- Nút mở Bưu Thiếp Kỷ Niệm & Thẻ Hoa 20/10 -->
+        <button id="open-boarding-pass-btn" class="open-boarding-pass-btn hidden" title="Mở Bưu Thiếp Kỷ Niệm 20/10 · Hương Đồng Cỏ Nội">
+            <span class="btn-icon">💌</span>
+            <span class="btn-text">Bưu Thiếp 20/10</span>
+            <span class="btn-sparkle">🪷</span>
         </button>
 
         <!-- Bảng điều khiển Âm Nhạc & Âm lượng -->
@@ -740,108 +740,113 @@
         </div>
     </div>
 
-    <!-- Modal Vé Du Hành & Photobooth Keepsake 20/10 (Option 1 + 2 + 3) -->
+    <!-- Modal Bưu Thiếp Kỷ Niệm 20/10 · Hương Đồng Cỏ Nội (Phase 3 Heritage Keepsake) -->
     <div id="boarding-pass-modal" class="modal-overlay hidden" style="z-index: 100001;">
         <!-- Chớp sáng máy ảnh toàn màn hình khi chụp/tải ảnh -->
         <div id="camera-flash-overlay" class="camera-flash-overlay"></div>
 
         <div class="boarding-pass-dialog">
-            <button id="close-boarding-pass-btn" class="close-pass-btn" aria-label="Đóng vé">✕</button>
+            <button id="close-boarding-pass-btn" class="close-pass-btn" aria-label="Đóng bưu thiếp">✕</button>
             
-            <!-- Vùng cuộn hiển thị tấm vé (Boarding Pass Card) -->
+            <!-- Vùng cuộn hiển thị tấm bưu thiếp (Heritage Postcard Card) -->
             <div class="ticket-scroll-container">
-                <div class="boarding-pass-card" id="boarding-pass-card">
-                    <!-- Lớp phủ ánh xà cừ Hologram 3D Foil khi di chuyển chuột hoặc chạm -->
+                <div class="boarding-pass-card postcard-heritage-card" id="boarding-pass-card">
+                    <!-- Lớp phủ ánh xà cừ Hologram Foil dịu nhẹ -->
                     <div class="hologram-foil-overlay" id="hologram-foil"></div>
 
-                    <!-- Cuống vé Header (Option 3: Time Ticket) -->
+                    <!-- Đầu bưu thiếp: Dấu Bưu Điện & Tuyến Thư Tình Đồng Nội -->
                     <div class="ticket-header" id="ticket-header">
-                        <!-- Con tem Đã Check-in khi xé vé -->
-                        <div class="checked-in-stamp hidden" id="checked-in-stamp">
-                            <span>★ BOARDED ★</span>
-                            <strong>ĐÃ CHECK-IN</strong>
-                            <small>GATE 20/10</small>
+                        <!-- Con dấu bưu chính Đã Trao Tận Tay khi mở niêm phong -->
+                        <div class="checked-in-stamp postal-postmark-stamp hidden" id="checked-in-stamp">
+                            <div class="postmark-circle">
+                                <span>★ 20/10/2026 ★</span>
+                                <strong>BƯU ĐIỆN ĐỒNG NỘI</strong>
+                                <small>ĐÃ TRAO TẬN TAY</small>
+                            </div>
+                            <div class="postmark-waves" aria-hidden="true">
+                                <span></span><span></span><span></span>
+                            </div>
                         </div>
 
-                        <div class="ticket-badge">EPIC TIME TRAVEL PASS · 20/10 SPECIAL EDITION</div>
+                        <div class="ticket-badge">BƯU THIẾP KỶ NIỆM · 20/10 ĐONG ĐẦY YÊU THƯƠNG</div>
                         <div class="ticket-route">
                             <div class="route-point">
-                                <span class="point-code">REAL</span>
-                                <span class="point-label">Thực Tại</span>
+                                <span class="point-code">VƯỜN BÍ MẬT</span>
+                                <span class="point-label">Nơi Gieo Mầm 🪷</span>
                             </div>
                             <div class="route-line">
-                                <span class="flight-no">EPIC-2010</span>
-                                <span class="route-arrow">✈</span>
+                                <span class="flight-no">THƯ TÌNH ĐỒNG NỘI</span>
+                                <span class="route-arrow">🕊️</span>
                             </div>
                             <div class="route-point">
-                                <span class="point-code">GARDEN</span>
-                                <span class="point-label">Vườn Bí Mật</span>
+                                <span class="point-code">NÀNG THƠ</span>
+                                <span class="point-label">Trái Tim Nàng 💖</span>
                             </div>
                         </div>
                         <div class="ticket-meta-grid">
                             <div class="meta-item">
-                                <span class="meta-label">HÀNH KHÁCH</span>
+                                <span class="meta-label">NGƯỜI NHẬN</span>
                                 <span class="meta-value passenger-name-display" id="pass-passenger-name">Bạn Yêu Thương</span>
                             </div>
                             <div class="meta-item">
-                                <span class="meta-label">CỔNG LỄ HỘI</span>
-                                <span class="meta-value">GATE 20/10</span>
+                                <span class="meta-label">NGÀY TRAO GỬI</span>
+                                <span class="meta-value">20/10/2026</span>
                             </div>
                             <div class="meta-item">
-                                <span class="meta-label">HẠNG VÉ</span>
-                                <span class="meta-value highlight-gold">VIP SWEETHEART</span>
+                                <span class="meta-label">TÌNH CẢM</span>
+                                <span class="meta-value highlight-gold">ĐONG ĐẦY NẮNG ẤM</span>
                             </div>
                         </div>
                     </div>
 
-                    <!-- Đường đục lỗ xé vé tương tác (Perforated Tear Notch Line) -->
-                    <div class="ticket-tear-line" id="ticket-tear-line" title="Chạm hoặc bấm vào đây để xé cuống vé kỷ niệm!">
+                    <!-- Đường đục lỗ xé niêm phong tương tác (Perforated Tear Notch Line) -->
+                    <div class="ticket-tear-line" id="ticket-tear-line" title="Chạm hoặc bấm vào đây để mở niêm phong bưu thiếp kỷ niệm!">
                         <div class="tear-notch notch-left"></div>
                         <div class="dashed-line"></div>
-                        <button type="button" class="tear-pill-btn" id="tear-ticket-btn" aria-label="Xé cuống vé kỷ niệm">
-                            <span class="tear-icon">✂</span>
-                            <span class="tear-btn-text" id="tear-btn-text">Xé cuống vé</span>
+                        <button type="button" class="tear-pill-btn" id="tear-ticket-btn" aria-label="Mở niêm phong bưu thiếp kỷ niệm">
+                            <span class="tear-icon">💌</span>
+                            <span class="tear-btn-text" id="tear-btn-text">Mở niêm phong</span>
                         </button>
                         <div class="tear-notch notch-right"></div>
                     </div>
 
-                    <!-- Thân vé chính: Gồm 2 phần (Option 1: Flower ID & Option 2: Photobooth 4 khung) -->
+                    <!-- Thân bưu thiếp: Định danh hoa & 4 Khoảnh khắc đồng nội -->
                     <div class="ticket-body">
-                        <!-- Phần bên trái: Thẻ định danh hoa Flower ID (Option 1) -->
+                        <!-- Phần bên trái: Thẻ định danh hoa Flower ID -->
                         <div class="flower-id-section">
                             <div class="flower-header-badge-row">
-                                <div class="flower-badge-pill">YOUR FLOWER ID · 20/10</div>
+                                <div class="flower-badge-pill">HOA TÂM HỒN NÀNG THƠ · 20/10</div>
                                 <button type="button" id="shuffle-flower-profile-btn" class="shuffle-flower-btn" title="Khám phá loài hoa khác">Khám phá hoa khác 🌸</button>
                             </div>
-                            <h3 class="flower-identity-title" id="flower-id-title">Bạn là một bông Allium.</h3>
-                            <p class="flower-identity-subtitle" id="flower-id-quote">Đầu đầy ý tưởng, miệng đầy câu hay.</p>
+                            <h3 class="flower-identity-title" id="flower-id-title">Bạn là đóa Sen Lụa thanh tao.</h3>
+                            <p class="flower-identity-subtitle" id="flower-id-quote">Gần bùn chẳng vướng bụi trần, thơm ngát dịu dàng.</p>
 
                             <!-- Bông hoa minh họa với ô upload ảnh selfie ở nhụy hoa -->
                             <div class="flower-avatar-wrap">
                                 <div class="flower-petals-svg-container" id="flower-petals-container">
                                     <div class="flower-svg-art">
                                         <svg viewBox="0 0 100 100" class="flower-vector-svg" id="flower-vector-svg">
-                                            <circle id="flower-svg-bg" cx="50" cy="50" r="42" fill="#EEF2FF" stroke="#DCE3F2" stroke-width="2"/>
-                                            <circle class="flower-svg-petal" cx="50" cy="18" r="9" fill="#F5CE56" opacity="0.85"/>
-                                            <circle class="flower-svg-petal" cx="50" cy="82" r="9" fill="#F5CE56" opacity="0.85"/>
-                                            <circle class="flower-svg-petal" cx="18" cy="50" r="9" fill="#F5CE56" opacity="0.85"/>
-                                            <circle class="flower-svg-petal" cx="82" cy="50" r="9" fill="#F5CE56" opacity="0.85"/>
-                                            <circle class="flower-svg-petal" cx="27" cy="27" r="9" fill="#F5CE56" opacity="0.85"/>
-                                            <circle class="flower-svg-petal" cx="73" cy="27" r="9" fill="#F5CE56" opacity="0.85"/>
-                                            <circle class="flower-svg-petal" cx="27" cy="73" r="9" fill="#F5CE56" opacity="0.85"/>
-                                            <circle class="flower-svg-petal" cx="73" cy="73" r="9" fill="#F5CE56" opacity="0.85"/>
+                                            <circle id="flower-svg-bg" cx="50" cy="50" r="42" fill="#FAF7F0" stroke="#E6DED5" stroke-width="2"/>
+                                            <circle class="flower-svg-petal" cx="50" cy="18" r="9" fill="#D47A88" opacity="0.85"/>
+                                            <circle class="flower-svg-petal" cx="50" cy="82" r="9" fill="#D47A88" opacity="0.85"/>
+                                            <circle class="flower-svg-petal" cx="18" cy="50" r="9" fill="#D47A88" opacity="0.85"/>
+                                            <circle class="flower-svg-petal" cx="82" cy="50" r="9" fill="#D47A88" opacity="0.85"/>
+                                            <circle class="flower-svg-petal" cx="27" cy="27" r="9" fill="#D47A88" opacity="0.85"/>
+                                            <circle class="flower-svg-petal" cx="73" cy="27" r="9" fill="#D47A88" opacity="0.85"/>
+                                            <circle class="flower-svg-petal" cx="27" cy="73" r="9" fill="#D47A88" opacity="0.85"/>
+                                            <circle class="flower-svg-petal" cx="73" cy="73" r="9" fill="#D47A88" opacity="0.85"/>
                                         </svg>
                                     </div>
                                     <!-- Dynamic Flower Center Avatar -->
                                     <div class="flower-center-avatar" id="flower-center-avatar">
-                                        <span class="default-avatar-emoji" id="flower-avatar-emoji">🌸</span>
+                                        <span class="default-avatar-emoji" id="flower-avatar-emoji">🪷</span>
                                         <img id="user-uploaded-avatar" class="uploaded-avatar-img hidden" alt="User Avatar">
                                     </div>
                                 </div>
                                 <div class="photo-upload-actions">
                                     <label for="user-flower-photo-input" class="photo-upload-pill-btn" id="photo-upload-label">
                                         <span>📷</span>
-                                        <span id="photo-upload-text">Thêm ảnh của bạn vào bông hoa</span>
+                                        <span id="photo-upload-text">Thêm ảnh của bạn vào nhụy hoa</span>
                                     </label>
                                     <button type="button" id="remove-flower-photo-btn" class="remove-photo-pill-btn hidden" title="Xóa ảnh và dùng lại avatar mặc định">✕ Bỏ ảnh</button>
                                 </div>
@@ -851,44 +856,44 @@
 
                             <!-- Nhãn tính cách (Capsules) -->
                             <div class="trait-tags-row" id="flower-trait-tags">
-                                <span class="trait-pill">Sáng tạo</span>
-                                <span class="trait-pill">Hài hước</span>
-                                <span class="trait-pill">Có chính kiến</span>
+                                <span class="trait-pill">Thanh cao</span>
+                                <span class="trait-pill">Dịu dàng</span>
+                                <span class="trait-pill">Tâm hồn thuần khiết</span>
                             </div>
 
-                            <!-- Bảng Hợp cạ & Lệch sóng (5th Season Style) -->
+                            <!-- Bảng Hợp cạ & Lệch sóng phong cách 5th Season -->
                             <div class="compatibility-grid">
                                 <div class="compat-box match">
-                                    <span class="compat-title">Bạn hợp cạ với</span>
-                                    <div class="compat-item">
-                                        <span class="compat-flower-icon">🌺</span>
-                                        <div class="compat-text">
-                                            <strong>Anh túc</strong>
-                                            <small>Rủ nhau làm trò, vui nguyên buổi.</small>
-                                        </div>
-                                    </div>
+                                    <span class="compat-title">Đồng điệu tâm hồn</span>
                                     <div class="compat-item">
                                         <span class="compat-flower-icon">🌼</span>
                                         <div class="compat-text">
-                                            <strong>Cúc đại đóa</strong>
-                                            <small>Bạn nghĩ ra trò, rủ cả hội chơi.</small>
+                                            <strong>Cúc họa mi</strong>
+                                            <small>Cùng mang nét đẹp bình dị, thanh tao.</small>
+                                        </div>
+                                    </div>
+                                    <div class="compat-item">
+                                        <span class="compat-flower-icon">🌷</span>
+                                        <div class="compat-text">
+                                            <strong>Tulip</strong>
+                                            <small>Đồng điệu sự trang nhã và chiều sâu tâm hồn.</small>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="compat-box clash">
-                                    <span class="compat-title">Hơi lệch sóng với</span>
+                                    <span class="compat-title">Khác biệt nét duyên</span>
                                     <div class="compat-item">
-                                        <span class="compat-flower-icon">🌸</span>
+                                        <span class="compat-flower-icon">🌪️</span>
                                         <div class="compat-text">
-                                            <strong>Địa lan</strong>
-                                            <small>Bạn "hay là...", bạn ấy cần kế hoạch.</small>
+                                            <strong>Bão cát</strong>
+                                            <small>Ồn ào náo nhiệt không hợp với nét tĩnh tại.</small>
                                         </div>
                                     </div>
                                     <div class="compat-item">
-                                        <span class="compat-flower-icon">🌻</span>
+                                        <span class="compat-flower-icon">🌵</span>
                                         <div class="compat-text">
-                                            <strong>Lily</strong>
-                                            <small>Ý lạ gặp checklist, dễ cãi nhau.</small>
+                                            <strong>Gai nhọn</strong>
+                                            <small>Dễ làm tổn thương vẻ mềm mại, e ấp.</small>
                                         </div>
                                     </div>
                                 </div>
@@ -897,74 +902,83 @@
                             <!-- Đặc điểm tính cách chi tiết -->
                             <div class="personality-checklist">
                                 <div class="check-row">
-                                    <span class="row-label">TRONG HỘI BẠN</span>
-                                    <span class="row-desc" id="trait-desc-1">Người ném ra "hay là..." rồi cả bàn bàn tới khuya.</span>
+                                    <span class="row-label">NÉT DUYÊN NGÀY THƯỜNG</span>
+                                    <span class="row-desc" id="trait-desc-1">Chốn bình yên ai cũng muốn tìm về sau những mệt mỏi.</span>
                                 </div>
                                 <div class="check-row">
-                                    <span class="row-label">KHI THƯƠNG AI ĐÓ</span>
-                                    <span class="row-desc" id="trait-desc-2">Thương bằng sự thú vị, kể chuyện và làm người kia cười.</span>
+                                    <span class="row-label">KHI TRAO YÊU THƯƠNG</span>
+                                    <span class="row-desc" id="trait-desc-2">Thương bằng tình cảm sâu lắng, chung thủy và sắt son.</span>
                                 </div>
                                 <div class="check-row">
-                                    <span class="row-label">KHI ÁP LỰC</span>
-                                    <span class="row-desc" id="trait-desc-3">Nghĩ ra cách mới, đôi khi hơi lạ nhưng chạy được.</span>
+                                    <span class="row-label">KHI ĐỐI DIỆN ÂU LO</span>
+                                    <span class="row-desc" id="trait-desc-3">Tĩnh lặng nhìn nhận, giữ trọn cốt cách và nét an nhiên.</span>
                                 </div>
                             </div>
                         </div>
 
-                        <!-- Phần bên phải: Dải Photobooth 4 khung Life4Cuts (Option 2) -->
-                        <div class="photobooth-strip-section">
+                        <!-- Phần bên phải: Dải 4 Khung Khoảnh Khắc Đồng Nội -->
+                        <div class="photobooth-strip-section photobooth-heritage-strip">
                             <div class="strip-header">
-                                <span class="strip-brand">EPIC MEMORIES · 4-CUTS</span>
+                                <span class="strip-brand">BỐN MÙA ĐỒNG NỘI</span>
                                 <span class="strip-date">20/10/2026</span>
                             </div>
                             <div class="strip-frames-grid">
-                                <!-- Frame 1: Hạt mầm -->
+                                <!-- Frame 1: Hạt mầm gieo duyên -->
                                 <div class="strip-frame frame-seed">
                                     <div class="frame-content">
                                         <span class="frame-emoji">🌱</span>
                                         <span class="frame-caption">01 · Hạt Mầm Khởi Nguyên</span>
                                     </div>
                                 </div>
-                                <!-- Frame 2: Robot EPIC chăm sóc -->
+                                <!-- Frame 2: Nắng sớm bờ tre -->
                                 <div class="strip-frame frame-mascot">
                                     <div class="frame-content">
-                                        <span class="frame-emoji">🤖💦</span>
-                                        <span class="frame-caption">02 · Robot Tiếp Sức</span>
+                                        <span class="frame-emoji">🌾✨</span>
+                                        <span class="frame-caption">02 · Nắng Sớm Bờ Tre</span>
                                     </div>
                                 </div>
-                                <!-- Frame 3: Cây tình yêu nở rộ -->
+                                <!-- Frame 3: Sen hồng ngát hương -->
                                 <div class="strip-frame frame-tree">
                                     <div class="frame-content">
-                                        <span class="frame-emoji">🌸✨</span>
-                                        <span class="frame-caption">03 · Bừng Nở Rực Rỡ</span>
+                                        <span class="frame-emoji">🪷💖</span>
+                                        <span class="frame-caption">03 · Sen Hồng Ngát Hương</span>
                                     </div>
                                 </div>
-                                <!-- Frame 4: Bức thư kỷ niệm -->
-                                <div class="strip-frame frame-letter">
+                                <!-- Frame 4: Dáng ngọc áo dài e ấp -->
+                                <div class="strip-frame frame-letter frame-aodai">
                                     <div class="frame-content">
-                                        <span class="frame-emoji">💌💖</span>
-                                        <span class="frame-caption" id="frame-passenger-caption">04 · Thư Gửi Bạn</span>
+                                        <img src="./img/ao-dai-viet.webp" class="frame-aodai-thumb" alt="Áo dài thiếu nữ Việt">
+                                        <span class="frame-caption" id="frame-passenger-caption">04 · Nét Duyên Gửi Bạn</span>
                                     </div>
                                 </div>
                             </div>
                             <div class="strip-footer">
-                                <span class="strip-doodle">♡ (≧◡≦) ♡</span>
-                                <span class="strip-stamp">OFFICIAL LIFE4CUTS EDITION</span>
+                                <span class="strip-doodle">♡ Nắng thu đọng nét cười thơ ♡</span>
+                                <span class="strip-stamp">VIETNAMESE HERITAGE EDITION</span>
                             </div>
                         </div>
                     </div>
 
-                    <!-- Chân vé Barcode & Dấu mộc (Option 3: Verification Seal) -->
-                    <div class="ticket-footer">
-                        <div class="barcode-wrap">
-                            <div class="barcode-bars"></div>
-                            <span class="barcode-number">EPIC-2010-8888-SWEETHEART</span>
+                    <!-- Chân bưu thiếp: Con tem hoa sen cổ điển & Mộc triện son đỏ -->
+                    <div class="ticket-footer postcard-heritage-footer">
+                        <div class="vintage-stamp-wrap">
+                            <div class="vintage-postage-stamp">
+                                <div class="stamp-inner">
+                                    <div class="stamp-top-text">BƯU CHÍNH VIỆT NAM</div>
+                                    <div class="stamp-art">
+                                        <span class="stamp-lotus-icon">🪷</span>
+                                        <span class="stamp-value">20/10<small>Đ</small></span>
+                                    </div>
+                                    <div class="stamp-bottom-text">HƯƠNG ĐỒNG NỘI</div>
+                                </div>
+                            </div>
+                            <div class="stamp-postal-code">VN-2010 · THƯ TÌNH ĐỒNG NỘI · KỶ NIỆM</div>
                         </div>
-                        <div class="wax-seal-badge">
-                            <div class="seal-circle">
+                        <div class="wax-seal-badge trien-son-badge" title="Mộc triện son: Chạm để nhận lời chúc an yên!">
+                            <div class="seal-circle trien-circle">
                                 <span>★ 20/10 ★</span>
-                                <strong>APPROVED</strong>
-                                <small>WITH LOVE</small>
+                                <strong>NÉT DUYÊN</strong>
+                                <small>AN YÊN</small>
                             </div>
                         </div>
                     </div>
@@ -975,11 +989,11 @@
             <div class="ticket-actions-bar">
                 <button id="download-ticket-btn" class="ticket-action-btn primary-gold">
                     <span>📥</span>
-                    <span>Tải ảnh Story 9:16 (Lưu máy)</span>
+                    <span>Tải Bưu Thiếp Story 9:16 (Lưu máy)</span>
                 </button>
                 <button id="share-social-btn" class="ticket-action-btn primary-navy">
-                    <span>🚀</span>
-                    <span>Chia sẻ Story / Mạng xã hội</span>
+                    <span>🕊️</span>
+                    <span>Gửi Bưu Thiếp / Mạng Xã Hội</span>
                 </button>
                 <button id="copy-ticket-quote-btn" class="ticket-action-btn tertiary-clean">
                     <span>📋</span>

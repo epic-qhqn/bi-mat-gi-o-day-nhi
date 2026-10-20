@@ -13,9 +13,9 @@
 - [x] Sub-phase 2.3: Đồng nhất Typography thanh nhã và viền thẻ mộc mạc như giấy thủ công (soft mist shadows, 100% brace-balanced).
 
 ## Phase 3: Chuyển Hóa Tấm Vé Thành "Bưu Thiếp Hương Đồng Cỏ Nội"
-- [ ] Sub-phase 3.1: Tái thiết kế Modal vé thành Bưu Thiếp Lụa Sen 20/10 với con tem bưu hoa cổ điển.
-- [ ] Sub-phase 3.2: Tích hợp họa tiết thiếu nữ áo dài nón lá và triện son tên nàng thơ vào thân bưu thiếp.
-- [ ] Sub-phase 3.3: Nâng cấp Canvas 2D (`boarding-pass-canvas.js`) kết xuất ảnh Story 9:16 phong cách bưu thiếp truyền thống.
+- [x] Sub-phase 3.1: Tái thiết kế Modal vé thành Bưu Thiếp Lụa Sen 20/10 với con tem bưu hoa cổ điển.
+- [x] Sub-phase 3.2: Tích hợp họa tiết thiếu nữ áo dài nón lá và triện son tên nàng thơ vào thân bưu thiếp.
+- [x] Sub-phase 3.3: Nâng cấp Canvas 2D (`boarding-pass-canvas.js`) kết xuất ảnh Story 9:16 phong cách bưu thiếp truyền thống.
 
 ## Phase 4: Tái Sinh Linh Vật Đồng Dao & Điểm Xuyết Thiếu Nữ Áo Dài
 - [ ] Sub-phase 4.1: Cập nhật Mascot với mắt chớp, má hồng e ấp (`////`), nụ cười mèo (`ω`) và lời thoại mộc mạc ấm áp.

@@ -1,11 +1,17 @@
 /**
  * ============================================================================
- * SUB-PHASE 4.2: RETINA CANVAS 2D EXPORT ENGINE (1080 x 1920 STORY RESOLUTION)
- * 100% Client-Side Pure HTML5 Canvas rendering for "Epic Flower Boarding Pass"
+ * SUB-PHASE 4.2 / PHASE 3: RETINA CANVAS 2D EXPORT ENGINE (1080 x 1920 STORY RESOLUTION)
+ * 100% Client-Side Pure HTML5 Canvas rendering for "Bưu Thiếp Hương Đồng Cỏ Nội 20/10"
  * ============================================================================
  */
 
 (function () {
+    // Preload Ao Dai asset for Story Canvas
+    if (typeof window !== 'undefined' && !window.aoDaiVietImg) {
+        window.aoDaiVietImg = new Image();
+        window.aoDaiVietImg.src = './img/ao-dai-viet.webp';
+    }
+
     // Utility: Safe roundRect polyfill for canvas context
     function drawRoundRect(ctx, x, y, width, height, radius) {
         if (typeof radius === 'number') {
@@ -56,7 +62,7 @@
     }
 
     /**
-     * Core Render Engine: Renders 1080x1920 Story Canvas
+     * Core Render Engine: Renders 1080x1920 Story Postcard Canvas
      * @param {Object} options Custom overrides for profile, passenger, etc.
      * @returns {HTMLCanvasElement}
      */
@@ -71,39 +77,39 @@
 
         // Data sources
         const profile = options.profile || (typeof window.getCurrentFlowerProfile === 'function' ? window.getCurrentFlowerProfile() : null) || {
-            flowerName: "Allium",
-            vietnameseName: "Hành Kiểng",
-            title: "Bạn là một bông Allium.",
-            quote: "Đầu đầy ý tưởng, miệng đầy câu hay.",
-            emoji: "🌸",
-            traits: ["Sáng tạo", "Hài hước", "Có chính kiến"],
-            petalColor: "#F5CE56",
-            bgColor: "#EEF2FF",
+            flowerName: "Lotus",
+            vietnameseName: "Hoa Sen",
+            title: "Bạn là đóa Sen Lụa thanh tao.",
+            quote: "Gần bùn chẳng vướng bụi trần, thơm ngát dịu dàng.",
+            emoji: "🪷",
+            traits: ["Thanh cao", "Dịu dàng", "Tâm hồn thuần khiết"],
+            petalColor: "#D47A88",
+            bgColor: "#FAF7F0",
             match: [
-                { icon: "🌺", name: "Anh túc", desc: "Rủ nhau làm trò, vui nguyên buổi." },
-                { icon: "🌼", name: "Cúc đại đóa", desc: "Bạn nghĩ ra trò, rủ cả hội chơi." }
+                { icon: "🌼", name: "Cúc họa mi", desc: "Cùng mang nét đẹp bình dị, thanh tao." },
+                { icon: "🌷", name: "Tulip", desc: "Đồng điệu sự trang nhã và chiều sâu tâm hồn." }
             ],
             clash: [
-                { icon: "🌸", name: "Địa lan", desc: "Bạn 'hay là...', bạn ấy cần kế hoạch." },
-                { icon: "🌻", name: "Lily", desc: "Ý lạ gặp checklist, dễ cãi nhau." }
+                { icon: "🌪️", name: "Bão cát", desc: "Ồn ào náo nhiệt không hợp với nét tĩnh tại." },
+                { icon: "🌵", name: "Gai nhọn", desc: "Dễ làm tổn thương vẻ mềm mại, e ấp." }
             ],
             checklist: {
-                friend: "Người ném ra 'hay là...' rồi cả bàn bàn tới khuya.",
-                love: "Thương bằng sự thú vị, kể chuyện và làm người kia cười.",
-                pressure: "Nghĩ ra cách mới, đôi khi hơi lạ nhưng chạy được."
+                friend: "Chốn bình yên ai cũng muốn tìm về sau những mệt mỏi.",
+                love: "Thương bằng tình cảm sâu lắng, chung thủy và sắt son.",
+                pressure: "Tĩnh lặng nhìn nhận, giữ trọn cốt cách và nét an nhiên."
             }
         };
 
         const passengerName = (options.passengerName || window.currentUserName || (typeof userName !== 'undefined' ? userName : '') || 'Bạn Yêu Thương').trim();
 
         // -------------------------------------------------------------
-        // 1. Background (Warm Cream & Subtle Starlight Dots)
+        // 1. Background (Warm Giấy Dó Ivory & Soft Autumn Petals)
         // -------------------------------------------------------------
-        ctx.fillStyle = "#FAF8F5";
+        ctx.fillStyle = "#FAF7F0";
         ctx.fillRect(0, 0, width, height);
 
-        // Soft Starlight Dotted Grid background
-        ctx.fillStyle = "rgba(220, 227, 242, 0.45)";
+        // Soft Decorative Dó Paper Fibers & Starlight Dots
+        ctx.fillStyle = "rgba(212, 122, 136, 0.16)";
         for (let gx = 30; gx < width; gx += 40) {
             for (let gy = 30; gy < height; gy += 40) {
                 if ((gx + gy) % 80 === 0) {
@@ -115,135 +121,184 @@
         }
 
         // -------------------------------------------------------------
-        // 2. The Main Ticket Card (960 x 1760 at x=60, y=70)
+        // 2. The Main Postcard Card (960 x 1760 at x=60, y=70)
         // -------------------------------------------------------------
         const cardX = 60;
         const cardY = 70;
         const cardW = 960;
         const cardH = 1760;
-        const cardRadius = 36;
+        const cardRadius = 24;
 
-        // Soft ambient shadow
+        // Soft ambient mist shadow
         ctx.save();
-        ctx.shadowColor = "rgba(19, 28, 78, 0.12)";
+        ctx.shadowColor = "rgba(74, 55, 40, 0.1)";
         ctx.shadowBlur = 40;
-        ctx.shadowOffsetY = 18;
-        ctx.fillStyle = "#FFFFFF";
+        ctx.shadowOffsetY = 16;
+        ctx.fillStyle = "#FFFDF9";
         drawRoundRect(ctx, cardX, cardY, cardW, cardH, cardRadius);
         ctx.fill();
         ctx.restore();
 
-        // Card Border
-        ctx.strokeStyle = "#DCE3F2";
-        ctx.lineWidth = 3;
+        // Card Outer Border
+        ctx.strokeStyle = "#E6DED5";
+        ctx.lineWidth = 2.5;
         drawRoundRect(ctx, cardX, cardY, cardW, cardH, cardRadius);
         ctx.stroke();
 
+        // Card Inner Decorative Inset Border
+        ctx.strokeStyle = "rgba(212, 122, 136, 0.3)";
+        ctx.lineWidth = 1;
+        drawRoundRect(ctx, cardX + 8, cardY + 8, cardW - 16, cardH - 16, cardRadius - 4);
+        ctx.stroke();
+
         // -------------------------------------------------------------
-        // 3. Ticket Header (x=60, y=70, w=960, h=300)
+        // 3. Postcard Header (x=60, y=70, w=960, h=300)
         // -------------------------------------------------------------
         const headerH = 300;
         ctx.save();
         drawRoundRect(ctx, cardX, cardY, cardW, headerH, { tl: cardRadius, tr: cardRadius, bl: 0, br: 0 });
         ctx.clip();
-        ctx.fillStyle = "#FAF8F5";
+        ctx.fillStyle = "#FAF7F0";
         ctx.fillRect(cardX, cardY, cardW, headerH);
         ctx.restore();
 
-        // Top Badge: EPIC TIME TRAVEL PASS · 20/10 SPECIAL EDITION
-        ctx.fillStyle = "#EEF2FF";
-        drawRoundRect(ctx, cardX + cardW / 2 - 250, cardY + 28, 500, 38, 999);
+        // Top Badge: BƯU THIẾP KỶ NIỆM · 20/10 ĐONG ĐẦY YÊU THƯƠNG
+        ctx.fillStyle = "#F5EBE6";
+        drawRoundRect(ctx, cardX + cardW / 2 - 270, cardY + 28, 540, 38, 10);
         ctx.fill();
-        ctx.strokeStyle = "#DCE3F2";
+        ctx.strokeStyle = "#E6DED5";
         ctx.lineWidth = 1.5;
-        drawRoundRect(ctx, cardX + cardW / 2 - 250, cardY + 28, 500, 38, 999);
+        drawRoundRect(ctx, cardX + cardW / 2 - 270, cardY + 28, 540, 38, 10);
         ctx.stroke();
 
-        ctx.fillStyle = "#131C4E";
-        ctx.font = "bold 16px 'Outfit', sans-serif";
+        ctx.fillStyle = "#4A3728";
+        ctx.font = "bold 15px 'Outfit', sans-serif";
         ctx.textAlign = "center";
         ctx.textBaseline = "middle";
-        ctx.fillText("EPIC TIME TRAVEL PASS · 20/10 SPECIAL EDITION", cardX + cardW / 2, cardY + 47);
+        ctx.fillText("BƯU THIẾP KỶ NIỆM · 20/10 ĐONG ĐẦY YÊU THƯƠNG", cardX + cardW / 2, cardY + 47);
 
-        // Flight Route Display: REAL  ✈ EPIC-2010 ✈  GARDEN
-        const routeY = cardY + 115;
-        // Point REAL
+        // Circular Postmark Cancellation Stamp (Top-Left of Header)
+        ctx.save();
+        const stampX = cardX + 115;
+        const stampY = cardY + 68;
+        ctx.translate(stampX, stampY);
+        ctx.rotate((-10 * Math.PI) / 180);
+
+        // Outer Ring
+        ctx.strokeStyle = "#C53030";
+        ctx.lineWidth = 2;
+        ctx.beginPath();
+        ctx.arc(0, 0, 34, 0, Math.PI * 2);
+        ctx.stroke();
+
+        // Inner Ring
+        ctx.strokeStyle = "rgba(197, 48, 48, 0.4)";
+        ctx.lineWidth = 1;
+        ctx.beginPath();
+        ctx.arc(0, 0, 28, 0, Math.PI * 2);
+        ctx.stroke();
+
+        // Stamp Text
+        ctx.fillStyle = "#C53030";
+        ctx.textAlign = "center";
+        ctx.textBaseline = "middle";
+        ctx.font = "bold 7px 'Outfit', sans-serif";
+        ctx.fillText("★ 20/10/2026 ★", 0, -14);
+        ctx.font = "bold 8.5px 'Outfit', sans-serif";
+        ctx.fillText("BƯU ĐIỆN", 0, -1);
+        ctx.fillText("ĐỒNG NỘI", 0, 10);
+        ctx.font = "bold 6.5px 'Outfit', sans-serif";
+        ctx.fillText("ĐÃ TRAO", 0, 20);
+
+        // Wavy Cancellation Lines
+        ctx.strokeStyle = "#C53030";
+        ctx.lineWidth = 1.8;
+        for (let waveY of [-8, 0, 8]) {
+            ctx.beginPath();
+            for (let wx = 42; wx <= 100; wx += 2) {
+                const wy = waveY + Math.sin((wx - 42) * 0.2) * 3;
+                if (wx === 42) ctx.moveTo(wx, wy);
+                else ctx.lineTo(wx, wy);
+            }
+            ctx.stroke();
+        }
+        ctx.restore();
+
+        // Postal Route Display: VƯỜN BÍ MẬT  🕊️ THƯ TÌNH ĐỒNG NỘI  NÀNG THƠ
+        const routeY = cardY + 125;
+        // Point: Vườn Bí Mật
         ctx.textAlign = "left";
-        ctx.font = "900 40px 'Outfit', sans-serif";
-        ctx.fillStyle = "#131C4E";
-        ctx.fillText("REAL", cardX + 60, routeY);
-        ctx.font = "600 18px 'Outfit', sans-serif";
-        ctx.fillStyle = "#64748B";
-        ctx.fillText("Thực Tại", cardX + 60, routeY + 30);
+        ctx.font = "900 32px 'Outfit', sans-serif";
+        ctx.fillStyle = "#4A3728";
+        ctx.fillText("VƯỜN BÍ MẬT", cardX + 60, routeY);
+        ctx.font = "600 17px 'Outfit', sans-serif";
+        ctx.fillStyle = "#8C7A6B";
+        ctx.fillText("Nơi Gieo Mầm 🪷", cardX + 60, routeY + 28);
 
-        // Flight Middle Badge
+        // Middle Postal Tag
         const midX = cardX + cardW / 2;
         ctx.textAlign = "center";
         ctx.fillStyle = "#FFFFFF";
-        drawRoundRect(ctx, midX - 85, routeY - 26, 170, 36, 999);
+        drawRoundRect(ctx, midX - 110, routeY - 26, 220, 38, 10);
         ctx.fill();
-        ctx.strokeStyle = "#DCE3F2";
+        ctx.strokeStyle = "#E6DED5";
         ctx.lineWidth = 1.5;
-        drawRoundRect(ctx, midX - 85, routeY - 26, 170, 36, 999);
+        drawRoundRect(ctx, midX - 110, routeY - 26, 220, 38, 10);
         ctx.stroke();
 
-        ctx.fillStyle = "#131C4E";
-        ctx.font = "bold 15px 'Outfit', sans-serif";
-        ctx.fillText("EPIC-2010", midX - 10, routeY - 7);
-        ctx.fillStyle = "#F5CE56";
-        ctx.font = "20px 'Outfit', sans-serif";
-        ctx.fillText("✈", midX + 55, routeY - 7);
+        ctx.fillStyle = "#4A3728";
+        ctx.font = "bold 13.5px 'Outfit', sans-serif";
+        ctx.fillText("🕊️ THƯ TÌNH ĐỒNG NỘI", midX, routeY - 7);
 
         // Connecting dotted line
-        ctx.strokeStyle = "#C8D3E6";
+        ctx.strokeStyle = "#D6CBC0";
         ctx.setLineDash([6, 6]);
         ctx.lineWidth = 2;
         ctx.beginPath();
-        ctx.moveTo(cardX + 190, routeY - 8);
-        ctx.lineTo(midX - 95, routeY - 8);
-        ctx.moveTo(midX + 95, routeY - 8);
-        ctx.lineTo(cardX + cardW - 190, routeY - 8);
+        ctx.moveTo(cardX + 270, routeY - 8);
+        ctx.lineTo(midX - 120, routeY - 8);
+        ctx.moveTo(midX + 120, routeY - 8);
+        ctx.lineTo(cardX + cardW - 240, routeY - 8);
         ctx.stroke();
         ctx.setLineDash([]); // Reset line dash
 
-        // Point GARDEN
+        // Point: Nàng Thơ
         ctx.textAlign = "right";
-        ctx.font = "900 40px 'Outfit', sans-serif";
-        ctx.fillStyle = "#131C4E";
-        ctx.fillText("GARDEN", cardX + cardW - 60, routeY);
-        ctx.font = "600 18px 'Outfit', sans-serif";
-        ctx.fillStyle = "#64748B";
-        ctx.fillText("Vườn Bí Mật", cardX + cardW - 60, routeY + 30);
+        ctx.font = "900 32px 'Outfit', sans-serif";
+        ctx.fillStyle = "#D47A88";
+        ctx.fillText("NÀNG THƠ", cardX + cardW - 60, routeY);
+        ctx.font = "600 17px 'Outfit', sans-serif";
+        ctx.fillStyle = "#8C7A6B";
+        ctx.fillText("Trái Tim Nàng 💖", cardX + cardW - 60, routeY + 28);
 
-        // Meta Info Grid (3 White cards)
+        // Meta Info Grid (3 Parchment cards)
         const metaY = cardY + 185;
         const metaCardW = (cardW - 120 - 32) / 3;
         const metaH = 80;
 
         const metaItems = [
-            { label: "HÀNH KHÁCH", val: passengerName, highlight: false },
-            { label: "CỔNG LỄ HỘI", val: "GATE 20/10", highlight: false },
-            { label: "HẠNG VÉ", val: "VIP SWEETHEART", highlight: true }
+            { label: "NGƯỜI NHẬN", val: passengerName, highlight: false },
+            { label: "NGÀY TRAO GỬI", val: "20/10/2026", highlight: false },
+            { label: "TÌNH CẢM", val: "ĐONG ĐẦY NẮNG ẤM", highlight: true }
         ];
 
         metaItems.forEach((item, idx) => {
             const mx = cardX + 60 + idx * (metaCardW + 16);
             ctx.fillStyle = "#FFFFFF";
-            drawRoundRect(ctx, mx, metaY, metaCardW, metaH, 16);
+            drawRoundRect(ctx, mx, metaY, metaCardW, metaH, 12);
             ctx.fill();
-            ctx.strokeStyle = "#DCE3F2";
+            ctx.strokeStyle = "#E6DED5";
             ctx.lineWidth = 1.5;
-            drawRoundRect(ctx, mx, metaY, metaCardW, metaH, 16);
+            drawRoundRect(ctx, mx, metaY, metaCardW, metaH, 12);
             ctx.stroke();
 
             ctx.textAlign = "center";
-            ctx.fillStyle = "#94A3B8";
-            ctx.font = "bold 13px 'Outfit', sans-serif";
+            ctx.fillStyle = "#8C7A6B";
+            ctx.font = "bold 12.5px 'Outfit', sans-serif";
             ctx.fillText(item.label, mx + metaCardW / 2, metaY + 28);
 
-            ctx.fillStyle = item.highlight ? "#D97706" : "#131C4E";
-            ctx.font = "bold 20px 'Outfit', sans-serif";
-            // Trim passenger name if too long for card
+            ctx.fillStyle = item.highlight ? "#D47A88" : "#4A3728";
+            ctx.font = "bold 19px 'Outfit', sans-serif";
             let displayVal = item.val;
             if (ctx.measureText(displayVal).width > metaCardW - 20) {
                 displayVal = displayVal.substring(0, 12) + '...';
@@ -259,70 +314,87 @@
 
         // Left Notch
         ctx.save();
-        ctx.fillStyle = "#FAF8F5";
+        ctx.fillStyle = "#FAF7F0";
         ctx.beginPath();
         ctx.arc(cardX, tearY, notchRadius, -Math.PI / 2, Math.PI / 2);
         ctx.fill();
-        ctx.strokeStyle = "#DCE3F2";
-        ctx.lineWidth = 3;
+        ctx.strokeStyle = "#E6DED5";
+        ctx.lineWidth = 2.5;
         ctx.stroke();
         ctx.restore();
 
         // Right Notch
         ctx.save();
-        ctx.fillStyle = "#FAF8F5";
+        ctx.fillStyle = "#FAF7F0";
         ctx.beginPath();
         ctx.arc(cardX + cardW, tearY, notchRadius, Math.PI / 2, -Math.PI / 2);
         ctx.fill();
-        ctx.strokeStyle = "#DCE3F2";
-        ctx.lineWidth = 3;
+        ctx.strokeStyle = "#E6DED5";
+        ctx.lineWidth = 2.5;
         ctx.stroke();
         ctx.restore();
 
         // Dashed Perforation Line
         ctx.save();
-        ctx.strokeStyle = "#C8D3E6";
+        ctx.strokeStyle = "#D6CBC0";
         ctx.setLineDash([12, 10]);
-        ctx.lineWidth = 3;
+        ctx.lineWidth = 2.5;
         ctx.beginPath();
         ctx.moveTo(cardX + notchRadius + 10, tearY);
         ctx.lineTo(cardX + cardW - notchRadius - 10, tearY);
         ctx.stroke();
         ctx.restore();
 
+        // Center Seal Pill (💌 Mở niêm phong)
+        const sealPillW = 150;
+        const sealPillH = 32;
+        ctx.fillStyle = "#FFFDF9";
+        drawRoundRect(ctx, cardX + cardW / 2 - sealPillW / 2, tearY - sealPillH / 2, sealPillW, sealPillH, 10);
+        ctx.fill();
+        ctx.strokeStyle = "#E6DED5";
+        ctx.lineWidth = 1.5;
+        drawRoundRect(ctx, cardX + cardW / 2 - sealPillW / 2, tearY - sealPillH / 2, sealPillW, sealPillH, 10);
+        ctx.stroke();
+
+        ctx.fillStyle = "#4A3728";
+        ctx.font = "bold 13px 'Outfit', sans-serif";
+        ctx.textAlign = "center";
+        ctx.textBaseline = "middle";
+        ctx.fillText("💌 Mở niêm phong", cardX + cardW / 2, tearY);
+
         // -------------------------------------------------------------
-        // 5. Ticket Body: 2 Columns Layout
-        // Left: Flower ID (x=cardX+40, w=540)
-        // Right: Photobooth Strip (x=cardX+610, w=310)
+        // 5. Postcard Body: 2 Columns Layout
+        // Left: Flower ID (x=cardX+44, w=530)
+        // Right: Photobooth Strip (x=cardX+595, w=320)
         // -------------------------------------------------------------
         const bodyY = tearY + 36;
         const colLeftX = cardX + 44;
         const colLeftW = 530;
 
-        // Badge: YOUR FLOWER ID · 20/10
-        ctx.fillStyle = "#EEF2FF";
-        drawRoundRect(ctx, colLeftX, bodyY, 180, 30, 999);
+        // Badge: HOA TÂM HỒN NÀNG THƠ · 20/10
+        ctx.fillStyle = "#F5EBE6";
+        drawRoundRect(ctx, colLeftX, bodyY, 240, 32, 10);
         ctx.fill();
-        ctx.strokeStyle = "#DCE3F2";
+        ctx.strokeStyle = "#E6DED5";
         ctx.lineWidth = 1;
-        drawRoundRect(ctx, colLeftX, bodyY, 180, 30, 999);
+        drawRoundRect(ctx, colLeftX, bodyY, 240, 32, 10);
         ctx.stroke();
 
-        ctx.fillStyle = "#131C4E";
-        ctx.font = "bold 13px 'Outfit', sans-serif";
+        ctx.fillStyle = "#4A3728";
+        ctx.font = "bold 12.5px 'Outfit', sans-serif";
         ctx.textAlign = "center";
-        ctx.fillText("YOUR FLOWER ID · 20/10", colLeftX + 90, bodyY + 16);
+        ctx.fillText("HOA TÂM HỒN NÀNG THƠ · 20/10", colLeftX + 120, bodyY + 17);
 
         // Flower Identity Title
         ctx.textAlign = "left";
-        ctx.fillStyle = "#131C4E";
-        ctx.font = "800 32px 'Outfit', sans-serif";
-        ctx.fillText(profile.title, colLeftX, bodyY + 68);
+        ctx.fillStyle = "#4A3728";
+        ctx.font = "800 30px 'Outfit', sans-serif";
+        ctx.fillText(profile.title, colLeftX, bodyY + 70);
 
         // Flower Quote
-        ctx.fillStyle = "#64748B";
-        ctx.font = "500 18px 'Outfit', sans-serif";
-        ctx.fillText(profile.quote, colLeftX, bodyY + 98);
+        ctx.fillStyle = "#8C7A6B";
+        ctx.font = "500 17.5px 'Outfit', sans-serif";
+        ctx.fillText(profile.quote, colLeftX, bodyY + 100);
 
         // -------------------------------------------------------------
         // 6. Flower Vector Art & Center Avatar (Selfie or Emoji)
@@ -332,16 +404,16 @@
         const flowerRadius = 95;
 
         // Outer flower background circle
-        ctx.fillStyle = profile.bgColor || "#EEF2FF";
+        ctx.fillStyle = profile.bgColor || "#FAF7F0";
         ctx.beginPath();
         ctx.arc(flowerCenterX, flowerCenterY, flowerRadius, 0, Math.PI * 2);
         ctx.fill();
-        ctx.strokeStyle = "#DCE3F2";
+        ctx.strokeStyle = "#E6DED5";
         ctx.lineWidth = 2.5;
         ctx.stroke();
 
         // 8 Petals radiating outward
-        const petalColor = profile.petalColor || "#F5CE56";
+        const petalColor = profile.petalColor || "#D47A88";
         const petalDist = 68;
         const petalRadius = 18;
         for (let i = 0; i < 8; i++) {
@@ -390,7 +462,7 @@
             ctx.beginPath();
             ctx.arc(flowerCenterX, flowerCenterY, centerAvatarRadius, 0, Math.PI * 2);
             ctx.stroke();
-            ctx.strokeStyle = "#DCE3F2";
+            ctx.strokeStyle = "#E6DED5";
             ctx.lineWidth = 2;
             ctx.stroke();
         } else {
@@ -399,36 +471,36 @@
             ctx.beginPath();
             ctx.arc(flowerCenterX, flowerCenterY, centerAvatarRadius, 0, Math.PI * 2);
             ctx.fill();
-            ctx.strokeStyle = "#DCE3F2";
+            ctx.strokeStyle = "#E6DED5";
             ctx.lineWidth = 2;
             ctx.stroke();
 
             ctx.font = "46px sans-serif";
             ctx.textAlign = "center";
             ctx.textBaseline = "middle";
-            ctx.fillText(profile.emoji || "🌸", flowerCenterX, flowerCenterY + 4);
+            ctx.fillText(profile.emoji || "🪷", flowerCenterX, flowerCenterY + 4);
         }
 
         // -------------------------------------------------------------
         // 7. Trait Pills Row
         // -------------------------------------------------------------
         const traitsY = flowerCenterY + flowerRadius + 32;
-        const traits = Array.isArray(profile.traits) ? profile.traits : ["Sáng tạo", "Hài hước", "Có chính kiến"];
-        let traitStartX = colLeftX + (colLeftW - (traits.length * 130 + (traits.length - 1) * 12)) / 2;
+        const traits = Array.isArray(profile.traits) ? profile.traits : ["Thanh cao", "Dịu dàng", "Tâm hồn thuần khiết"];
+        let traitStartX = colLeftX + (colLeftW - (traits.length * 135 + (traits.length - 1) * 12)) / 2;
 
         traits.forEach((t) => {
-            const pillW = 130;
+            const pillW = 135;
             const pillH = 36;
-            ctx.fillStyle = "#FAF8F5";
-            drawRoundRect(ctx, traitStartX, traitsY, pillW, pillH, 999);
+            ctx.fillStyle = "#FAF7F0";
+            drawRoundRect(ctx, traitStartX, traitsY, pillW, pillH, 10);
             ctx.fill();
-            ctx.strokeStyle = "#DCE3F2";
+            ctx.strokeStyle = "#E6DED5";
             ctx.lineWidth = 1.5;
-            drawRoundRect(ctx, traitStartX, traitsY, pillW, pillH, 999);
+            drawRoundRect(ctx, traitStartX, traitsY, pillW, pillH, 10);
             ctx.stroke();
 
-            ctx.fillStyle = "#131C4E";
-            ctx.font = "bold 15px 'Outfit', sans-serif";
+            ctx.fillStyle = "#4A3728";
+            ctx.font = "bold 14px 'Outfit', sans-serif";
             ctx.textAlign = "center";
             ctx.textBaseline = "middle";
             ctx.fillText(t, traitStartX + pillW / 2, traitsY + pillH / 2);
@@ -437,81 +509,81 @@
         });
 
         // -------------------------------------------------------------
-        // 8. Compatibility Match & Clash Boxes (Side-by-side or Stacked)
+        // 8. Compatibility Match & Clash Boxes (Side-by-side)
         // -------------------------------------------------------------
         const compatY = traitsY + 60;
         const boxW = (colLeftW - 16) / 2;
         const boxH = 150;
 
-        // Box 1: Match
+        // Box 1: Match (Đồng điệu tâm hồn)
         ctx.fillStyle = "#FFF5F7";
-        drawRoundRect(ctx, colLeftX, compatY, boxW, boxH, 18);
+        drawRoundRect(ctx, colLeftX, compatY, boxW, boxH, 14);
         ctx.fill();
         ctx.strokeStyle = "#FED7E2";
         ctx.lineWidth = 1.5;
-        drawRoundRect(ctx, colLeftX, compatY, boxW, boxH, 18);
+        drawRoundRect(ctx, colLeftX, compatY, boxW, boxH, 14);
         ctx.stroke();
 
         ctx.textAlign = "left";
         ctx.textBaseline = "top";
-        ctx.fillStyle = "#131C4E";
-        ctx.font = "bold 14px 'Outfit', sans-serif";
-        ctx.fillText("BẠN HỢP CẠ VỚI", colLeftX + 16, compatY + 14);
+        ctx.fillStyle = "#4A3728";
+        ctx.font = "bold 13.5px 'Outfit', sans-serif";
+        ctx.fillText("ĐỒNG ĐIỆU TÂM HỒN", colLeftX + 16, compatY + 14);
 
         if (profile.match && profile.match.length >= 2) {
             // Item 1
             ctx.font = "18px sans-serif";
             ctx.fillText(profile.match[0].icon, colLeftX + 16, compatY + 42);
-            ctx.fillStyle = "#131C4E";
+            ctx.fillStyle = "#4A3728";
             ctx.font = "bold 14px 'Outfit', sans-serif";
             ctx.fillText(profile.match[0].name, colLeftX + 44, compatY + 42);
-            ctx.fillStyle = "#64748B";
+            ctx.fillStyle = "#8C7A6B";
             ctx.font = "500 12px 'Outfit', sans-serif";
             ctx.fillText(profile.match[0].desc, colLeftX + 44, compatY + 62);
 
             // Item 2
             ctx.font = "18px sans-serif";
             ctx.fillText(profile.match[1].icon, colLeftX + 16, compatY + 92);
-            ctx.fillStyle = "#131C4E";
+            ctx.fillStyle = "#4A3728";
             ctx.font = "bold 14px 'Outfit', sans-serif";
             ctx.fillText(profile.match[1].name, colLeftX + 44, compatY + 92);
-            ctx.fillStyle = "#64748B";
+            ctx.fillStyle = "#8C7A6B";
             ctx.font = "500 12px 'Outfit', sans-serif";
             ctx.fillText(profile.match[1].desc, colLeftX + 44, compatY + 112);
         }
 
-        // Box 2: Clash
+        // Box 2: Clash (Khác biệt nét duyên)
         const box2X = colLeftX + boxW + 16;
-        ctx.fillStyle = "#EEF2FF";
-        drawRoundRect(ctx, box2X, compatY, boxW, boxH, 18);
+        ctx.fillStyle = "#F8F6F0";
+        drawRoundRect(ctx, box2X, compatY, boxW, boxH, 14);
         ctx.fill();
-        ctx.strokeStyle = "#DCE3F2";
+        ctx.strokeStyle = "#E6DED5";
         ctx.lineWidth = 1.5;
-        drawRoundRect(ctx, box2X, compatY, boxW, boxH, 18);
+        drawRoundRect(ctx, box2X, compatY, boxW, boxH, 14);
         ctx.stroke();
 
-        ctx.fillStyle = "#131C4E";
-        ctx.font = "bold 14px 'Outfit', sans-serif";
-        ctx.fillText("HƠI LỆCH SÓNG VỚI", box2X + 16, compatY + 14);
+        ctx.fillStyle = "#4A3728";
+        ctx.font = "bold 13.5px 'Outfit', sans-serif";
+        ctx.fillText("KHÁC BIỆT NÉT DUYÊN", box2X + 16, compatY + 14);
 
         if (profile.clash && profile.clash.length >= 2) {
             // Item 1
             ctx.font = "18px sans-serif";
             ctx.fillText(profile.clash[0].icon, box2X + 16, compatY + 42);
-            ctx.fillStyle = "#131C4E";
+            ctx.fillStyle = "#4A3728";
             ctx.font = "bold 14px 'Outfit', sans-serif";
             ctx.fillText(profile.clash[0].name, box2X + 44, compatY + 42);
-            ctx.fillStyle = "#64748B";
+            ctx.fillStyle = "#8C7A6B";
             ctx.font = "500 12px 'Outfit', sans-serif";
             ctx.fillText(profile.clash[0].desc, box2X + 44, compatY + 62);
 
             // Item 2
             ctx.font = "18px sans-serif";
             ctx.fillText(profile.clash[1].icon, box2X + 16, compatY + 92);
-            ctx.fillStyle = "#131C4E";
+            ctx.fillStyle = "#4A3728";
             ctx.font = "bold 14px 'Outfit', sans-serif";
             ctx.fillText(profile.clash[1].name, box2X + 44, compatY + 92);
-            ctx.fillStyle = "#64748B";
+            ctx.fillStyle = "#8C7A6B";
             ctx.font = "500 12px 'Outfit', sans-serif";
             ctx.fillText(profile.clash[1].desc, box2X + 44, compatY + 112);
         }
@@ -521,52 +593,52 @@
         // -------------------------------------------------------------
         const checkY = compatY + boxH + 20;
         const checkRows = [
-            { label: "TRONG HỘI BẠN", desc: profile.checklist ? profile.checklist.friend : "Người ném ra 'hay là...' rồi cả bàn bàn tới khuya." },
-            { label: "KHI THƯƠNG AI ĐÓ", desc: profile.checklist ? profile.checklist.love : "Thương bằng sự thú vị, kể chuyện và làm người kia cười." },
-            { label: "KHI ÁP LỰC", desc: profile.checklist ? profile.checklist.pressure : "Nghĩ ra cách mới, đôi khi hơi lạ nhưng chạy được." }
+            { label: "NÉT DUYÊN NGÀY THƯỜNG", desc: profile.checklist ? profile.checklist.friend : "Chốn bình yên ai cũng muốn tìm về sau những mệt mỏi." },
+            { label: "KHI TRAO YÊU THƯƠNG", desc: profile.checklist ? profile.checklist.love : "Thương bằng tình cảm sâu lắng, chung thủy và sắt son." },
+            { label: "KHI ĐỐI DIỆN ÂU LO", desc: profile.checklist ? profile.checklist.pressure : "Tĩnh lặng nhìn nhận, giữ trọn cốt cách và nét an nhiên." }
         ];
 
         checkRows.forEach((r, idx) => {
             const ry = checkY + idx * 56;
-            ctx.fillStyle = "#FAF8F5";
-            drawRoundRect(ctx, colLeftX, ry, colLeftW, 46, 12);
+            ctx.fillStyle = "#FAF7F0";
+            drawRoundRect(ctx, colLeftX, ry, colLeftW, 46, 10);
             ctx.fill();
-            ctx.strokeStyle = "#DCE3F2";
+            ctx.strokeStyle = "#E6DED5";
             ctx.lineWidth = 1;
-            drawRoundRect(ctx, colLeftX, ry, colLeftW, 46, 12);
+            drawRoundRect(ctx, colLeftX, ry, colLeftW, 46, 10);
             ctx.stroke();
 
             // Label pill inside
             ctx.fillStyle = "#FFFFFF";
-            drawRoundRect(ctx, colLeftX + 6, ry + 6, 140, 34, 8);
+            drawRoundRect(ctx, colLeftX + 6, ry + 6, 160, 34, 8);
             ctx.fill();
-            ctx.strokeStyle = "#DCE3F2";
+            ctx.strokeStyle = "#E6DED5";
             ctx.lineWidth = 1;
-            drawRoundRect(ctx, colLeftX + 6, ry + 6, 140, 34, 8);
+            drawRoundRect(ctx, colLeftX + 6, ry + 6, 160, 34, 8);
             ctx.stroke();
 
-            ctx.fillStyle = "#131C4E";
-            ctx.font = "bold 11px 'Outfit', sans-serif";
+            ctx.fillStyle = "#4A3728";
+            ctx.font = "bold 10px 'Outfit', sans-serif";
             ctx.textAlign = "center";
             ctx.textBaseline = "middle";
-            ctx.fillText(r.label, colLeftX + 76, ry + 23);
+            ctx.fillText(r.label, colLeftX + 86, ry + 23);
 
             // Description text
             ctx.textAlign = "left";
-            ctx.fillStyle = "#131C4E";
-            ctx.font = "500 13.5px 'Outfit', sans-serif";
+            ctx.fillStyle = "#4A3728";
+            ctx.font = "500 13px 'Outfit', sans-serif";
             let descStr = r.desc;
-            if (ctx.measureText(descStr).width > colLeftW - 170) {
-                while (ctx.measureText(descStr + '...').width > colLeftW - 170 && descStr.length > 0) {
+            if (ctx.measureText(descStr).width > colLeftW - 190) {
+                while (ctx.measureText(descStr + '...').width > colLeftW - 190 && descStr.length > 0) {
                     descStr = descStr.substring(0, descStr.length - 1);
                 }
                 descStr += '...';
             }
-            ctx.fillText(descStr, colLeftX + 160, ry + 23);
+            ctx.fillText(descStr, colLeftX + 175, ry + 23);
         });
 
         // -------------------------------------------------------------
-        // 10. Right Column: Life4Cuts Photobooth Filmstrip (330px width)
+        // 10. Right Column: Bốn Mùa Đồng Nội Photobooth Strip (320px)
         // -------------------------------------------------------------
         const colRightX = cardX + 595;
         const colRightW = 320;
@@ -574,28 +646,28 @@
         const stripH = 800;
 
         // Filmstrip outer container
-        ctx.fillStyle = "#FAF8F5";
-        drawRoundRect(ctx, colRightX, stripY, colRightW, stripH, 20);
+        ctx.fillStyle = "#FAF7F0";
+        drawRoundRect(ctx, colRightX, stripY, colRightW, stripH, 16);
         ctx.fill();
-        ctx.strokeStyle = "#DCE3F2";
+        ctx.strokeStyle = "#E6DED5";
         ctx.lineWidth = 2;
-        drawRoundRect(ctx, colRightX, stripY, colRightW, stripH, 20);
+        drawRoundRect(ctx, colRightX, stripY, colRightW, stripH, 16);
         ctx.stroke();
 
-        // Strip Header: EPIC MEMORIES · 4-CUTS
+        // Strip Header: BỐN MÙA ĐỒNG NỘI · 20/10/2026
         ctx.textAlign = "left";
-        ctx.fillStyle = "#131C4E";
+        ctx.fillStyle = "#4A3728";
         ctx.font = "800 13px 'Outfit', sans-serif";
         ctx.textBaseline = "middle";
-        ctx.fillText("EPIC MEMORIES · 4-CUTS", colRightX + 16, stripY + 24);
+        ctx.fillText("BỐN MÙA ĐỒNG NỘI", colRightX + 16, stripY + 24);
 
         ctx.textAlign = "right";
-        ctx.fillStyle = "#64748B";
+        ctx.fillStyle = "#8C7A6B";
         ctx.font = "700 13px 'Outfit', sans-serif";
         ctx.fillText("20/10/2026", colRightX + colRightW - 16, stripY + 24);
 
         // Header divider
-        ctx.strokeStyle = "#DCE3F2";
+        ctx.strokeStyle = "#E6DED5";
         ctx.lineWidth = 1;
         ctx.beginPath();
         ctx.moveTo(colRightX + 16, stripY + 40);
@@ -605,9 +677,9 @@
         // 4 Photo Frames
         const frames = [
             { emoji: "🌱", caption: "01 · Hạt Mầm Khởi Nguyên" },
-            { emoji: "🤖💦", caption: "02 · Robot Tiếp Sức" },
-            { emoji: "🌸✨", caption: "03 · Bừng Nở Rực Rỡ" },
-            { emoji: "💌💖", caption: `04 · Thư Gửi ${passengerName}` }
+            { emoji: "🌾✨", caption: "02 · Nắng Sớm Bờ Tre" },
+            { emoji: "🪷💖", caption: "03 · Sen Hồng Ngát Hương" },
+            { isAoDai: true, emoji: "✨👗", caption: `04 · Nét Duyên Gửi Bạn` }
         ];
 
         const frameH = 155;
@@ -616,32 +688,41 @@
         frames.forEach((f, idx) => {
             const fy = stripY + 54 + idx * (frameH + 12);
             ctx.fillStyle = "#FFFFFF";
-            drawRoundRect(ctx, colRightX + 16, fy, frameW, frameH, 14);
+            drawRoundRect(ctx, colRightX + 16, fy, frameW, frameH, 12);
             ctx.fill();
-            ctx.strokeStyle = "#DCE3F2";
+            ctx.strokeStyle = "#E6DED5";
             ctx.lineWidth = 1.5;
-            drawRoundRect(ctx, colRightX + 16, fy, frameW, frameH, 14);
+            drawRoundRect(ctx, colRightX + 16, fy, frameW, frameH, 12);
             ctx.stroke();
 
-            // Emoji Art
-            ctx.font = "40px sans-serif";
-            ctx.textAlign = "center";
-            ctx.textBaseline = "middle";
-            ctx.fillText(f.emoji, colRightX + 16 + frameW / 2, fy + 58);
+            // Frame Visual Content
+            if (f.isAoDai && window.aoDaiVietImg && window.aoDaiVietImg.complete && window.aoDaiVietImg.naturalWidth > 0) {
+                // Draw Ao Dai art centered in frame
+                const imgW = 75;
+                const imgH = 75;
+                ctx.drawImage(window.aoDaiVietImg, colRightX + 16 + (frameW - imgW) / 2, fy + 20, imgW, imgH);
+            } else {
+                ctx.font = "40px sans-serif";
+                ctx.textAlign = "center";
+                ctx.textBaseline = "middle";
+                ctx.fillText(f.emoji, colRightX + 16 + frameW / 2, fy + 58);
+            }
 
             // Caption text
-            ctx.fillStyle = "#131C4E";
+            ctx.fillStyle = "#4A3728";
             ctx.font = "bold 13px 'Outfit', sans-serif";
+            ctx.textAlign = "center";
+            ctx.textBaseline = "middle";
             let capStr = f.caption;
             if (ctx.measureText(capStr).width > frameW - 20) {
                 capStr = capStr.substring(0, 18) + '...';
             }
-            ctx.fillText(capStr, colRightX + 16 + frameW / 2, fy + 120);
+            ctx.fillText(capStr, colRightX + 16 + frameW / 2, fy + 124);
         });
 
         // Strip Footer Doodle & Stamp
         const stripFooterY = stripY + stripH - 52;
-        ctx.strokeStyle = "#DCE3F2";
+        ctx.strokeStyle = "#E6DED5";
         ctx.lineWidth = 1;
         ctx.beginPath();
         ctx.moveTo(colRightX + 16, stripFooterY);
@@ -649,16 +730,16 @@
         ctx.stroke();
 
         ctx.textAlign = "center";
-        ctx.fillStyle = "#131C4E";
-        ctx.font = "bold 14px 'Outfit', sans-serif";
-        ctx.fillText("♡ (≧◡≦) ♡", colRightX + colRightW / 2, stripFooterY + 22);
+        ctx.fillStyle = "#4A3728";
+        ctx.font = "bold 13px 'Outfit', sans-serif";
+        ctx.fillText("♡ Nắng thu đọng nét cười thơ ♡", colRightX + colRightW / 2, stripFooterY + 20);
 
-        ctx.fillStyle = "#94A3B8";
-        ctx.font = "bold 11px 'Outfit', sans-serif";
-        ctx.fillText("OFFICIAL LIFE4CUTS EDITION", colRightX + colRightW / 2, stripFooterY + 40);
+        ctx.fillStyle = "#8C7A6B";
+        ctx.font = "bold 10px 'Outfit', sans-serif";
+        ctx.fillText("VIETNAMESE HERITAGE EDITION", colRightX + colRightW / 2, stripFooterY + 38);
 
         // -------------------------------------------------------------
-        // 11. Ticket Footer: Barcode & Wax Seal (y = cardY + cardH - 260)
+        // 11. Postcard Footer: Con Tem Hoa Sen & Mộc Triện Son
         // -------------------------------------------------------------
         const footerY = cardY + cardH - 250;
         const footerH = 250;
@@ -666,69 +747,97 @@
         ctx.save();
         drawRoundRect(ctx, cardX, footerY, cardW, footerH, { tl: 0, tr: 0, bl: cardRadius, br: cardRadius });
         ctx.clip();
-        ctx.fillStyle = "#FAF8F5";
+        ctx.fillStyle = "#FAF7F0";
         ctx.fillRect(cardX, footerY, cardW, footerH);
         ctx.restore();
 
         // Top divider for footer
-        ctx.strokeStyle = "#DCE3F2";
+        ctx.strokeStyle = "#E6DED5";
         ctx.lineWidth = 2;
         ctx.beginPath();
         ctx.moveTo(cardX, footerY);
         ctx.lineTo(cardX + cardW, footerY);
         ctx.stroke();
 
-        // Left: Barcode Graphics
-        const barcodeX = cardX + 60;
-        const barcodeY = footerY + 55;
-        const barcodeW = 460;
-        const barcodeH = 75;
+        // Left: Con Tem Bưu Chính Hoa Sen Cổ Điển
+        const stampW = 280;
+        const stampH = 120;
+        const stampBoxX = cardX + 60;
+        const stampBoxY = footerY + 50;
 
-        // Draw realistic barcode lines
-        const barPats = [3, 2, 6, 2, 4, 3, 2, 5, 2, 7, 3, 2, 5, 4, 2, 6, 3, 2, 4, 5, 2, 8, 3, 2, 6, 2, 4, 3, 7, 2, 5, 2, 4, 6, 2, 3, 5, 2, 7, 3, 2, 4];
-        let curBarX = barcodeX;
-        ctx.fillStyle = "#131C4E";
-        for (let i = 0; i < barPats.length; i++) {
-            const bw = barPats[i];
-            if (i % 2 === 0) {
-                ctx.fillRect(curBarX, barcodeY, bw * 1.5, barcodeH);
-            }
-            curBarX += bw * 2.6;
-            if (curBarX > barcodeX + barcodeW) break;
-        }
+        // Stamp Outer Perforated Teeth (Tiny scalloped circles)
+        ctx.fillStyle = "#FFFFFF";
+        drawRoundRect(ctx, stampBoxX, stampBoxY, stampW, stampH, 4);
+        ctx.fill();
 
-        // Barcode number
-        ctx.fillStyle = "#131C4E";
-        ctx.font = "bold 17px monospace";
+        ctx.strokeStyle = "#D47A88";
+        ctx.setLineDash([4, 4]);
+        ctx.lineWidth = 2;
+        drawRoundRect(ctx, stampBoxX, stampBoxY, stampW, stampH, 4);
+        ctx.stroke();
+        ctx.setLineDash([]); // Reset line dash
+
+        // Stamp Inner Frame
+        ctx.fillStyle = "#FFFDF9";
+        drawRoundRect(ctx, stampBoxX + 6, stampBoxY + 6, stampW - 12, stampH - 12, 2);
+        ctx.fill();
+        ctx.strokeStyle = "rgba(212, 122, 136, 0.4)";
+        ctx.lineWidth = 1;
+        drawRoundRect(ctx, stampBoxX + 6, stampBoxY + 6, stampW - 12, stampH - 12, 2);
+        ctx.stroke();
+
+        // Stamp Text & Art
+        ctx.fillStyle = "#D47A88";
+        ctx.font = "bold 10px 'Outfit', sans-serif";
+        ctx.textAlign = "center";
+        ctx.textBaseline = "middle";
+        ctx.fillText("BƯU CHÍNH VIỆT NAM", stampBoxX + stampW / 2, stampBoxY + 22);
+
+        ctx.font = "32px sans-serif";
+        ctx.fillText("🪷", stampBoxX + 60, stampBoxY + 62);
+
+        ctx.font = "900 24px 'Outfit', sans-serif";
+        ctx.fillStyle = "#4A3728";
+        ctx.textAlign = "left";
+        ctx.fillText("20/10 Đ", stampBoxX + 110, stampBoxY + 62);
+
+        ctx.fillStyle = "#6A8D73";
+        ctx.font = "bold 9px 'Outfit', sans-serif";
+        ctx.textAlign = "center";
+        ctx.fillText("HƯƠNG ĐỒNG NỘI", stampBoxX + stampW / 2, stampBoxY + 98);
+
+        // Stamp postal reference text below
+        ctx.fillStyle = "#8C7A6B";
+        ctx.font = "bold 13px monospace";
         ctx.textAlign = "left";
         ctx.textBaseline = "top";
-        ctx.fillText("EPIC-2010-8888-SWEETHEART", barcodeX + 40, barcodeY + barcodeH + 16);
+        ctx.fillText("VN-2010 · THƯ TÌNH ĐỒNG NỘI · KỶ NIỆM", stampBoxX + 10, stampBoxY + stampH + 14);
 
-        // Right: 3D Wax Seal Badge
+        // Right: Traditional Mộc Triện Son Đỏ
         const sealCenterX = cardX + cardW - 140;
         const sealCenterY = footerY + footerH / 2;
-        const sealR = 64;
+        const sealR = 66;
 
         ctx.save();
         ctx.translate(sealCenterX, sealCenterY);
         ctx.rotate((-8 * Math.PI) / 180); // Tilt by -8 degrees
 
-        // Wax Seal Outer Shadow & Base
-        ctx.shadowColor = "rgba(197, 48, 48, 0.4)";
+        // Vermilion Lacquer Base
+        ctx.shadowColor = "rgba(185, 28, 28, 0.35)";
         ctx.shadowBlur = 24;
         ctx.shadowOffsetY = 8;
-        ctx.fillStyle = "#9B1C1C";
+        ctx.fillStyle = "#B91C1C";
         ctx.beginPath();
         ctx.arc(0, 0, sealR, 0, Math.PI * 2);
         ctx.fill();
 
-        // Wax Seal Inner Core
+        // Inner Red Core
         ctx.fillStyle = "#DC2626";
         ctx.beginPath();
         ctx.arc(0, 0, sealR - 6, 0, Math.PI * 2);
         ctx.fill();
 
-        // Dashed circular rim
+        // Dashed Golden Rim
         ctx.strokeStyle = "#FEF08A";
         ctx.setLineDash([4, 4]);
         ctx.lineWidth = 2;
@@ -739,17 +848,17 @@
 
         // Seal Typography
         ctx.textAlign = "center";
-        ctx.fillStyle = "#FFFFFF";
-
+        ctx.fillStyle = "#FEF08A";
         ctx.font = "bold 13px 'Outfit', sans-serif";
         ctx.fillText("★ 20/10 ★", 0, -22);
 
-        ctx.font = "900 21px 'Outfit', sans-serif";
-        ctx.fillText("APPROVED", 0, 4);
+        ctx.font = "900 20px 'Outfit', sans-serif";
+        ctx.fillStyle = "#FFFFFF";
+        ctx.fillText("NÉT DUYÊN", 0, 4);
 
         ctx.font = "bold 12px 'Outfit', sans-serif";
         ctx.fillStyle = "#FEE2E2";
-        ctx.fillText("WITH LOVE", 0, 24);
+        ctx.fillText("AN YÊN", 0, 24);
 
         ctx.restore();
 
@@ -758,9 +867,9 @@
         // -------------------------------------------------------------
         ctx.textAlign = "center";
         ctx.textBaseline = "middle";
-        ctx.fillStyle = "#94A3B8";
-        ctx.font = "500 17px 'Outfit', sans-serif";
-        ctx.fillText("✦ Made with love by EPIC Gentlemen · 20/10 Celebration · 100% Client-side Keepsake ✦", width / 2, height - 42);
+        ctx.fillStyle = "#8C7A6B";
+        ctx.font = "500 16px 'Outfit', sans-serif";
+        ctx.fillText("✦ Bưu Thiếp Kỷ Niệm 20/10 · Tôn Vinh Nét Duyên & Tâm Hồn Phụ Nữ Việt Nam ✦", width / 2, height - 42);
 
         return canvas;
     };
@@ -801,7 +910,7 @@
 
             const rawName = window.currentUserName || (typeof userName !== 'undefined' ? userName : '') || '20-10';
             const safeName = rawName.trim().replace(/[^a-zA-Z0-9àáạảãâầấậẩẫăằắặẳẵèéẹẻẽêềếệểễìíịỉĩòóọỏõôồốộổỗơờớợởỡùúụủũưừứựửữỳýỵỷỹđĐ_-]/g, '_');
-            const targetFilename = filename || `Ve-Du-Hanh-20-10_${safeName}.png`;
+            const targetFilename = filename || `Buu-Thiep-20-10_${safeName}.png`;
 
             const blob = await window.exportBoardingPassImageBlob();
             const blobUrl = URL.createObjectURL(blob);
@@ -829,7 +938,7 @@
             }
 
             if (typeof window.showTicketToast === 'function') {
-                window.showTicketToast("Đã tải vé du hành 1080x1920 HD thành công! 📸✨");
+                window.showTicketToast("Đã tải bưu thiếp kỷ niệm 1080x1920 HD thành công! 📸🪷");
             }
         } catch (err) {
             console.error("Export error:", err);
@@ -860,13 +969,13 @@
 
             const rawName = window.currentUserName || (typeof userName !== 'undefined' ? userName : '') || '20-10';
             const safeName = rawName.trim().replace(/[^a-zA-Z0-9àáạảãâầấậẩẫăằắặẳẵèéẹẻẽêềếệểễìíịỉĩòóọỏõôồốộổỗơờớợởỡùúụủũưừứựửữỳýỵỷỹđĐ_-]/g, '_');
-            const filename = `Ve-Du-Hanh-20-10_${safeName}.png`;
+            const filename = `Buu-Thiep-20-10_${safeName}.png`;
 
             const blob = await window.exportBoardingPassImageBlob();
             const file = new File([blob], filename, { type: 'image/png' });
 
-            const shareTitle = `Vé Du Hành 20/10 · ${rawName}`;
-            const shareText = `Tấm vé du hành tới Vườn Hoa Yêu Thương 20/10 đặc biệt dành riêng cho ${rawName}! 🌸✨`;
+            const shareTitle = `Bưu Thiếp Kỷ Niệm 20/10 · ${rawName}`;
+            const shareText = `Bưu thiếp kỷ niệm 20/10 đong đầy yêu thương gửi tặng ${rawName}! 🪷💌✨`;
 
             // Case A: Mobile Native Web Share API (Level 2 with File support)
             if (navigator.canShare && navigator.canShare({ files: [file] })) {
@@ -877,7 +986,7 @@
                 });
                 if (typeof window.playChimeSFX === 'function') window.playChimeSFX();
                 if (typeof window.showTicketToast === 'function') {
-                    window.showTicketToast("Đã mở hộp thoại chia sẻ thành công! 🚀🌸");
+                    window.showTicketToast("Đã mở hộp thoại chia sẻ bưu thiếp thành công! 🕊️🌸");
                 }
                 return;
             }

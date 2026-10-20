@@ -43,7 +43,7 @@
         const rawName = window.currentUserName || (window.gardenState && window.gardenState.userName) || '';
         const displayName = rawName.trim() || 'Bạn Yêu Thương';
         if (passengerNameEl) passengerNameEl.textContent = displayName;
-        if (passengerCaptionEl) passengerCaptionEl.textContent = `04 · Thư Gửi ${displayName}`;
+        if (passengerCaptionEl) passengerCaptionEl.textContent = `04 · Nét Duyên Gửi ${displayName}`;
     };
 
     // =========================================================================
@@ -267,19 +267,19 @@
         if (ticketCard.classList.contains('ticket-torn')) {
             ticketCard.classList.remove('ticket-torn');
             if (checkedInStamp) checkedInStamp.classList.add('hidden');
-            if (tearBtnText) tearBtnText.textContent = 'Xé cuống vé';
+            if (tearBtnText) tearBtnText.textContent = 'Mở niêm phong';
             if (typeof window.playBubblePopSFX === 'function') window.playBubblePopSFX();
-            showTicketToast('Đã dán lại cuống vé kỷ niệm 🪄');
+            showTicketToast('Đã gấp lại bưu thiếp kỷ niệm 🪄');
         } else {
             ticketCard.classList.add('ticket-torn');
             if (checkedInStamp) checkedInStamp.classList.remove('hidden');
-            if (tearBtnText) tearBtnText.textContent = 'Đã xé vé (Dán lại 🪄)';
+            if (tearBtnText) tearBtnText.textContent = 'Đã mở (Gấp lại 🪄)';
             if (typeof window.playPaperTearSFX === 'function') window.playPaperTearSFX();
             spawnTearSparkles(clickX, clickY);
             if (navigator.vibrate) {
                 try { navigator.vibrate([25, 40, 25]); } catch (_) {}
             }
-            showTicketToast('Đã xé cuống vé kỷ niệm! Sẵn sàng cho chuyến bay 20/10 ✈️💖');
+            showTicketToast('Đã mở niêm phong bưu thiếp! Gửi trọn yêu thương 20/10 💌🪷');
         }
     };
 
@@ -408,7 +408,7 @@
                     document.body.appendChild(s);
                     setTimeout(() => s.remove(), 850);
                 }
-                showTicketToast('Con dấu chứng nhận với 100% tình yêu thương! 💖★');
+                showTicketToast('Mộc triện son: Chúc nàng thơ luôn an yên, dịu dàng và hạnh phúc! 🪷❤️');
             });
         }
 

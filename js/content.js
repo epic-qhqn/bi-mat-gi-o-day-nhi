@@ -80,6 +80,30 @@ window.getNextRandomLetter = function() {
 // ==========================================================================
 const flowerProfiles = [
     {
+        id: "lotus",
+        flowerName: "Lotus",
+        vietnameseName: "Hoa Sen",
+        title: "Bạn là đóa Sen Lụa thanh tao.",
+        quote: "Gần bùn chẳng vướng bụi trần, thơm ngát dịu dàng.",
+        emoji: "🪷",
+        traits: ["Thanh cao", "Dịu dàng", "Tâm hồn thuần khiết"],
+        petalColor: "#D47A88",
+        bgColor: "#FAF7F0",
+        match: [
+            { icon: "🌼", name: "Cúc họa mi", desc: "Cùng mang nét đẹp bình dị, thanh tao." },
+            { icon: "🌷", name: "Tulip", desc: "Đồng điệu sự trang nhã và chiều sâu tâm hồn." }
+        ],
+        clash: [
+            { icon: "🌪️", name: "Bão cát", desc: "Ồn ào náo nhiệt không hợp với nét tĩnh tại." },
+            { icon: "🌵", name: "Gai nhọn", desc: "Dễ làm tổn thương vẻ mềm mại, e ấp." }
+        ],
+        checklist: {
+            friend: "Chốn bình yên ai cũng muốn tìm về sau những mệt mỏi.",
+            love: "Thương bằng tình cảm sâu lắng, chung thủy và sắt son.",
+            pressure: "Tĩnh lặng nhìn nhận, giữ trọn cốt cách và nét an nhiên."
+        }
+    },
+    {
         id: "allium",
         flowerName: "Allium",
         vietnameseName: "Hành Kiểng",
