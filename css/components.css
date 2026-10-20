@@ -4489,6 +4489,189 @@ body.sky-night .found-letter-slot.filled {
   pointer-events: auto;
 }
 
+/* ==========================================================================
+   MASCOT VIETNAMESE NÓN LÁ & FACIAL EMOTES (SUB-PHASE 4.1)
+   ========================================================================== */
+.mascot-mini-non-la {
+  position: absolute;
+  top: -14%;
+  left: 23%;
+  width: 55%;
+  z-index: 10;
+  pointer-events: none;
+  transform-origin: center bottom;
+  transform: rotate(-9deg);
+  filter: drop-shadow(0 4px 10px rgba(74, 55, 40, 0.3));
+  animation: nonLaGentleFloat 4s ease-in-out infinite alternate;
+}
+
+@keyframes nonLaGentleFloat {
+  0% { transform: rotate(-9deg) translateY(0); }
+  100% { transform: rotate(-5deg) translateY(-3px); }
+}
+
+.non-la-svg {
+  width: 100%;
+  height: auto;
+  display: block;
+  overflow: visible;
+}
+
+/* Mascot Face Emotes (Blinking Eyes, Blushing Cheeks, Cat Smile) */
+.mascot-face-emotes {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 4;
+}
+
+/* 1. Đôi Mắt Chớp Tự Nhiên */
+.mascot-eyes-pair {
+  position: absolute;
+  top: 17%;
+  left: 0;
+  width: 100%;
+  height: 10%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 24%;
+}
+
+.mascot-eye {
+  position: relative;
+  width: 18px;
+  height: 18px;
+  transition: transform 0.15s ease;
+}
+
+.mascot-eye .eye-pupil {
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(circle at 35% 35%, #2A2521 0%, #171412 100%);
+  border-radius: 50%;
+  position: relative;
+  transition: transform 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 0 6px rgba(0, 0, 0, 0.35);
+}
+
+.mascot-eye .eye-sparkle {
+  position: absolute;
+  top: 1px;
+  right: 2px;
+  font-size: 8px;
+  color: #FFFDF5;
+  line-height: 1;
+  pointer-events: none;
+  text-shadow: 0 0 4px #FFFFFF;
+}
+
+.mascot-eye .eye-lid-curve {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border-bottom: 2.5px solid #2A2521;
+  border-radius: 50%;
+  opacity: 0;
+  transform: scale(0.9);
+  transition: opacity 0.12s ease;
+}
+
+/* Blinking Cycle State */
+.mascot-face-emotes.mascot-blinking .eye-pupil {
+  transform: scaleY(0.08);
+}
+
+.mascot-face-emotes.mascot-blinking .eye-sparkle {
+  opacity: 0;
+}
+
+.mascot-face-emotes.mascot-blinking .eye-lid-curve {
+  opacity: 1;
+}
+
+/* Happy Wink / Smile State */
+.mascot-face-emotes.mascot-happy-wink .mascot-eye {
+  transform: scaleY(0.18) scaleX(1.1);
+}
+
+.mascot-face-emotes.mascot-happy-wink .eye-sparkle {
+  opacity: 0;
+}
+
+/* 2. Đôi Má Hồng E Ấp (////) */
+.mascot-blush-cheeks {
+  position: absolute;
+  top: 24%;
+  left: 0;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  padding: 0 24%;
+  box-sizing: border-box;
+  pointer-events: none;
+}
+
+.mascot-blush {
+  background: radial-gradient(ellipse at center, rgba(242, 196, 206, 0.85) 0%, rgba(212, 122, 136, 0.35) 60%, transparent 100%);
+  border-radius: 50%;
+  width: 22px;
+  height: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  filter: blur(0.5px);
+  animation: blushWarmPulse 3.5s ease-in-out infinite alternate;
+}
+
+.mascot-blush .blush-lines {
+  font-family: monospace;
+  font-size: 8px;
+  font-weight: 900;
+  color: #D47A88;
+  letter-spacing: -1.5px;
+  opacity: 0.85;
+  transform: rotate(-10deg);
+}
+
+.mascot-blush.blush-right .blush-lines {
+  transform: rotate(10deg);
+}
+
+@keyframes blushWarmPulse {
+  0% { transform: scale(0.92); opacity: 0.75; }
+  100% { transform: scale(1.1); opacity: 1; }
+}
+
+/* 3. Nụ Cười Mèo Híp Mắt (ω) */
+.mascot-cat-smile {
+  position: absolute;
+  top: 26.5%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 24px;
+  height: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.cat-smile-svg {
+  width: 100%;
+  height: 100%;
+  display: block;
+  transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.mascot-face-emotes.mascot-happy-wink .cat-smile-svg {
+  transform: scale(1.25) translateY(-1px);
+}
+
 /* Cutout Tool Layer: Left Arm (Hydro-Blaster) */
 .mascot-layer-arm-left {
   position: absolute;
@@ -4685,6 +4868,162 @@ body.sky-night .found-letter-slot.filled {
     max-width: min(200px, 40vw);
     bottom: calc(100% + 6px);
   }
+}
+
+/* ==========================================================================
+   NHÁNH CỎ 4 LÁ MAY MẮN (PHASE 4 - SUB-PHASE 4.3)
+   ========================================================================== */
+.sprout-lucky-clover {
+  position: absolute;
+  bottom: 52px;
+  left: calc(50% + 55px);
+  width: 44px;
+  height: 72px;
+  z-index: 12;
+  cursor: pointer;
+  touch-action: manipulation;
+  transform-origin: center bottom;
+  transition: opacity 1.2s ease, transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+  user-select: none;
+}
+
+.sprout-lucky-clover.hidden {
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(12px) scale(0.8);
+}
+
+.sprout-lucky-clover.visible {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateY(0) scale(1);
+}
+
+.sprout-lucky-clover:hover {
+  transform: translateY(-4px) scale(1.08);
+}
+
+.sprout-lucky-clover .clover-glow-aura {
+  position: absolute;
+  width: 80px;
+  height: 80px;
+  top: -15px;
+  left: -18px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(79, 238, 134, 0.45) 0%, rgba(31, 207, 90, 0.15) 50%, transparent 70%);
+  filter: blur(8px);
+  pointer-events: none;
+  animation: cloverAuraPulse 3s ease-in-out infinite alternate;
+}
+
+@keyframes cloverAuraPulse {
+  0% { transform: scale(0.85); opacity: 0.6; }
+  100% { transform: scale(1.15); opacity: 1; }
+}
+
+.sprout-lucky-clover .clover-svg-icon {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  animation: cloverStemSway 5s ease-in-out infinite alternate;
+  transform-origin: 50% 95%;
+  filter: drop-shadow(0 4px 8px rgba(0, 90, 40, 0.35));
+}
+
+@keyframes cloverStemSway {
+  0% { transform: rotate(-5deg); }
+  50% { transform: rotate(3deg); }
+  100% { transform: rotate(-4deg); }
+}
+
+.clover-luck-bubble {
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  transform: translateX(-50%) translateY(-6px) scale(0.85);
+  background: #FAF7F0;
+  border: 1.5px solid #6A8D73;
+  border-radius: 12px;
+  padding: 6px 12px;
+  font-family: "Outfit", sans-serif;
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: #4A3728;
+  white-space: nowrap;
+  box-shadow: 0 4px 16px rgba(74, 55, 40, 0.18);
+  opacity: 0;
+  pointer-events: none;
+  transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+  z-index: 20;
+}
+
+.sprout-lucky-clover:hover .clover-luck-bubble,
+.sprout-lucky-clover.active .clover-luck-bubble {
+  opacity: 1;
+  transform: translateX(-50%) translateY(-10px) scale(1);
+}
+
+@media (max-width: 768px) {
+  .sprout-lucky-clover {
+    width: 36px;
+    height: 60px;
+    bottom: 38px;
+    left: calc(50% + 40px);
+  }
+}
+
+/* Polaroid Clover Charm & Heritage Blessing */
+.polaroid-clover-charm {
+  position: absolute;
+  top: 10px;
+  right: 12px;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  background: rgba(250, 247, 240, 0.94);
+  border: 1px solid #8EA885;
+  border-radius: 10px;
+  padding: 3px 8px;
+  box-shadow: 0 2px 8px rgba(74, 55, 40, 0.12);
+}
+
+.polaroid-clover-svg {
+  width: 16px;
+  height: 22px;
+  object-fit: contain;
+}
+
+.clover-wish-tag {
+  font-family: "Outfit", sans-serif;
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: #4A3728;
+}
+
+.polaroid-footer-heritage {
+  margin-top: 14px;
+  padding-top: 8px;
+  border-top: 1px dashed rgba(212, 122, 136, 0.35);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  font-family: "Playfair Display", "Times New Roman", serif;
+  font-style: italic;
+  font-size: 0.82rem;
+  color: #6A8D73;
+}
+
+.letter-pill-clover {
+  font-size: 1rem;
+  margin-left: 2px;
+  display: inline-block;
+  animation: cloverFloat 2.5s ease-in-out infinite alternate;
+}
+
+@keyframes cloverFloat {
+  0% { transform: translateY(0); }
+  100% { transform: translateY(-2px); }
 }
 
 /* ==========================================================================

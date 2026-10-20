@@ -119,12 +119,19 @@
         // Clean up stray particles from DOM
         document.querySelectorAll('.water-drop, .vfx-water, .vfx-star, .vfx-brass-dust, .vfx-flower-petal, .awakening-light-seed, .ground-seed-ripple, .root-thermal-ring, .tear-sparkle').forEach(p => p.remove());
 
-        // Stage 4: Áo dài figure cleanup if resetting
+        // Stage 4: Áo dài figure & Clover cleanup if resetting
         if (stageId === 1 || stageId === 2 || stageId === 3 || stageId === 'all') {
             const aoDaiFig = document.getElementById('ao-dai-viet-stage4');
             if (aoDaiFig) {
-                aoDaiFig.classList.remove('hien-thi');
+                aoDaiFig.classList.remove('hien-thi', 'poem-visible');
                 aoDaiFig.classList.add('hidden');
+            }
+            if (stageId === 3 || stageId === 4 || stageId === 'all') {
+                const cloverEl = document.getElementById('sprout-lucky-clover');
+                if (cloverEl) {
+                    cloverEl.classList.remove('visible');
+                    cloverEl.classList.add('hidden');
+                }
             }
         }
     };
@@ -208,9 +215,15 @@
                 sunShifterEl.style.transform = '';
             }
 
+            const cloverEl = document.getElementById('sprout-lucky-clover');
+            if (cloverEl) {
+                cloverEl.classList.remove('hidden');
+                setTimeout(() => cloverEl.classList.add('visible'), 150);
+            }
+
             if (gardenMsg) gardenMsg.textContent = "Giai đoạn 1: Hãy gom mây gọi mưa sương hoặc kéo vệt nắng ấm sưởi mầm non! 🌧️☀️";
             if (typeof window.showMascotSpeech === 'function') {
-                window.showMascotSpeech("Cùng chăm sóc mầm cây thức giấc nào! 🤖🌱", 4000);
+                window.showMascotSpeech("Cùng sưởi ấm mầm non và tìm nhánh cỏ bốn lá may mắn nào! 🌾🍀", 4000);
             }
             if (typeof window.playMelodicHarpChime === 'function') {
                 window.playMelodicHarpChime(0);
@@ -315,10 +328,20 @@
             if (typeof window.revealSecretLetterButton === 'function') window.revealSecretLetterButton();
             if (typeof window.revealBoardingPassButton === 'function') window.revealBoardingPassButton();
 
+            const cloverEl = document.getElementById('sprout-lucky-clover');
+            if (cloverEl) {
+                cloverEl.classList.remove('visible');
+                setTimeout(() => cloverEl.classList.add('hidden'), 800);
+            }
+
             const aoDaiFig = document.getElementById('ao-dai-viet-stage4');
             if (aoDaiFig) {
                 aoDaiFig.classList.remove('hidden');
-                setTimeout(() => aoDaiFig.classList.add('hien-thi'), 150);
+                setTimeout(() => {
+                    aoDaiFig.classList.add('hien-thi');
+                    aoDaiFig.classList.add('poem-visible');
+                    setTimeout(() => aoDaiFig.classList.remove('poem-visible'), 6000);
+                }, 150);
             }
 
             if (mascotCompanion) {
@@ -327,7 +350,7 @@
             }
 
             if (typeof window.showMascotSpeech === 'function') {
-                window.showMascotSpeech("Khu vườn hoa nở rực rỡ và ngập tràn tình yêu! 🌸💖", 5000);
+                window.showMascotSpeech("Khu vườn hoa sen nở rực rỡ và ngập tràn tình yêu! 🪷💖", 5000);
             }
             if (typeof window.playChimeSFX === 'function') window.playChimeSFX();
         }
@@ -463,9 +486,63 @@
     window.advanceStage = advanceStage;
     window.checkGrowth = checkGrowth;
 
-    if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', initGardenStageSelector);
-    } else {
+    // Khởi tạo tương tác nét duyên Thiếu Nữ Áo Dài & Cỏ 4 Lá May Mắn
+    const initHeritageStageInteractions = () => {
+        // 1. Cỏ 4 Lá May Mắn
+        const cloverEl = document.getElementById('sprout-lucky-clover');
+        if (cloverEl && !cloverEl.dataset.initialized) {
+            cloverEl.dataset.initialized = 'true';
+            cloverEl.addEventListener('click', (e) => {
+                e.stopPropagation();
+                cloverEl.classList.add('active');
+                setTimeout(() => cloverEl.classList.remove('active'), 2500);
+                if (typeof window.triggerMascotCloverCheer === 'function') {
+                    window.triggerMascotCloverCheer();
+                } else if (typeof window.playChimeSFX === 'function') {
+                    window.playChimeSFX();
+                }
+            });
+        }
+
+        // 2. Thiếu Nữ Áo Dài Thơ Mộng
+        const aoDaiFig = document.getElementById('ao-dai-viet-stage4');
+        const poemText = document.getElementById('ao-dai-poem-text');
+        const aoDaiVerses = [
+            "Nét duyên con gái Việt e ấp bên đầm sen ♡",
+            "Thướt tha áo trắng bay trong gió, dịu dàng nét ngọc gái quê hương ✨",
+            "Tháp Mười đẹp nhất bông sen, Việt Nam đẹp nhất có em dịu dàng 🌸",
+            "Chúc bạn một ngày 20/10 vạn sự an nhiên, rạng ngời như nắng sớm ☀️",
+            "Gửi trọn yêu thương vào từng đóa hoa ngát hương đồng nội 🪷🌾"
+        ];
+        let verseIndex = 0;
+
+        if (aoDaiFig && !aoDaiFig.dataset.initialized) {
+            aoDaiFig.dataset.initialized = 'true';
+            aoDaiFig.addEventListener('click', (e) => {
+                e.stopPropagation();
+                verseIndex = (verseIndex + 1) % aoDaiVerses.length;
+                if (poemText) poemText.textContent = aoDaiVerses[verseIndex];
+                aoDaiFig.classList.add('poem-visible');
+                if (typeof window.playMelodicHarpChime === 'function') {
+                    window.playMelodicHarpChime(Math.floor(Math.random() * 5));
+                } else if (typeof window.playChimeSFX === 'function') {
+                    window.playChimeSFX();
+                }
+                setTimeout(() => {
+                    aoDaiFig.classList.remove('poem-visible');
+                }, 4500);
+            });
+        }
+    };
+
+    const setupAll = () => {
         initGardenStageSelector();
+        initHeritageStageInteractions();
+    };
+
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', setupAll);
+    } else {
+        setupAll();
     }
 })();

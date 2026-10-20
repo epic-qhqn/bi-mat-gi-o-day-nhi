@@ -18,9 +18,9 @@
 - [x] Sub-phase 3.3: Nâng cấp Canvas 2D (`boarding-pass-canvas.js`) kết xuất ảnh Story 9:16 phong cách bưu thiếp truyền thống.
 
 ## Phase 4: Tái Sinh Linh Vật Đồng Dao & Điểm Xuyết Thiếu Nữ Áo Dài
-- [ ] Sub-phase 4.1: Cập nhật Mascot với mắt chớp, má hồng e ấp (`////`), nụ cười mèo (`ω`) và lời thoại mộc mạc ấm áp.
-- [ ] Sub-phase 4.2: Tích hợp bóng dáng thiếu nữ áo dài e ấp bên hoa sen khi cây nở hoa rực rỡ ở Stage 4.
-- [ ] Sub-phase 4.3: Nhúng ngọn cỏ 4 lá may mắn vào giai đoạn mầm sống và quà tặng thư bí mật.
+- [x] Sub-phase 4.1: Cập nhật Mascot với mắt chớp, má hồng e ấp (`////`), nụ cười mèo (`ω`) và lời thoại mộc mạc ấm áp.
+- [x] Sub-phase 4.2: Tích hợp bóng dáng thiếu nữ áo dài e ấp bên hoa sen khi cây nở hoa rực rỡ ở Stage 4.
+- [x] Sub-phase 4.3: Nhúng ngọn cỏ 4 lá may mắn vào giai đoạn mầm sống và quà tặng thư bí mật.
 
 ## Phase 5: Tổng Duyệt Toàn Diện, Git Sync & Nghiệm Thu Bàn Giao
 - [ ] Sub-phase 5.1: Kiểm tra toàn diện responsive trên mobile dọc, ngang và desktop.

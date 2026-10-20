@@ -228,14 +228,24 @@
         const aoDaiFig = document.getElementById('ao-dai-viet-stage4');
         if (aoDaiFig) {
           aoDaiFig.classList.remove('hidden');
-          setTimeout(() => aoDaiFig.classList.add('hien-thi'), 150);
+          setTimeout(() => {
+            aoDaiFig.classList.add('hien-thi');
+            aoDaiFig.classList.add('poem-visible');
+            setTimeout(() => aoDaiFig.classList.remove('poem-visible'), 6000);
+          }, 150);
+        }
+
+        const cloverEl = document.getElementById('sprout-lucky-clover');
+        if (cloverEl) {
+          cloverEl.classList.remove('visible');
+          setTimeout(() => cloverEl.classList.add('hidden'), 800);
         }
 
         const mascotCompanion = document.getElementById('garden-mascot-companion');
         if (mascotCompanion) {
           mascotCompanion.classList.add('relocated-for-letter');
           if (typeof window.showMascotSpeech === 'function') {
-            window.showMascotSpeech("Có một bức thư bí mật xuất hiện kìa! 💌✨", 6000);
+            window.showMascotSpeech("Khu vườn ngát hương sen, có một lá thư bí mật 20/10 gửi bạn nè! 💌🪷", 6000);
           }
           if (typeof window.playRobotChirpSFX === 'function') {
             window.playRobotChirpSFX();

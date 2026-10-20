@@ -565,12 +565,66 @@
     <div id="garden-mascot-companion" class="mascot-companion-wrap" title="Nhấn vào tớ để trò chuyện nè!">
         <div class="mascot-halo-glow"></div>
         <div class="mascot-speech-bubble" id="mascot-speech-bubble">
-            <span class="bubble-text" id="mascot-bubble-text">Chào bạn! Tớ là robot EPIC bảo vệ khu vườn nè! 🤖🌱</span>
+            <span class="bubble-text" id="mascot-bubble-text">Chào bạn! Tớ là chú bé đồng dao chăm vườn hoa 20/10 nè! 🌾✨</span>
             <div class="bubble-tail"></div>
         </div>
         <div class="mascot-puppet-container" id="mascot-puppet">
             <!-- Base authentic artwork: 100% exact from user's original image -->
             <img src="./img/mascot-base.png" alt="Mascot Robot Epic" class="mascot-layer mascot-layer-base" id="mascot-base-img">
+
+            <!-- Miniature Vietnamese Nón Lá on Mascot's Head -->
+            <div class="mascot-mini-non-la" id="mascot-mini-non-la" title="Chiếc nón lá nghiêng che mộc mạc">
+                <svg viewBox="0 0 100 60" class="non-la-svg" xmlns="http://www.w3.org/2000/svg">
+                    <defs>
+                        <linearGradient id="nonLaStrawGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                            <stop offset="0%" stop-color="#FFFDF5"/>
+                            <stop offset="45%" stop-color="#F2DEAE"/>
+                            <stop offset="100%" stop-color="#CBB175"/>
+                        </linearGradient>
+                    </defs>
+                    <!-- Chóp nón lá Việt Nam -->
+                    <polygon points="50,4 96,52 4,52" fill="url(#nonLaStrawGrad)" stroke="#B89B5E" stroke-width="2" stroke-linejoin="round"/>
+                    <!-- Các vành nan nón lá -->
+                    <ellipse cx="50" cy="52" rx="46" ry="6" fill="#D8C28A" stroke="#B89B5E" stroke-width="1.5"/>
+                    <ellipse cx="50" cy="40" rx="34" ry="4.5" fill="none" stroke="#B89B5E" stroke-width="1" opacity="0.6"/>
+                    <ellipse cx="50" cy="28" rx="22" ry="3.2" fill="none" stroke="#B89B5E" stroke-width="1" opacity="0.6"/>
+                    <ellipse cx="50" cy="16" rx="11" ry="1.8" fill="none" stroke="#B89B5E" stroke-width="1" opacity="0.6"/>
+                    <!-- Quai nón lụa hồng sen e ấp -->
+                    <path d="M12,52 Q50,70 88,52" fill="none" stroke="#D47A88" stroke-width="2.5" stroke-linecap="round"/>
+                </svg>
+            </div>
+
+            <!-- Mascot Facial Expressions Overlay (Mắt chớp, Má hồng e ấp ////, Nụ cười mèo ω) -->
+            <div class="mascot-face-emotes" id="mascot-face-emotes">
+                <!-- Đôi mắt to tròn chớp nháy tự nhiên -->
+                <div class="mascot-eyes-pair" id="mascot-eyes">
+                    <div class="mascot-eye eye-left">
+                        <div class="eye-pupil"></div>
+                        <div class="eye-sparkle">✦</div>
+                        <div class="eye-lid-curve"></div>
+                    </div>
+                    <div class="mascot-eye eye-right">
+                        <div class="eye-pupil"></div>
+                        <div class="eye-sparkle">✦</div>
+                        <div class="eye-lid-curve"></div>
+                    </div>
+                </div>
+                <!-- Đôi má hồng e ấp (blushing cheeks với vệt sọc //// mềm mại tông sen hồng) -->
+                <div class="mascot-blush-cheeks">
+                    <div class="mascot-blush blush-left">
+                        <span class="blush-lines">////</span>
+                    </div>
+                    <div class="mascot-blush blush-right">
+                        <span class="blush-lines">////</span>
+                    </div>
+                </div>
+                <!-- Nụ cười mèo híp mắt (ω) dễ thương -->
+                <div class="mascot-cat-smile" id="mascot-cat-smile">
+                    <svg viewBox="0 0 32 16" class="cat-smile-svg">
+                        <path d="M4,5 Q10,13 16,7 Q22,13 28,5" fill="none" stroke="#4A3728" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </div>
+            </div>
             
             <!-- Hydro-Blaster Arm Layer (Left Arm) -->
             <div class="mascot-layer mascot-layer-arm-left" id="mascot-arm-water">
@@ -649,11 +703,34 @@
                 </div>
             </div>
 
+            <!-- Nhánh Cỏ 4 Lá May Mắn (Stage 1 & 2 Botanical Companion) -->
+            <div id="sprout-lucky-clover" class="sprout-lucky-clover hidden" role="button" tabindex="0" title="Chạm vào ngọn cỏ bốn lá để nhận may mắn!">
+                <div class="clover-glow-aura"></div>
+                <img src="./img/clover-bon-la.svg" alt="Ngọn cỏ bốn lá may mắn" class="clover-svg-icon">
+                <div class="clover-luck-bubble" id="clover-luck-bubble">
+                    <span class="clover-bubble-sparkle">✨</span>
+                    <span class="clover-bubble-text">Chúc bạn vạn sự may mắn! 🍀</span>
+                </div>
+            </div>
+
             <canvas id="canvas" width="1100" height="680"></canvas>
 
             <!-- Bóng Dáng Thiếu Nữ Áo Dài Nón Lá & Hoa Sen (Stage 4 Full Blossom) -->
-            <div id="ao-dai-viet-stage4" class="ao-dai-viet-stage4 hidden" aria-hidden="true">
+            <div id="ao-dai-viet-stage4" class="ao-dai-viet-stage4 hidden" aria-label="Nét duyên con gái Việt e ấp bên hoa sen" role="button" tabindex="0">
+                <div class="ao-dai-aura-mist"></div>
                 <img src="./img/ao-dai-viet.png" alt="Hai cô gái áo dài nón lá hoa sen" class="ao-dai-figure-img">
+                <!-- Interactive Poetic Verse Tooltip / Ribbon -->
+                <div class="ao-dai-poem-badge" id="ao-dai-poem-badge">
+                    <span class="poem-lotus-icon">🪷</span>
+                    <span class="poem-verse-text" id="ao-dai-poem-text">Nét duyên con gái Việt e ấp bên đầm sen ♡</span>
+                    <span class="poem-sparkle">✨</span>
+                </div>
+                <!-- Floating Lotus Petals around Áo Dài -->
+                <div class="ao-dai-floating-petals" aria-hidden="true">
+                    <span class="petal p1">🌸</span>
+                    <span class="petal p2">🪷</span>
+                    <span class="petal p3">🍃</span>
+                </div>
             </div>
         </div>
 
@@ -681,6 +758,7 @@
         <button id="secret-letter-trigger-btn" class="secret-letter-trigger-pill" title="Mở bức thư bí mật">
             <span class="letter-pill-icon">💌</span>
             <span class="letter-pill-text">Thư Bí Mật 20/10</span>
+            <span class="letter-pill-clover" aria-hidden="true">🍀</span>
             <span class="letter-pill-sparkle">✨</span>
         </button>
     </div>
@@ -702,6 +780,11 @@
                                 <span class="seal-icon">✦</span>
                             </div>
                         </div>
+                        <!-- Cỏ 4 Lá May Mắn Đính Kèm Trên Thiệp -->
+                        <div class="polaroid-clover-charm" title="Cỏ 4 lá may mắn">
+                            <img src="./img/clover-bon-la.svg" alt="Cỏ 4 lá may mắn" class="polaroid-clover-svg">
+                            <span class="clover-wish-tag">Cỏ May Mắn 🍀</span>
+                        </div>
                         <span class="photo-hint-text">Chạm để mở bức thư bí mật ✨</span>
                     </div>
                     <div class="caption">20/10/2026 · A Secret Note for You ♡</div>
@@ -711,6 +794,11 @@
                     <div class="polaroid-stamp-header">EPIC ATELIER · SPECIAL MEMORY</div>
                     <div class="letter-content" id="random-letter-content">Chúc bạn 20/10 thật hạnh phúc!</div>
                     <div class="letter-author" id="random-letter-author">- Nam Sinh -</div>
+                    <div class="polaroid-footer-heritage">
+                        <span class="footer-clover-leaf">🍀</span>
+                        <span class="footer-blessing">Gửi trao ngàn may mắn & bình an đến bạn</span>
+                        <span class="footer-clover-leaf">🪷</span>
+                    </div>
                     <button class="polaroid-shuffle-btn" id="polaroid-shuffle-btn" title="Đọc một lời chúc khác từ các bạn nam">Đổi lời chúc khác 🎲</button>
                 </div>
             </div>
