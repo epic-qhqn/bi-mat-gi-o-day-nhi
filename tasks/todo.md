@@ -8,9 +8,9 @@
 - [x] Sub-phase 1.5: Kiểm thử tài nguyên tĩnh và kiểm tra tải ngoại tuyến 100% mượt mà, 0 lỗi console (15/15 JS files OK, 3 CSS brace-balanced).
 
 ## Phase 2: Đại Tu Ngôn Ngữ Thẩm Mỹ & Loại Bỏ Phong Cách Tròn Bóng
-- [ ] Sub-phase 2.1: Triệt tiêu bo góc viên thuốc `999px` và bóng đổ neon công nghệ trên toàn bộ hệ thống CSS.
-- [ ] Sub-phase 2.2: Cập nhật Design Tokens chuẩn màu đồng nội: Trắng ngà giấy Dó (`#FAF7F0`), Hồng Sen (`#D47A88`), Cốm Non (`#6A8D73`), Gỗ Mộc (`#4A3728`), Vàng Nắng Thu (`#DEB853`).
-- [ ] Sub-phase 2.3: Đồng nhất Typography thanh nhã và viền thẻ mộc mạc như giấy thủ công.
+- [x] Sub-phase 2.1: Triệt tiêu bo góc viên thuốc `999px` và bóng đổ neon công nghệ trên toàn bộ hệ thống CSS (hạ bo góc 999px xuống 10px-14px viền giấy mộc mềm mại).
+- [x] Sub-phase 2.2: Cập nhật Design Tokens chuẩn màu đồng nội: Trắng ngà giấy Dó (`#FAF7F0`), Hồng Sen (`#D47A88`), Cốm Non (`#6A8D73`), Gỗ Mộc (`#4A3728`), Vàng Nắng Thu (`#DEB853`).
+- [x] Sub-phase 2.3: Đồng nhất Typography thanh nhã và viền thẻ mộc mạc như giấy thủ công (soft mist shadows, 100% brace-balanced).
 
 ## Phase 3: Chuyển Hóa Tấm Vé Thành "Bưu Thiếp Hương Đồng Cỏ Nội"
 - [ ] Sub-phase 3.1: Tái thiết kế Modal vé thành Bưu Thiếp Lụa Sen 20/10 với con tem bưu hoa cổ điển.

@@ -307,7 +307,7 @@ body.sky-night .stage-selector-header {
   gap: 6px;
   background: transparent;
   border: 1px solid transparent;
-  border-radius: 999px;
+  border-radius: 10px;
   padding: 8px 14px;
   min-height: 38px;
   box-sizing: border-box;
@@ -459,7 +459,7 @@ body.sky-night .garden-message {
   border: 1.5px solid var(--border-card);
   color: var(--text-navy);
   padding: 6px 16px;
-  border-radius: 999px;
+  border-radius: 10px;
   font-family: 'Outfit', sans-serif;
   font-size: 13px;
   font-weight: 600;
@@ -1022,7 +1022,7 @@ body.readable-font .polaroid-back .letter-content {
   background: rgba(255, 255, 255, 0.94);
   border: 1.5px solid var(--border-card);
   padding: 5px 14px;
-  border-radius: 999px;
+  border-radius: 10px;
   pointer-events: none;
   z-index: 100;
   opacity: 1;
