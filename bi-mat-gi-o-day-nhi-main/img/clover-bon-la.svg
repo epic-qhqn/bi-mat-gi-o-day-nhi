@@ -1,0 +1,29 @@
+<svg viewBox="0 0 240 400" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Ngọn cỏ bốn lá màu xanh phát sáng">
+    <defs>
+        <radialGradient id="clover-leaf-grad" cx="50%" cy="85%" r="95%">
+            <stop offset="0%" stop-color="#1FCF5A" />
+            <stop offset="60%" stop-color="#4FEE86" />
+            <stop offset="100%" stop-color="#A8FFC6" />
+        </radialGradient>
+        <g id="clover-leaf-shape">
+            <path d="M0 0 C -6 -8 -22 -14 -22 -28 C -22 -38 -8 -42 0 -32 C 8 -42 22 -38 22 -28 C 22 -14 6 -8 0 0 Z"
+                  fill="url(#clover-leaf-grad)" stroke="#C9FFDC" stroke-width="1.2" />
+            <path d="M0 -3 L0 -30" stroke="rgba(0, 90, 40, 0.5)" stroke-width="1.1" />
+        </g>
+    </defs>
+    <g class="clover-sway-wrap">
+        <g class="clover-plant-stem">
+            <path d="M121 90 C 158 168, 80 228, 116 298 C 142 348, 106 378, 126 396" fill="none"
+                  stroke="#33D96F" stroke-width="6.5" stroke-linecap="round" />
+            <path d="M121 90 C 158 168, 80 228, 116 298 C 142 348, 106 378, 126 396" fill="none"
+                  stroke="#B7FFD0" stroke-width="1.8" stroke-linecap="round" opacity="0.75" />
+            <g id="clover-bloom-head" transform="translate(121, 84) rotate(-8) scale(1.85)">
+                <g transform="rotate(45)"><use href="#clover-leaf-shape" /></g>
+                <g transform="rotate(135)"><use href="#clover-leaf-shape" /></g>
+                <g transform="rotate(225)"><use href="#clover-leaf-shape" /></g>
+                <g transform="rotate(315)"><use href="#clover-leaf-shape" /></g>
+                <circle r="3.6" fill="#EAFFD8" />
+            </g>
+        </g>
+    </g>
+</svg>
