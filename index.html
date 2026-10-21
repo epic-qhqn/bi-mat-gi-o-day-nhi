@@ -1,0 +1,1111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>Điều bí mật gì đang chờ đón bạn?</title>
+    <link rel="icon" href="./img/epic.ico" type="image/x-icon">
+    
+    <!-- Premium Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@500;600;700&family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- CSS: Modular Clean Architecture -->
+    <link rel="stylesheet" href="./css/base.css">
+    <link rel="stylesheet" href="./css/layout.css">
+    <link rel="stylesheet" href="./css/components.css">
+    <script type="text/javascript" src="./js/love.js" charset="utf-8"></script>
+</head>
+
+<body class="sky-day">
+    
+    <!-- Orientation Hint -->
+    <div id="orientation-hint-overlay" class="modal-overlay hidden">
+        <div class="orientation-hint">
+            <svg viewBox="0 0 24 24" class="rotate-icon"><path fill="currentColor" d="M4 8h16c1.1 0 2 .9 2 2v4c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2v-4c0-1.1.9-2 2-2zm0 6h16v-4H4v4z"/></svg>
+            <p>Hãy xoay ngang điện thoại để trải nghiệm trọn vẹn nhất nhé!</p>
+        </div>
+    </div>
+
+    <!-- Time Lock Gateway Modal (Khóa thời gian đến 12h trưa 25/10/2026) -->
+    <div id="time-lock-modal" class="modal-overlay hidden" style="z-index: 100000;">
+        <div class="time-lock-panel lyrical-panel">
+            <div class="lock-icon-container">
+                <div class="lock-glow-ring"></div>
+                <div class="lock-svg-wrap">
+                    <svg viewBox="0 0 24 24" width="44" height="44" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+                        <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+                    </svg>
+                </div>
+            </div>
+            <div class="portal-badge" style="margin-bottom: 12px;">⏳ SPECIAL GATEWAY · 20/10 ⏳</div>
+            <h2>CỔNG THỜI GIAN BÍ MẬT</h2>
+            <p class="lock-subtitle" id="lock-subtitle">
+                Hãy nhập mật mã để mở khóa cổng bí mật ✨<br>
+                <small style="opacity: 0.85;">(Sau 12:00 trưa ngày 25/10/2026 sẽ tự động mở tự do)</small>
+            </p>
+            <div class="lock-input-group">
+                <input type="text" id="time-lock-input" class="lyrical-input time-lock-input" placeholder="Nhập mật mã mở sớm..." autocomplete="off" maxlength="20">
+                <button id="time-lock-btn" class="lyrical-btn time-lock-btn">Mở Khóa Ngay 🔓</button>
+            </div>
+            <div id="time-lock-msg" class="time-lock-msg"></div>
+            <div class="time-lock-footer">
+                <span id="time-lock-clock" class="time-lock-clock"></span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Name Prompt Modal: The Floral Wax Seal & Letterpress Atelier (Phase 2) -->
+    <div id="name-modal" class="modal-overlay">
+        <div class="atelier-stationery-desk">
+            <div class="name-panel lyrical-panel atelier-paper-card">
+                <!-- Pressed Dried Flower Sprig & Silk Ribbon -->
+                <div class="botanical-sprig-wrap">
+                    <svg class="pressed-botanical-branch" viewBox="0 0 120 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M10 35 C 35 25, 65 15, 110 5" stroke="#7A8B7B" stroke-width="2" stroke-linecap="round"/>
+                        <path d="M30 27 C 25 18, 35 12, 42 22 C 38 27, 33 28, 30 27 Z" fill="#94A796" opacity="0.85"/>
+                        <path d="M50 20 C 52 10, 64 8, 62 18 C 58 22, 53 22, 50 20 Z" fill="#889E8A" opacity="0.85"/>
+                        <path d="M72 13 C 70 3, 82 2, 84 11 C 80 15, 75 15, 72 13 Z" fill="#94A796" opacity="0.85"/>
+                        <path d="M92 8 C 96 -1, 106 2, 102 9 C 98 11, 94 10, 92 8 Z" fill="#889E8A" opacity="0.85"/>
+                        <circle cx="44" cy="18" r="3.5" fill="#E8B4B8" opacity="0.9"/>
+                        <circle cx="66" cy="12" r="3.5" fill="#F3C5C9" opacity="0.9"/>
+                        <circle cx="86" cy="7" r="3.5" fill="#E8B4B8" opacity="0.9"/>
+                        <circle cx="106" cy="4" r="3" fill="#F7D6D9" opacity="0.9"/>
+                    </svg>
+                    <div class="atelier-silk-ribbon">
+                        <span class="ribbon-content">🌸 ATELIER BOTANIQUE · THIỆP HOA 20/10 🌸</span>
+                    </div>
+                </div>
+
+                <div class="atelier-header">
+                    <h2>LƯU DẤU TÊN NÀNG VÀO VƯỜN HOA</h2>
+                    <p id="name-prompt-desc">Hãy ghi tên của bạn lên khuôn dập đồng để nghệ nhân đúc thành triện sáp son và đánh thức mầm hoa bí mật ✨</p>
+                </div>
+
+                <!-- Vintage Brass Letterpress Plate -->
+                <div class="letterpress-brass-plate" id="letterpress-brass-plate">
+                    <span class="brass-rivet rivet-tl"></span>
+                    <span class="brass-rivet rivet-tr"></span>
+                    <span class="brass-rivet rivet-bl"></span>
+                    <span class="brass-rivet rivet-br"></span>
+                    <div class="plate-inner-rim">
+                        <div class="plate-engraving-label">✦ VINTAGE BRASS LETTERPRESS ✦</div>
+                        <input type="text" id="name-input" class="lyrical-input portal-input atelier-input" placeholder="Nhập tên của bạn..." autocomplete="off" maxlength="15">
+                        <div id="emboss-preview-wrap" class="emboss-preview-wrap" aria-hidden="true">
+                            <span class="emboss-placeholder">Bản dập nổi tên son sẽ hiển thị ở đây</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Wax Seal & Action Station (Phase 3: Artisan Melt & Press Ritual) -->
+                <div class="wax-seal-station" id="wax-seal-station">
+                    <!-- Artisan Melting Hearth: Candle + Brass Spoon + 2 Hexagonal Wax Beads + Glass Stirring Rod -->
+                    <div class="artisan-melting-hearth" id="artisan-melting-hearth">
+                        <!-- Candle & Brass Spoon Burner Unit -->
+                        <div class="hearth-burner-unit" id="hearth-burner-unit">
+                            <div class="artisan-candle" id="artisan-candle" role="button" tabindex="0" title="Chạm để thắp ngọn nến thơm">
+                                <div class="candle-halo hidden" id="candle-halo"></div>
+                                <div class="candle-flame hidden" id="candle-flame">
+                                    <div class="flame-core"></div>
+                                    <div class="flame-glow"></div>
+                                </div>
+                                <div class="candle-wick"></div>
+                                <div class="candle-body"></div>
+                                <div class="candle-holder"></div>
+                                <span class="candle-badge" id="candle-badge">Chạm thắp nến 🕯️</span>
+                            </div>
+
+                            <div class="brass-spoon-stand" id="brass-spoon-stand">
+                                <div class="brass-spoon" id="brass-spoon">
+                                    <div class="spoon-handle"></div>
+                                    <div class="spoon-neck"></div>
+                                    <div class="spoon-bowl" id="spoon-bowl">
+                                        <div class="spoon-heat-glow hidden" id="spoon-heat-glow"></div>
+                                        <div class="spoon-bead spoon-ruby-bead hidden" id="spoon-ruby-bead"></div>
+                                        <div class="spoon-bead spoon-gold-bead hidden" id="spoon-gold-bead"></div>
+                                        <!-- Molten wax pool with procedural marbled swirl -->
+                                        <div class="spoon-molten-wax hidden" id="spoon-molten-wax">
+                                            <canvas id="marbled-swirl-canvas" class="marbled-swirl-canvas" width="80" height="80"></canvas>
+                                            <div class="molten-glimmer"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- Glass stirring rod that appears after beads melt -->
+                                <div class="glass-stirring-rod hidden" id="glass-stirring-rod" role="button" tabindex="0" title="Chạm hoặc kéo để khuấy vân sáp cẩm thạch">
+                                    <div class="rod-stem"></div>
+                                    <div class="rod-tip"></div>
+                                    <span class="rod-tip-badge" id="rod-tip-badge">Khuấy vân sáp 🪄</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Wax Beads Palette Tray -->
+                        <div class="wax-beads-tray" id="wax-beads-tray">
+                            <div class="tray-title">VIÊN SÁP NGHỆ NHÂN</div>
+                            <div class="beads-container">
+                                <div class="wax-bead-item bead-ruby" id="wax-bead-ruby" role="button" tabindex="0" title="Chạm hoặc kéo sáp đỏ ruby vào thìa">
+                                    <div class="hex-bead-shape">
+                                        <span class="bead-stamp-icon">✦</span>
+                                    </div>
+                                    <span class="bead-label">Đỏ Nhung</span>
+                                </div>
+                                <div class="wax-bead-item bead-gold" id="wax-bead-gold" role="button" tabindex="0" title="Chạm hoặc kéo sáp vàng pearl vào thìa">
+                                    <div class="hex-bead-shape">
+                                        <span class="bead-stamp-icon">✿</span>
+                                    </div>
+                                    <span class="bead-label">Vàng Pearl</span>
+                                </div>
+                            </div>
+                            <button type="button" class="hearth-quick-drop-btn" id="hearth-quick-drop-btn" title="Thả cả 2 viên sáp vào thìa">
+                                <span>Thả sáp vào thìa ✨</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Interactive 3D Wax Seal Workspace (Target zone for pouring & Stamping) -->
+                    <div class="wax-seal-workspace" id="wax-seal-workspace">
+                        <!-- Target Pedestal for the Wax Pool -->
+                        <div class="wax-target-zone" id="wax-target-zone" title="Khu vực đóng triện sáp">
+                            <span class="wax-target-ring"></span>
+                            <span class="wax-target-hint">ĐẶT DẤU VÀO ĐÂY</span>
+
+                            <!-- Molten Wax Pouring Stream from Tilted Spoon (Sub-phase 3.2) -->
+                            <div class="wax-pour-stream hidden" id="wax-pour-stream">
+                                <div class="stream-liquid-core"></div>
+                                <div class="stream-gold-glint"></div>
+                            </div>
+
+                            <!-- Hot Molten Wax Pool (Spreads organically with steam before stamping) -->
+                            <div class="wax-hot-pool hidden" id="wax-hot-pool">
+                                <div class="hot-wax-body" id="hot-wax-body"></div>
+                                <div class="hot-wax-gloss"></div>
+                                <div class="wax-steam-container">
+                                    <span class="steam-wisp wisp-1"></span>
+                                    <span class="steam-wisp wisp-2"></span>
+                                    <span class="steam-wisp wisp-3"></span>
+                                </div>
+                            </div>
+                            
+                            <!-- Molten Wax Pool Imprint (Appears upon stamping) -->
+                            <div class="wax-seal-puddle hidden" id="wax-seal-puddle">
+                                <div class="wax-outer-crease"></div>
+                                <div class="wax-inner-core">
+                                    <svg class="wax-flower-crest" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                                        <path d="M12 7.5a4.5 4.5 0 1 1 4.5 4.5M12 7.5A4.5 4.5 0 1 0 7.5 12M12 7.5V12m0 0a4.5 4.5 0 1 0 4.5 4.5M12 12a4.5 4.5 0 1 1-4.5 4.5m4.5-4.5v4.5"/>
+                                        <circle cx="12" cy="12" r="2" fill="currentColor"/>
+                                    </svg>
+                                    <div class="wax-name-imprint" id="wax-name-imprint">NÀNG THƠ</div>
+                                </div>
+                            </div>
+
+                            <!-- Artistic Dried Flower Flourish & Golden Radiance Halo (Sub-phase 3.3) -->
+                            <div class="seal-botanical-flourish hidden" id="seal-botanical-flourish" aria-hidden="true">
+                                <svg class="botanical-wreath-svg" viewBox="0 0 140 140" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path class="wreath-branch branch-left" d="M32 110 C 14 78, 20 40, 52 18 C 60 13, 68 10, 70 10" stroke="#C5A030" stroke-width="1.8" stroke-linecap="round"/>
+                                    <path class="wreath-branch branch-right" d="M108 110 C 126 78, 120 40, 88 18 C 80 13, 72 10, 70 10" stroke="#C5A030" stroke-width="1.8" stroke-linecap="round"/>
+                                    <path class="wreath-leaf" d="M22 84 C 12 79, 14 69, 24 73 C 28 77, 26 82, 22 84 Z" fill="#94A796" opacity="0.95"/>
+                                    <path class="wreath-leaf" d="M20 56 C 10 50, 16 40, 26 46 C 28 51, 24 55, 20 56 Z" fill="#889E8A" opacity="0.95"/>
+                                    <path class="wreath-leaf" d="M35 30 C 27 22, 37 14, 45 22 C 43 27, 38 29, 35 30 Z" fill="#94A796" opacity="0.95"/>
+                                    <circle class="wreath-bud" cx="28" cy="44" r="3" fill="#E8B4B8"/>
+                                    <circle class="wreath-bud" cx="44" cy="20" r="2.5" fill="#F5CE56"/>
+                                    <path class="wreath-leaf" d="M118 84 C 128 79, 126 69, 116 73 C 112 77, 114 82, 118 84 Z" fill="#94A796" opacity="0.95"/>
+                                    <path class="wreath-leaf" d="M120 56 C 130 50, 124 40, 114 46 C 112 51, 116 55, 120 56 Z" fill="#889E8A" opacity="0.95"/>
+                                    <path class="wreath-leaf" d="M105 30 C 113 22, 103 14, 95 22 C 97 27, 102 29, 105 30 Z" fill="#94A796" opacity="0.95"/>
+                                    <circle class="wreath-bud" cx="112" cy="44" r="3" fill="#E8B4B8"/>
+                                    <circle class="wreath-bud" cx="96" cy="20" r="2.5" fill="#F5CE56"/>
+                                </svg>
+                                <div class="seal-radiance-halo"></div>
+                            </div>
+                        </div>
+
+                        <!-- 3D Interactive Handcrafted Wax Seal Stamp -->
+                        <div class="wax-seal-stamp" id="wax-seal-stamp" role="button" tabindex="0" title="Chạm hoặc kéo con dấu để đóng triện son">
+                            <div class="stamp-3d-wrap">
+                                <div class="stamp-handle-top"></div>
+                                <div class="stamp-handle-body"></div>
+                                <div class="stamp-brass-collar"></div>
+                                <div class="stamp-brass-head">
+                                    <div class="stamp-engraving-face">💮</div>
+                                </div>
+                            </div>
+                            <div class="stamp-shadow"></div>
+                        </div>
+                    </div>
+
+                    <button id="start-btn" class="lyrical-btn portal-btn atelier-seal-btn">
+                        <span class="seal-icon">🪶</span>
+                        <span class="seal-text">Khắc Dấu & Mở Cổng Hoa ✨</span>
+                    </button>
+                    <div class="wax-seal-guide-tip" id="wax-seal-guide-tip">
+                        <span>Châm nến thơm và thả 2 viên sáp vào thìa để bắt đầu đun sáp 🕯️</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bầu trời & Hiện tượng thiên nhiên -->
+    <div class="sky-background">
+        <div class="sky-gradient layer-dawn"></div>
+        <div class="sky-gradient layer-day"></div>
+        <div class="sky-gradient layer-dusk"></div>
+        <div class="sky-gradient layer-night"></div>
+        <div class="dusk-glow"></div>
+        <div class="aurora"></div>
+
+        <div id="stars" class="stars"></div>
+        <div id="celestial-body" class="celestial-body sun"></div>
+        <div class="sun-rays"></div>
+        <div class="shooting-star"></div>
+        <div class="mist"></div>
+        <div class="clouds parallax-bg">
+             <div class="cloud cloud-1"></div>
+             <div class="cloud cloud-3"></div>
+        </div>
+        <div class="clouds parallax-fg">
+             <div class="cloud cloud-2"></div>
+        </div>
+        <div class="birds">
+             <svg class="bird bird-1" viewBox="0 0 24 24"><path fill="currentColor" d="M23 12l-11 5-11-5 11-2z"/></svg>
+             <svg class="bird bird-2" viewBox="0 0 24 24"><path fill="currentColor" d="M23 12l-11 5-11-5 11-2z"/></svg>
+        </div>
+        
+        <!-- Phase 9: Dusk Flock (V-formation) -->
+        <div class="dusk-flock">
+             <svg class="flock-bird" style="top: 0; left: 0;" viewBox="0 0 24 24"><path fill="currentColor" d="M23 12l-11 5-11-5 11-2z"/></svg>
+             <svg class="flock-bird" style="top: -15px; left: -20px;" viewBox="0 0 24 24"><path fill="currentColor" d="M23 12l-11 5-11-5 11-2z"/></svg>
+             <svg class="flock-bird" style="top: 15px; left: -20px;" viewBox="0 0 24 24"><path fill="currentColor" d="M23 12l-11 5-11-5 11-2z"/></svg>
+             <svg class="flock-bird" style="top: -30px; left: -40px;" viewBox="0 0 24 24"><path fill="currentColor" d="M23 12l-11 5-11-5 11-2z"/></svg>
+             <svg class="flock-bird" style="top: 30px; left: -40px;" viewBox="0 0 24 24"><path fill="currentColor" d="M23 12l-11 5-11-5 11-2z"/></svg>
+        </div>
+        <div class="butterflies">
+             <div class="butterfly"></div>
+             <div class="butterfly"></div>
+             <div class="butterfly"></div>
+        </div>
+        
+        <!-- Phase 9: Day Dandelions -->
+        <div class="dandelions">
+             <div class="dandelion"></div>
+             <div class="dandelion"></div>
+             <div class="dandelion"></div>
+             <div class="dandelion"></div>
+        </div>
+        
+        <!-- Phase 9: Dawn God Rays -->
+        <div class="god-rays">
+            <div class="ray"></div>
+            <div class="ray"></div>
+            <div class="ray"></div>
+        </div>
+    </div>
+    
+    <div id="fireflies-container" class="fireflies" style="display: none;">
+        <div class="firefly"></div><div class="firefly"></div><div class="firefly"></div>
+        <div class="firefly"></div><div class="firefly"></div><div class="firefly"></div>
+        <div class="firefly"></div><div class="firefly"></div><div class="firefly"></div>
+    </div>
+
+    <!-- Container for dynamic JS effects (Petals) -->
+    <div id="particles-container" class="particles-container"></div>
+
+    <!-- Dải Cỏ Hoa Đồng Nội Tiền Cảnh (Vietnamese Countryside Wildflowers & Lotus Stems) -->
+    <svg id="co-hoa" class="co-hoa-countryside hien-thi" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"></svg>
+
+    <!-- Cơn Mưa Lá Thu & Cánh Hoa Sen Chao Liệng 3D (Floating Autumn Leaves & Lotus Petals Canvas) -->
+    <canvas id="laCanvas" class="la-canvas-autumn hien-thi" aria-hidden="true"></canvas>
+
+    <!-- UI Vườn Hoa (Lyrical Design) -->
+    <div id="garden-ui" class="garden-ui lyrical-panel">
+        <div class="instruction">Hãy chăm sóc hạt giống để điều kỳ diệu xảy ra</div>
+        <div id="growth-progress" class="growth-progress">
+             <div class="step"></div>
+             <div class="step"></div>
+             <div class="step"></div>
+        </div>
+        <div id="garden-message" class="garden-message">Gom mây gọi mưa sương sớm hoặc sưởi ấm mầm non bằng vệt nắng 🌤️</div>
+        <div id="terrarium-gesture-hint" class="terrarium-gesture-hint">
+            <span class="hint-dot">✦</span>
+            <span>Mẹo Khu Vườn: Gõ đúp ngưng tụ sương · Xoa rễ sưởi ấm · Chạm vuốt cành gảy đàn hạc 🌿🎶</span>
+            <span class="hint-dot">✦</span>
+        </div>
+        <button id="simon-replay-btn" class="simon-replay-btn hidden" title="Nghe lại giai điệu ma thuật">
+            <span class="replay-icon">♫</span>
+            <span>Nghe lại giai điệu</span>
+        </button>
+    </div>
+
+    <!-- Sub-phase 4.3: Garden Stage Selector / Replay Toolbar -->
+    <nav id="garden-stage-selector" class="garden-stage-selector hidden" aria-label="Bộ chọn giai đoạn khu vườn">
+        <div class="stage-selector-inner lyrical-panel">
+            <div class="stage-selector-header">
+                <span class="selector-badge-icon">↺</span>
+                <span class="selector-title">Giai Đoạn</span>
+            </div>
+            <div class="stage-buttons-group" role="tablist">
+                <button class="stage-btn" data-stage="1" role="tab" aria-selected="false" title="Chơi lại Giai đoạn 1: Mưa sương & Chồi non">
+                    <span class="stage-btn-icon">🌱</span>
+                    <span class="stage-btn-text">Giai đoạn 1</span>
+                </button>
+                <button class="stage-btn" data-stage="2" role="tab" aria-selected="false" title="Chơi lại Giai đoạn 2: Khúc hòa âm Simon">
+                    <span class="stage-btn-icon">🎵</span>
+                    <span class="stage-btn-text">Giai đoạn 2</span>
+                </button>
+                <button class="stage-btn" data-stage="3" role="tab" aria-selected="false" title="Chơi lại Giai đoạn 3: Nối chòm sao định mệnh">
+                    <span class="stage-btn-icon">✨</span>
+                    <span class="stage-btn-text">Giai đoạn 3</span>
+                </button>
+                <button class="stage-btn active" data-stage="4" role="tab" aria-selected="true" title="Xem Trạng thái hoa nở hoàn mỹ">
+                    <span class="stage-btn-icon">🌸</span>
+                    <span class="stage-btn-text">Hoa nở</span>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Phase 4: Celestial Weather Orrery (Bánh Xe Thiên Văn 360° Celestial Orrery) -->
+    <div id="celestial-weather-orrery" class="celestial-weather-orrery hidden" aria-label="Bánh xe thiên văn 360 độ điều khiển khí hậu">
+        <!-- Expanded Full View (La Bàn Thiên Văn Mở Rộng) -->
+        <div class="orrery-expanded-wrap" id="orrery-expanded-wrap">
+            <!-- Miniature Gold Collapse Button -->
+            <button id="orrery-collapse-btn" class="orrery-collapse-btn" aria-label="Thu gọn bánh xe thiên văn thành vì sao phương bắc" title="Thu gọn thành vì sao ✦">
+                <span class="collapse-icon">✕</span>
+            </button>
+
+            <!-- Astrolabe Base Frame & Golden Gear Rim -->
+            <div class="orrery-frame" id="orrery-frame">
+                <div class="orrery-outer-ring">
+                    <!-- Astrological & Season Tick Marks -->
+                    <div class="orrery-ticks-ring"></div>
+                </div>
+
+                <!-- 4 Season Quadrant Sectors -->
+                <div class="orrery-quadrants-container">
+                    <!-- Q1: 0deg - 90deg Spring Dew (Mưa Sương Mai) -->
+                    <div class="orrery-quadrant q-spring is-active" data-quadrant="spring" data-angle-center="45" role="button" tabindex="0" title="Mùa Xuân: Mưa Sương Mai (0° - 90°)">
+                        <div class="quadrant-aura"></div>
+                        <span class="quadrant-glyph">🌧️</span>
+                    </div>
+                    <!-- Q2: 90deg - 180deg Summer Solstice (Nắng Hạ Chí) -->
+                    <div class="orrery-quadrant q-summer" data-quadrant="summer" data-angle-center="135" role="button" tabindex="0" title="Mùa Hạ: Nắng Hạ Chí (90° - 180°)">
+                        <div class="quadrant-aura"></div>
+                        <span class="quadrant-glyph">☀️</span>
+                    </div>
+                    <!-- Q3: 180deg - 270deg Autumn Breeze (Gió Thu Khởi Sắc) -->
+                    <div class="orrery-quadrant q-autumn" data-quadrant="autumn" data-angle-center="225" role="button" tabindex="0" title="Mùa Thu: Gió Thu Khởi Sắc (180° - 270°)">
+                        <div class="quadrant-aura"></div>
+                        <span class="quadrant-glyph">🍃</span>
+                    </div>
+                    <!-- Q4: 270deg - 360deg Aurora Night (Cực Quang Tinh Tú) -->
+                    <div class="orrery-quadrant q-aurora" data-quadrant="aurora" data-angle-center="315" role="button" tabindex="0" title="Mùa Đông: Cực Quang Tinh Tú (270° - 360°)">
+                        <div class="quadrant-aura"></div>
+                        <span class="quadrant-glyph">🌌</span>
+                    </div>
+                </div>
+
+                <!-- Dial Face with Concentric Planetary Orbits -->
+                <div class="orrery-dial-face">
+                    <svg class="orrery-orbits-svg" viewBox="0 0 100 100" fill="none">
+                        <circle cx="50" cy="50" r="42" stroke="rgba(212, 175, 55, 0.35)" stroke-width="1" stroke-dasharray="2 3"/>
+                        <circle cx="50" cy="50" r="30" stroke="rgba(212, 175, 55, 0.45)" stroke-width="1"/>
+                        <circle cx="50" cy="50" r="18" stroke="rgba(212, 175, 55, 0.25)" stroke-width="0.8"/>
+                        <line x1="50" y1="6" x2="50" y2="94" stroke="rgba(212, 175, 55, 0.25)" stroke-width="0.7"/>
+                        <line x1="6" y1="50" x2="94" y2="50" stroke="rgba(212, 175, 55, 0.25)" stroke-width="0.7"/>
+                    </svg>
+                </div>
+
+                <!-- Armillary Sun-Pointer Needle (Rotates 360 degrees) -->
+                <div class="orrery-pointer-arm" id="orrery-pointer-arm" role="slider" tabindex="0" aria-valuemin="0" aria-valuemax="360" aria-valuenow="45" aria-label="Kim thiên văn điều chuyển khí hậu" title="Kéo hoặc chạm để xoay kim 360°">
+                    <!-- Needle Arrow Head with Radiant Sunstone -->
+                    <div class="pointer-head">
+                        <div class="sunstone-gem"></div>
+                        <div class="needle-tip"></div>
+                    </div>
+                    <!-- Needle Stem -->
+                    <div class="pointer-shaft"></div>
+                    <!-- Counter-weight Crescent Moon Tail -->
+                    <div class="pointer-counterweight">
+                        <div class="crescent-moon"></div>
+                    </div>
+                </div>
+
+                <!-- Center Brass Pivot Cabochon Jewel -->
+                <div class="orrery-center-pivot">
+                    <div class="pivot-cabochon"></div>
+                </div>
+            </div>
+
+            <!-- Floating Status Label & Degree Indicator -->
+            <div class="orrery-status-badge" id="orrery-status-badge">
+                <span class="badge-season-icon" id="orrery-season-icon">🌧️</span>
+                <span class="badge-season-text" id="orrery-season-text">Mưa Sương Mai</span>
+                <span class="badge-degree-val" id="orrery-degree-val">45°</span>
+            </div>
+            <div class="orrery-hint-text">
+                <span>Xoay kim la bàn 360° chuyển mùa ✦</span>
+            </div>
+        </div>
+
+        <!-- Sub-phase 4.3: Celestial Lodestar Token (Thiên Thể Phương Bắc Lung Linh Khi Thu Nhỏ) -->
+        <button id="orrery-lodestar-btn" class="orrery-lodestar-btn" aria-label="Mở la bàn thiên văn điều khiển thời tiết" title="✦ Chạm để mở Bánh xe Thiên văn 360°">
+            <div class="lodestar-halo"></div>
+            <div class="lodestar-compass-star">
+                <svg viewBox="0 0 40 40" class="lodestar-svg" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <defs>
+                        <radialGradient id="lodestar-gold-grad" cx="50%" cy="50%" r="50%">
+                            <stop offset="0%" stop-color="#FFF5C0"/>
+                            <stop offset="50%" stop-color="#F5CE56"/>
+                            <stop offset="100%" stop-color="#D4AF37"/>
+                        </radialGradient>
+                    </defs>
+                    <!-- 8-pointed Polaris compass star -->
+                    <path d="M20 2 L22.8 14.8 L36 12 L24.5 20 L38 23 L24.5 26 L36 34 L22.8 28.5 L20 38 L17.2 28.5 L4 34 L15.5 26 L2 23 L15.5 20 L4 12 L17.2 14.8 Z" fill="url(#lodestar-gold-grad)"/>
+                    <polygon points="20,15 25,20 20,25 15,20" fill="#FFFFFF"/>
+                    <circle cx="20" cy="20" r="2" fill="#131C4E"/>
+                </svg>
+            </div>
+            <span class="lodestar-season-pip" id="lodestar-season-pip" title="Mùa hiện tại">🌧️</span>
+        </button>
+    </div>
+
+    <!-- Phase 3.1: Living Atmosphere Shifter (Khí Hậu Tự Nhiên Thay Cho Icon Cũ) -->
+    <div id="living-atmosphere-hud" class="living-atmosphere-hud">
+        <!-- 1. Đám Mây Mưa Sương Sớm -->
+        <div id="atmosphere-cloud-shifter" class="atmosphere-shifter-token cloud-shifter" role="button" tabindex="0" title="Chạm hoặc kéo mây để gọi mưa rào sương sớm">
+            <div class="shifter-glow-aura"></div>
+            <div class="shifter-cloud-body">
+                <svg class="cloud-svg" viewBox="0 0 100 60" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M25 45 C15 45 8 38 8 28 C8 19 15 13 23 13 C26 7 35 2 46 2 C58 2 68 8 72 16 C78 14 86 18 89 25 C94 28 96 34 94 40 C92 45 86 48 80 48 L25 48 Z" fill="url(#cloud-pearl-grad)" filter="drop-shadow(0 8px 16px rgba(19, 28, 78, 0.12))"/>
+                    <defs>
+                        <linearGradient id="cloud-pearl-grad" x1="10" y1="5" x2="90" y2="50" gradientUnits="userSpaceOnUse">
+                            <stop offset="0%" stop-color="#FFFFFF"/>
+                            <stop offset="65%" stop-color="#F0F4FA"/>
+                            <stop offset="100%" stop-color="#D6E2F0"/>
+                        </linearGradient>
+                    </defs>
+                </svg>
+                <div class="cloud-suspended-drops">
+                    <span class="suspended-drop drop-1">💧</span>
+                    <span class="suspended-drop drop-2">💧</span>
+                    <span class="suspended-drop drop-3">💧</span>
+                </div>
+            </div>
+            <div class="shifter-pill-label">
+                <span class="pill-icon">🌧️</span>
+                <span class="pill-text">Mây Mưa Sương Sớm</span>
+            </div>
+        </div>
+
+        <!-- 2. Vệt Nắng Vàng Ban Mai -->
+        <div id="atmosphere-sun-shifter" class="atmosphere-shifter-token sun-shifter" role="button" tabindex="0" title="Chạm hoặc kéo vệt nắng để sưởi ấm mầm non">
+            <div class="shifter-glow-aura sun-aura"></div>
+            <div class="shifter-sun-body">
+                <svg class="sun-svg" viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="40" cy="40" r="22" fill="url(#sun-warm-grad)" filter="drop-shadow(0 0 18px rgba(245, 206, 86, 0.7))"/>
+                    <g class="sun-rays-group" stroke="#F5CE56" stroke-width="2.5" stroke-linecap="round" opacity="0.85">
+                        <line x1="40" y1="8" x2="40" y2="13"/>
+                        <line x1="40" y1="67" x2="40" y2="72"/>
+                        <line x1="8" y1="40" x2="13" y2="40"/>
+                        <line x1="67" y1="40" x2="72" y2="40"/>
+                        <line x1="17.4" y1="17.4" x2="21" y2="21"/>
+                        <line x1="59" y1="59" x2="62.6" y2="62.6"/>
+                        <line x1="17.4" y1="62.6" x2="21" y2="59"/>
+                        <line x1="59" y1="21" x2="62.6" y2="17.4"/>
+                    </g>
+                    <defs>
+                        <radialGradient id="sun-warm-grad" cx="40" cy="40" r="22" gradientUnits="userSpaceOnUse">
+                            <stop offset="0%" stop-color="#FFFDF7"/>
+                            <stop offset="55%" stop-color="#FCD34D"/>
+                            <stop offset="100%" stop-color="#F59E0B"/>
+                        </radialGradient>
+                    </defs>
+                </svg>
+                <div class="sun-sparkle-stars">
+                    <span class="sparkle-star s1">✨</span>
+                    <span class="sparkle-star s2">✦</span>
+                </div>
+            </div>
+            <div class="shifter-pill-label">
+                <span class="pill-icon">☀️</span>
+                <span class="pill-text">Nắng Vàng Ban Mai</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Active Weather Phenomena Layers -->
+    <div id="summer-rain-layer" class="summer-rain-layer" aria-hidden="true"></div>
+    <div id="mini-rainbow-layer" class="mini-rainbow-layer" aria-hidden="true">
+        <div class="mini-rainbow-arc"></div>
+    </div>
+    <div id="golden-pollen-layer" class="golden-pollen-layer" aria-hidden="true"></div>
+
+    <!-- Phase 3.2: Terrarium Magic Touch Gestures Layers -->
+    <div id="terrarium-touch-surface" class="terrarium-touch-surface" aria-label="Khu vực chạm cảm ứng Terrarium"></div>
+    <div id="terrarium-vortex-layer" class="terrarium-vortex-layer" aria-hidden="true"></div>
+    <div id="root-warmth-layer" class="root-warmth-layer" aria-hidden="true"></div>
+
+    <!-- Draggable Tools (Legacy DOM anchors preserved, hidden in favor of Living Atmosphere Shifter) -->
+    <div id="tool-water" class="draggable-tool hidden-tool-legacy" data-tool="water" style="display: none !important;">
+        <div class="tool-icon-wrapper lyrical-panel">
+            <svg class="tool-icon" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"/></svg>
+        </div>
+        <span class="tool-label">Tưới nước</span>
+    </div>
+
+    <div id="tool-fertilize" class="draggable-tool hidden-tool-legacy" data-tool="fertilize" style="display: none !important;">
+        <div class="tool-icon-wrapper lyrical-panel">
+            <svg class="tool-icon" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l1.912 5.813a2 2 0 001.275 1.275L21 12l-5.813 1.912a2 2 0 00-1.275 1.275L12 21l-1.912-5.813a2 2 0 00-1.275-1.275L3 12l5.813-1.912a2 2 0 001.275-1.275L12 3z"/></svg>
+        </div>
+        <span class="tool-label">Bón phân</span>
+    </div>
+
+    <!-- Mascot Robot Garden Companion (Layered 2D Cutout Puppet) -->
+    <div id="garden-mascot-companion" class="mascot-companion-wrap" title="Nhấn vào tớ để trò chuyện nè!">
+        <div class="mascot-halo-glow"></div>
+        <div class="mascot-speech-bubble" id="mascot-speech-bubble">
+            <span class="bubble-text" id="mascot-bubble-text">Chào bạn! Tớ là chú bé đồng dao chăm vườn hoa 20/10 nè! 🌾✨</span>
+            <div class="bubble-tail"></div>
+        </div>
+        <div class="mascot-puppet-container" id="mascot-puppet">
+            <!-- Base authentic artwork: 100% exact from user's original image -->
+            <img src="./img/mascot-base.png" alt="Mascot Robot Epic" class="mascot-layer mascot-layer-base" id="mascot-base-img">
+
+            <!-- Miniature Vietnamese Nón Lá on Mascot's Head -->
+            <div class="mascot-mini-non-la" id="mascot-mini-non-la" title="Chiếc nón lá nghiêng che mộc mạc">
+                <svg viewBox="0 0 100 60" class="non-la-svg" xmlns="http://www.w3.org/2000/svg">
+                    <defs>
+                        <linearGradient id="nonLaStrawGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                            <stop offset="0%" stop-color="#FFFDF5"/>
+                            <stop offset="45%" stop-color="#F2DEAE"/>
+                            <stop offset="100%" stop-color="#CBB175"/>
+                        </linearGradient>
+                    </defs>
+                    <!-- Chóp nón lá Việt Nam -->
+                    <polygon points="50,4 96,52 4,52" fill="url(#nonLaStrawGrad)" stroke="#B89B5E" stroke-width="2" stroke-linejoin="round"/>
+                    <!-- Các vành nan nón lá -->
+                    <ellipse cx="50" cy="52" rx="46" ry="6" fill="#D8C28A" stroke="#B89B5E" stroke-width="1.5"/>
+                    <ellipse cx="50" cy="40" rx="34" ry="4.5" fill="none" stroke="#B89B5E" stroke-width="1" opacity="0.6"/>
+                    <ellipse cx="50" cy="28" rx="22" ry="3.2" fill="none" stroke="#B89B5E" stroke-width="1" opacity="0.6"/>
+                    <ellipse cx="50" cy="16" rx="11" ry="1.8" fill="none" stroke="#B89B5E" stroke-width="1" opacity="0.6"/>
+                    <!-- Quai nón lụa hồng sen e ấp -->
+                    <path d="M12,52 Q50,70 88,52" fill="none" stroke="#D47A88" stroke-width="2.5" stroke-linecap="round"/>
+                </svg>
+            </div>
+
+            <!-- Mascot Facial Expressions Overlay (Mắt chớp, Má hồng e ấp ////, Nụ cười mèo ω) -->
+            <div class="mascot-face-emotes" id="mascot-face-emotes">
+                <!-- Đôi mắt to tròn chớp nháy tự nhiên -->
+                <div class="mascot-eyes-pair" id="mascot-eyes">
+                    <div class="mascot-eye eye-left">
+                        <div class="eye-pupil"></div>
+                        <div class="eye-sparkle">✦</div>
+                        <div class="eye-lid-curve"></div>
+                    </div>
+                    <div class="mascot-eye eye-right">
+                        <div class="eye-pupil"></div>
+                        <div class="eye-sparkle">✦</div>
+                        <div class="eye-lid-curve"></div>
+                    </div>
+                </div>
+                <!-- Đôi má hồng e ấp (blushing cheeks với vệt sọc //// mềm mại tông sen hồng) -->
+                <div class="mascot-blush-cheeks">
+                    <div class="mascot-blush blush-left">
+                        <span class="blush-lines">////</span>
+                    </div>
+                    <div class="mascot-blush blush-right">
+                        <span class="blush-lines">////</span>
+                    </div>
+                </div>
+                <!-- Nụ cười mèo híp mắt (ω) dễ thương -->
+                <div class="mascot-cat-smile" id="mascot-cat-smile">
+                    <svg viewBox="0 0 32 16" class="cat-smile-svg">
+                        <path d="M4,5 Q10,13 16,7 Q22,13 28,5" fill="none" stroke="#4A3728" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </div>
+            </div>
+            
+            <!-- Hydro-Blaster Arm Layer (Left Arm) -->
+            <div class="mascot-layer mascot-layer-arm-left" id="mascot-arm-water">
+                <div class="hydro-blaster-prop" id="hydro-blaster-prop">
+                    <div class="blaster-nozzle"></div>
+                    <div class="blaster-tank"></div>
+                </div>
+                <div class="mascot-water-jet" id="mascot-water-jet"></div>
+            </div>
+
+            <!-- Star Fertilizer Arm Layer (Right Arm) -->
+            <div class="mascot-layer mascot-layer-arm-right" id="mascot-arm-fertilize">
+                <div class="star-wand-prop" id="star-wand-prop">
+                    <div class="wand-star">★</div>
+                </div>
+                <div class="mascot-star-burst" id="mascot-star-burst"></div>
+            </div>
+        </div>
+    </div>
+
+
+    <div id="main-container">
+        <div id="wrap">
+            <div id="seed-hint">Chăm sóc tôi nhé!</div>
+            
+            <!-- Minigame A: Giai Điệu Tình Yêu (Stage 2) -->
+            <div id="simon-game" class="minigame-container hidden">
+                <!-- Nodes generated dynamically by JS with randomized safe positions -->
+            </div>
+
+            <!-- Minigame B: Chòm Sao Định Mệnh (Stage 3) -->
+            <div id="constellation-game" class="minigame-container hidden">
+                <!-- Floating Atelier Constellation Pill Badge (Sub-phase 5.2) -->
+                <div id="constellation-name-badge" class="constellation-name-badge" aria-live="polite">
+                    <span id="constellation-latin-name" class="constellation-latin-name">✦ Astra Nova ✦</span>
+                    <span id="constellation-subtitle" class="constellation-subtitle">Trái Tim Ngân Hà Đơm Hoa</span>
+                </div>
+                <svg id="constellation-svg" viewBox="0 0 1100 680" width="100%" height="100%" style="position: absolute; top:0; left:0; pointer-events: none; z-index: 1;">
+                    <g id="constellation-lines-group"></g>
+                    <line id="constellation-preview-line" class="constellation-preview-line" x1="0" y1="0" x2="0" y2="0" style="display: none;" />
+                </svg>
+                <!-- Stars will be generated by JS -->
+            </div>
+
+            <!-- Phase 9: Tree Shadow -->
+            <div class="tree-shadow hidden-env"></div>
+            
+            <!-- Phase 9: Dewdrops around tree -->
+            <div id="dewdrops-container" class="dewdrops hidden">
+                <div class="dew" style="top: 80%; left: 45%;"></div>
+                <div class="dew" style="top: 75%; left: 52%;"></div>
+                <div class="dew" style="top: 82%; left: 55%;"></div>
+            </div>
+
+            <!-- Phase 3.3: Botanical Melodic Harp Strings (Dây Đàn Hạc Thảo Mộc Ngân Vang) -->
+            <div id="plant-harp-strings-wrap" class="plant-harp-strings-wrap" aria-label="Dây đàn hạc thảo mộc ngân vang">
+                <div class="harp-string-wire" data-string-index="0" title="Dây đàn Đô (C5)">
+                    <div class="harp-string-line"></div>
+                    <div class="harp-string-node">✦</div>
+                </div>
+                <div class="harp-string-wire" data-string-index="1" title="Dây đàn Rê (D5)">
+                    <div class="harp-string-line"></div>
+                    <div class="harp-string-node">❀</div>
+                </div>
+                <div class="harp-string-wire" data-string-index="2" title="Dây đàn Mi (E5)">
+                    <div class="harp-string-line"></div>
+                    <div class="harp-string-node">♫</div>
+                </div>
+                <div class="harp-string-wire" data-string-index="3" title="Dây đàn Sol (G5)">
+                    <div class="harp-string-line"></div>
+                    <div class="harp-string-node">❀</div>
+                </div>
+                <div class="harp-string-wire" data-string-index="4" title="Dây đàn La (A5)">
+                    <div class="harp-string-line"></div>
+                    <div class="harp-string-node">✦</div>
+                </div>
+            </div>
+
+            <!-- Nhánh Cỏ 4 Lá May Mắn (Stage 1 & 2 Botanical Companion) -->
+            <div id="sprout-lucky-clover" class="sprout-lucky-clover hidden" role="button" tabindex="0" title="Chạm vào ngọn cỏ bốn lá để nhận may mắn!">
+                <div class="clover-glow-aura"></div>
+                <img src="./img/clover-bon-la.svg" alt="Ngọn cỏ bốn lá may mắn" class="clover-svg-icon">
+                <div class="clover-luck-bubble" id="clover-luck-bubble">
+                    <span class="clover-bubble-sparkle">✨</span>
+                    <span class="clover-bubble-text">Chúc bạn vạn sự may mắn! 🍀</span>
+                </div>
+            </div>
+
+            <canvas id="canvas" width="1100" height="680"></canvas>
+
+            <!-- Bóng Dáng Thiếu Nữ Áo Dài Nón Lá & Hoa Sen (Stage 4 Full Blossom) -->
+            <div id="ao-dai-viet-stage4" class="ao-dai-viet-stage4 hidden" aria-label="Nét duyên con gái Việt e ấp bên hoa sen" role="button" tabindex="0">
+                <div class="ao-dai-aura-mist"></div>
+                <img src="./img/ao-dai-viet.png" alt="Hai cô gái áo dài nón lá hoa sen" class="ao-dai-figure-img">
+                <!-- Interactive Poetic Verse Tooltip / Ribbon -->
+                <div class="ao-dai-poem-badge" id="ao-dai-poem-badge">
+                    <span class="poem-lotus-icon">🪷</span>
+                    <span class="poem-verse-text" id="ao-dai-poem-text">Nét duyên con gái Việt e ấp bên đầm sen ♡</span>
+                    <span class="poem-sparkle">✨</span>
+                </div>
+                <!-- Floating Lotus Petals around Áo Dài -->
+                <div class="ao-dai-floating-petals" aria-hidden="true">
+                    <span class="petal p1">🌸</span>
+                    <span class="petal p2">🪷</span>
+                    <span class="petal p3">🍃</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Lyrical Text Panel (Decoupled from canvas scale for crisp responsive reading) -->
+        <div id="text" class="lyrical-panel text-panel">
+            <button id="font-toggle-btn" class="font-toggle-btn" title="Chuyển sang font chữ dễ đọc">
+                <span class="font-icon">Aa</span>
+                <span class="font-label">Font dễ đọc</span>
+            </button>
+            <div id="code" style="display: none;">
+                <!-- Nội dung sẽ được nhúng vào đây -->
+            </div>
+        </div>
+    </div>
+    
+    <audio id="myAudio" loop>
+        <source src="./audio/nhac.mp3" type="audio/mp3" />
+    </audio>
+
+    <!-- Thư viện Marked.js nhẹ để parse markdown -->
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    
+    <!-- BOTTOM-LEFT ZONE: Secret Letter Trigger Pill -->
+    <div id="secret-letter-container" class="secret-letter-container hidden">
+        <button id="secret-letter-trigger-btn" class="secret-letter-trigger-pill" title="Mở bức thư bí mật">
+            <span class="letter-pill-icon">💌</span>
+            <span class="letter-pill-text">Thư Bí Mật 20/10</span>
+            <span class="letter-pill-clover" aria-hidden="true">🍀</span>
+            <span class="letter-pill-sparkle">✨</span>
+        </button>
+    </div>
+
+    <!-- Centered Modal Overlay for Polaroid Secret Letter (Zero Overlap with Bottom Controls) -->
+    <div id="secret-letter-modal" class="modal-overlay hidden" style="z-index: 100003;">
+        <div class="secret-letter-dialog">
+            <button id="close-secret-letter-btn" class="close-letter-btn" aria-label="Đóng thư">✕</button>
+            <div class="polaroid-hint-badge" id="polaroid-hint-badge">
+                <span class="badge-sparkle">✨</span>
+                <span class="badge-text" id="polaroid-badge-text">Chạm để lật thư 💌</span>
+            </div>
+            <div class="polaroid" id="polaroid-card">
+                <div class="polaroid-front">
+                    <div class="photo-placeholder">
+                        <div class="polaroid-botanical-art">
+                            <span class="polaroid-flower-motif">🌸</span>
+                            <div class="polaroid-wax-seal-mini">
+                                <span class="seal-icon">✦</span>
+                            </div>
+                        </div>
+                        <!-- Cỏ 4 Lá May Mắn Đính Kèm Trên Thiệp -->
+                        <div class="polaroid-clover-charm" title="Cỏ 4 lá may mắn">
+                            <img src="./img/clover-bon-la.svg" alt="Cỏ 4 lá may mắn" class="polaroid-clover-svg">
+                            <span class="clover-wish-tag">Cỏ May Mắn 🍀</span>
+                        </div>
+                        <span class="photo-hint-text">Chạm để mở bức thư bí mật ✨</span>
+                    </div>
+                    <div class="caption">20/10/2026 · A Secret Note for You ♡</div>
+                </div>
+                <div class="polaroid-back">
+                    <button class="polaroid-font-toggle" id="polaroid-font-btn" title="Chuyển đổi kiểu chữ (Viết tay / Dễ đọc)">Aa</button>
+                    <div class="polaroid-stamp-header">EPIC ATELIER · SPECIAL MEMORY</div>
+                    <div class="letter-content" id="random-letter-content">Chúc bạn 20/10 thật hạnh phúc!</div>
+                    <div class="letter-author" id="random-letter-author">- Nam Sinh -</div>
+                    <div class="polaroid-footer-heritage">
+                        <span class="footer-clover-leaf">🍀</span>
+                        <span class="footer-blessing">Gửi trao ngàn may mắn & bình an đến bạn</span>
+                        <span class="footer-clover-leaf">🪷</span>
+                    </div>
+                    <button class="polaroid-shuffle-btn" id="polaroid-shuffle-btn" title="Đọc một lời chúc khác từ các bạn nam">Đổi lời chúc khác 🎲</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- BOTTOM-RIGHT ZONE: Unified System Dock (BGM Audio + Boarding Pass) -->
+    <div id="bottom-system-dock" class="bottom-system-dock">
+        <!-- Nút mở Bưu Thiếp Kỷ Niệm & Thẻ Hoa 20/10 -->
+        <button id="open-boarding-pass-btn" class="open-boarding-pass-btn hidden" title="Mở Bưu Thiếp Kỷ Niệm 20/10 · Hương Đồng Cỏ Nội">
+            <span class="btn-icon">💌</span>
+            <span class="btn-text">Bưu Thiếp 20/10</span>
+            <span class="btn-sparkle">🪷</span>
+        </button>
+
+        <!-- Bảng điều khiển Âm Nhạc & Âm lượng -->
+        <div class="music-panel lyrical-panel">
+            <button id="music-toggle" aria-label="Toggle Music" class="music-btn-inner" title="Bật/Tắt nhạc nền">
+                <svg id="music-icon" width="22" height="22" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z"/>
+                </svg>
+            </button>
+            <div class="volume-control">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path><path d="M19.07 4.93a10 10 0 0 1 0 14.14"></path></svg>
+                <input type="range" id="volume-slider" min="0" max="1" step="0.01" value="0.05" title="Điều chỉnh âm lượng">
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Bưu Thiếp Kỷ Niệm 20/10 · Hương Đồng Cỏ Nội (Phase 3 Heritage Keepsake) -->
+    <div id="boarding-pass-modal" class="modal-overlay hidden" style="z-index: 100001;">
+        <!-- Chớp sáng máy ảnh toàn màn hình khi chụp/tải ảnh -->
+        <div id="camera-flash-overlay" class="camera-flash-overlay"></div>
+
+        <div class="boarding-pass-dialog">
+            <button id="close-boarding-pass-btn" class="close-pass-btn" aria-label="Đóng bưu thiếp">✕</button>
+            
+            <!-- Vùng cuộn hiển thị tấm bưu thiếp (Heritage Postcard Card) -->
+            <div class="ticket-scroll-container">
+                <div class="boarding-pass-card postcard-heritage-card" id="boarding-pass-card">
+                    <!-- Lớp phủ ánh xà cừ Hologram Foil dịu nhẹ -->
+                    <div class="hologram-foil-overlay" id="hologram-foil"></div>
+
+                    <!-- Đầu bưu thiếp: Dấu Bưu Điện & Tuyến Thư Tình Đồng Nội -->
+                    <div class="ticket-header" id="ticket-header">
+                        <!-- Con dấu bưu chính Đã Trao Tận Tay khi mở niêm phong -->
+                        <div class="checked-in-stamp postal-postmark-stamp hidden" id="checked-in-stamp">
+                            <div class="postmark-circle">
+                                <span>★ 20/10/2026 ★</span>
+                                <strong>BƯU ĐIỆN ĐỒNG NỘI</strong>
+                                <small>ĐÃ TRAO TẬN TAY</small>
+                            </div>
+                            <div class="postmark-waves" aria-hidden="true">
+                                <span></span><span></span><span></span>
+                            </div>
+                        </div>
+
+                        <div class="ticket-badge">BƯU THIẾP KỶ NIỆM · 20/10 ĐONG ĐẦY YÊU THƯƠNG</div>
+                        <div class="ticket-route">
+                            <div class="route-point">
+                                <span class="point-code">VƯỜN BÍ MẬT</span>
+                                <span class="point-label">Nơi Gieo Mầm 🪷</span>
+                            </div>
+                            <div class="route-line">
+                                <span class="flight-no">THƯ TÌNH ĐỒNG NỘI</span>
+                                <span class="route-arrow">🕊️</span>
+                            </div>
+                            <div class="route-point">
+                                <span class="point-code">NÀNG THƠ</span>
+                                <span class="point-label">Trái Tim Nàng 💖</span>
+                            </div>
+                        </div>
+                        <div class="ticket-meta-grid">
+                            <div class="meta-item">
+                                <span class="meta-label">NGƯỜI NHẬN</span>
+                                <span class="meta-value passenger-name-display" id="pass-passenger-name">Bạn Yêu Thương</span>
+                            </div>
+                            <div class="meta-item">
+                                <span class="meta-label">NGÀY TRAO GỬI</span>
+                                <span class="meta-value">20/10/2026</span>
+                            </div>
+                            <div class="meta-item">
+                                <span class="meta-label">TÌNH CẢM</span>
+                                <span class="meta-value highlight-gold">ĐONG ĐẦY NẮNG ẤM</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Đường đục lỗ xé niêm phong tương tác (Perforated Tear Notch Line) -->
+                    <div class="ticket-tear-line" id="ticket-tear-line" title="Chạm hoặc bấm vào đây để mở niêm phong bưu thiếp kỷ niệm!">
+                        <div class="tear-notch notch-left"></div>
+                        <div class="dashed-line"></div>
+                        <button type="button" class="tear-pill-btn" id="tear-ticket-btn" aria-label="Mở niêm phong bưu thiếp kỷ niệm">
+                            <span class="tear-icon">💌</span>
+                            <span class="tear-btn-text" id="tear-btn-text">Mở niêm phong</span>
+                        </button>
+                        <div class="tear-notch notch-right"></div>
+                    </div>
+
+                    <!-- Thân bưu thiếp: Định danh hoa & 4 Khoảnh khắc đồng nội -->
+                    <div class="ticket-body">
+                        <!-- Phần bên trái: Thẻ định danh hoa Flower ID -->
+                        <div class="flower-id-section">
+                            <div class="flower-header-badge-row">
+                                <div class="flower-badge-pill">HOA TÂM HỒN NÀNG THƠ · 20/10</div>
+                                <button type="button" id="shuffle-flower-profile-btn" class="shuffle-flower-btn" title="Khám phá loài hoa khác">Khám phá hoa khác 🌸</button>
+                            </div>
+                            <h3 class="flower-identity-title" id="flower-id-title">Bạn là đóa Sen Lụa thanh tao.</h3>
+                            <p class="flower-identity-subtitle" id="flower-id-quote">Gần bùn chẳng vướng bụi trần, thơm ngát dịu dàng.</p>
+
+                            <!-- Bông hoa minh họa với ô upload ảnh selfie ở nhụy hoa -->
+                            <div class="flower-avatar-wrap">
+                                <div class="flower-petals-svg-container" id="flower-petals-container">
+                                    <div class="flower-svg-art">
+                                        <svg viewBox="0 0 100 100" class="flower-vector-svg" id="flower-vector-svg">
+                                            <circle id="flower-svg-bg" cx="50" cy="50" r="42" fill="#FAF7F0" stroke="#E6DED5" stroke-width="2"/>
+                                            <circle class="flower-svg-petal" cx="50" cy="18" r="9" fill="#D47A88" opacity="0.85"/>
+                                            <circle class="flower-svg-petal" cx="50" cy="82" r="9" fill="#D47A88" opacity="0.85"/>
+                                            <circle class="flower-svg-petal" cx="18" cy="50" r="9" fill="#D47A88" opacity="0.85"/>
+                                            <circle class="flower-svg-petal" cx="82" cy="50" r="9" fill="#D47A88" opacity="0.85"/>
+                                            <circle class="flower-svg-petal" cx="27" cy="27" r="9" fill="#D47A88" opacity="0.85"/>
+                                            <circle class="flower-svg-petal" cx="73" cy="27" r="9" fill="#D47A88" opacity="0.85"/>
+                                            <circle class="flower-svg-petal" cx="27" cy="73" r="9" fill="#D47A88" opacity="0.85"/>
+                                            <circle class="flower-svg-petal" cx="73" cy="73" r="9" fill="#D47A88" opacity="0.85"/>
+                                        </svg>
+                                    </div>
+                                    <!-- Dynamic Flower Center Avatar -->
+                                    <div class="flower-center-avatar" id="flower-center-avatar">
+                                        <span class="default-avatar-emoji" id="flower-avatar-emoji">🪷</span>
+                                        <img id="user-uploaded-avatar" class="uploaded-avatar-img hidden" alt="User Avatar">
+                                    </div>
+                                </div>
+                                <div class="photo-upload-actions">
+                                    <label for="user-flower-photo-input" class="photo-upload-pill-btn" id="photo-upload-label">
+                                        <span>📷</span>
+                                        <span id="photo-upload-text">Thêm ảnh của bạn vào nhụy hoa</span>
+                                    </label>
+                                    <button type="button" id="remove-flower-photo-btn" class="remove-photo-pill-btn hidden" title="Xóa ảnh và dùng lại avatar mặc định">✕ Bỏ ảnh</button>
+                                </div>
+                                <input type="file" id="user-flower-photo-input" accept="image/*" style="display: none;">
+                                <div class="photo-upload-hint">Không bắt buộc. Ảnh chỉ xử lý trên máy bạn, không gửi đi đâu.</div>
+                            </div>
+
+                            <!-- Nhãn tính cách (Capsules) -->
+                            <div class="trait-tags-row" id="flower-trait-tags">
+                                <span class="trait-pill">Thanh cao</span>
+                                <span class="trait-pill">Dịu dàng</span>
+                                <span class="trait-pill">Tâm hồn thuần khiết</span>
+                            </div>
+
+                            <!-- Bảng Hợp cạ & Lệch sóng phong cách 5th Season -->
+                            <div class="compatibility-grid">
+                                <div class="compat-box match">
+                                    <span class="compat-title">Đồng điệu tâm hồn</span>
+                                    <div class="compat-item">
+                                        <span class="compat-flower-icon">🌼</span>
+                                        <div class="compat-text">
+                                            <strong>Cúc họa mi</strong>
+                                            <small>Cùng mang nét đẹp bình dị, thanh tao.</small>
+                                        </div>
+                                    </div>
+                                    <div class="compat-item">
+                                        <span class="compat-flower-icon">🌷</span>
+                                        <div class="compat-text">
+                                            <strong>Tulip</strong>
+                                            <small>Đồng điệu sự trang nhã và chiều sâu tâm hồn.</small>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="compat-box clash">
+                                    <span class="compat-title">Khác biệt nét duyên</span>
+                                    <div class="compat-item">
+                                        <span class="compat-flower-icon">🌪️</span>
+                                        <div class="compat-text">
+                                            <strong>Bão cát</strong>
+                                            <small>Ồn ào náo nhiệt không hợp với nét tĩnh tại.</small>
+                                        </div>
+                                    </div>
+                                    <div class="compat-item">
+                                        <span class="compat-flower-icon">🌵</span>
+                                        <div class="compat-text">
+                                            <strong>Gai nhọn</strong>
+                                            <small>Dễ làm tổn thương vẻ mềm mại, e ấp.</small>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Đặc điểm tính cách chi tiết -->
+                            <div class="personality-checklist">
+                                <div class="check-row">
+                                    <span class="row-label">NÉT DUYÊN NGÀY THƯỜNG</span>
+                                    <span class="row-desc" id="trait-desc-1">Chốn bình yên ai cũng muốn tìm về sau những mệt mỏi.</span>
+                                </div>
+                                <div class="check-row">
+                                    <span class="row-label">KHI TRAO YÊU THƯƠNG</span>
+                                    <span class="row-desc" id="trait-desc-2">Thương bằng tình cảm sâu lắng, chung thủy và sắt son.</span>
+                                </div>
+                                <div class="check-row">
+                                    <span class="row-label">KHI ĐỐI DIỆN ÂU LO</span>
+                                    <span class="row-desc" id="trait-desc-3">Tĩnh lặng nhìn nhận, giữ trọn cốt cách và nét an nhiên.</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Phần bên phải: Dải 4 Khung Khoảnh Khắc Đồng Nội -->
+                        <div class="photobooth-strip-section photobooth-heritage-strip">
+                            <div class="strip-header">
+                                <span class="strip-brand">BỐN MÙA ĐỒNG NỘI</span>
+                                <span class="strip-date">20/10/2026</span>
+                            </div>
+                            <div class="strip-frames-grid">
+                                <!-- Frame 1: Hạt mầm gieo duyên -->
+                                <div class="strip-frame frame-seed">
+                                    <div class="frame-content">
+                                        <span class="frame-emoji">🌱</span>
+                                        <span class="frame-caption">01 · Hạt Mầm Khởi Nguyên</span>
+                                    </div>
+                                </div>
+                                <!-- Frame 2: Nắng sớm bờ tre -->
+                                <div class="strip-frame frame-mascot">
+                                    <div class="frame-content">
+                                        <span class="frame-emoji">🌾✨</span>
+                                        <span class="frame-caption">02 · Nắng Sớm Bờ Tre</span>
+                                    </div>
+                                </div>
+                                <!-- Frame 3: Sen hồng ngát hương -->
+                                <div class="strip-frame frame-tree">
+                                    <div class="frame-content">
+                                        <span class="frame-emoji">🪷💖</span>
+                                        <span class="frame-caption">03 · Sen Hồng Ngát Hương</span>
+                                    </div>
+                                </div>
+                                <!-- Frame 4: Dáng ngọc áo dài e ấp -->
+                                <div class="strip-frame frame-letter frame-aodai">
+                                    <div class="frame-content">
+                                        <img src="./img/ao-dai-viet.webp" class="frame-aodai-thumb" alt="Áo dài thiếu nữ Việt">
+                                        <span class="frame-caption" id="frame-passenger-caption">04 · Nét Duyên Gửi Bạn</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="strip-footer">
+                                <span class="strip-doodle">♡ Nắng thu đọng nét cười thơ ♡</span>
+                                <span class="strip-stamp">VIETNAMESE HERITAGE EDITION</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Chân bưu thiếp: Con tem hoa sen cổ điển & Mộc triện son đỏ -->
+                    <div class="ticket-footer postcard-heritage-footer">
+                        <div class="vintage-stamp-wrap">
+                            <div class="vintage-postage-stamp">
+                                <div class="stamp-inner">
+                                    <div class="stamp-top-text">BƯU CHÍNH VIỆT NAM</div>
+                                    <div class="stamp-art">
+                                        <span class="stamp-lotus-icon">🪷</span>
+                                        <span class="stamp-value">20/10<small>Đ</small></span>
+                                    </div>
+                                    <div class="stamp-bottom-text">HƯƠNG ĐỒNG NỘI</div>
+                                </div>
+                            </div>
+                            <div class="stamp-postal-code">VN-2010 · THƯ TÌNH ĐỒNG NỘI · KỶ NIỆM</div>
+                        </div>
+                        <div class="wax-seal-badge trien-son-badge" title="Mộc triện son: Chạm để nhận lời chúc an yên!">
+                            <div class="seal-circle trien-circle">
+                                <span>★ 20/10 ★</span>
+                                <strong>NÉT DUYÊN</strong>
+                                <small>AN YÊN</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Thanh nút bấm CTA hành động (Download & Share) -->
+            <div class="ticket-actions-bar">
+                <button id="download-ticket-btn" class="ticket-action-btn primary-gold">
+                    <span>📥</span>
+                    <span>Tải Bưu Thiếp Story 9:16 (Lưu máy)</span>
+                </button>
+                <button id="share-social-btn" class="ticket-action-btn primary-navy">
+                    <span>🕊️</span>
+                    <span>Gửi Bưu Thiếp / Mạng Xã Hội</span>
+                </button>
+                <button id="copy-ticket-quote-btn" class="ticket-action-btn tertiary-clean">
+                    <span>📋</span>
+                    <span>Sao chép lời chúc</span>
+                </button>
+            </div>
+            <div id="ticket-action-toast" class="ticket-toast hidden"></div>
+        </div>
+    </div>
+
+    <!-- 100% Static Modular JavaScript Engine -->
+    <script src="./js/content.js"></script>
+    <script src="./js/audio-vfx.js"></script>
+    <script src="./js/environment.js"></script>
+    <script src="./js/mascot-companion.js"></script>
+    <script src="./js/wax-seal-ceremony.js"></script>
+    <script src="./js/atmosphere-shifter.js"></script>
+    <script src="./js/botanical-harp.js"></script>
+    <script src="./js/celestial-orrery.js"></script>
+    <script src="./js/garden-minigames.js"></script>
+    <script src="./js/garden-stages.js"></script>
+    <script src="./js/secret-letter.js"></script>
+    <script src="./js/boarding-pass-modal.js"></script>
+    <script src="./js/boarding-pass-canvas.js"></script>
+    <script src="./js/main.js"></script>
+</body>
+</html>

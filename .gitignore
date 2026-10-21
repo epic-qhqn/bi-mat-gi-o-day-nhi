@@ -1,0 +1,8 @@
+# OS & IDE metadata
+.DS_Store
+Thumbs.db
+*.tmp
+*.log
+
+# Reference files
+20-10.html
