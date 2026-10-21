@@ -16,6 +16,46 @@
     let simonPlaying = false;
     let lastSimonTapTime = 0;
 
+    // Tạo dãy nốt ngẫu nhiên: 4-5 nốt, không lặp liền nhau, có >= 3 nốt khác nhau.
+    const generateRandomSequence = () => {
+        const len = Math.random() < 0.5 ? 4 : 5;
+        const seq = [];
+        for (let i = 0; i < len; i++) {
+            let n;
+            do { n = Math.floor(Math.random() * 4); } while (i > 0 && n === seq[i - 1]);
+            seq.push(n);
+        }
+        return new Set(seq).size >= 3 ? seq : generateRandomSequence();
+    };
+
+    // Chọn NGẪU NHIÊN bản nhạc (palette) + dãy nốt mới, luôn khác lần trước.
+    // Gọi khi vào game (mỗi lần tải trang) và mỗi khi người chơi bấm sai nốt.
+    const rollNewMelody = () => {
+        const palettes = window.simonHarmonicPalettes || [];
+        const currentId = window.activeHarmonicPalette
+            ? window.activeHarmonicPalette.id
+            : sessionStorage.getItem('last_simon_palette_id');
+        let chosen = palettes[0] || { id: 'canon', name: 'Canon in D Romance' };
+        if (palettes.length > 1) {
+            const available = palettes.filter(p => p.id !== currentId);
+            chosen = available[Math.floor(Math.random() * available.length)] || palettes[0];
+        }
+        sessionStorage.setItem('last_simon_palette_id', chosen.id);
+        window.activeHarmonicPalette = chosen;
+
+        const lastSeqStr = JSON.stringify(simonSequence.length ? simonSequence : JSON.parse(sessionStorage.getItem('last_simon_seq') || 'null'));
+        let newSeq;
+        let attempts = 0;
+        do {
+            newSeq = generateRandomSequence();
+            attempts++;
+        } while (attempts < 30 && JSON.stringify(newSeq) === lastSeqStr);
+
+        sessionStorage.setItem('last_simon_seq', JSON.stringify(newSeq));
+        simonSequence = newSeq;
+        simonInput = [];
+    };
+
     const startSimonGame = async () => {
         const container = document.getElementById('simon-game');
         if (!container) return;
@@ -76,28 +116,8 @@
             container.appendChild(node);
         });
 
-        const palettes = window.simonHarmonicPalettes || [];
-        const lastPaletteId = sessionStorage.getItem('last_simon_palette_id');
-        let chosenPalette = palettes[0] || { id: 'canon', name: 'Canon in D Romance', motifs: [[0, 1, 2, 3], [0, 2, 1, 3], [0, 1, 3, 2]] };
-        if (palettes.length > 1) {
-            const available = palettes.filter(p => p.id !== lastPaletteId);
-            chosenPalette = available[Math.floor(Math.random() * available.length)] || palettes[0];
-        }
-        sessionStorage.setItem('last_simon_palette_id', chosenPalette.id);
-        window.activeHarmonicPalette = chosenPalette;
-
-        const motifs = chosenPalette.motifs || [[0, 1, 2, 3], [0, 2, 1, 3], [0, 1, 3, 2]];
-        const lastSeqStr = sessionStorage.getItem('last_simon_seq');
-        let newSeq = [];
-        let attempts = 0;
-        do {
-            newSeq = [...motifs[Math.floor(Math.random() * motifs.length)]];
-            attempts++;
-        } while (attempts < 20 && lastSeqStr && JSON.stringify(newSeq) === lastSeqStr);
-
-        sessionStorage.setItem('last_simon_seq', JSON.stringify(newSeq));
-        simonSequence = newSeq;
-        simonInput = [];
+        rollNewMelody();
+        const chosenPalette = window.activeHarmonicPalette;
 
         const msg = document.getElementById('garden-message');
         if (msg) msg.textContent = `🎵 ${chosenPalette.name}: Hãy lắng nghe khúc giai điệu ma thuật...`;
@@ -147,9 +167,10 @@
             node.classList.add('wrong');
             setTimeout(() => node.classList.remove('wrong'), 500);
             await sleep(1000);
-            simonInput = [];
+            // Bấm sai -> đổi sang bản nhạc + dãy nốt ngẫu nhiên mới cho lượt kế tiếp
+            rollNewMelody();
             const paletteName = window.activeHarmonicPalette ? window.activeHarmonicPalette.name : 'Khúc ca';
-            if (msg) msg.textContent = `Lắng nghe lại giai điệu ${paletteName}...`;
+            if (msg) msg.textContent = `🎵 ${paletteName}: giai điệu mới, hãy lắng nghe...`;
             await playSimonSequence();
             if (msg) msg.textContent = "Đến lượt bạn lặp lại giai điệu nhé!";
         } else if (simonInput.length === simonSequence.length) {
