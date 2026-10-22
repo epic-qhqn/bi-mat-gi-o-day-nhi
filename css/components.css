@@ -1434,23 +1434,36 @@ body.sky-dusk .dusk-glow {
 
 .atelier-paper-card,
 .luminous-portal {
-  width: min(480px, 92vw);
+  width: min(510px, 94vw);
+  max-height: 92vh !important;
+  overflow-y: auto !important;
+  overflow-x: hidden !important;
   background: #FAF8F5 !important;
   background-image: radial-gradient(rgba(200, 185, 160, 0.15) 1px, transparent 1px);
   background-size: 14px 14px;
   border: 1.5px solid var(--border-card) !important;
   box-shadow: var(--shadow-card) !important;
   border-radius: 24px !important;
-  padding: 38px 28px 26px 28px !important;
+  padding: 26px 20px 20px 20px !important;
   color: var(--text-navy) !important;
   text-align: center;
   position: relative;
-  overflow: visible !important;
   box-sizing: border-box;
   animation: zoom-in-lock 0.4s cubic-bezier(0.16, 1, 0.3, 1);
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
   transition: transform 0.3s ease, box-shadow 0.3s ease;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(212, 175, 55, 0.45) transparent;
+}
+
+.atelier-paper-card::-webkit-scrollbar {
+  width: 5px;
+}
+
+.atelier-paper-card::-webkit-scrollbar-thumb {
+  background: rgba(212, 175, 55, 0.45);
+  border-radius: 999px;
 }
 
 body.sky-night .atelier-paper-card,
@@ -1747,27 +1760,20 @@ body.sky-night .emboss-char {
    PHASE 3: ARTISAN MELTING HEARTH & MULTI-SENSORY WAX SEAL RITUAL
    ========================================================================== */
 
-/* 6-Step Poetic Ritual Breadcrumb Bar */
+/* 3-Phase Poetic Ritual Breadcrumb Bar */
 .ritual-step-bar {
   display: flex;
   align-items: center;
   justify-content: space-between;
   flex-wrap: nowrap;
-  gap: 2px 4px;
+  gap: 6px;
   margin: 0 auto 12px auto;
-  padding: 5px 8px;
-  background: rgba(245, 236, 215, 0.45);
+  padding: 6px 12px;
+  background: rgba(245, 236, 215, 0.55);
   border: 1px solid rgba(212, 175, 55, 0.35);
   border-radius: 999px;
   width: 100%;
-  max-width: 500px;
   box-sizing: border-box;
-  overflow-x: auto;
-  scrollbar-width: none;
-}
-
-.ritual-step-bar::-webkit-scrollbar {
-  display: none;
 }
 
 body.sky-night .ritual-step-bar {
@@ -1776,16 +1782,17 @@ body.sky-night .ritual-step-bar {
 }
 
 .step-dot {
-  flex-shrink: 0;
+  flex: 1;
   font-family: 'Be Vietnam Pro', sans-serif;
-  font-size: 10px;
+  font-size: 11px;
   font-weight: 600;
   color: var(--text-muted);
-  padding: 3px 6px;
+  padding: 4px 6px;
   border-radius: 999px;
   display: inline-flex;
   align-items: center;
-  gap: 3px;
+  justify-content: center;
+  gap: 4px;
   transition: all 0.25s ease;
   user-select: none;
   white-space: nowrap;
@@ -1793,7 +1800,7 @@ body.sky-night .ritual-step-bar {
 
 .step-dot i {
   font-style: normal;
-  font-size: 9.5px;
+  font-size: 11px;
 }
 
 .step-dot.is-active {
@@ -1801,41 +1808,38 @@ body.sky-night .ritual-step-bar {
   color: var(--text-navy);
   font-weight: 700;
   box-shadow: 0 2px 8px rgba(222, 184, 83, 0.4);
-  transform: scale(1.04);
 }
 
 .step-dot.is-done {
   color: #2E7D32;
-  background: rgba(46, 125, 50, 0.12);
+  background: rgba(46, 125, 50, 0.14);
+  font-weight: 700;
 }
 
 body.sky-night .step-dot.is-done {
   color: #81C784;
-  background: rgba(129, 199, 132, 0.15);
+  background: rgba(129, 199, 132, 0.18);
 }
 
 .step-connector {
-  flex: 1;
-  min-width: 4px;
-  max-width: 14px;
+  width: 10px;
   height: 1.5px;
   background: rgba(212, 175, 55, 0.35);
   flex-shrink: 0;
 }
 
-/* Artisan Crafting Bench Container */
+/* Artisan Crafting Bench Container (2-Column Balanced Grid) */
 .artisan-crafting-bench {
-  display: flex;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
   align-items: stretch;
-  justify-content: space-between;
   gap: 12px;
   padding: 12px;
   background: rgba(250, 248, 245, 0.95);
   border: var(--border-width-atelier) solid var(--border-card);
   border-radius: var(--radius-card);
-  margin: 6px auto 14px auto;
+  margin: 0 auto 12px auto;
   width: 100%;
-  max-width: 500px;
   box-sizing: border-box;
   backdrop-filter: blur(var(--blur-glass));
   -webkit-backdrop-filter: blur(var(--blur-glass));
@@ -1850,22 +1854,37 @@ body.sky-night .artisan-crafting-bench {
   box-shadow: 0 6px 24px rgba(0, 0, 0, 0.45);
 }
 
+.hearth-column-title,
+.workspace-column-title {
+  font-family: 'Be Vietnam Pro', sans-serif;
+  font-size: 9.5px;
+  font-weight: 800;
+  letter-spacing: 0.8px;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  margin-bottom: 2px;
+  display: block;
+  text-align: center;
+}
+
+body.sky-night .hearth-column-title,
+body.sky-night .workspace-column-title {
+  color: #E2D4B7;
+}
+
 /* Hearth Burner Unit: Self-contained Dedicated Heating Station */
 .hearth-burner-unit {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: space-between;
-  gap: 6px;
-  width: 136px;
-  min-width: 130px;
-  max-width: 140px;
-  flex-shrink: 0;
+  gap: 8px;
+  width: 100%;
   box-sizing: border-box;
   background: rgba(245, 238, 224, 0.55);
   border: 1px solid rgba(212, 175, 55, 0.3);
-  border-radius: 10px;
-  padding: 8px 6px;
+  border-radius: 12px;
+  padding: 8px 8px;
   position: relative;
 }
 
@@ -2432,24 +2451,24 @@ body.sky-night .matchbox-brand {
   100% { transform: translate(0, 0) rotate(15deg); }
 }
 
-/* Wax Beads Palette Tray & Crest Selector */
+/* Wax Beads Palette Tray & Crest Selector (Full Width) */
 .wax-beads-tray {
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
-  gap: 6px;
-  flex: 1;
-  min-width: 0;
+  gap: 10px;
+  width: 100%;
   box-sizing: border-box;
-  background: rgba(255, 255, 255, 0.7);
-  border: 1px solid rgba(228, 220, 208, 0.6);
-  border-radius: 10px;
-  padding: 8px 10px;
+  background: rgba(255, 255, 255, 0.85);
+  border: 1px solid rgba(228, 220, 208, 0.8);
+  border-radius: 14px;
+  padding: 12px 14px;
+  box-shadow: 0 2px 10px rgba(19, 28, 78, 0.04);
+  margin-bottom: 12px;
 }
 
 body.sky-night .wax-beads-tray {
-  background: rgba(255, 255, 255, 0.03);
-  border-color: rgba(245, 206, 86, 0.15);
+  background: rgba(255, 255, 255, 0.05);
+  border-color: rgba(245, 206, 86, 0.2);
 }
 
 .tray-header-row {
@@ -2457,24 +2476,33 @@ body.sky-night .wax-beads-tray {
   align-items: center;
   justify-content: space-between;
   width: 100%;
+  flex-wrap: wrap;
+  gap: 6px;
 }
 
 .tray-title {
   font-family: 'Be Vietnam Pro', sans-serif;
-  font-size: 8.5px;
+  font-size: 11px;
   font-weight: 800;
-  letter-spacing: 0.8px;
-  color: var(--text-muted);
+  letter-spacing: 1px;
+  color: var(--text-navy);
   text-transform: uppercase;
 }
 
 body.sky-night .tray-title {
-  color: var(--text-subtle);
+  color: #F5CE56;
+}
+
+.tray-actions-group {
+  display: flex;
+  align-items: center;
+  gap: 8px;
 }
 
 .tray-counter {
-  font-size: 9px;
+  font-size: 11.5px;
   color: var(--text-muted);
+  white-space: nowrap;
 }
 
 .tray-counter strong {
@@ -2486,11 +2514,39 @@ body.sky-night .tray-counter strong {
   color: #F5CE56;
 }
 
+.hearth-quick-drop-btn,
+.tray-reset-btn {
+  background: #FFFFFF;
+  border: 1px solid var(--border-card);
+  border-radius: var(--radius-pill);
+  padding: 5px 12px;
+  font-family: 'Be Vietnam Pro', sans-serif;
+  font-size: 11.5px;
+  font-weight: 700;
+  color: var(--text-navy);
+  cursor: pointer;
+  box-shadow: 0 1px 4px rgba(19, 28, 78, 0.08);
+  transition: all var(--transition-fast);
+  white-space: nowrap;
+  min-height: 28px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.hearth-quick-drop-btn:hover,
+.tray-reset-btn:hover {
+  background: var(--accent-pill-bg);
+  border-color: var(--accent-gold);
+  transform: translateY(-1px);
+}
+
 .beads-container {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 4px;
+  width: 100%;
+  gap: 6px;
 }
 
 .wax-bead-item {
@@ -2500,32 +2556,32 @@ body.sky-night .tray-counter strong {
   cursor: pointer;
   touch-action: manipulation;
   transition: transform var(--transition-normal);
-  padding: 2px;
-  border-radius: 6px;
+  padding: 4px 6px;
+  border-radius: 8px;
+  min-width: 44px;
 }
 
 .wax-bead-item:hover {
-  transform: translateY(-2px) scale(1.1);
+  transform: translateY(-2px) scale(1.08);
 }
 
 .wax-bead-item:active {
-  transform: translateY(0) scale(var(--scale-active, 0.95));
+  transform: translateY(0) scale(0.95);
 }
 
 .wax-bead-item.is-selected {
   outline: 2px solid var(--accent-gold);
-  border-radius: 8px;
   background: rgba(212, 175, 55, 0.15);
 }
 
 .hex-bead-shape {
-  width: 28px;
-  height: 28px;
+  width: 36px;
+  height: 36px;
   clip-path: polygon(25% 0%, 75% 0%, 100% 50%, 75% 100%, 25% 100%, 0% 50%);
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 3px 8px rgba(19, 28, 78, 0.15);
+  box-shadow: 0 3px 8px rgba(19, 28, 78, 0.18);
   position: relative;
   transition: all var(--transition-fast);
 }
@@ -2557,16 +2613,16 @@ body.sky-night .tray-counter strong {
 }
 
 .bead-stamp-icon {
-  font-size: 11px;
+  font-size: 14px;
   color: rgba(255, 255, 255, 0.95);
   text-shadow: 0 1px 2px rgba(0, 0, 0, 0.4);
 }
 
 .bead-label {
-  font-size: 8px;
+  font-size: 11px;
   font-weight: 700;
   color: var(--text-navy);
-  margin-top: 3px;
+  margin-top: 4px;
   white-space: nowrap;
 }
 
@@ -2580,49 +2636,22 @@ body.sky-night .bead-label {
   transform: scale(0.85);
 }
 
-.tray-action-row {
-  display: flex;
-  align-items: center;
-  justify-content: flex-end;
-  gap: 6px;
-}
-
-.hearth-quick-drop-btn,
-.tray-reset-btn {
-  background: var(--bg-card);
-  border: 1px solid var(--border-card);
-  border-radius: var(--radius-pill);
-  padding: 3px 9px;
-  font-family: 'Be Vietnam Pro', sans-serif;
-  font-size: 9.5px;
-  font-weight: 700;
-  color: var(--text-navy);
-  cursor: pointer;
-  box-shadow: 0 1px 4px rgba(19, 28, 78, 0.06);
-  transition: all var(--transition-fast);
-  white-space: nowrap;
-}
-
-.hearth-quick-drop-btn:hover,
-.tray-reset-btn:hover {
-  background: #FFFFFF;
-  border-color: var(--text-navy);
-  transform: translateY(-1px);
-}
-
-/* Brass Crest Motif Selector */
+/* Brass Crest Motif Selector (2x2 Grid Responsive) */
 .crest-selector-wrap {
   display: flex;
   flex-direction: column;
-  gap: 3px;
-  margin-top: 2px;
+  gap: 6px;
+  margin-top: 4px;
+  width: 100%;
 }
 
 .crest-selector-title {
-  font-size: 8px;
+  font-size: 10.5px;
   font-weight: 800;
   color: var(--text-muted);
-  letter-spacing: 0.6px;
+  letter-spacing: 0.8px;
+  text-align: left;
+  text-transform: uppercase;
 }
 
 body.sky-night .crest-selector-title {
@@ -2630,38 +2659,48 @@ body.sky-night .crest-selector-title {
 }
 
 .crest-options-row {
-  display: flex;
-  align-items: center;
-  gap: 4px;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 8px;
+  width: 100%;
+}
+
+@media (min-width: 440px) {
+  .crest-options-row {
+    grid-template-columns: repeat(4, 1fr);
+  }
 }
 
 .crest-opt-btn {
-  flex: 1;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 3px;
-  padding: 3px 5px;
-  background: rgba(245, 236, 215, 0.4);
-  border: 1px solid rgba(212, 175, 55, 0.35);
-  border-radius: 6px;
+  gap: 6px;
+  min-height: 38px;
+  padding: 6px 10px;
+  background: rgba(245, 236, 215, 0.5);
+  border: 1.5px solid rgba(212, 175, 55, 0.35);
+  border-radius: 10px;
   font-family: 'Be Vietnam Pro', sans-serif;
-  font-size: 8.5px;
-  font-weight: 600;
+  font-size: 12px;
+  font-weight: 700;
   color: var(--text-navy);
   cursor: pointer;
   transition: all 0.2s ease;
   white-space: nowrap;
+  box-sizing: border-box;
 }
 
 body.sky-night .crest-opt-btn {
-  background: rgba(255, 255, 255, 0.05);
+  background: rgba(255, 255, 255, 0.06);
   color: #DCE3F2;
+  border-color: rgba(245, 206, 86, 0.25);
 }
 
 .crest-opt-btn:hover {
   background: rgba(212, 175, 55, 0.2);
   transform: translateY(-1px);
+  box-shadow: 0 2px 8px rgba(212, 175, 55, 0.2);
 }
 
 .crest-opt-btn.is-selected {
@@ -2669,32 +2708,46 @@ body.sky-night .crest-opt-btn {
   border-color: #B58D2A;
   color: #3E2413;
   font-weight: 800;
-  box-shadow: 0 1px 4px rgba(212, 175, 55, 0.35);
+  box-shadow: 0 2px 8px rgba(212, 175, 55, 0.4);
 }
 
 .crest-opt-icon {
-  font-size: 10px;
+  font-size: 15px;
 }
 
-/* Interactive 3D Wax Seal Workspace */
+.crest-opt-name {
+  font-size: 12px;
+}
+
+/* Interactive 3D Wax Seal Workspace (Right Column inside Workbench) */
 .wax-seal-workspace {
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: clamp(16px, 5vw, 36px);
-  margin: 6px auto 14px auto;
-  position: relative;
-  min-height: 105px;
+  gap: 10px;
   width: 100%;
+  box-sizing: border-box;
+  background: rgba(245, 238, 224, 0.55);
+  border: 1px solid rgba(212, 175, 55, 0.3);
+  border-radius: 12px;
+  padding: 8px 8px;
+  position: relative;
+  min-height: 140px;
+}
+
+body.sky-night .wax-seal-workspace {
+  background: rgba(255, 255, 255, 0.04);
+  border-color: rgba(245, 206, 86, 0.2);
 }
 
 /* Target Landing Zone */
 .wax-target-zone {
-  width: clamp(78px, 18vw, 92px);
-  height: clamp(78px, 18vw, 92px);
+  width: 82px;
+  height: 82px;
   border-radius: 50%;
-  border: 2px dashed rgba(212, 175, 55, 0.45);
-  background: rgba(245, 236, 215, 0.35);
+  border: 2px dashed rgba(212, 175, 55, 0.5);
+  background: rgba(245, 236, 215, 0.45);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -2895,16 +2948,13 @@ body.sky-night .wax-target-hint {
 
 /* Artisan Sprinkle Vial Shaker Button */
 .artisan-sprinkle-vial {
-  position: absolute;
-  bottom: -28px;
-  left: 50%;
-  transform: translateX(-50%);
-  background: rgba(255, 255, 255, 0.95);
-  border: 1px solid #D4AF37;
+  position: relative;
+  background: #FFFFFF;
+  border: 1.5px solid #D4AF37;
   border-radius: 999px;
-  padding: 3px 10px;
+  padding: 5px 12px;
   font-family: 'Be Vietnam Pro', sans-serif;
-  font-size: 9px;
+  font-size: 11px;
   font-weight: 700;
   color: #73571A;
   box-shadow: 0 2px 8px rgba(212, 175, 55, 0.35);
@@ -2912,15 +2962,16 @@ body.sky-night .wax-target-hint {
   z-index: 8;
   display: inline-flex;
   align-items: center;
-  gap: 4px;
+  gap: 5px;
   white-space: nowrap;
+  min-height: 28px;
   transition: all 0.2s ease;
   animation: badge-bob 2s infinite ease-in-out;
 }
 
 .artisan-sprinkle-vial:hover {
   background: #FFF9E6;
-  transform: translateX(-50%) translateY(-2px) scale(1.05);
+  transform: translateY(-2px) scale(1.05);
 }
 
 .artisan-sprinkle-vial.hidden {
@@ -3350,71 +3401,62 @@ body.sky-night .wax-seal-guide-tip {
 }
 
 /* Mobile & Tablet Responsive Adjustments */
+/* Mobile & Tablet Responsive Adjustments */
 @media (max-width: 520px) {
-  .artisan-crafting-bench {
-    flex-direction: column;
-    align-items: center;
-    gap: 12px;
-    padding: 10px;
+  .atelier-paper-card {
+    padding: 20px 14px 16px 14px !important;
   }
-  .hearth-burner-unit {
-    flex-direction: row;
-    gap: 8px;
-    width: 100%;
-    max-width: 100%;
-    justify-content: space-around;
-    align-items: center;
-    padding: 6px 8px;
+  .ritual-step-bar {
+    padding: 5px 8px;
+    gap: 4px;
   }
-  .hearth-burner-unit .artisan-matchbox-wrap {
-    width: auto;
-    max-width: 125px;
+  .step-dot {
+    font-size: 10.5px;
+    padding: 3px 5px;
   }
-  .hearth-burner-unit .artisan-candle {
-    margin: 0;
-  }
-  .hearth-burner-unit .brass-spoon-stand {
-    width: auto;
-    margin-top: 0;
+  .step-dot i {
+    font-size: 10px;
+    display: inline;
   }
   .wax-beads-tray {
-    width: 100%;
-  }
-  .beads-container {
-    justify-content: center;
-    gap: 8px;
+    padding: 10px 10px;
   }
   .hex-bead-shape {
     width: 32px;
     height: 32px;
   }
+  .bead-label {
+    font-size: 10px;
+  }
   .crest-options-row {
-    flex-wrap: wrap;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 6px;
   }
   .crest-opt-btn {
-    min-width: calc(50% - 4px);
-    padding: 5px 6px;
+    min-height: 36px;
+    font-size: 11.5px;
+    padding: 5px 8px;
   }
+  .artisan-crafting-bench {
+    gap: 8px;
+    padding: 8px;
+  }
+  .hearth-burner-unit,
   .wax-seal-workspace {
-    gap: 20px;
-    min-height: 96px;
+    padding: 8px 6px;
   }
-  .step-dot i {
-    display: none;
+  .wax-target-zone {
+    width: 74px;
+    height: 74px;
   }
 }
 
-@media (max-width: 380px) {
-  .ritual-step-bar {
-    padding: 4px 8px;
-    gap: 2px;
+@media (max-width: 360px) {
+  .artisan-crafting-bench {
+    grid-template-columns: 1fr;
   }
   .step-dot {
-    font-size: 9px;
-    padding: 2px 5px;
-  }
-  .step-connector {
-    width: 4px;
+    font-size: 9.5px;
   }
 }
 

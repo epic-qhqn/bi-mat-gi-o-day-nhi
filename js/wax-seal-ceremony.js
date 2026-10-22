@@ -335,27 +335,45 @@
     };
 
     const STEP_HINTS = {
-        1: 'Quẹt que diêm qua dải nhám bao diêm để thắp ngọn nến thơm 🕯️',
-        2: 'Chọn 2-3 hạt sắc sáp & hoa văn triện đồng lưu tên nàng thơ 🎨',
-        3: 'Sáp đồng đang đun nóng trên ngọn lửa nến, sôi sủi bọt nhiệt 🔥',
-        4: 'Dùng que thủy tinh rê khuấy tự do để hòa quyện vân sáp cẩm thạch 🪄',
-        5: 'Chạm hoặc nghiêng thìa để rót dòng sáp nóng óng ả lên bao thư 🍯',
-        6: 'Cầm con dấu dập vào tâm vũng sáp, nhấn giữ để in triện son lưu niệm 💮'
+        1: 'Chọn sắc sáp & hoa văn triện nàng yêu thích 🎨',
+        2: 'Sáp thơm đang đun chảy óng ả trên ngọn lửa nến ấm 🔥',
+        3: 'Dập triện son lưu giữ kỷ niệm và mở lối vào vườn hoa 💮'
+    };
+
+    const updateStartBtnLabel = () => {
+        if (!startBtn) return;
+        const btnText = startBtn.querySelector('.seal-text');
+        const btnIcon = startBtn.querySelector('.seal-icon');
+        if (!btnText) return;
+
+        if (!isCandleLit || selectedBeads.length < 2 || !isWaxMelted) {
+            if (btnIcon) btnIcon.textContent = '🔥';
+            btnText.textContent = 'Thắp Nến & Đun Sáp ✨';
+        } else if (!isWaxPoured) {
+            if (btnIcon) btnIcon.textContent = '🍯';
+            btnText.textContent = 'Rót Sáp Lên Phong Thư 🍯';
+        } else {
+            if (btnIcon) btnIcon.textContent = '💮';
+            btnText.textContent = 'Dập Triện Son & Mở Cổng ✨';
+        }
     };
 
     const setRitualStep = (step) => {
         currentStep = step;
+        const phase = step <= 1 ? 1 : (step <= 5 ? 2 : 3);
         if (ritualStepBar) {
             ritualStepBar.querySelectorAll('.step-dot').forEach(dot => {
                 const s = parseInt(dot.getAttribute('data-step'), 10);
                 dot.classList.remove('is-active', 'is-done');
-                if (s === step) dot.classList.add('is-active');
-                else if (s < step) dot.classList.add('is-done');
+                if (s === phase) dot.classList.add('is-active');
+                else if (s < phase) dot.classList.add('is-done');
             });
         }
-        if (waxSealGuideTip && STEP_HINTS[step]) {
-            waxSealGuideTip.innerHTML = `<span>${STEP_HINTS[step]}</span>`;
+        if (waxSealGuideTip) {
+            const hint = STEP_HINTS[phase] || STEP_HINTS[1];
+            waxSealGuideTip.innerHTML = `<span>${hint}</span>`;
         }
+        updateStartBtnLabel();
     };
 
     // =========================================================================
@@ -774,114 +792,62 @@
                 setTimeout(() => { inputEl.style.borderColor = ''; }, 600);
             }
             if (waxSealGuideTip) {
-                waxSealGuideTip.innerHTML = `<span>✨ Hãy nhập tên nàng lên khuôn đồng dập nổi trước nhé!</span>`;
+                waxSealGuideTip.innerHTML = `<span>✨ Hãy nhập tên của bạn lên khuôn đồng trước nhé!</span>`;
             }
             if (navigator.vibrate) navigator.vibrate(20);
             return { ready: false, step: 0 };
         }
 
-        // Step 1: Candle must be lit
+        // Auto-progress Step 1: Light candle if not lit
         if (!isCandleLit) {
-            if (artisanMatchstick) {
-                artisanMatchstick.animate([
-                    { transform: 'scale(1)' },
-                    { transform: 'scale(1.2) rotate(-5deg)' },
-                    { transform: 'scale(1)' }
-                ], { duration: 400 });
+            if (selectedBeads.length < 2) {
+                selectedBeads = ['lotus', 'gold'];
+                updateBeadDisplayInSpoon();
             }
-            if (artisanCandleEl) {
-                artisanCandleEl.animate([
-                    { transform: 'translateY(0)' },
-                    { transform: 'translateY(-4px)' },
-                    { transform: 'translateY(0)' }
-                ], { duration: 400 });
-            }
-            if (waxSealGuideTip) {
-                waxSealGuideTip.innerHTML = `<span>Bước 1: Hãy quẹt que diêm để thắp ngọn nến thơm trước nhé 🕯️</span>`;
-            }
-            if (navigator.vibrate) navigator.vibrate(25);
-            setRitualStep(1);
+            lightMatch();
+            setTimeout(() => {
+                meltWaxBeads();
+            }, 600);
             return { ready: false, step: 1 };
         }
 
-        // Step 2: At least 2 wax beads must be chosen
-        if (selectedBeads.length < 2) {
-            if (waxBeadsTray) {
-                waxBeadsTray.animate([
-                    { transform: 'translateX(0)' },
-                    { transform: 'translateX(-4px)' },
-                    { transform: 'translateX(4px)' },
-                    { transform: 'translateX(0)' }
-                ], { duration: 350 });
+        // Auto-progress Step 2: Melt wax if not melted
+        if (!isWaxMelted) {
+            if (selectedBeads.length < 2) {
+                selectedBeads = ['lotus', 'gold'];
+                updateBeadDisplayInSpoon();
             }
-            if (waxSealGuideTip) {
-                waxSealGuideTip.innerHTML = `<span>Bước 2: Hãy chọn ít nhất 2 viên sáp vào thìa (hoặc bấm Phối màu nhanh) 🎨</span>`;
-            }
-            if (navigator.vibrate) navigator.vibrate(25);
-            setRitualStep(2);
+            meltWaxBeads();
             return { ready: false, step: 2 };
         }
 
-        // Step 3: Wax must be melted on the flame
-        if (!isWaxMelted) {
-            if (waxSealGuideTip) {
-                waxSealGuideTip.innerHTML = `<span>Bước 3: Sáp đang tan chảy trên ngọn lửa nến ấm, đợi một chút nhé 🔥</span>`;
-            }
-            if (navigator.vibrate) navigator.vibrate(25);
-            setRitualStep(3);
-            return { ready: false, step: 3 };
-        }
-
-        // Step 4: Wax must be stirred with marbling swirls
-        if (!isWaxStirred) {
-            if (glassStirringRodEl) {
-                glassStirringRodEl.animate([
-                    { transform: 'rotate(0deg)' },
-                    { transform: 'rotate(20deg)' },
-                    { transform: 'rotate(0deg)' }
-                ], { duration: 400 });
-            }
-            if (waxSealGuideTip) {
-                waxSealGuideTip.innerHTML = `<span>Bước 4: Hãy chạm que thủy tinh hoặc rê tay để khuấy vân cẩm thạch 🪄</span>`;
-            }
-            if (navigator.vibrate) navigator.vibrate(25);
-            setRitualStep(4);
-            return { ready: false, step: 4 };
-        }
-
-        // Step 5: Molten wax must be poured onto the letter
+        // Auto-progress Step 3: Stir and pour wax if not poured
         if (!isWaxPoured) {
-            if (brassSpoonEl) {
-                brassSpoonEl.animate([
-                    { transform: 'rotate(0deg)' },
-                    { transform: 'rotate(15deg)' },
-                    { transform: 'rotate(0deg)' }
-                ], { duration: 400 });
+            if (!isWaxStirred) {
+                stirMarbledWax(() => {
+                    setTimeout(pourMoltenWax, 250);
+                });
+            } else {
+                pourMoltenWax();
             }
-            if (waxSealGuideTip) {
-                waxSealGuideTip.innerHTML = `<span>Bước 5: Chạm vào thìa để rót dòng sáp óng ánh xuống giấy nhé 🍯</span>`;
-            }
-            if (navigator.vibrate) navigator.vibrate(25);
-            setRitualStep(5);
-            return { ready: false, step: 5 };
+            return { ready: false, step: 2 };
         }
 
-        // All steps verified: Ready for final stamping
-        setRitualStep(6);
-        return { ready: true, step: 6 };
+        setRitualStep(3);
+        return { ready: true, step: 3 };
     };
 
     const performWaxSealStamp = (onComplete) => {
-        const check = checkStepProgression();
-        if (!check.ready) {
-            return;
+        const inputEl = document.getElementById('name-input');
+        const val = inputEl ? inputEl.value.trim() : '';
+        if (!val || !isWaxPoured) {
+            const check = checkStepProgression();
+            if (!check.ready) return;
         }
 
         if (isWaxStamping) return;
         isWaxStamping = true;
 
-        const inputEl = document.getElementById('name-input');
-        const val = inputEl ? inputEl.value.trim() : '';
         window.currentUserName = val;
         if (waxNameImprintEl) waxNameImprintEl.textContent = val.toUpperCase();
         if (typeof window.initAudio === 'function') window.initAudio();
@@ -1250,6 +1216,79 @@
         // 5. Step 6: Brass Stamp Stamping & Hold-to-Press Gestures
         if (startBtn) {
             startBtn.addEventListener('click', () => {
+                const val = nameInputEl ? nameInputEl.value.trim() : '';
+                if (!val) {
+                    if (nameInputEl) {
+                        nameInputEl.style.borderColor = '#E53E3E';
+                        nameInputEl.focus();
+                        const brassPlate = document.getElementById('letterpress-brass-plate');
+                        if (brassPlate) {
+                            brassPlate.animate([
+                                { transform: 'translateX(0)' },
+                                { transform: 'translateX(-6px)' },
+                                { transform: 'translateX(6px)' },
+                                { transform: 'translateX(-4px)' },
+                                { transform: 'translateX(4px)' },
+                                { transform: 'translateX(0)' }
+                            ], { duration: 350 });
+                        }
+                        setTimeout(() => { nameInputEl.style.borderColor = ''; }, 600);
+                    }
+                    if (waxSealGuideTip) {
+                        waxSealGuideTip.innerHTML = `<span>✨ Hãy nhập tên của bạn lên khuôn đồng trước nhé!</span>`;
+                    }
+                    if (navigator.vibrate) navigator.vibrate(20);
+                    return;
+                }
+
+                window.currentUserName = val;
+                if (waxNameImprintEl) waxNameImprintEl.textContent = val.toUpperCase();
+                if (typeof window.initAudio === 'function') window.initAudio();
+
+                // Phase 1: Light candle & melt
+                if (!isCandleLit) {
+                    if (selectedBeads.length < 2) {
+                        selectedBeads = ['lotus', 'gold'];
+                        updateBeadDisplayInSpoon();
+                    }
+                    lightMatch();
+                    setTimeout(() => {
+                        meltWaxBeads();
+                        updateStartBtnLabel();
+                    }, 650);
+                    return;
+                }
+
+                // Phase 2a: Melt
+                if (!isWaxMelted) {
+                    if (selectedBeads.length < 2) {
+                        selectedBeads = ['lotus', 'gold'];
+                        updateBeadDisplayInSpoon();
+                    }
+                    meltWaxBeads();
+                    updateStartBtnLabel();
+                    return;
+                }
+
+                // Phase 2b: Pour into envelope target zone
+                if (!isWaxPoured) {
+                    if (!isWaxStirred) {
+                        stirMarbledWax(() => {
+                            setTimeout(() => {
+                                pourMoltenWax(() => {
+                                    updateStartBtnLabel();
+                                });
+                            }, 250);
+                        });
+                    } else {
+                        pourMoltenWax(() => {
+                            updateStartBtnLabel();
+                        });
+                    }
+                    return;
+                }
+
+                // Phase 3: Stamp & Awaken
                 performWaxSealStamp(() => {
                     startGardenAwakeningTransition(window.currentUserName);
                 });
@@ -1259,8 +1298,10 @@
         if (waxTargetZoneEl) {
             waxTargetZoneEl.addEventListener('click', () => {
                 if (isWaxStamping) return;
-                const check = checkStepProgression();
-                if (!check.ready) return;
+                if (!isWaxPoured) {
+                    if (startBtn) startBtn.click();
+                    return;
+                }
                 performWaxSealStamp(() => startGardenAwakeningTransition(window.currentUserName));
             });
         }
@@ -1270,8 +1311,8 @@
 
             waxStampEl.addEventListener('pointerdown', (e) => {
                 if (isWaxStamping) return;
-                const check = checkStepProgression();
-                if (!check.ready) {
+                if (!isWaxPoured) {
+                    if (startBtn) startBtn.click();
                     return;
                 }
                 isDraggingStamp = true;
