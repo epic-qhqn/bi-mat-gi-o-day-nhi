@@ -362,6 +362,11 @@
         currentStep = step;
         const phase = step <= 1 ? 1 : (step <= 5 ? 2 : 3);
         if (ritualStepBar) {
+            const strandProgress = document.getElementById('ritual-strand-progress');
+            if (strandProgress) {
+                const pct = phase === 1 ? 0 : (phase === 2 ? 50 : 100);
+                strandProgress.style.width = `${pct}%`;
+            }
             ritualStepBar.querySelectorAll('.step-dot').forEach(dot => {
                 const s = parseInt(dot.getAttribute('data-step'), 10);
                 dot.classList.remove('is-active', 'is-done');

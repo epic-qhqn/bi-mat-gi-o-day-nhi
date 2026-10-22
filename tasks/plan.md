@@ -1,73 +1,65 @@
-# MASTER PLAN V3.0: THƠ MỘNG LÀNG QUÊ & NÉT DUYÊN CON GÁI VIỆT (VIETNAMESE POETIC HERITAGE)
+# KẾ HOẠCH NÂNG CẤP TOÀN DIỆN UI/UX: GIAI ĐOẠN, MASCOT, DÂY ĐÀN & LA BÀN THIÊN VĂN
 
-> **Mục tiêu**: Chuyển đổi toàn diện phong cách từ "hiện đại bóng bẩy, tròn tròn kỳ cục" sang chất thơ mộng đồng quê thanh bình và nét duyên dáng, tinh tế của người con gái Việt Nam. Dung hợp hài hòa các yếu tố tinh hoa từ [20-10.html](file:///c:/Users/kishikuun/Documents/dieu-bi-mat-epic/20-10.html) vào website hiện tại.  
-> **Nguyên tắc bất biến**:
-> 1. **100% Full-Static Web**: Không Node runtime khi chạy, không bundler, không API ngoài, hoạt động ngoại tuyến và GitHub Pages.
-> 2. **Git Workflow Đa Lập Trình Viên**: Luôn kiểm tra fetch commit mới từ remote `https://github.com/epic-qhqn/bi-mat-gi-o-day-nhi.git`, phân nhánh độc lập, dung hòa tuyệt đối không xung đột mã nguồn.
-> 3. **Thanh nhã & Tự nhiên**: Triệt tiêu bo góc kiểu viên thuốc (999px) bóng bẩy và đổ bóng neon công nghệ; thay bằng chất liệu giấy Dó vân mây, lụa sen, nét vẽ mực mộc và bóng sương mai.
+> **Nguyên tắc cốt lõi**: Giữ vững kiến trúc **100% Web Tĩnh (Full-Static Client-Side)**, bảo toàn chuẩn mực thiết kế **Vietnamese Poetic Heritage**, tuân thủ nghiêm ngặt **Concurrent Git Protocol** và quy tắc `.antigravity/rules.md`.
 
 ---
 
-## 1. NGUYÊN TẮC QUY HOẠCH & DUNG HỢP TÀI NGUYÊN TỪ 20-10.HTML
+## TỔNG QUAN CÁC ĐIỂM CẢI TIẾN CỐT LÕI
 
-### 1.1. Bức Họa Thiếu Nữ Áo Dài - Nón Lá & Hoa Sen (`ao-dai-viet.png`)
-- Trích xuất bức vẽ line-art màu trắng tinh tế của hai thiếu nữ Việt Nam mặc áo dài thướt tha, nón lá nghiêng che và ôm đóa hoa sen.
-- Xuất hiện trang nhã ở **Giai đoạn Cây hoa nở rộ (Stage 4)** và trở thành biểu tượng nghệ thuật trung tâm trên **Bưu Thiếp Hương Đồng Cỏ Nội**.
-
-### 1.2. Dải Hoa Cỏ Đồng Nội Đung Đưa Dưới Chân Trang (`#co-hoa`)
-- Dải cỏ lau và hoa dại SVG uốn lượn mềm mại dưới chân gốc cây tình yêu.
-- Chuyển động đung đưa nhịp nhàng theo làn gió quê hương (`@keyframes gio`, `@keyframes veNet`), biến không gian thành một khu vườn quê yên ả.
-
-### 1.3. Cơn Mưa Lá Thu & Cánh Hoa Rơi Chao Nghiêng 3D (`laCanvas` / `natureCanvas`)
-- Cải tiến hệ thống hạt thời tiết: những cánh hoa sen, cánh hoa đào và lá vàng rơi nhẹ nhàng, xoay nghiêng 3D theo luồng gió tự nhiên, tạo không khí lãng đãng mùa thu.
-
-### 1.4. Nhánh Cỏ Bốn Lá May Mắn (`clover-sample-garden`)
-- Ngọn cỏ bốn lá phát sáng ngọc bích rung rinh xuất hiện ở giai đoạn hạt mầm thức tỉnh (Stage 1) và là quà tặng may mắn kèm bức thư bí mật.
-
-### 1.5. Tinh Chỉnh Linh Vật Đồng Dao Thân Thương
-- Thay đổi phong cách Robot súng nước cơ khí sang hình tượng chú mèo nhỏ đồng dao / bạn nhỏ hiền hòa có đôi mắt to tròn biết chớp (`nham`), má hồng e ấp (`////`), nụ cười mèo tít mắt (`ω`) và lời thoại mộc mạc ấm áp.
-
-### 1.6. Chuyển Hóa Tấm Vé Hàng Không Thành "Bưu Thiếp Hương Đồng Cỏ Nội"
-- Bỏ hoàn toàn concept vé máy bay công nghệ (barcode, số hiệu chuyến bay, Life4Cuts).
-- Thay bằng tấm thiệp giấy Dó vân mây, con tem hoa sen truyền thống, dấu triện son cẩm thạch mang tên người nhận và ảnh kỷ niệm.
+| Hạng mục | Hiện trạng | Giải pháp nâng cấp hiện đại & thơ mộng |
+| :--- | :--- | :--- |
+| **1. Thanh trạng thái giai đoạn** | Khối vuông `border-radius: 10px`, màu sắc đơn điệu | Thiết kế **"Hành Trình Đơm Hoa" (Botanical Constellation Rail)**: đường ray chỉ số sinh trưởng hữu cơ với thanh dẫn sáng (progress vein), nút mầm sống phát sáng thở, con trượt ánh kim trôi mềm mại (fluid sliding pill), kèm nâng cấp thanh tiến trình đóng sáp (Artisan Lacquer Strand). |
+| **2. Mascot Companion** | Tay robot cơ khí thô ráp (`mascot-arm-water`, `mascot-arm-fertilize`) | **Loại bỏ triệt để cánh tay cơ học**. Thay thế bằng hệ thống tương tác cảm xúc lấy cảm hứng từ Meow Meow (`20-10.html`): đôi mắt dõi theo con trỏ chuột/chạm (pupil tracking), cử chỉ gọi mây sương/hoa đăng kỳ diệu, hiệu ứng vuốt ve cưng nựng (pet/nuzzle) với vệt ửng hồng sen e ấp (`////`) và lời đồng dao ấm áp. |
+| **3. Dây đàn hạc (Botanical Harp)** | Chiếm giữa màn hình PC (`left: 540px; top: 480px`), che khuất mầm cây và Áo Dài | Di dời khéo léo về góc dưới (Aesthetic Corner Vignette) mô phỏng đàn hạc mộc cầm uốn lượn cạnh thảm cỏ; hỗ trợ thu gọn/mở rộng thanh thoát, tối ưu trượt ngón tay glissando trên cả Mobile & Tablet mà không che tâm điểm thị giác. |
+| **4. La bàn thiên văn (Celestial Orrery)** | Giật lag khi xoay nhanh (layout thrashing do `getBoundingClientRect` liên tục); ít công dụng | **Tối ưu 60/120fps mượt mà 100%** bằng `requestAnimationFrame`, bộ đệm tọa độ (cached rect), vật lý xoay quán tính (inertia damping); bổ sung **"Kinh Độ Định Mệnh" (Celestial Wayfinding)** & nút ngọc **"Hòa Điệu Thiên Hà"** mở khóa điềm may và mưa sao băng. |
 
 ---
 
-## 2. BẢNG MÀU THƠ MỘNG ĐỒNG NỘI (VIETNAMESE POETIC PALETTE)
+## KẾ HOẠCH CHI TIẾT TỪNG PHASE THỰC HIỆN
 
-* **Trắng Ngà Giấy Dó / Lụa Tơ Tằm (`#FAF7F0`, `#F4EFEA`)**: Màu nền chính mềm dịu, không chói gắt.
-* **Hồng Cánh Sen / Má Phấn (`#D47A88`, `#F2C4CE`)**: Điểm nhấn nữ tính, đằm thắm của người con gái Việt.
-* **Xanh Ngọc Cốm Non / Lá Mạ (`#6A8D73`, `#8EA885`)**: Sắc màu đồng lúa, đầm sen, lũy tre làng.
-* **Nâu Gỗ Mộc Trầm (`#4A3728`, `#5C4433`)**: Màu chữ và viền thanh nhã thay cho màu Navy thép lạnh.
-* **Vàng Hoàng Yến / Nắng Thu Dịu (`#DEB853`, `#E6C66E`)**: Sắc nắng thu ấm áp bên hiên nhà.
+### PHASE 1: NÂNG CẤP THANH TRẠNG THÁI GIAI ĐOẠN (STAGE & RITUAL PROGRESSION)
+- **1.1. Tái thiết kế Garden Stage Selector (`#garden-stage-selector`)**:
+  - Chuyển đổi từ các nút bấm vuông thành **"Hành trình đơm hoa"**:
+    * Đường ray quang học thủy tinh mờ (`backdrop-filter`) với dải nhựa sống (growth vine) phát sáng nối 4 chặng: `1. Mầm sinh` ➔ `2. Đồng dao` ➔ `3. Tinh tú` ➔ `4. Đơm hoa`.
+    * Con trượt định vị phát sáng (gliding active thumb) chuyển động mượt mà dọc thanh ray bằng `cubic-bezier`.
+    * Hiệu ứng pulse hạt sương/vầng sáng tại giai đoạn hiện tại.
+  - Tối ưu hiển thị responsive trên Mobile (dạng micro-pill thanh mảnh, không chạm viền màn hình, tuân thủ `safe-area-inset`).
+- **1.2. Nâng cấp thanh tiến trình làm sáp (`.ritual-step-bar`)**:
+  - Thay thế các khối tròn thông thường bằng chuỗi ngọc khảm sơn mài (Artisan Filigree Beads) với đường kim tuyến nối các bước.
+  - Hiệu ứng gợn sóng ánh vàng (golden ripple) khi hoàn tất từng bước chế tác.
 
----
+### PHASE 2: THAY THẾ MASCOT ROBOT BẰNG COMPANION CẢM XÚC (INSPIRATION TỪ 20-10.HTML)
+- **2.1. Dọn sạch cấu trúc cánh tay robot cơ học**:
+  - Gỡ bỏ hoàn toàn `#mascot-arm-water`, `#mascot-arm-fertilize`, `.hydro-blaster-prop`, `.star-wand-prop`, `.mascot-water-jet`, `.mascot-star-burst` trong `index.html`, `mascot-companion.js` và `components.css`.
+- **2.2. Xây dựng tương tác sống động**:
+  - **Ánh mắt dõi theo (Pupil/Gaze Tracking)**: Tròng mắt di chuyển tự nhiên theo hướng chuột hoặc điểm chạm của người dùng với giới hạn góc nhìn mềm mại.
+  - **Phản ứng vuốt ve (Petting Micro-Interaction)**: Khi người dùng nhấp hoặc xoa nhẹ chú bé, kích hoạt biểu cảm tít mắt cười `(>‿<)`, ửng hồng má sen `////`, kèm âm thanh tiếng rù rỉ/tiếng chuông trong trẻo và lời thì thầm chúc 20/10 dễ thương.
+  - **Cử chỉ ma thuật thay thế tưới nước & bón phân**:
+    * Tưới nước: Chú bé vẫy tay nhẹ gọi một đám mây nhỏ phát sáng buông những giọt mưa sương long lanh xuống mầm cây.
+    * Sưởi nắng: Chú bé chụm tay thắp sáng vầng hào quang ấm áp như đốm lửa đom đóm gửi đến gốc cây.
 
-## 3. LỘ TRÌNH TRIỂN KHAI 5 MASTER PHASES
+### PHASE 3: DI DỜI DÂY ĐÀN HẠC (BOTANICAL HARP) VỀ GÓC MÀN HÌNH
+- **3.1. Thiết kế lại vị trí & khung đàn hạc mộc**:
+  - Chuyển `plant-harp-strings-wrap` khỏi tọa độ trung tâm (540px, 480px).
+  - Đặt đàn hạc tại góc dưới bên phải màn hình (hoặc góc thanh thoát cạnh đồng cỏ), tạo hình như một nhánh cây phong lan/dây leo uốn thành khung đàn hạc cổ điển.
+- **3.2. Trải nghiệm âm nhạc & cử chỉ trượt mượt mà**:
+  - Giữ nguyên cơ chế vuốt glissando và phát nốt C5-A5 trong trẻo.
+  - Tích hợp nút thu gọn/mở rộng nhẹ nhàng hoặc tự động ẩn mờ khi không tương tác để trả lại không gian ngắm trọn cây hoa và Áo Dài.
+  - Tinh chỉnh riêng cho Mobile/Tablet: Bố trí dải dây đàn dạng vertical/arc strip góc dưới thuận tay cái lướt nhẹ, bảo đảm vùng chạm tối thiểu 44px (chuẩn WCAG).
 
-### 🌾 PHASE 1: Tách Chiết, Tối Ưu & Tích Hợp Tài Nguyên Hồn Việt (BẮT ĐẦU NGAY)
-- **1.1**: Tách và tối ưu hóa hình vẽ Áo Dài - Nón Lá - Hoa Sen vào `img/ao-dai-viet.png` (Retina sắc nét, nền trong suốt).
-- **1.2**: Tách hình ký họa thiếu nữ ôm tim vào `img/thieu-nu-tim.png` & chuẩn hóa vector ngọn cỏ 4 lá may mắn.
-- **1.3**: Tích hợp dải hoa cỏ đồng nội SVG (`#co-hoa`) vào chân trang `#wrap` với chuyển động gió đưa êm dịu.
-- **1.4**: Tích hợp cỗ máy lá vàng và cánh hoa rơi chao nghiêng 3D (`laCanvas`) vào hệ thống thời tiết tĩnh.
-- **1.5**: Kiểm tra tương thích tĩnh 100%, không tăng tải CPU/GPU, responsive hoàn hảo trên cả mobile và desktop.
+### PHASE 4: TỐI TÂN HÓA LA BÀN THIÊN VĂN (CELESTIAL ORRERY) MƯỢT 100% & THÊM TÍNH NĂNG KỲ DIỆU
+- **4.1. Khắc phục triệt để giật lag (Zero-Stutter Performance)**:
+  - Loại bỏ hoàn toàn việc gọi `getBoundingClientRect()` trong vòng lặp `pointermove`. Cache tâm xoay khi `pointerdown` hoặc `resize`.
+  - Áp dụng `requestAnimationFrame` và nội suy chuyển động (lerp damping) giúp kim xoay êm ru ở tần số quét 60fps/120fps.
+  - Tách rời việc vẽ kim la bàn khỏi logic kích hoạt hiệu ứng thời tiết nặng nề (chỉ kích hoạt hiệu ứng sau khi kim dừng lại ở mùa mới hoặc lướt dứt khoát, chống nghẽn DOM).
+  - Thêm vật lý trớn (flywheel inertia): Khi người dùng vuốt nhanh và thả tay, la bàn tiếp tục quay chậm dần rồi hít nhẹ vào góc phân vị mùa một cách tự nhiên.
+- **4.2. Bổ sung các tính năng hữu ích & lôi cuốn**:
+  - **Kinh độ kỳ diệu (Celestial Wayfinding)**: Bổ sung 4 phương vị thiên văn bí mật. Khi xoay kim trùng với phương vị, tâm la bàn rung nhẹ và nở ra chòm sao may mắn cùng thông điệp cổ thi.
+  - **Hòa Điệu Thiên Hà (Center Astrolabe Jewel)**: Nhấp vào viên ngọc trung tâm sẽ kích hoạt chuỗi hợp âm 4 mùa đồng tấu, phát tán hào quang cực quang bao phủ khu vườn.
 
-### 📜 PHASE 2: Đại Tu Ngôn Ngữ Thẩm Mỹ & Loại Bỏ Phong Cách Tròn Bóng
-- **2.1**: Triệt tiêu bo góc viên thuốc `999px` và bóng đổ neon công nghệ trong `base.css` và `components.css`.
-- **2.2**: Áp dụng hệ thống tokens Vietnamese Poetic Palette (Giấy Dó, Hồng Sen, Cốm Non, Gỗ Mộc).
-- **2.3**: Đồng nhất Typography thanh nhã, viền giấy thủ công mềm mại.
-
-### 💌 PHASE 3: Chuyển Hóa Tấm Vé Máy Bay Thành "Bưu Thiếp Hương Đồng Cỏ Nội"
-- **3.1**: Tái thiết kế Modal vé thành Bưu Thiếp Lụa Sen 20/10 với con tem bưu hoa truyền thống.
-- **3.2**: Nhúng họa tiết thiếu nữ áo dài nón lá và mộc triện son tên nàng thơ vào thiệp.
-- **3.3**: Cập nhật động cơ Canvas 2D (`boarding-pass-canvas.js`) kết xuất ảnh Story 9:16 phong cách bưu thiếp cổ phong.
-
-### 🌸 PHASE 4: Tái Sinh Linh Vật Đồng Dao & Điểm Xuyết Thiếu Nữ Áo Dài
-- **4.1**: Cập nhật Mascot Companion với mắt chớp, má hồng e ấp, biểu cảm ngộ nghĩnh và lời thoại đậm chất Việt.
-- **4.2**: Hiển thị bóng dáng thiếu nữ áo dài nón lá thanh thoát khi cây hoa nở trọn vẹn (Stage 4).
-- **4.3**: Bổ sung nhánh cỏ 4 lá may mắn vào mầm hoa thức tỉnh và thư bí mật.
-
-### 🛡️ PHASE 5: Tổng Duyệt Toàn Diện, Git Sync & Nghiệm Thu Bàn Giao
-- **5.1**: Chạy kiểm tra cú pháp toàn bộ file JS (`node -c`).
-- **5.2**: Kiểm tra hiển thị responsive không tràn ngang trên mọi kích thước màn hình.
-- **5.3**: Đồng bộ Git sạch sẽ, đảm bảo an toàn tuyệt đối cho team 3 người.
+### PHASE 5: KIỂM THỬ ĐA THIẾT BỊ, THẨM MỸ & ĐỒNG BỘ GIT HOÀN HẢO
+- Chạy kiểm tra cú pháp toàn diện: `node -c js/*.js`.
+- Kiểm tra tính cân bằng thẻ đóng mở và dấu ngoặc CSS.
+- Kiểm thử responsive trên các viewport: Mobile Portrait (375x667, 390x844), Tablet (768x1024), PC/Desktop (1920x1080).
+- Đảm bảo website 100% web tĩnh, chạy offline mượt mà không có bất kỳ lỗi console nào.
+- Tuân thủ Concurrent Git Protocol: kiểm tra remote, dung hòa commit và đẩy lên topic branch an toàn.

@@ -313,6 +313,29 @@ body.sky-night .stage-selector-header {
   align-items: center;
   gap: 6px;
   flex-wrap: nowrap;
+  position: relative;
+}
+
+.stage-slider-indicator {
+  position: absolute;
+  top: 2px;
+  bottom: 2px;
+  left: 0;
+  width: 84px;
+  background: linear-gradient(135deg, rgba(212, 175, 55, 0.22) 0%, rgba(245, 206, 86, 0.38) 100%);
+  border: 1px solid rgba(212, 175, 55, 0.55);
+  border-radius: 12px;
+  box-shadow: 0 4px 16px rgba(212, 175, 55, 0.28), inset 0 1px 1px rgba(255, 255, 255, 0.6);
+  pointer-events: none;
+  opacity: 0;
+  transition: transform 0.38s cubic-bezier(0.18, 0.9, 0.32, 1.15), width 0.38s cubic-bezier(0.18, 0.9, 0.32, 1.15), opacity 0.25s ease;
+  z-index: 1;
+}
+
+body.sky-night .stage-slider-indicator {
+  background: linear-gradient(135deg, rgba(245, 206, 86, 0.32) 0%, rgba(212, 175, 55, 0.48) 100%);
+  border-color: #F5CE56;
+  box-shadow: 0 4px 20px rgba(245, 206, 86, 0.45), inset 0 0 12px rgba(245, 206, 86, 0.35);
 }
 
 .stage-btn {
@@ -330,11 +353,13 @@ body.sky-night .stage-selector-header {
   font-weight: 600;
   color: #556085;
   cursor: pointer;
-  transition: all 0.24s cubic-bezier(0.16, 1, 0.3, 1);
+  transition: color 0.24s cubic-bezier(0.16, 1, 0.3, 1), transform 0.24s cubic-bezier(0.16, 1, 0.3, 1);
   user-select: none;
   touch-action: manipulation;
   -webkit-tap-highlight-color: transparent;
   white-space: nowrap;
+  position: relative;
+  z-index: 2;
 }
 
 body.sky-night .stage-btn {
@@ -342,10 +367,8 @@ body.sky-night .stage-btn {
 }
 
 .stage-btn:hover {
-  background: rgba(245, 206, 86, 0.15);
   color: #131C4E;
   transform: translateY(-2px);
-  box-shadow: 0 4px 10px rgba(19, 28, 78, 0.08);
 }
 
 .stage-btn:active {
@@ -353,23 +376,18 @@ body.sky-night .stage-btn {
 }
 
 body.sky-night .stage-btn:hover {
-  background: rgba(245, 206, 86, 0.2);
   color: #FFFFFF;
 }
 
 .stage-btn.active {
-  background: #131C4E;
-  color: #FFFFFF;
-  border-color: rgba(245, 206, 86, 0.5);
-  box-shadow: 0 4px 12px rgba(19, 28, 78, 0.25), 0 0 10px rgba(245, 206, 86, 0.35);
+  color: #131C4E;
+  font-weight: 700;
   transform: translateY(-1px);
 }
 
 body.sky-night .stage-btn.active {
-  background: #F5CE56;
   color: #131C4E;
-  border-color: #F5CE56;
-  box-shadow: 0 4px 14px rgba(245, 206, 86, 0.45);
+  font-weight: 700;
 }
 
 .stage-btn-icon {
@@ -423,37 +441,145 @@ body.sky-night .stage-btn.active {
   letter-spacing: 0.2px;
 }
 
+/* Thanh Sinh Trưởng Mầm Hoa Cây Lớn Lên Hiện Đại (Living Botanical Sap Strand) */
 .growth-progress {
   display: flex;
-  justify-content: center;
+  flex-direction: column;
   align-items: center;
-  gap: 8px;
-  margin: 8px auto 10px auto;
-  max-width: 160px;
+  justify-content: center;
+  gap: 4px;
+  margin: 8px auto 12px auto;
+  width: 100%;
+  max-width: 290px;
+  position: relative;
 }
 
-.growth-progress .step {
-  flex: 1;
-  height: 6px;
-  border-radius: var(--radius-pill);
-  border: var(--border-width-atelier) solid var(--border-card);
-  background: var(--accent-pill-bg);
-  transition: all 0.4s ease;
+.growth-track-rail {
+  position: absolute;
+  top: 14px;
+  left: 36px;
+  right: 36px;
+  height: 4px;
+  background: rgba(85, 96, 133, 0.16);
+  border-radius: 99px;
+  z-index: 1;
+  overflow: hidden;
 }
 
-body.sky-night .growth-progress .step {
-  background: rgba(255, 255, 255, 0.15);
-  border-color: rgba(255, 255, 255, 0.25);
+body.sky-night .growth-track-rail {
+  background: rgba(255, 255, 255, 0.16);
 }
 
-.growth-progress .step.active {
-  background: var(--text-navy);
-  border-color: var(--text-navy);
+.growth-track-fill {
+  width: 0%;
+  height: 100%;
+  background: linear-gradient(90deg, #6A8D73 0%, #D4AF37 55%, #D47A88 100%);
+  border-radius: 99px;
+  box-shadow: 0 0 8px rgba(212, 175, 55, 0.65);
+  transition: width 0.6s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-body.sky-night .growth-progress .step.active {
-  background: var(--accent-gold);
-  border-color: var(--accent-gold);
+.growth-nodes-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  position: relative;
+  z-index: 2;
+}
+
+.growth-progress .step.step-node {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3px;
+  position: relative;
+  cursor: default;
+  user-select: none;
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.growth-progress .step-node .node-icon {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: var(--bg-card, #FAF7F0);
+  border: 1.5px solid rgba(85, 96, 133, 0.28);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 13px;
+  box-shadow: 0 2px 6px rgba(19, 28, 78, 0.08);
+  transition: all 0.35s ease;
+  position: relative;
+  z-index: 2;
+}
+
+.growth-progress .step-node .node-halo {
+  position: absolute;
+  top: -3px;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(212, 175, 55, 0.45) 0%, transparent 70%);
+  opacity: 0;
+  transform: scale(0.7);
+  transition: all 0.35s ease;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.growth-progress .step-node .node-label {
+  font-family: 'Be Vietnam Pro', sans-serif;
+  font-size: 10.5px;
+  font-weight: 600;
+  color: var(--text-muted);
+  white-space: nowrap;
+  letter-spacing: 0.2px;
+  transition: color 0.3s ease;
+}
+
+.growth-progress .step-node.active .node-icon {
+  border-color: #D4AF37;
+  background: #FFFDF9;
+  transform: scale(1.15);
+  box-shadow: 0 4px 14px rgba(212, 175, 55, 0.45);
+}
+
+.growth-progress .step-node.active .node-halo {
+  opacity: 1;
+  transform: scale(1.25);
+  animation: nodeHaloPulse 2.2s infinite ease-in-out;
+}
+
+.growth-progress .step-node.active .node-label {
+  color: var(--text-navy);
+  font-weight: 700;
+}
+
+.growth-progress .step-node.completed .node-icon {
+  border-color: #6A8D73;
+  background: #F0FDF4;
+}
+
+body.sky-night .growth-progress .step-node .node-icon {
+  background: #131C4E;
+  border-color: rgba(245, 206, 86, 0.35);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+}
+
+body.sky-night .growth-progress .step-node.active .node-icon {
+  background: #1C2866;
+  border-color: #F5CE56;
+}
+
+body.sky-night .growth-progress .step-node.active .node-label {
+  color: #F5CE56;
+}
+
+@keyframes nodeHaloPulse {
+  0%, 100% { transform: scale(1.2); opacity: 0.5; }
+  50% { transform: scale(1.5); opacity: 0.85; }
 }
 
 .garden-message {

@@ -136,14 +136,51 @@
         }
     };
 
+    const syncGrowthProgressVisual = (activeCount) => {
+        const fill = document.getElementById('growth-track-fill');
+        if (fill) {
+            const pct = activeCount <= 0 ? 0 : (activeCount === 1 ? 33 : (activeCount === 2 ? 66 : 100));
+            fill.style.width = `${pct}%`;
+        }
+        const steps = document.querySelectorAll('.growth-progress .step');
+        steps.forEach((s, i) => {
+            if (i < activeCount) {
+                s.classList.add('active', 'completed');
+            } else if (i === activeCount && activeCount > 0) {
+                s.classList.add('active');
+                s.classList.remove('completed');
+            } else {
+                s.classList.remove('active', 'completed');
+            }
+        });
+    };
+
     const syncGardenStageSelector = (stageNum) => {
         const selector = document.getElementById('garden-stage-selector');
         if (!selector) return;
-        selector.querySelectorAll('.stage-btn').forEach(btn => {
+        const sliderIndicator = document.getElementById('stage-slider-indicator');
+        const buttons = selector.querySelectorAll('.stage-btn');
+        let activeBtn = null;
+        buttons.forEach(btn => {
             const isActive = parseInt(btn.dataset.stage, 10) === stageNum;
             btn.classList.toggle('active', isActive);
             btn.setAttribute('aria-selected', isActive ? 'true' : 'false');
+            if (isActive) activeBtn = btn;
         });
+
+        if (sliderIndicator && activeBtn) {
+            const groupEl = activeBtn.parentElement;
+            if (groupEl) {
+                const groupRect = groupEl.getBoundingClientRect();
+                const btnRect = activeBtn.getBoundingClientRect();
+                if (groupRect.width > 0) {
+                    const offsetLeft = btnRect.left - groupRect.left;
+                    sliderIndicator.style.transform = `translateX(${offsetLeft}px)`;
+                    sliderIndicator.style.width = `${btnRect.width}px`;
+                    sliderIndicator.style.opacity = '1';
+                }
+            }
+        }
     };
 
     const revealGardenStageSelector = () => {
@@ -156,6 +193,7 @@
 
     const jumpToGardenStage = (stageNum) => {
         syncGardenStageSelector(stageNum);
+        syncGrowthProgressVisual(Math.max(0, stageNum - 1));
         if (typeof window.playKeyTapSFX !== 'undefined') window.playKeyTapSFX();
 
         cleanupStage('all');
@@ -380,9 +418,9 @@
 
     const advanceStage = (completedStage) => {
         cleanupStage(completedStage);
-        const steps = document.querySelectorAll('.growth-progress .step');
-        if (steps[completedStage]) steps[completedStage].classList.add('active');
+        syncGrowthProgressVisual(completedStage + 1);
         window.gardenState.currentStage++;
+        syncGardenStageSelector(window.gardenState.currentStage === 3 ? 4 : (window.gardenState.currentStage + 1));
 
         // Sub-phase 4.3: Auto-minimize Orrery into sparkling lodestar upon stage completion
         if (completedStage === 0 || window.gardenState.currentStage >= 1) {

@@ -102,12 +102,28 @@
                 <!-- Wax Seal & Action Station (Phase 3: Artisan Multi-Sensory Ritual) -->
                 <div class="wax-seal-station" id="wax-seal-station">
                     <!-- 3-Phase Poetic Ritual Breadcrumbs -->
+                    <!-- 3-Phase Poetic Ritual Breadcrumbs (Thanh Chuỗi Sơn Mài & Triện Sáp) -->
                     <div class="ritual-step-bar" id="ritual-step-bar" aria-label="Các bước chế tác con dấu sáp">
-                        <span class="step-dot is-active" data-step="1" title="Bước 1: Chọn sắc sáp & hoa văn triện">🎨 <i>1. Chọn sáp & triện</i></span>
+                        <div class="ritual-strand-track" aria-hidden="true">
+                            <div class="ritual-strand-progress" id="ritual-strand-progress"></div>
+                        </div>
+                        <span class="step-dot is-active" data-step="1" title="Bước 1: Chọn sắc sáp & hoa văn triện">
+                            <span class="step-dot-icon">🎨</span>
+                            <span class="step-dot-label"><i>1. Chọn sáp & triện</i></span>
+                            <span class="step-dot-sparkle">✦</span>
+                        </span>
                         <span class="step-connector"></span>
-                        <span class="step-dot" data-step="2" title="Bước 2: Đun nóng & rót sáp lên phong thư">🔥 <i>2. Đun & rót sáp</i></span>
+                        <span class="step-dot" data-step="2" title="Bước 2: Đun nóng & rót sáp lên phong thư">
+                            <span class="step-dot-icon">🔥</span>
+                            <span class="step-dot-label"><i>2. Đun & rót sáp</i></span>
+                            <span class="step-dot-sparkle">✦</span>
+                        </span>
                         <span class="step-connector"></span>
-                        <span class="step-dot" data-step="3" title="Bước 3: Dập triện son & đánh thức vườn">💮 <i>3. Dập triện mở cổng</i></span>
+                        <span class="step-dot" data-step="3" title="Bước 3: Dập triện son & đánh thức vườn">
+                            <span class="step-dot-icon">💮</span>
+                            <span class="step-dot-label"><i>3. Dập triện mở cổng</i></span>
+                            <span class="step-dot-sparkle">✦</span>
+                        </span>
                     </div>
 
                     <!-- 5-Color Vietnamese Wax Beads Palette & Seal Crest Options (Full-Width Row) -->
@@ -453,10 +469,28 @@
     <!-- UI Vườn Hoa (Lyrical Design) -->
     <div id="garden-ui" class="garden-ui lyrical-panel">
         <div class="instruction">Hãy chăm sóc hạt giống để điều kỳ diệu xảy ra</div>
-        <div id="growth-progress" class="growth-progress">
-             <div class="step"></div>
-             <div class="step"></div>
-             <div class="step"></div>
+        <!-- Thanh Sinh Trưởng Mầm Hoa Cây Lớn Lên Hiện Đại (Living Botanical Sap Strand) -->
+        <div id="growth-progress" class="growth-progress" aria-label="Tiến trình phát triển mầm cây">
+            <div class="growth-track-rail" aria-hidden="true">
+                <div class="growth-track-fill" id="growth-track-fill"></div>
+            </div>
+            <div class="growth-nodes-container">
+                <div class="step step-node" data-node="1" title="Chặng 1: Mầm Sinh (Mưa sương & Đất ấm)">
+                    <span class="node-halo"></span>
+                    <span class="node-icon">🌱</span>
+                    <span class="node-label">Mầm Sinh</span>
+                </div>
+                <div class="step step-node" data-node="2" title="Chặng 2: Vươn Cành (Khúc đồng dao Simon)">
+                    <span class="node-halo"></span>
+                    <span class="node-icon">🌿</span>
+                    <span class="node-label">Vươn Cành</span>
+                </div>
+                <div class="step step-node" data-node="3" title="Chặng 3: Đơm Nụ (Chòm sao định mệnh)">
+                    <span class="node-halo"></span>
+                    <span class="node-icon">🌸</span>
+                    <span class="node-label">Đơm Nụ</span>
+                </div>
+            </div>
         </div>
         <div id="garden-message" class="garden-message">Gom mây gọi mưa sương sớm hoặc sưởi ấm mầm non bằng vệt nắng 🌤️</div>
         <div id="terrarium-gesture-hint" class="terrarium-gesture-hint">
@@ -471,28 +505,30 @@
     </div>
 
     <!-- Sub-phase 4.3: Garden Stage Selector / Replay Toolbar -->
-    <nav id="garden-stage-selector" class="garden-stage-selector hidden" aria-label="Bộ chọn giai đoạn khu vườn">
+    <!-- Sub-phase 4.3: Garden Stage Selector / Hành Trình Vườn Thơ -->
+    <nav id="garden-stage-selector" class="garden-stage-selector hidden" aria-label="Hành trình các giai đoạn khu vườn">
         <div class="stage-selector-inner lyrical-panel">
             <div class="stage-selector-header">
                 <span class="selector-badge-icon">↺</span>
-                <span class="selector-title">Giai Đoạn</span>
+                <span class="selector-title">Hành Trình</span>
             </div>
             <div class="stage-buttons-group" role="tablist">
+                <div class="stage-slider-indicator" id="stage-slider-indicator" aria-hidden="true"></div>
                 <button class="stage-btn" data-stage="1" role="tab" aria-selected="false" title="Chơi lại Giai đoạn 1: Mưa sương & Chồi non">
                     <span class="stage-btn-icon">🌱</span>
-                    <span class="stage-btn-text">Giai đoạn 1</span>
+                    <span class="stage-btn-text">Chồi Non</span>
                 </button>
                 <button class="stage-btn" data-stage="2" role="tab" aria-selected="false" title="Chơi lại Giai đoạn 2: Khúc hòa âm Simon">
                     <span class="stage-btn-icon">🎵</span>
-                    <span class="stage-btn-text">Giai đoạn 2</span>
+                    <span class="stage-btn-text">Đồng Dao</span>
                 </button>
                 <button class="stage-btn" data-stage="3" role="tab" aria-selected="false" title="Chơi lại Giai đoạn 3: Nối chòm sao định mệnh">
                     <span class="stage-btn-icon">✨</span>
-                    <span class="stage-btn-text">Giai đoạn 3</span>
+                    <span class="stage-btn-text">Tinh Tú</span>
                 </button>
                 <button class="stage-btn active" data-stage="4" role="tab" aria-selected="true" title="Xem Trạng thái hoa nở hoàn mỹ">
                     <span class="stage-btn-icon">🌸</span>
-                    <span class="stage-btn-text">Hoa nở</span>
+                    <span class="stage-btn-text">Hoa Nở</span>
                 </button>
             </div>
         </div>
@@ -564,9 +600,10 @@
                     </div>
                 </div>
 
-                <!-- Center Brass Pivot Cabochon Jewel -->
-                <div class="orrery-center-pivot">
+                <!-- Center Brass Pivot Cabochon Jewel (Hòa Điệu Thiên Hà tương tác) -->
+                <div class="orrery-center-pivot" id="orrery-center-jewel" role="button" tabindex="0" title="Chạm ngọc thái dương để hòa âm thiên hà ✦" aria-label="Hòa điệu thiên hà">
                     <div class="pivot-cabochon"></div>
+                    <div class="jewel-ripple"></div>
                 </div>
             </div>
 
@@ -759,21 +796,28 @@
                 </div>
             </div>
             
-            <!-- Hydro-Blaster Arm Layer (Left Arm) -->
-            <div class="mascot-layer mascot-layer-arm-left" id="mascot-arm-water">
-                <div class="hydro-blaster-prop" id="hydro-blaster-prop">
-                    <div class="blaster-nozzle"></div>
-                    <div class="blaster-tank"></div>
+            <!-- Nature Magic Auras & Emotional Micro-FX (Loại bỏ tay robot cơ học, thay bằng ma thuật thiên nhiên & cảm xúc) -->
+            <div class="mascot-nature-magic" id="mascot-nature-magic">
+                <!-- Vầng mây mưa sương khi tưới nước -->
+                <div class="mascot-magic-cloud" id="mascot-magic-cloud" aria-hidden="true">
+                    <span class="cloud-puff">☁️</span>
+                    <span class="magic-dew-drop d1">💧</span>
+                    <span class="magic-dew-drop d2">💧</span>
+                    <span class="magic-dew-drop d3">✨</span>
                 </div>
-                <div class="mascot-water-jet" id="mascot-water-jet"></div>
-            </div>
-
-            <!-- Star Fertilizer Arm Layer (Right Arm) -->
-            <div class="mascot-layer mascot-layer-arm-right" id="mascot-arm-fertilize">
-                <div class="star-wand-prop" id="star-wand-prop">
-                    <div class="wand-star">★</div>
+                <!-- Đốm sáng đom đóm sưởi nắng khi bón ấm -->
+                <div class="mascot-magic-sunbeam" id="mascot-magic-sunbeam" aria-hidden="true">
+                    <span class="sun-orb">☀️</span>
+                    <span class="firefly f1">✦</span>
+                    <span class="firefly f2">✦</span>
+                    <span class="firefly f3">✦</span>
                 </div>
-                <div class="mascot-star-burst" id="mascot-star-burst"></div>
+                <!-- Trái tim e ấp khi được vuốt ve cưng nựng -->
+                <div class="mascot-affection-burst" id="mascot-affection-burst" aria-hidden="true">
+                    <span class="heart-mote h1">♡</span>
+                    <span class="heart-mote h2">🌸</span>
+                    <span class="heart-mote h3">✨</span>
+                </div>
             </div>
         </div>
     </div>
@@ -812,27 +856,48 @@
                 <div class="dew" style="top: 82%; left: 55%;"></div>
             </div>
 
-            <!-- Phase 3.3: Botanical Melodic Harp Strings (Dây Đàn Hạc Thảo Mộc Ngân Vang) -->
+            <!-- Phase 3.3: Botanical Melodic Harp Strings (Dây Đàn Hạc Thảo Mộc Ngân Vang Đặt Tại Góc Khu Vườn) -->
             <div id="plant-harp-strings-wrap" class="plant-harp-strings-wrap" aria-label="Dây đàn hạc thảo mộc ngân vang">
-                <div class="harp-string-wire" data-string-index="0" title="Dây đàn Đô (C5)">
-                    <div class="harp-string-line"></div>
-                    <div class="harp-string-node">✦</div>
+                <div class="harp-corner-vignette" aria-hidden="true">
+                    <svg viewBox="0 0 180 220" class="harp-vine-frame-svg" fill="none">
+                        <!-- Khung mộc cầm uốn lượn mộc mạc như rễ cây phong lan -->
+                        <path d="M15,210 C15,120 40,30 90,15 C135,2 165,40 160,85 C155,125 125,160 140,210" stroke="#7E5835" stroke-width="6" stroke-linecap="round"/>
+                        <path d="M15,210 C15,120 40,30 90,15 C135,2 165,40 160,85 C155,125 125,160 140,210" stroke="#D4AF37" stroke-width="1.8" stroke-dasharray="8 6" opacity="0.6"/>
+                        <!-- Đọt lá non điểm xuyết viền đàn -->
+                        <circle cx="92" cy="15" r="4" fill="#6A8D73"/>
+                        <circle cx="162" cy="85" r="4" fill="#D47A88"/>
+                    </svg>
+                    <div class="harp-header-badge">
+                        <span class="badge-icon">♫</span>
+                        <span class="badge-txt">Mộc Cầm</span>
+                    </div>
                 </div>
-                <div class="harp-string-wire" data-string-index="1" title="Dây đàn Rê (D5)">
-                    <div class="harp-string-line"></div>
-                    <div class="harp-string-node">❀</div>
-                </div>
-                <div class="harp-string-wire" data-string-index="2" title="Dây đàn Mi (E5)">
-                    <div class="harp-string-line"></div>
-                    <div class="harp-string-node">♫</div>
-                </div>
-                <div class="harp-string-wire" data-string-index="3" title="Dây đàn Sol (G5)">
-                    <div class="harp-string-line"></div>
-                    <div class="harp-string-node">❀</div>
-                </div>
-                <div class="harp-string-wire" data-string-index="4" title="Dây đàn La (A5)">
-                    <div class="harp-string-line"></div>
-                    <div class="harp-string-node">✦</div>
+                <div class="harp-strings-board">
+                    <div class="harp-string-wire" data-string-index="0" title="Dây đàn Đô (C5)">
+                        <div class="harp-string-line"></div>
+                        <div class="harp-string-node">✦</div>
+                        <span class="harp-note-name">Đô</span>
+                    </div>
+                    <div class="harp-string-wire" data-string-index="1" title="Dây đàn Rê (D5)">
+                        <div class="harp-string-line"></div>
+                        <div class="harp-string-node">❀</div>
+                        <span class="harp-note-name">Rê</span>
+                    </div>
+                    <div class="harp-string-wire" data-string-index="2" title="Dây đàn Mi (E5)">
+                        <div class="harp-string-line"></div>
+                        <div class="harp-string-node">♫</div>
+                        <span class="harp-note-name">Mi</span>
+                    </div>
+                    <div class="harp-string-wire" data-string-index="3" title="Dây đàn Sol (G5)">
+                        <div class="harp-string-line"></div>
+                        <div class="harp-string-node">❀</div>
+                        <span class="harp-note-name">Sol</span>
+                    </div>
+                    <div class="harp-string-wire" data-string-index="4" title="Dây đàn La (A5)">
+                        <div class="harp-string-line"></div>
+                        <div class="harp-string-node">✦</div>
+                        <span class="harp-note-name">La</span>
+                    </div>
                 </div>
             </div>
 

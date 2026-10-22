@@ -103,11 +103,16 @@
         if (!plantHarpWrapEl) return;
         let isSwipingHarp = false;
         let lastSwipedIndex = -1;
+        let cachedWireRects = [];
 
         const checkAndPluckFromPoint = (x, y) => {
+            const rects = cachedWireRects.length === harpStringWires.length
+                ? cachedWireRects
+                : harpStringWires.map(w => w.getBoundingClientRect());
+
             for (let i = 0; i < harpStringWires.length; i++) {
-                const rect = harpStringWires[i].getBoundingClientRect();
-                if (x >= rect.left && x <= rect.right && y >= rect.top && y <= rect.bottom) {
+                const rect = rects[i];
+                if (rect && x >= rect.left && x <= rect.right && y >= rect.top && y <= rect.bottom) {
                     if (i !== lastSwipedIndex) {
                         lastSwipedIndex = i;
                         pluckHarpStringByIndex(i, x, y);
@@ -120,6 +125,7 @@
         plantHarpWrapEl.addEventListener('pointerdown', (e) => {
             isSwipingHarp = true;
             lastSwipedIndex = -1;
+            cachedWireRects = harpStringWires.map(w => w.getBoundingClientRect());
             try { plantHarpWrapEl.setPointerCapture(e.pointerId); } catch (_) {}
             checkAndPluckFromPoint(e.clientX, e.clientY);
         });
@@ -133,6 +139,7 @@
             if (isSwipingHarp) {
                 isSwipingHarp = false;
                 lastSwipedIndex = -1;
+                cachedWireRects = [];
                 try { plantHarpWrapEl.releasePointerCapture(e.pointerId); } catch (_) {}
             }
         };
