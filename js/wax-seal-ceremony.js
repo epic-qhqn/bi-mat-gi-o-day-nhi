@@ -88,9 +88,16 @@
     // =========================================================================
     const getTimeLockState = () => {
         const params = new URLSearchParams(window.location.search);
+        if (params.get('relock') === '1') {
+            sessionStorage.removeItem('epic_gate_unlocked');
+            return 'PASSWORD_REQUIRED';
+        }
         if (params.get('unlock') === '1') return 'UNLOCKED';
         if (params.get('teststrict') === '1' || params.get('testlock') === '1') return 'STRICT_LOCK';
-        if (params.get('testpass') === '1') return 'PASSWORD_REQUIRED';
+        if (params.get('testpass') === '1') {
+            sessionStorage.removeItem('epic_gate_unlocked');
+            return 'PASSWORD_REQUIRED';
+        }
 
         const now = window.__mockLockDate || new Date();
         const targetDate = new Date(2026, 9, 25, 12, 0, 0); // 12h trưa 25/10/2026
@@ -744,35 +751,9 @@
     };
 
     // =========================================================================
-    // 9. STAMPING PRESS, COOLING & POP UNMOLDING
+    // 9. STRICT STEP PROGRESSION & STAMPING PRESS
     // =========================================================================
-    const ensureArtisanRitualReady = (callback) => {
-        if (!isCandleLit) lightCandle();
-        if (selectedBeads.length < 2) {
-            selectWaxBead('lotus');
-            selectWaxBead('gold');
-            selectWaxBead('ivory');
-        }
-        if (!isWaxMelted) meltWaxBeads();
-
-        const proceedToPour = () => {
-            if (!isWaxPoured) {
-                pourMoltenWax(() => setTimeout(callback, 250));
-            } else {
-                callback();
-            }
-        };
-
-        if (!isWaxStirred) {
-            setTimeout(() => {
-                stirMarbledWax(() => setTimeout(proceedToPour, 200));
-            }, 300);
-        } else {
-            proceedToPour();
-        }
-    };
-
-    const performWaxSealStamp = (onComplete) => {
+    const checkStepProgression = () => {
         const inputEl = document.getElementById('name-input');
         const val = inputEl ? inputEl.value.trim() : '';
         if (!val) {
@@ -792,87 +773,188 @@
                 }
                 setTimeout(() => { inputEl.style.borderColor = ''; }, 600);
             }
+            if (waxSealGuideTip) {
+                waxSealGuideTip.innerHTML = `<span>✨ Hãy nhập tên nàng lên khuôn đồng dập nổi trước nhé!</span>`;
+            }
+            if (navigator.vibrate) navigator.vibrate(20);
+            return { ready: false, step: 0 };
+        }
+
+        // Step 1: Candle must be lit
+        if (!isCandleLit) {
+            if (artisanMatchstick) {
+                artisanMatchstick.animate([
+                    { transform: 'scale(1)' },
+                    { transform: 'scale(1.2) rotate(-5deg)' },
+                    { transform: 'scale(1)' }
+                ], { duration: 400 });
+            }
+            if (artisanCandleEl) {
+                artisanCandleEl.animate([
+                    { transform: 'translateY(0)' },
+                    { transform: 'translateY(-4px)' },
+                    { transform: 'translateY(0)' }
+                ], { duration: 400 });
+            }
+            if (waxSealGuideTip) {
+                waxSealGuideTip.innerHTML = `<span>Bước 1: Hãy quẹt que diêm để thắp ngọn nến thơm trước nhé 🕯️</span>`;
+            }
+            if (navigator.vibrate) navigator.vibrate(25);
+            setRitualStep(1);
+            return { ready: false, step: 1 };
+        }
+
+        // Step 2: At least 2 wax beads must be chosen
+        if (selectedBeads.length < 2) {
+            if (waxBeadsTray) {
+                waxBeadsTray.animate([
+                    { transform: 'translateX(0)' },
+                    { transform: 'translateX(-4px)' },
+                    { transform: 'translateX(4px)' },
+                    { transform: 'translateX(0)' }
+                ], { duration: 350 });
+            }
+            if (waxSealGuideTip) {
+                waxSealGuideTip.innerHTML = `<span>Bước 2: Hãy chọn ít nhất 2 viên sáp vào thìa (hoặc bấm Phối màu nhanh) 🎨</span>`;
+            }
+            if (navigator.vibrate) navigator.vibrate(25);
+            setRitualStep(2);
+            return { ready: false, step: 2 };
+        }
+
+        // Step 3: Wax must be melted on the flame
+        if (!isWaxMelted) {
+            if (waxSealGuideTip) {
+                waxSealGuideTip.innerHTML = `<span>Bước 3: Sáp đang tan chảy trên ngọn lửa nến ấm, đợi một chút nhé 🔥</span>`;
+            }
+            if (navigator.vibrate) navigator.vibrate(25);
+            setRitualStep(3);
+            return { ready: false, step: 3 };
+        }
+
+        // Step 4: Wax must be stirred with marbling swirls
+        if (!isWaxStirred) {
+            if (glassStirringRodEl) {
+                glassStirringRodEl.animate([
+                    { transform: 'rotate(0deg)' },
+                    { transform: 'rotate(20deg)' },
+                    { transform: 'rotate(0deg)' }
+                ], { duration: 400 });
+            }
+            if (waxSealGuideTip) {
+                waxSealGuideTip.innerHTML = `<span>Bước 4: Hãy chạm que thủy tinh hoặc rê tay để khuấy vân cẩm thạch 🪄</span>`;
+            }
+            if (navigator.vibrate) navigator.vibrate(25);
+            setRitualStep(4);
+            return { ready: false, step: 4 };
+        }
+
+        // Step 5: Molten wax must be poured onto the letter
+        if (!isWaxPoured) {
+            if (brassSpoonEl) {
+                brassSpoonEl.animate([
+                    { transform: 'rotate(0deg)' },
+                    { transform: 'rotate(15deg)' },
+                    { transform: 'rotate(0deg)' }
+                ], { duration: 400 });
+            }
+            if (waxSealGuideTip) {
+                waxSealGuideTip.innerHTML = `<span>Bước 5: Chạm vào thìa để rót dòng sáp óng ánh xuống giấy nhé 🍯</span>`;
+            }
+            if (navigator.vibrate) navigator.vibrate(25);
+            setRitualStep(5);
+            return { ready: false, step: 5 };
+        }
+
+        // All steps verified: Ready for final stamping
+        setRitualStep(6);
+        return { ready: true, step: 6 };
+    };
+
+    const performWaxSealStamp = (onComplete) => {
+        const check = checkStepProgression();
+        if (!check.ready) {
             return;
         }
 
         if (isWaxStamping) return;
         isWaxStamping = true;
 
-        ensureArtisanRitualReady(() => {
-            window.currentUserName = val;
-            if (waxNameImprintEl) waxNameImprintEl.textContent = val.toUpperCase();
-            if (typeof window.initAudio === 'function') window.initAudio();
+        const inputEl = document.getElementById('name-input');
+        const val = inputEl ? inputEl.value.trim() : '';
+        window.currentUserName = val;
+        if (waxNameImprintEl) waxNameImprintEl.textContent = val.toUpperCase();
+        if (typeof window.initAudio === 'function') window.initAudio();
 
-            if (waxStampEl && waxTargetZoneEl) {
-                const stampRect = waxStampEl.getBoundingClientRect();
-                const targetRect = waxTargetZoneEl.getBoundingClientRect();
-                const snapX = (targetRect.left + targetRect.width / 2) - (stampRect.left + stampRect.width / 2);
-                const snapY = (targetRect.top + targetRect.height / 2) - (stampRect.top + stampRect.height / 2);
+        if (waxStampEl && waxTargetZoneEl) {
+            const stampRect = waxStampEl.getBoundingClientRect();
+            const targetRect = waxTargetZoneEl.getBoundingClientRect();
+            const snapX = (targetRect.left + targetRect.width / 2) - (stampRect.left + stampRect.width / 2);
+            const snapY = (targetRect.top + targetRect.height / 2) - (stampRect.top + stampRect.height / 2);
 
-                waxStampEl.style.setProperty('--snap-x', `${snapX}px`);
-                waxStampEl.style.setProperty('--snap-y', `${snapY}px`);
-                waxStampEl.style.transform = '';
-                waxStampEl.classList.remove('dragging');
-                waxStampEl.classList.add('animating-stamp');
+            waxStampEl.style.setProperty('--snap-x', `${snapX}px`);
+            waxStampEl.style.setProperty('--snap-y', `${snapY}px`);
+            waxStampEl.style.transform = '';
+            waxStampEl.classList.remove('dragging');
+            waxStampEl.classList.add('animating-stamp');
 
-                // 1. Heavy Impact on Hot Wax
-                setTimeout(() => {
-                    if (typeof window.playWaxStampASMR === 'function') {
-                        window.playWaxStampASMR();
-                    } else if (typeof window.playWaxStampSFX === 'function') {
-                        window.playWaxStampSFX();
+            // 1. Heavy Impact on Hot Wax
+            setTimeout(() => {
+                if (typeof window.playWaxStampASMR === 'function') {
+                    window.playWaxStampASMR();
+                } else if (typeof window.playWaxStampSFX === 'function') {
+                    window.playWaxStampSFX();
+                }
+                if (navigator.vibrate) navigator.vibrate([25, 45]);
+
+                if (waxHotPoolEl) waxHotPoolEl.classList.add('squished');
+                if (waxTargetZoneEl) waxTargetZoneEl.classList.add('stamped');
+                if (typeof window.createBrassDustVFX === 'function') {
+                    window.createBrassDustVFX(targetRect.left + targetRect.width / 2, targetRect.top + targetRect.height / 2);
+                }
+
+                // 2. Cooling Solidification Phase (1.4s)
+                if (waxCoolingIndicator) {
+                    waxCoolingIndicator.classList.remove('hidden');
+                    if (coolingFillRing) {
+                        coolingFillRing.style.strokeDasharray = '100, 100';
                     }
-                    if (navigator.vibrate) navigator.vibrate([25, 45]);
-
-                    if (waxHotPoolEl) waxHotPoolEl.classList.add('squished');
-                    if (waxTargetZoneEl) waxTargetZoneEl.classList.add('stamped');
-                    if (typeof window.createBrassDustVFX === 'function') {
-                        window.createBrassDustVFX(targetRect.left + targetRect.width / 2, targetRect.top + targetRect.height / 2);
-                    }
-
-                    // 2. Cooling Solidification Phase (1.4s)
-                    if (waxCoolingIndicator) {
-                        waxCoolingIndicator.classList.remove('hidden');
-                        if (coolingFillRing) {
-                            coolingFillRing.style.strokeDasharray = '100, 100';
-                        }
-                    }
-                    if (hotWaxBodyEl) hotWaxBodyEl.classList.add('cured-matte');
-                    if (hotWaxGlossEl) hotWaxGlossEl.classList.add('cured-matte');
-
-                    setTimeout(() => {
-                        // 3. Satisfying Unmolding Suction Pop
-                        if (typeof window.playWaxUnmoldPopASMR === 'function') {
-                            window.playWaxUnmoldPopASMR();
-                        }
-                        if (navigator.vibrate) navigator.vibrate(20);
-
-                        if (waxCoolingIndicator) waxCoolingIndicator.classList.add('hidden');
-                        if (waxHotPoolEl) waxHotPoolEl.classList.add('hidden');
-
-                        if (waxSealPuddleEl) {
-                            waxSealPuddleEl.classList.remove('hidden');
-                            if (window.currentMarbledPattern) {
-                                waxSealPuddleEl.style.backgroundImage = `url(${window.currentMarbledPattern})`;
-                                waxSealPuddleEl.style.backgroundSize = 'cover';
-                            }
-                        }
-
-                        const flourishEl = document.getElementById('seal-botanical-flourish');
-                        if (flourishEl) flourishEl.classList.remove('hidden');
-                    }, 800);
-                }, 650);
+                }
+                if (hotWaxBodyEl) hotWaxBodyEl.classList.add('cured-matte');
+                if (hotWaxGlossEl) hotWaxGlossEl.classList.add('cured-matte');
 
                 setTimeout(() => {
-                    waxStampEl.classList.remove('animating-stamp');
-                    isWaxStamping = false;
-                    if (typeof onComplete === 'function') onComplete();
-                }, 1600);
-            } else {
+                    // 3. Satisfying Unmolding Suction Pop
+                    if (typeof window.playWaxUnmoldPopASMR === 'function') {
+                        window.playWaxUnmoldPopASMR();
+                    }
+                    if (navigator.vibrate) navigator.vibrate(20);
+
+                    if (waxCoolingIndicator) waxCoolingIndicator.classList.add('hidden');
+                    if (waxHotPoolEl) waxHotPoolEl.classList.add('hidden');
+
+                    if (waxSealPuddleEl) {
+                        waxSealPuddleEl.classList.remove('hidden');
+                        if (window.currentMarbledPattern) {
+                            waxSealPuddleEl.style.backgroundImage = `url(${window.currentMarbledPattern})`;
+                            waxSealPuddleEl.style.backgroundSize = 'cover';
+                        }
+                    }
+
+                    const flourishEl = document.getElementById('seal-botanical-flourish');
+                    if (flourishEl) flourishEl.classList.remove('hidden');
+                }, 800);
+            }, 650);
+
+            setTimeout(() => {
+                waxStampEl.classList.remove('animating-stamp');
                 isWaxStamping = false;
                 if (typeof onComplete === 'function') onComplete();
-            }
-        });
+            }, 1600);
+        } else {
+            isWaxStamping = false;
+            if (typeof onComplete === 'function') onComplete();
+        }
     };
 
     // =========================================================================
@@ -1135,13 +1217,23 @@
         }
 
         if (glassStirringRodEl) {
-            glassStirringRodEl.addEventListener('click', () => stirMarbledWax());
+            glassStirringRodEl.addEventListener('click', () => {
+                if (!isWaxMelted) {
+                    checkStepProgression();
+                    return;
+                }
+                stirMarbledWax();
+            });
         }
 
         // 4. Step 5: Pouring & Sprinkle Gestures
         if (brassSpoonEl) {
             brassSpoonEl.addEventListener('click', () => {
-                if (isWaxMelted && !isWaxPoured) {
+                if (!isWaxMelted) {
+                    checkStepProgression();
+                    return;
+                }
+                if (!isWaxPoured) {
                     if (!isWaxStirred) {
                         stirMarbledWax(() => setTimeout(pourMoltenWax, 250));
                     } else {
@@ -1166,9 +1258,10 @@
 
         if (waxTargetZoneEl) {
             waxTargetZoneEl.addEventListener('click', () => {
-                if (isWaxPoured && !isWaxStamping) {
-                    performWaxSealStamp(() => startGardenAwakeningTransition(window.currentUserName));
-                }
+                if (isWaxStamping) return;
+                const check = checkStepProgression();
+                if (!check.ready) return;
+                performWaxSealStamp(() => startGardenAwakeningTransition(window.currentUserName));
             });
         }
 
@@ -1177,13 +1270,8 @@
 
             waxStampEl.addEventListener('pointerdown', (e) => {
                 if (isWaxStamping) return;
-                const inputVal = nameInputEl ? nameInputEl.value.trim() : '';
-                if (!inputVal) {
-                    if (nameInputEl) {
-                        nameInputEl.style.borderColor = '#E53E3E';
-                        nameInputEl.focus();
-                        setTimeout(() => nameInputEl.style.borderColor = '', 600);
-                    }
+                const check = checkStepProgression();
+                if (!check.ready) {
                     return;
                 }
                 isDraggingStamp = true;

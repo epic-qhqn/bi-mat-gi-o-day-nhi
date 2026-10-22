@@ -64,7 +64,7 @@
 }
 
 .time-lock-panel h2 {
-  font-family: 'Outfit', sans-serif;
+  font-family: 'Be Vietnam Pro', sans-serif;
   font-size: 21px;
   font-weight: 700;
   letter-spacing: 1.2px;
@@ -107,7 +107,7 @@
   text-align: center;
   outline: none;
   box-sizing: border-box;
-  font-family: 'Outfit', sans-serif !important;
+  font-family: 'Be Vietnam Pro', sans-serif !important;
   transition: all 0.25s ease;
 }
 
@@ -123,7 +123,7 @@
   background: var(--text-navy) !important;
   border-radius: 12px !important;
   padding: 13px 22px !important;
-  font-family: 'Outfit', sans-serif !important;
+  font-family: 'Be Vietnam Pro', sans-serif !important;
   font-weight: 600 !important;
   font-size: 15px !important;
   letter-spacing: 0.3px;
@@ -206,7 +206,7 @@
 }
 
 .name-panel h2 {
-  font-family: 'Outfit', sans-serif;
+  font-family: 'Be Vietnam Pro', sans-serif;
   font-size: 21px;
   font-weight: 700;
   letter-spacing: 1px;
@@ -233,7 +233,7 @@
   border-radius: 14px;
   background: var(--bg-cream);
   color: var(--text-navy);
-  font-family: 'Outfit', sans-serif;
+  font-family: 'Be Vietnam Pro', sans-serif;
   text-align: center;
   outline: none;
   box-sizing: border-box;
@@ -260,7 +260,7 @@
   border: 1px solid rgba(74, 55, 40, 0.12);
   border-radius: var(--radius-pill);
   padding: 13px 22px;
-  font-family: 'Outfit', sans-serif;
+  font-family: 'Be Vietnam Pro', sans-serif;
   font-size: 15px;
   font-weight: 700;
   letter-spacing: 0.3px;
@@ -312,7 +312,7 @@
   box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
   pointer-events: auto;
   max-width: min(90vw, 360px);
-  font-family: 'Outfit', sans-serif;
+  font-family: 'Be Vietnam Pro', sans-serif;
   animation: toast-slide-in 0.4s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
@@ -453,7 +453,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  font-family: 'Outfit', sans-serif;
+  font-family: 'Be Vietnam Pro', sans-serif;
   font-size: 14px;
   font-weight: 700;
   color: #fff;
@@ -655,7 +655,7 @@
 }
 
 .constellation-latin-name {
-  font-family: 'Outfit', sans-serif;
+  font-family: 'Be Vietnam Pro', sans-serif;
   font-size: 14.5px;
   font-weight: 700;
   letter-spacing: 0.12em;
@@ -815,7 +815,7 @@ body.aurora-active .aurora {
   border: var(--border-width-atelier) solid var(--border-card);
   box-shadow: 0 3px 12px rgba(74, 55, 40, 0.08);
   color: var(--text-navy);
-  font-family: 'Outfit', sans-serif;
+  font-family: 'Be Vietnam Pro', sans-serif;
   font-size: 13.5px;
   font-weight: 700;
   cursor: pointer;
@@ -979,7 +979,7 @@ body.aurora-active .aurora {
   justify-content: center;
   gap: 14px;
   color: var(--text-navy);
-  font-family: "Outfit", sans-serif;
+  font-family: 'Be Vietnam Pro', sans-serif;
   text-align: center;
   padding: 16px 12px;
   position: relative;
@@ -1053,7 +1053,7 @@ body.aurora-active .aurora {
 }
 
 .polaroid-stamp-header {
-  font-family: "Outfit", sans-serif;
+  font-family: 'Be Vietnam Pro', sans-serif;
   font-size: 10px;
   font-weight: 800;
   letter-spacing: 2px;
@@ -1068,7 +1068,7 @@ body.aurora-active .aurora {
 
 .polaroid-front .caption {
   margin-top: 10px;
-  font-family: "Outfit", sans-serif;
+  font-family: 'Be Vietnam Pro', sans-serif;
   font-weight: 600;
   font-size: 15px;
   color: var(--text-navy);
@@ -1114,7 +1114,7 @@ body.aurora-active .aurora {
   display: flex;
   align-items: center;
   justify-content: center;
-  font-family: 'Outfit', sans-serif;
+  font-family: 'Be Vietnam Pro', sans-serif;
   font-size: 11px;
   font-weight: 700;
   color: var(--text-navy);
@@ -1142,7 +1142,7 @@ body.aurora-active .aurora {
   border: var(--border-width-atelier) solid var(--border-card);
   border-radius: var(--radius-pill);
   padding: 5px 14px;
-  font-family: 'Outfit', sans-serif;
+  font-family: 'Be Vietnam Pro', sans-serif;
   font-size: 11.5px;
   font-weight: 700;
   color: var(--text-navy);
@@ -1177,7 +1177,7 @@ body.aurora-active .aurora {
   display: flex;
   align-items: center;
   justify-content: center;
-  font-family: "Outfit", sans-serif;
+  font-family: 'Be Vietnam Pro', sans-serif;
   font-size: 20px;
   font-weight: 600;
   color: #d53f8c;
@@ -1215,7 +1215,7 @@ body.aurora-active .aurora {
   display: flex;
   align-items: center;
   justify-content: center;
-  font-family: "Outfit", sans-serif;
+  font-family: 'Be Vietnam Pro', sans-serif;
   font-size: 16px;
   font-weight: 500;
   color: #2d3748;
@@ -1539,7 +1539,7 @@ body.sky-night .portal-badge {
 
 .atelier-header h2,
 .luminous-portal h2 {
-  font-family: 'Outfit', sans-serif;
+  font-family: 'Be Vietnam Pro', sans-serif;
   font-size: 21px;
   letter-spacing: 1.2px;
   font-weight: 800;
@@ -1626,7 +1626,7 @@ body.sky-night .plate-engraving-label {
   border: 1.5px solid #D4AF37 !important;
   border-radius: 12px !important;
   color: var(--text-navy) !important;
-  font-family: 'Outfit', sans-serif !important;
+  font-family: 'Be Vietnam Pro', sans-serif !important;
   font-size: 16px !important;
   font-weight: 700 !important;
   letter-spacing: 2px !important;
@@ -1688,7 +1688,7 @@ body.sky-night .emboss-placeholder {
 
 .emboss-char {
   display: inline-block;
-  font-family: 'Outfit', sans-serif;
+  font-family: 'Be Vietnam Pro', sans-serif;
   font-size: clamp(17px, 4vw, 23px);
   font-weight: 800;
   text-transform: uppercase;
@@ -1751,16 +1751,23 @@ body.sky-night .emboss-char {
 .ritual-step-bar {
   display: flex;
   align-items: center;
-  justify-content: center;
-  flex-wrap: wrap;
-  gap: 4px clamp(2px, 1vw, 6px);
-  margin: 0 auto 10px auto;
-  padding: 6px 12px;
+  justify-content: space-between;
+  flex-wrap: nowrap;
+  gap: 2px 4px;
+  margin: 0 auto 12px auto;
+  padding: 5px 8px;
   background: rgba(245, 236, 215, 0.45);
   border: 1px solid rgba(212, 175, 55, 0.35);
   border-radius: 999px;
-  max-width: 95%;
+  width: 100%;
+  max-width: 500px;
   box-sizing: border-box;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+
+.ritual-step-bar::-webkit-scrollbar {
+  display: none;
 }
 
 body.sky-night .ritual-step-bar {
@@ -1769,22 +1776,24 @@ body.sky-night .ritual-step-bar {
 }
 
 .step-dot {
-  font-family: 'Outfit', sans-serif;
-  font-size: 11px;
+  flex-shrink: 0;
+  font-family: 'Be Vietnam Pro', sans-serif;
+  font-size: 10px;
   font-weight: 600;
   color: var(--text-muted);
-  padding: 3px 8px;
+  padding: 3px 6px;
   border-radius: 999px;
   display: inline-flex;
   align-items: center;
-  gap: 4px;
+  gap: 3px;
   transition: all 0.25s ease;
   user-select: none;
+  white-space: nowrap;
 }
 
 .step-dot i {
   font-style: normal;
-  font-size: 10px;
+  font-size: 9.5px;
 }
 
 .step-dot.is-active {
@@ -1792,12 +1801,12 @@ body.sky-night .ritual-step-bar {
   color: var(--text-navy);
   font-weight: 700;
   box-shadow: 0 2px 8px rgba(222, 184, 83, 0.4);
-  transform: scale(1.05);
+  transform: scale(1.04);
 }
 
 .step-dot.is-done {
   color: #2E7D32;
-  background: rgba(46, 125, 50, 0.1);
+  background: rgba(46, 125, 50, 0.12);
 }
 
 body.sky-night .step-dot.is-done {
@@ -1806,9 +1815,12 @@ body.sky-night .step-dot.is-done {
 }
 
 .step-connector {
-  width: 8px;
+  flex: 1;
+  min-width: 4px;
+  max-width: 14px;
   height: 1.5px;
-  background: rgba(212, 175, 55, 0.3);
+  background: rgba(212, 175, 55, 0.35);
+  flex-shrink: 0;
 }
 
 /* Artisan Crafting Bench Container */
@@ -1816,14 +1828,14 @@ body.sky-night .step-dot.is-done {
   display: flex;
   align-items: stretch;
   justify-content: space-between;
-  gap: clamp(10px, 2vw, 16px);
-  padding: 12px 14px;
-  background: rgba(250, 248, 245, 0.92);
+  gap: 12px;
+  padding: 12px;
+  background: rgba(250, 248, 245, 0.95);
   border: var(--border-width-atelier) solid var(--border-card);
   border-radius: var(--radius-card);
-  margin: 6px auto 12px auto;
+  margin: 6px auto 14px auto;
   width: 100%;
-  max-width: 480px;
+  max-width: 500px;
   box-sizing: border-box;
   backdrop-filter: blur(var(--blur-glass));
   -webkit-backdrop-filter: blur(var(--blur-glass));
@@ -1838,28 +1850,43 @@ body.sky-night .artisan-crafting-bench {
   box-shadow: 0 6px 24px rgba(0, 0, 0, 0.45);
 }
 
-/* Hearth Burner Unit: Matchbox + Candle + Suspended Brass Spoon */
+/* Hearth Burner Unit: Self-contained Dedicated Heating Station */
 .hearth-burner-unit {
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
-  gap: 8px;
+  justify-content: space-between;
+  gap: 6px;
+  width: 136px;
+  min-width: 130px;
+  max-width: 140px;
+  flex-shrink: 0;
+  box-sizing: border-box;
+  background: rgba(245, 238, 224, 0.55);
+  border: 1px solid rgba(212, 175, 55, 0.3);
+  border-radius: 10px;
+  padding: 8px 6px;
   position: relative;
-  min-width: 140px;
+}
+
+body.sky-night .hearth-burner-unit {
+  background: rgba(255, 255, 255, 0.04);
+  border-color: rgba(245, 206, 86, 0.2);
 }
 
 /* Vintage Lotus Matchbox & Striker Strip */
 .artisan-matchbox-wrap {
-  position: relative;
+  width: 100%;
+  box-sizing: border-box;
   display: flex;
   align-items: center;
-  gap: 8px;
-  padding: 4px 8px;
+  justify-content: space-between;
+  gap: 4px;
+  padding: 3px 5px;
   background: linear-gradient(135deg, #FAF3E0 0%, #E8D8B8 100%);
   border: 1px solid #C4A768;
-  border-radius: 6px;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.12);
+  border-radius: 5px;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
   user-select: none;
 }
 
@@ -1871,25 +1898,27 @@ body.sky-night .artisan-matchbox-wrap {
 .matchbox-drawer {
   display: flex;
   align-items: center;
-  gap: 6px;
+  gap: 3px;
+  min-width: 0;
 }
 
 .matchbox-label {
   display: flex;
   align-items: center;
-  gap: 3px;
+  gap: 2px;
 }
 
 .matchbox-lotus-icon {
-  font-size: 13px;
+  font-size: 11px;
 }
 
 .matchbox-brand {
-  font-family: 'Outfit', sans-serif;
-  font-size: 8.5px;
+  font-family: 'Be Vietnam Pro', sans-serif;
+  font-size: 8px;
   font-weight: 800;
-  letter-spacing: 0.8px;
+  letter-spacing: 0.5px;
   color: #6B4E1E;
+  white-space: nowrap;
 }
 
 body.sky-night .matchbox-brand {
@@ -1900,10 +1929,10 @@ body.sky-night .matchbox-brand {
   background: #3A2312;
   border: 1px solid #1F1108;
   border-radius: 3px;
-  padding: 2px 6px;
+  padding: 2px 4px;
   display: flex;
   align-items: center;
-  gap: 3px;
+  gap: 2px;
   cursor: pointer;
   touch-action: manipulation;
   transition: all 0.2s ease;
@@ -1916,14 +1945,14 @@ body.sky-night .matchbox-brand {
 }
 
 .striker-grit {
-  width: 4px;
-  height: 10px;
+  width: 3px;
+  height: 9px;
   background: repeating-linear-gradient(to bottom, #774322 0%, #3A2312 2px, #1F1108 4px);
   border-radius: 1px;
 }
 
 .striker-hint {
-  font-size: 8px;
+  font-size: 7.5px;
   font-weight: 700;
   color: #FFA726;
   white-space: nowrap;
@@ -1936,8 +1965,9 @@ body.sky-night .matchbox-brand {
   cursor: grab;
   touch-action: none;
   position: relative;
-  padding: 4px;
+  padding: 2px;
   transition: transform 0.2s ease;
+  flex-shrink: 0;
 }
 
 .artisan-matchstick:hover {
@@ -1950,7 +1980,7 @@ body.sky-night .matchbox-brand {
 }
 
 .match-stem {
-  width: 22px;
+  width: 16px;
   height: 3px;
   background: #E4C896;
   border-radius: 1px 0 0 1px;
@@ -1958,8 +1988,8 @@ body.sky-night .matchbox-brand {
 }
 
 .match-head {
-  width: 6px;
-  height: 6px;
+  width: 5px;
+  height: 5px;
   border-radius: 50% 30% 30% 50%;
   background: radial-gradient(circle at 30% 30%, #EF4444 0%, #B91C1C 60%, #7F1D1D 100%);
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
@@ -1972,9 +2002,9 @@ body.sky-night .matchbox-brand {
 .match-flame {
   position: absolute;
   right: 0;
-  top: -10px;
-  width: 10px;
-  height: 16px;
+  top: -9px;
+  width: 9px;
+  height: 15px;
   border-radius: 50% 50% 25% 25%;
   background: radial-gradient(ellipse at 50% 85%, #FFFFFF 0%, #FFF4B8 30%, #FFA726 65%, rgba(230, 81, 0, 0) 100%);
   animation: flame-flicker 1.4s infinite ease-in-out;
@@ -2006,8 +2036,8 @@ body.sky-night .matchbox-brand {
 
 /* Artisan Aromatherapy Candle */
 .artisan-candle {
-  width: 44px;
-  height: 54px;
+  width: 40px;
+  height: 48px;
   position: relative;
   cursor: pointer;
   display: flex;
@@ -2016,6 +2046,7 @@ body.sky-night .matchbox-brand {
   justify-content: flex-end;
   touch-action: manipulation;
   transition: transform var(--transition-fast);
+  margin: 4px auto 14px auto;
 }
 
 .artisan-candle:hover {
@@ -2027,22 +2058,22 @@ body.sky-night .matchbox-brand {
 }
 
 .candle-holder {
-  width: 40px;
-  height: 8px;
+  width: 38px;
+  height: 7px;
   background: linear-gradient(90deg, #A88734 0%, #F5CE56 50%, #906F23 100%);
   border-radius: 999px;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
   border: 1px solid rgba(255, 235, 160, 0.6);
   z-index: 2;
 }
 
 .candle-body {
-  width: 26px;
-  height: 30px;
+  width: 24px;
+  height: 26px;
   background: linear-gradient(180deg, #FAF8F5 0%, #EFEBE4 70%, #D8D2C7 100%);
-  border-radius: 4px 4px 5px 5px;
+  border-radius: 3px 3px 4px 4px;
   border: 1px solid rgba(210, 205, 195, 0.8);
-  box-shadow: inset -2px 0 4px rgba(0, 0, 0, 0.06), 0 3px 6px rgba(19, 28, 78, 0.08);
+  box-shadow: inset -2px 0 4px rgba(0, 0, 0, 0.06), 0 2px 5px rgba(19, 28, 78, 0.08);
   position: relative;
   margin-bottom: -1px;
   z-index: 2;
@@ -2054,7 +2085,7 @@ body.sky-night .matchbox-brand {
   top: 0;
   left: 2px;
   right: 2px;
-  height: 4px;
+  height: 3px;
   border-radius: 50%;
   background: #EAE6DE;
   box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.15);
@@ -2062,7 +2093,7 @@ body.sky-night .matchbox-brand {
 
 .candle-wick {
   width: 2px;
-  height: 7px;
+  height: 6px;
   background: #2D2721;
   border-radius: 1px;
   margin-bottom: -1px;
@@ -2072,9 +2103,9 @@ body.sky-night .matchbox-brand {
 /* Realistic Dancing Candle Flame */
 .candle-flame {
   position: absolute;
-  top: 3px;
-  width: 14px;
-  height: 22px;
+  top: 2px;
+  width: 12px;
+  height: 19px;
   border-radius: 50% 50% 25% 25%;
   background: radial-gradient(ellipse at 50% 85%, #FFFFFF 0%, #FFF4B8 30%, #FFA726 65%, rgba(230, 81, 0, 0) 100%);
   animation: flame-flicker 1.8s infinite ease-in-out;
@@ -2087,8 +2118,8 @@ body.sky-night .matchbox-brand {
   bottom: 2px;
   left: 50%;
   transform: translateX(-50%);
-  width: 5px;
-  height: 9px;
+  width: 4px;
+  height: 8px;
   background: #64B5F6;
   border-radius: 50%;
   opacity: 0.85;
@@ -2096,9 +2127,9 @@ body.sky-night .matchbox-brand {
 
 .candle-halo {
   position: absolute;
-  top: -8px;
-  width: 56px;
-  height: 56px;
+  top: -7px;
+  width: 48px;
+  height: 48px;
   border-radius: 50%;
   background: radial-gradient(circle, rgba(245, 206, 86, 0.55) 0%, rgba(245, 206, 86, 0.18) 50%, rgba(245, 206, 86, 0) 75%);
   pointer-events: none;
@@ -2108,18 +2139,18 @@ body.sky-night .matchbox-brand {
 
 .candle-badge {
   position: absolute;
-  bottom: -18px;
+  bottom: -14px;
   left: 50%;
   transform: translateX(-50%);
-  font-size: 8.5px;
+  font-size: 8px;
   font-weight: 700;
   white-space: nowrap;
   background: var(--accent-pill-bg);
   border: 1px solid var(--border-card);
-  padding: 2px 7px;
+  padding: 1px 6px;
   border-radius: 999px;
   color: var(--text-navy);
-  box-shadow: 0 1px 4px rgba(19, 28, 78, 0.08);
+  box-shadow: 0 1px 3px rgba(19, 28, 78, 0.08);
   pointer-events: none;
   transition: all var(--transition-fast);
 }
@@ -2142,20 +2173,23 @@ body.sky-night .matchbox-brand {
   50% { transform: scale(1.18); opacity: 1; }
 }
 
-/* Brass Melting Spoon Stand */
+/* Brass Melting Spoon Stand - Positioned below candle with proper clearance */
 .brass-spoon-stand {
   position: relative;
   display: flex;
   align-items: center;
-  margin-top: 4px;
+  justify-content: center;
+  width: 100%;
+  margin-top: 2px;
 }
 
 .brass-spoon {
   display: flex;
   align-items: center;
+  justify-content: center;
   position: relative;
   transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
-  transform-origin: 15px 50%;
+  transform-origin: 12px 50%;
   cursor: pointer;
 }
 
@@ -2171,38 +2205,38 @@ body.sky-night .matchbox-brand {
 }
 
 .spoon-handle {
-  width: 44px;
-  height: 7px;
+  width: 30px;
+  height: 6px;
   background: linear-gradient(90deg, #3E2413 0%, #684120 70%, #A88734 100%);
-  border-radius: 4px 0 0 4px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.25);
+  border-radius: 3px 0 0 3px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.25);
   position: relative;
 }
 
 .spoon-wood-grip {
   position: absolute;
-  left: 3px;
+  left: 2px;
   top: 1px;
   bottom: 1px;
-  width: 20px;
+  width: 14px;
   background: #271406;
   border-radius: 2px;
 }
 
 .spoon-neck {
-  width: 12px;
-  height: 5px;
+  width: 8px;
+  height: 4px;
   background: linear-gradient(90deg, #A88734 0%, #D4AF37 100%);
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
 }
 
 .spoon-bowl {
-  width: 52px;
-  height: 52px;
+  width: 44px;
+  height: 44px;
   border-radius: 50%;
   background: radial-gradient(circle at 40% 35%, #FFF0B3 0%, #D4AF37 45%, #92701F 100%);
   border: 1.5px solid #F5CE56;
-  box-shadow: inset 0 3px 8px rgba(0, 0, 0, 0.35), 0 4px 12px rgba(19, 28, 78, 0.15);
+  box-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.35), 0 3px 8px rgba(19, 28, 78, 0.15);
   position: relative;
   overflow: hidden;
   display: flex;
@@ -2405,6 +2439,17 @@ body.sky-night .matchbox-brand {
   justify-content: space-between;
   gap: 6px;
   flex: 1;
+  min-width: 0;
+  box-sizing: border-box;
+  background: rgba(255, 255, 255, 0.7);
+  border: 1px solid rgba(228, 220, 208, 0.6);
+  border-radius: 10px;
+  padding: 8px 10px;
+}
+
+body.sky-night .wax-beads-tray {
+  background: rgba(255, 255, 255, 0.03);
+  border-color: rgba(245, 206, 86, 0.15);
 }
 
 .tray-header-row {
@@ -2415,7 +2460,7 @@ body.sky-night .matchbox-brand {
 }
 
 .tray-title {
-  font-family: 'Outfit', sans-serif;
+  font-family: 'Be Vietnam Pro', sans-serif;
   font-size: 8.5px;
   font-weight: 800;
   letter-spacing: 0.8px;
@@ -2548,7 +2593,7 @@ body.sky-night .bead-label {
   border: 1px solid var(--border-card);
   border-radius: var(--radius-pill);
   padding: 3px 9px;
-  font-family: 'Outfit', sans-serif;
+  font-family: 'Be Vietnam Pro', sans-serif;
   font-size: 9.5px;
   font-weight: 700;
   color: var(--text-navy);
@@ -2600,7 +2645,7 @@ body.sky-night .crest-selector-title {
   background: rgba(245, 236, 215, 0.4);
   border: 1px solid rgba(212, 175, 55, 0.35);
   border-radius: 6px;
-  font-family: 'Outfit', sans-serif;
+  font-family: 'Be Vietnam Pro', sans-serif;
   font-size: 8.5px;
   font-weight: 600;
   color: var(--text-navy);
@@ -2858,7 +2903,7 @@ body.sky-night .wax-target-hint {
   border: 1px solid #D4AF37;
   border-radius: 999px;
   padding: 3px 10px;
-  font-family: 'Outfit', sans-serif;
+  font-family: 'Be Vietnam Pro', sans-serif;
   font-size: 9px;
   font-weight: 700;
   color: #73571A;
@@ -3049,7 +3094,7 @@ body.sky-night .wax-target-hint {
 }
 
 .wax-name-imprint {
-  font-family: 'Outfit', sans-serif;
+  font-family: 'Be Vietnam Pro', sans-serif;
   font-size: 8.5px;
   font-weight: 800;
   letter-spacing: 1px;
@@ -3263,7 +3308,7 @@ body.sky-night .wax-target-hint {
   color: var(--text-navy) !important;
   border: 1.5px solid rgba(212, 175, 55, 0.4) !important;
   padding: 13px 26px !important;
-  font-family: 'Outfit', sans-serif !important;
+  font-family: 'Be Vietnam Pro', sans-serif !important;
   font-size: 15px !important;
   font-weight: 700 !important;
   border-radius: 12px !important;
@@ -3314,9 +3359,23 @@ body.sky-night .wax-seal-guide-tip {
   }
   .hearth-burner-unit {
     flex-direction: row;
-    gap: 14px;
+    gap: 8px;
     width: 100%;
+    max-width: 100%;
     justify-content: space-around;
+    align-items: center;
+    padding: 6px 8px;
+  }
+  .hearth-burner-unit .artisan-matchbox-wrap {
+    width: auto;
+    max-width: 125px;
+  }
+  .hearth-burner-unit .artisan-candle {
+    margin: 0;
+  }
+  .hearth-burner-unit .brass-spoon-stand {
+    width: auto;
+    margin-top: 0;
   }
   .wax-beads-tray {
     width: 100%;
@@ -4048,7 +4107,7 @@ body.sky-night .wax-seal-guide-tip {
   border: 1.5px solid var(--border-card);
   padding: 4px 12px;
   border-radius: 999px;
-  font-family: 'Outfit', sans-serif;
+  font-family: 'Be Vietnam Pro', sans-serif;
   font-size: 11.5px;
   font-weight: 700;
   color: var(--text-navy);
@@ -4283,7 +4342,7 @@ body.sky-night .shifter-pill-label {
    PHASE 3.2: TERRARIUM MAGIC TOUCH GESTURES (GÕ ĐÚP & XOA TRÒN SƯỞI ẤM RỄ)
    ========================================================================== */
 .terrarium-gesture-hint {
-  font-family: 'Outfit', sans-serif;
+  font-family: 'Be Vietnam Pro', sans-serif;
   font-size: 11px;
   font-weight: 500;
   color: var(--text-muted);
@@ -4618,7 +4677,7 @@ body.sky-night .harp-string-node {
   position: fixed;
   pointer-events: none;
   z-index: 1004;
-  font-family: 'Outfit', sans-serif;
+  font-family: 'Be Vietnam Pro', sans-serif;
   font-size: 16px;
   font-weight: 700;
   color: var(--accent-gold);
@@ -4713,7 +4772,7 @@ body.sky-night .harp-string-node {
 }
 
 .starlight-bubble .bubble-char {
-  font-family: 'Outfit', sans-serif;
+  font-family: 'Be Vietnam Pro', sans-serif;
   font-size: clamp(20px, 4.5vw, 28px);
   font-weight: 800;
   color: var(--text-navy, #131C4E);
@@ -4800,7 +4859,7 @@ body.sky-night .harp-string-node {
   min-height: 44px;
   box-sizing: border-box;
   border-radius: var(--radius-pill);
-  font-family: 'Outfit', sans-serif;
+  font-family: 'Be Vietnam Pro', sans-serif;
   font-size: 13.5px;
   font-weight: 600;
   display: flex;
@@ -5391,7 +5450,7 @@ body.sky-night .found-letter-slot.filled {
   border-radius: 16px;
   padding: 8px 14px;
   color: var(--text-navy);
-  font-family: "Outfit", sans-serif;
+  font-family: 'Be Vietnam Pro', sans-serif;
   font-size: clamp(0.76rem, 1.6vw, 0.92rem);
   font-weight: 600;
   white-space: normal;
@@ -5506,7 +5565,7 @@ body.sky-night .found-letter-slot.filled {
   border: 1.5px solid #6A8D73;
   border-radius: 12px;
   padding: 6px 12px;
-  font-family: "Outfit", sans-serif;
+  font-family: 'Be Vietnam Pro', sans-serif;
   font-size: 0.78rem;
   font-weight: 600;
   color: #4A3728;
@@ -5555,7 +5614,7 @@ body.sky-night .found-letter-slot.filled {
 }
 
 .clover-wish-tag {
-  font-family: "Outfit", sans-serif;
+  font-family: 'Be Vietnam Pro', sans-serif;
   font-size: 0.72rem;
   font-weight: 600;
   color: #4A3728;
@@ -5599,7 +5658,7 @@ body.sky-night .found-letter-slot.filled {
   border: 1.5px solid rgba(255, 255, 255, 0.4);
   padding: 10px 20px;
   border-radius: 12px;
-  font-family: 'Outfit', sans-serif;
+  font-family: 'Be Vietnam Pro', sans-serif;
   font-size: 13.5px;
   font-weight: 700;
   box-shadow: 0 8px 20px rgba(212, 122, 136, 0.32);
@@ -6161,7 +6220,7 @@ body.sky-night .found-letter-slot.filled {
 }
 
 .flower-identity-title {
-  font-family: 'Outfit', sans-serif;
+  font-family: 'Be Vietnam Pro', sans-serif;
   font-size: 23px;
   font-weight: 800;
   color: var(--text-navy);
@@ -6578,7 +6637,7 @@ body.sky-night .found-letter-slot.filled {
 }
 
 .stamp-value {
-  font-family: 'Outfit', sans-serif;
+  font-family: 'Be Vietnam Pro', sans-serif;
   font-size: 12.5px;
   font-weight: 900;
   color: #4A3728;
@@ -6697,7 +6756,7 @@ body.sky-night .found-letter-slot.filled {
   gap: 8px;
   padding: 12px 22px;
   border-radius: 12px;
-  font-family: 'Outfit', sans-serif;
+  font-family: 'Be Vietnam Pro', sans-serif;
   font-size: 14px;
   cursor: pointer;
   border: none;
@@ -7014,4 +7073,6 @@ body.sky-night .found-letter-slot.filled {
     scroll-behavior: auto !important;
   }
 }
+
+
 

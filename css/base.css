@@ -45,8 +45,8 @@
   --radius-inner: 10px;
   --radius-sm: 8px;
 
-  /* Standardized Typography */
-  --font-ui: 'Outfit', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  /* Standardized Typography: Full Vietnamese Diacritics Support */
+  --font-ui: 'Be Vietnam Pro', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
   --font-script: 'Dancing Script', cursive;
   --font-mono: 'SF Mono', Consolas, Monaco, monospace;
 

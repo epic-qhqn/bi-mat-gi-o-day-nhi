@@ -172,7 +172,7 @@
         ctx.stroke();
 
         ctx.fillStyle = "#4A3728";
-        ctx.font = "bold 15px 'Outfit', sans-serif";
+        ctx.font = "bold 15px 'Be Vietnam Pro', sans-serif";
         ctx.textAlign = "center";
         ctx.textBaseline = "middle";
         ctx.fillText("BƯU THIẾP KỶ NIỆM · 20/10 ĐONG ĐẦY YÊU THƯƠNG", cardX + cardW / 2, cardY + 47);
@@ -202,12 +202,12 @@
         ctx.fillStyle = "#C53030";
         ctx.textAlign = "center";
         ctx.textBaseline = "middle";
-        ctx.font = "bold 7px 'Outfit', sans-serif";
+        ctx.font = "bold 7px 'Be Vietnam Pro', sans-serif";
         ctx.fillText("★ 20/10/2026 ★", 0, -14);
-        ctx.font = "bold 8.5px 'Outfit', sans-serif";
+        ctx.font = "bold 8.5px 'Be Vietnam Pro', sans-serif";
         ctx.fillText("BƯU ĐIỆN", 0, -1);
         ctx.fillText("ĐỒNG NỘI", 0, 10);
-        ctx.font = "bold 6.5px 'Outfit', sans-serif";
+        ctx.font = "bold 6.5px 'Be Vietnam Pro', sans-serif";
         ctx.fillText("ĐÃ TRAO", 0, 20);
 
         // Wavy Cancellation Lines
@@ -228,10 +228,10 @@
         const routeY = cardY + 125;
         // Point: Vườn Bí Mật
         ctx.textAlign = "left";
-        ctx.font = "900 32px 'Outfit', sans-serif";
+        ctx.font = "900 32px 'Be Vietnam Pro', sans-serif";
         ctx.fillStyle = "#4A3728";
         ctx.fillText("VƯỜN BÍ MẬT", cardX + 60, routeY);
-        ctx.font = "600 17px 'Outfit', sans-serif";
+        ctx.font = "600 17px 'Be Vietnam Pro', sans-serif";
         ctx.fillStyle = "#8C7A6B";
         ctx.fillText("Nơi Gieo Mầm 🪷", cardX + 60, routeY + 28);
 
@@ -247,7 +247,7 @@
         ctx.stroke();
 
         ctx.fillStyle = "#4A3728";
-        ctx.font = "bold 13.5px 'Outfit', sans-serif";
+        ctx.font = "bold 13.5px 'Be Vietnam Pro', sans-serif";
         ctx.fillText("🕊️ THƯ TÌNH ĐỒNG NỘI", midX, routeY - 7);
 
         // Connecting dotted line
@@ -264,10 +264,10 @@
 
         // Point: Nàng Thơ
         ctx.textAlign = "right";
-        ctx.font = "900 32px 'Outfit', sans-serif";
+        ctx.font = "900 32px 'Be Vietnam Pro', sans-serif";
         ctx.fillStyle = "#D47A88";
         ctx.fillText("NÀNG THƠ", cardX + cardW - 60, routeY);
-        ctx.font = "600 17px 'Outfit', sans-serif";
+        ctx.font = "600 17px 'Be Vietnam Pro', sans-serif";
         ctx.fillStyle = "#8C7A6B";
         ctx.fillText("Trái Tim Nàng 💖", cardX + cardW - 60, routeY + 28);
 
@@ -294,11 +294,11 @@
 
             ctx.textAlign = "center";
             ctx.fillStyle = "#8C7A6B";
-            ctx.font = "bold 12.5px 'Outfit', sans-serif";
+            ctx.font = "bold 12.5px 'Be Vietnam Pro', sans-serif";
             ctx.fillText(item.label, mx + metaCardW / 2, metaY + 28);
 
             ctx.fillStyle = item.highlight ? "#D47A88" : "#4A3728";
-            ctx.font = "bold 19px 'Outfit', sans-serif";
+            ctx.font = "bold 19px 'Be Vietnam Pro', sans-serif";
             let displayVal = item.val;
             if (ctx.measureText(displayVal).width > metaCardW - 20) {
                 displayVal = displayVal.substring(0, 12) + '...';
@@ -357,7 +357,7 @@
         ctx.stroke();
 
         ctx.fillStyle = "#4A3728";
-        ctx.font = "bold 13px 'Outfit', sans-serif";
+        ctx.font = "bold 13px 'Be Vietnam Pro', sans-serif";
         ctx.textAlign = "center";
         ctx.textBaseline = "middle";
         ctx.fillText("💌 Mở niêm phong", cardX + cardW / 2, tearY);
@@ -381,19 +381,19 @@
         ctx.stroke();
 
         ctx.fillStyle = "#4A3728";
-        ctx.font = "bold 12.5px 'Outfit', sans-serif";
+        ctx.font = "bold 12.5px 'Be Vietnam Pro', sans-serif";
         ctx.textAlign = "center";
         ctx.fillText("HOA TÂM HỒN NÀNG THƠ · 20/10", colLeftX + 120, bodyY + 17);
 
         // Flower Identity Title
         ctx.textAlign = "left";
         ctx.fillStyle = "#4A3728";
-        ctx.font = "800 30px 'Outfit', sans-serif";
+        ctx.font = "800 30px 'Be Vietnam Pro', sans-serif";
         ctx.fillText(profile.title, colLeftX, bodyY + 70);
 
         // Flower Quote
         ctx.fillStyle = "#8C7A6B";
-        ctx.font = "500 17.5px 'Outfit', sans-serif";
+        ctx.font = "500 17.5px 'Be Vietnam Pro', sans-serif";
         ctx.fillText(profile.quote, colLeftX, bodyY + 100);
 
         // -------------------------------------------------------------
@@ -500,7 +500,7 @@
             ctx.stroke();
 
             ctx.fillStyle = "#4A3728";
-            ctx.font = "bold 14px 'Outfit', sans-serif";
+            ctx.font = "bold 14px 'Be Vietnam Pro', sans-serif";
             ctx.textAlign = "center";
             ctx.textBaseline = "middle";
             ctx.fillText(t, traitStartX + pillW / 2, traitsY + pillH / 2);
@@ -527,7 +527,7 @@
         ctx.textAlign = "left";
         ctx.textBaseline = "top";
         ctx.fillStyle = "#4A3728";
-        ctx.font = "bold 13.5px 'Outfit', sans-serif";
+        ctx.font = "bold 13.5px 'Be Vietnam Pro', sans-serif";
         ctx.fillText("ĐỒNG ĐIỆU TÂM HỒN", colLeftX + 16, compatY + 14);
 
         if (profile.match && profile.match.length >= 2) {
@@ -535,20 +535,20 @@
             ctx.font = "18px sans-serif";
             ctx.fillText(profile.match[0].icon, colLeftX + 16, compatY + 42);
             ctx.fillStyle = "#4A3728";
-            ctx.font = "bold 14px 'Outfit', sans-serif";
+            ctx.font = "bold 14px 'Be Vietnam Pro', sans-serif";
             ctx.fillText(profile.match[0].name, colLeftX + 44, compatY + 42);
             ctx.fillStyle = "#8C7A6B";
-            ctx.font = "500 12px 'Outfit', sans-serif";
+            ctx.font = "500 12px 'Be Vietnam Pro', sans-serif";
             ctx.fillText(profile.match[0].desc, colLeftX + 44, compatY + 62);
 
             // Item 2
             ctx.font = "18px sans-serif";
             ctx.fillText(profile.match[1].icon, colLeftX + 16, compatY + 92);
             ctx.fillStyle = "#4A3728";
-            ctx.font = "bold 14px 'Outfit', sans-serif";
+            ctx.font = "bold 14px 'Be Vietnam Pro', sans-serif";
             ctx.fillText(profile.match[1].name, colLeftX + 44, compatY + 92);
             ctx.fillStyle = "#8C7A6B";
-            ctx.font = "500 12px 'Outfit', sans-serif";
+            ctx.font = "500 12px 'Be Vietnam Pro', sans-serif";
             ctx.fillText(profile.match[1].desc, colLeftX + 44, compatY + 112);
         }
 
@@ -563,7 +563,7 @@
         ctx.stroke();
 
         ctx.fillStyle = "#4A3728";
-        ctx.font = "bold 13.5px 'Outfit', sans-serif";
+        ctx.font = "bold 13.5px 'Be Vietnam Pro', sans-serif";
         ctx.fillText("KHÁC BIỆT NÉT DUYÊN", box2X + 16, compatY + 14);
 
         if (profile.clash && profile.clash.length >= 2) {
@@ -571,20 +571,20 @@
             ctx.font = "18px sans-serif";
             ctx.fillText(profile.clash[0].icon, box2X + 16, compatY + 42);
             ctx.fillStyle = "#4A3728";
-            ctx.font = "bold 14px 'Outfit', sans-serif";
+            ctx.font = "bold 14px 'Be Vietnam Pro', sans-serif";
             ctx.fillText(profile.clash[0].name, box2X + 44, compatY + 42);
             ctx.fillStyle = "#8C7A6B";
-            ctx.font = "500 12px 'Outfit', sans-serif";
+            ctx.font = "500 12px 'Be Vietnam Pro', sans-serif";
             ctx.fillText(profile.clash[0].desc, box2X + 44, compatY + 62);
 
             // Item 2
             ctx.font = "18px sans-serif";
             ctx.fillText(profile.clash[1].icon, box2X + 16, compatY + 92);
             ctx.fillStyle = "#4A3728";
-            ctx.font = "bold 14px 'Outfit', sans-serif";
+            ctx.font = "bold 14px 'Be Vietnam Pro', sans-serif";
             ctx.fillText(profile.clash[1].name, box2X + 44, compatY + 92);
             ctx.fillStyle = "#8C7A6B";
-            ctx.font = "500 12px 'Outfit', sans-serif";
+            ctx.font = "500 12px 'Be Vietnam Pro', sans-serif";
             ctx.fillText(profile.clash[1].desc, box2X + 44, compatY + 112);
         }
 
@@ -618,7 +618,7 @@
             ctx.stroke();
 
             ctx.fillStyle = "#4A3728";
-            ctx.font = "bold 10px 'Outfit', sans-serif";
+            ctx.font = "bold 10px 'Be Vietnam Pro', sans-serif";
             ctx.textAlign = "center";
             ctx.textBaseline = "middle";
             ctx.fillText(r.label, colLeftX + 86, ry + 23);
@@ -626,7 +626,7 @@
             // Description text
             ctx.textAlign = "left";
             ctx.fillStyle = "#4A3728";
-            ctx.font = "500 13px 'Outfit', sans-serif";
+            ctx.font = "500 13px 'Be Vietnam Pro', sans-serif";
             let descStr = r.desc;
             if (ctx.measureText(descStr).width > colLeftW - 190) {
                 while (ctx.measureText(descStr + '...').width > colLeftW - 190 && descStr.length > 0) {
@@ -657,13 +657,13 @@
         // Strip Header: BỐN MÙA ĐỒNG NỘI · 20/10/2026
         ctx.textAlign = "left";
         ctx.fillStyle = "#4A3728";
-        ctx.font = "800 13px 'Outfit', sans-serif";
+        ctx.font = "800 13px 'Be Vietnam Pro', sans-serif";
         ctx.textBaseline = "middle";
         ctx.fillText("BỐN MÙA ĐỒNG NỘI", colRightX + 16, stripY + 24);
 
         ctx.textAlign = "right";
         ctx.fillStyle = "#8C7A6B";
-        ctx.font = "700 13px 'Outfit', sans-serif";
+        ctx.font = "700 13px 'Be Vietnam Pro', sans-serif";
         ctx.fillText("20/10/2026", colRightX + colRightW - 16, stripY + 24);
 
         // Header divider
@@ -710,7 +710,7 @@
 
             // Caption text
             ctx.fillStyle = "#4A3728";
-            ctx.font = "bold 13px 'Outfit', sans-serif";
+            ctx.font = "bold 13px 'Be Vietnam Pro', sans-serif";
             ctx.textAlign = "center";
             ctx.textBaseline = "middle";
             let capStr = f.caption;
@@ -731,11 +731,11 @@
 
         ctx.textAlign = "center";
         ctx.fillStyle = "#4A3728";
-        ctx.font = "bold 13px 'Outfit', sans-serif";
+        ctx.font = "bold 13px 'Be Vietnam Pro', sans-serif";
         ctx.fillText("♡ Nắng thu đọng nét cười thơ ♡", colRightX + colRightW / 2, stripFooterY + 20);
 
         ctx.fillStyle = "#8C7A6B";
-        ctx.font = "bold 10px 'Outfit', sans-serif";
+        ctx.font = "bold 10px 'Be Vietnam Pro', sans-serif";
         ctx.fillText("VIETNAMESE HERITAGE EDITION", colRightX + colRightW / 2, stripFooterY + 38);
 
         // -------------------------------------------------------------
@@ -788,7 +788,7 @@
 
         // Stamp Text & Art
         ctx.fillStyle = "#D47A88";
-        ctx.font = "bold 10px 'Outfit', sans-serif";
+        ctx.font = "bold 10px 'Be Vietnam Pro', sans-serif";
         ctx.textAlign = "center";
         ctx.textBaseline = "middle";
         ctx.fillText("BƯU CHÍNH VIỆT NAM", stampBoxX + stampW / 2, stampBoxY + 22);
@@ -796,13 +796,13 @@
         ctx.font = "32px sans-serif";
         ctx.fillText("🪷", stampBoxX + 60, stampBoxY + 62);
 
-        ctx.font = "900 24px 'Outfit', sans-serif";
+        ctx.font = "900 24px 'Be Vietnam Pro', sans-serif";
         ctx.fillStyle = "#4A3728";
         ctx.textAlign = "left";
         ctx.fillText("20/10 Đ", stampBoxX + 110, stampBoxY + 62);
 
         ctx.fillStyle = "#6A8D73";
-        ctx.font = "bold 9px 'Outfit', sans-serif";
+        ctx.font = "bold 9px 'Be Vietnam Pro', sans-serif";
         ctx.textAlign = "center";
         ctx.fillText("HƯƠNG ĐỒNG NỘI", stampBoxX + stampW / 2, stampBoxY + 98);
 
@@ -849,14 +849,14 @@
         // Seal Typography
         ctx.textAlign = "center";
         ctx.fillStyle = "#FEF08A";
-        ctx.font = "bold 13px 'Outfit', sans-serif";
+        ctx.font = "bold 13px 'Be Vietnam Pro', sans-serif";
         ctx.fillText("★ 20/10 ★", 0, -22);
 
-        ctx.font = "900 20px 'Outfit', sans-serif";
+        ctx.font = "900 20px 'Be Vietnam Pro', sans-serif";
         ctx.fillStyle = "#FFFFFF";
         ctx.fillText("NÉT DUYÊN", 0, 4);
 
-        ctx.font = "bold 12px 'Outfit', sans-serif";
+        ctx.font = "bold 12px 'Be Vietnam Pro', sans-serif";
         ctx.fillStyle = "#FEE2E2";
         ctx.fillText("AN YÊN", 0, 24);
 
@@ -868,7 +868,7 @@
         ctx.textAlign = "center";
         ctx.textBaseline = "middle";
         ctx.fillStyle = "#8C7A6B";
-        ctx.font = "500 16px 'Outfit', sans-serif";
+        ctx.font = "500 16px 'Be Vietnam Pro', sans-serif";
         ctx.fillText("✦ Bưu Thiếp Kỷ Niệm 20/10 · Tôn Vinh Nét Duyên & Tâm Hồn Phụ Nữ Việt Nam ✦", width / 2, height - 42);
 
         return canvas;
@@ -1115,3 +1115,4 @@
         wireActionButtons();
     }
 })();
+
