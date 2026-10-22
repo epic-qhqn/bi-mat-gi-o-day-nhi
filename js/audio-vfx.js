@@ -362,7 +362,52 @@ window.playWaxStampASMR = () => {
     oscLift.stop(t + 0.28);
 };
 
-// Phase 3: Artisan Hearth Ritual ASMR SFX (Candle Light, Wax Drop, Wax Melt, Glass Stir)
+// Phase 3: Artisan Hearth Ritual ASMR SFX (Match Strike, Candle, Multi-color Beads, Simmer, Swirl, Sprinkle, Press & Pop)
+window.playMatchStrikeSFX = () => {
+    window.initAudio();
+    if (!window.audioCtx) return;
+    const t = window.audioCtx.currentTime;
+
+    // 1. Match head friction rasp across phosphorus striker strip
+    const raspLen = Math.floor(window.audioCtx.sampleRate * 0.08);
+    const raspBuf = window.audioCtx.createBuffer(1, raspLen, window.audioCtx.sampleRate);
+    const d = raspBuf.getChannelData(0);
+    for (let i = 0; i < raspLen; i++) {
+        d[i] = (Math.random() * 2 - 1) * Math.sin((i / raspLen) * Math.PI) * (1 - i / raspLen);
+    }
+    const src = window.audioCtx.createBufferSource();
+    src.buffer = raspBuf;
+    const filter = window.audioCtx.createBiquadFilter();
+    filter.type = 'bandpass';
+    filter.frequency.setValueAtTime(3400, t);
+    filter.Q.setValueAtTime(3.2, t);
+    const gain = window.audioCtx.createGain();
+    gain.gain.setValueAtTime(0.24, t);
+    gain.gain.exponentialRampToValueAtTime(0.001, t + 0.08);
+    src.connect(filter);
+    filter.connect(gain);
+    gain.connect(window.audioCtx.destination);
+    src.start(t);
+
+    // 2. Spark hiss & sulfur combustion flare
+    const flareOsc = window.audioCtx.createOscillator();
+    flareOsc.type = 'sawtooth';
+    flareOsc.frequency.setValueAtTime(480, t + 0.02);
+    flareOsc.frequency.exponentialRampToValueAtTime(180, t + 0.16);
+    const flareFilter = window.audioCtx.createBiquadFilter();
+    flareFilter.type = 'lowpass';
+    flareFilter.frequency.setValueAtTime(800, t + 0.02);
+    const flareGain = window.audioCtx.createGain();
+    flareGain.gain.setValueAtTime(0.001, t);
+    flareGain.gain.linearRampToValueAtTime(0.12, t + 0.05);
+    flareGain.gain.exponentialRampToValueAtTime(0.001, t + 0.18);
+    flareOsc.connect(flareFilter);
+    flareFilter.connect(flareGain);
+    flareGain.connect(window.audioCtx.destination);
+    flareOsc.start(t + 0.02);
+    flareOsc.stop(t + 0.2);
+};
+
 window.playCandleLightSFX = () => {
     window.initAudio();
     if (!window.audioCtx) return;
@@ -405,7 +450,7 @@ window.playCandleLightSFX = () => {
     oscIgnite.stop(t + 0.3);
 };
 
-window.playWaxDropSFX = () => {
+window.playBeadChimeSFX = (freq = 920) => {
     window.initAudio();
     if (!window.audioCtx) return;
     const t = window.audioCtx.currentTime;
@@ -413,15 +458,128 @@ window.playWaxDropSFX = () => {
     // Resonant brass click of solid wax pellet landing in brass spoon bowl
     const osc = window.audioCtx.createOscillator();
     osc.type = 'triangle';
-    osc.frequency.setValueAtTime(920, t);
-    osc.frequency.exponentialRampToValueAtTime(540, t + 0.07);
+    osc.frequency.setValueAtTime(freq, t);
+    osc.frequency.exponentialRampToValueAtTime(freq * 0.58, t + 0.09);
     const gain = window.audioCtx.createGain();
-    gain.gain.setValueAtTime(0.22, t);
-    gain.gain.exponentialRampToValueAtTime(0.001, t + 0.08);
+    gain.gain.setValueAtTime(0.25, t);
+    gain.gain.exponentialRampToValueAtTime(0.001, t + 0.1);
     osc.connect(gain);
     gain.connect(window.audioCtx.destination);
     osc.start(t);
-    osc.stop(t + 0.08);
+    osc.stop(t + 0.1);
+
+    // Metallic overtone harmonic
+    const overtone = window.audioCtx.createOscillator();
+    overtone.type = 'sine';
+    overtone.frequency.setValueAtTime(freq * 2.15, t);
+    overtone.frequency.exponentialRampToValueAtTime(freq * 1.6, t + 0.07);
+    const overtoneGain = window.audioCtx.createGain();
+    overtoneGain.gain.setValueAtTime(0.08, t);
+    overtoneGain.gain.exponentialRampToValueAtTime(0.001, t + 0.07);
+    overtone.connect(overtoneGain);
+    overtoneGain.connect(window.audioCtx.destination);
+    overtone.start(t);
+    overtone.stop(t + 0.08);
+};
+
+window.playWaxDropSFX = () => window.playBeadChimeSFX(920);
+
+window.playSimmerBubbleSFX = () => {
+    window.initAudio();
+    if (!window.audioCtx) return;
+    const t = window.audioCtx.currentTime;
+
+    // Micro bubbling pop of simmering wax
+    const osc = window.audioCtx.createOscillator();
+    osc.type = 'sine';
+    const startF = 350 + Math.random() * 260;
+    osc.frequency.setValueAtTime(startF, t);
+    osc.frequency.exponentialRampToValueAtTime(startF * 1.8, t + 0.04);
+    const g = window.audioCtx.createGain();
+    g.gain.setValueAtTime(0.001, t);
+    g.gain.linearRampToValueAtTime(0.08, t + 0.015);
+    g.gain.exponentialRampToValueAtTime(0.001, t + 0.05);
+    osc.connect(g);
+    g.connect(window.audioCtx.destination);
+    osc.start(t);
+    osc.stop(t + 0.06);
+};
+
+window.playGlassRodSwirlSFX = (intensity = 1) => {
+    window.initAudio();
+    if (!window.audioCtx) return;
+    const t = window.audioCtx.currentTime;
+
+    // Viscous swirl dragging sound with soft glass clink
+    const osc = window.audioCtx.createOscillator();
+    osc.type = 'sine';
+    const baseF = 1200 + Math.random() * 300;
+    osc.frequency.setValueAtTime(baseF, t);
+    osc.frequency.exponentialRampToValueAtTime(baseF * 0.9, t + 0.1);
+    const gain = window.audioCtx.createGain();
+    gain.gain.setValueAtTime(0.001, t);
+    gain.gain.linearRampToValueAtTime(Math.min(0.09 * intensity, 0.15), t + 0.02);
+    gain.gain.exponentialRampToValueAtTime(0.001, t + 0.12);
+    osc.connect(gain);
+    gain.connect(window.audioCtx.destination);
+    osc.start(t);
+    osc.stop(t + 0.14);
+};
+
+window.playSprinkleFlakesSFX = () => {
+    window.initAudio();
+    if (!window.audioCtx) return;
+    const t = window.audioCtx.currentTime;
+
+    // Shimmering chime of gold flakes / dried petals dusting the wax
+    [2400, 3100, 3800, 4600].forEach((freq, idx) => {
+        const osc = window.audioCtx.createOscillator();
+        osc.type = 'sine';
+        const delay = idx * 0.035;
+        osc.frequency.setValueAtTime(freq, t + delay);
+        osc.frequency.exponentialRampToValueAtTime(freq * 1.1, t + delay + 0.1);
+        const gain = window.audioCtx.createGain();
+        gain.gain.setValueAtTime(0.001, t);
+        gain.gain.setValueAtTime(0.06 / (idx + 1), t + delay);
+        gain.gain.exponentialRampToValueAtTime(0.001, t + delay + 0.12);
+        osc.connect(gain);
+        gain.connect(window.audioCtx.destination);
+        osc.start(t + delay);
+        osc.stop(t + delay + 0.14);
+    });
+};
+
+window.playWaxUnmoldPopASMR = () => {
+    window.initAudio();
+    if (!window.audioCtx) return;
+    const t = window.audioCtx.currentTime;
+
+    // Satisfying tactile suction pop when brass stamp pulls away from cured wax
+    const popOsc = window.audioCtx.createOscillator();
+    popOsc.type = 'sine';
+    popOsc.frequency.setValueAtTime(260, t);
+    popOsc.frequency.exponentialRampToValueAtTime(580, t + 0.08);
+    const popGain = window.audioCtx.createGain();
+    popGain.gain.setValueAtTime(0.001, t);
+    popGain.gain.linearRampToValueAtTime(0.32, t + 0.02);
+    popGain.gain.exponentialRampToValueAtTime(0.001, t + 0.12);
+    popOsc.connect(popGain);
+    popGain.connect(window.audioCtx.destination);
+    popOsc.start(t);
+    popOsc.stop(t + 0.14);
+
+    // Warm metallic ring resonance
+    const bellOsc = window.audioCtx.createOscillator();
+    bellOsc.type = 'triangle';
+    bellOsc.frequency.setValueAtTime(1450, t + 0.03);
+    bellOsc.frequency.exponentialRampToValueAtTime(1100, t + 0.35);
+    const bellGain = window.audioCtx.createGain();
+    bellGain.gain.setValueAtTime(0.12, t + 0.03);
+    bellGain.gain.exponentialRampToValueAtTime(0.001, t + 0.35);
+    bellOsc.connect(bellGain);
+    bellGain.connect(window.audioCtx.destination);
+    bellOsc.start(t + 0.03);
+    bellOsc.stop(t + 0.38);
 };
 
 window.playWaxMeltSFX = () => {

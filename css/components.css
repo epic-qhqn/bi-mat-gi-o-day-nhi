@@ -1744,46 +1744,270 @@ body.sky-night .emboss-char {
 }
 
 /* ==========================================================================
-   PHASE 3: ARTISAN MELTING HEARTH & DUAL MARBLED SWIRL SYSTEM
+   PHASE 3: ARTISAN MELTING HEARTH & MULTI-SENSORY WAX SEAL RITUAL
    ========================================================================== */
-.artisan-melting-hearth {
+
+/* 6-Step Poetic Ritual Breadcrumb Bar */
+.ritual-step-bar {
   display: flex;
   align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 4px clamp(2px, 1vw, 6px);
+  margin: 0 auto 10px auto;
+  padding: 6px 12px;
+  background: rgba(245, 236, 215, 0.45);
+  border: 1px solid rgba(212, 175, 55, 0.35);
+  border-radius: 999px;
+  max-width: 95%;
+  box-sizing: border-box;
+}
+
+body.sky-night .ritual-step-bar {
+  background: rgba(19, 28, 78, 0.55);
+  border-color: rgba(245, 206, 86, 0.25);
+}
+
+.step-dot {
+  font-family: 'Outfit', sans-serif;
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--text-muted);
+  padding: 3px 8px;
+  border-radius: 999px;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  transition: all 0.25s ease;
+  user-select: none;
+}
+
+.step-dot i {
+  font-style: normal;
+  font-size: 10px;
+}
+
+.step-dot.is-active {
+  background: var(--accent-gold);
+  color: var(--text-navy);
+  font-weight: 700;
+  box-shadow: 0 2px 8px rgba(222, 184, 83, 0.4);
+  transform: scale(1.05);
+}
+
+.step-dot.is-done {
+  color: #2E7D32;
+  background: rgba(46, 125, 50, 0.1);
+}
+
+body.sky-night .step-dot.is-done {
+  color: #81C784;
+  background: rgba(129, 199, 132, 0.15);
+}
+
+.step-connector {
+  width: 8px;
+  height: 1.5px;
+  background: rgba(212, 175, 55, 0.3);
+}
+
+/* Artisan Crafting Bench Container */
+.artisan-crafting-bench {
+  display: flex;
+  align-items: stretch;
   justify-content: space-between;
-  gap: 12px;
-  padding: 10px 14px;
-  background: rgba(250, 248, 245, 0.85);
+  gap: clamp(10px, 2vw, 16px);
+  padding: 12px 14px;
+  background: rgba(250, 248, 245, 0.92);
   border: var(--border-width-atelier) solid var(--border-card);
   border-radius: var(--radius-card);
   margin: 6px auto 12px auto;
   width: 100%;
-  max-width: 440px;
+  max-width: 480px;
   box-sizing: border-box;
   backdrop-filter: blur(var(--blur-glass));
   -webkit-backdrop-filter: blur(var(--blur-glass));
-  box-shadow: var(--shadow-subtle);
+  box-shadow: 0 4px 20px rgba(19, 28, 78, 0.08);
   position: relative;
   user-select: none;
 }
 
-body.sky-night .artisan-melting-hearth {
-  background: rgba(19, 28, 78, 0.8);
+body.sky-night .artisan-crafting-bench {
+  background: rgba(19, 28, 78, 0.88);
   border-color: var(--border-night);
-  box-shadow: var(--shadow-night);
+  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.45);
 }
 
-/* Hearth Burner Unit: Candle + Suspended Brass Spoon */
+/* Hearth Burner Unit: Matchbox + Candle + Suspended Brass Spoon */
 .hearth-burner-unit {
   display: flex;
+  flex-direction: column;
   align-items: center;
-  gap: 12px;
+  justify-content: center;
+  gap: 8px;
   position: relative;
+  min-width: 140px;
+}
+
+/* Vintage Lotus Matchbox & Striker Strip */
+.artisan-matchbox-wrap {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 4px 8px;
+  background: linear-gradient(135deg, #FAF3E0 0%, #E8D8B8 100%);
+  border: 1px solid #C4A768;
+  border-radius: 6px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.12);
+  user-select: none;
+}
+
+body.sky-night .artisan-matchbox-wrap {
+  background: linear-gradient(135deg, #2D2545 0%, #1F1930 100%);
+  border-color: #6C5B8B;
+}
+
+.matchbox-drawer {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.matchbox-label {
+  display: flex;
+  align-items: center;
+  gap: 3px;
+}
+
+.matchbox-lotus-icon {
+  font-size: 13px;
+}
+
+.matchbox-brand {
+  font-family: 'Outfit', sans-serif;
+  font-size: 8.5px;
+  font-weight: 800;
+  letter-spacing: 0.8px;
+  color: #6B4E1E;
+}
+
+body.sky-night .matchbox-brand {
+  color: #E2D4B7;
+}
+
+.match-striker-strip {
+  background: #3A2312;
+  border: 1px solid #1F1108;
+  border-radius: 3px;
+  padding: 2px 6px;
+  display: flex;
+  align-items: center;
+  gap: 3px;
+  cursor: pointer;
+  touch-action: manipulation;
+  transition: all 0.2s ease;
+  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.5);
+}
+
+.match-striker-strip:hover {
+  background: #503119;
+  box-shadow: 0 0 6px rgba(255, 152, 0, 0.4);
+}
+
+.striker-grit {
+  width: 4px;
+  height: 10px;
+  background: repeating-linear-gradient(to bottom, #774322 0%, #3A2312 2px, #1F1108 4px);
+  border-radius: 1px;
+}
+
+.striker-hint {
+  font-size: 8px;
+  font-weight: 700;
+  color: #FFA726;
+  white-space: nowrap;
+}
+
+/* Interactive Wooden Matchstick */
+.artisan-matchstick {
+  display: flex;
+  align-items: center;
+  cursor: grab;
+  touch-action: none;
+  position: relative;
+  padding: 4px;
+  transition: transform 0.2s ease;
+}
+
+.artisan-matchstick:hover {
+  transform: translateY(-2px) rotate(-3deg);
+}
+
+.artisan-matchstick.dragging {
+  cursor: grabbing !important;
+  z-index: 100020;
+}
+
+.match-stem {
+  width: 22px;
+  height: 3px;
+  background: #E4C896;
+  border-radius: 1px 0 0 1px;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+}
+
+.match-head {
+  width: 6px;
+  height: 6px;
+  border-radius: 50% 30% 30% 50%;
+  background: radial-gradient(circle at 30% 30%, #EF4444 0%, #B91C1C 60%, #7F1D1D 100%);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+}
+
+.artisan-matchstick.is-lit .match-head {
+  background: #2D2721;
+}
+
+.match-flame {
+  position: absolute;
+  right: 0;
+  top: -10px;
+  width: 10px;
+  height: 16px;
+  border-radius: 50% 50% 25% 25%;
+  background: radial-gradient(ellipse at 50% 85%, #FFFFFF 0%, #FFF4B8 30%, #FFA726 65%, rgba(230, 81, 0, 0) 100%);
+  animation: flame-flicker 1.4s infinite ease-in-out;
+  pointer-events: none;
+}
+
+.match-sparks-wrap {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  overflow: visible;
+}
+
+.match-spark-particle {
+  position: absolute;
+  width: 3px;
+  height: 3px;
+  border-radius: 50%;
+  background: #FFF275;
+  box-shadow: 0 0 6px #FF8C00;
+  pointer-events: none;
+  animation: spark-fly 0.35s ease-out forwards;
+}
+
+@keyframes spark-fly {
+  0% { transform: translate(0, 0) scale(1.4); opacity: 1; }
+  100% { transform: translate(var(--tx, 15px), var(--ty, -15px)) scale(0); opacity: 0; }
 }
 
 /* Artisan Aromatherapy Candle */
 .artisan-candle {
   width: 44px;
-  height: 56px;
+  height: 54px;
   position: relative;
   cursor: pointer;
   display: flex;
@@ -1799,7 +2023,7 @@ body.sky-night .artisan-melting-hearth {
 }
 
 .artisan-candle:active {
-  transform: scale(var(--scale-active-icon, 0.92));
+  transform: scale(var(--scale-active-icon, 0.94));
 }
 
 .candle-holder {
@@ -1814,7 +2038,7 @@ body.sky-night .artisan-melting-hearth {
 
 .candle-body {
   width: 26px;
-  height: 32px;
+  height: 30px;
   background: linear-gradient(180deg, #FAF8F5 0%, #EFEBE4 70%, #D8D2C7 100%);
   border-radius: 4px 4px 5px 5px;
   border: 1px solid rgba(210, 205, 195, 0.8);
@@ -1848,7 +2072,7 @@ body.sky-night .artisan-melting-hearth {
 /* Realistic Dancing Candle Flame */
 .candle-flame {
   position: absolute;
-  top: 2px;
+  top: 3px;
   width: 14px;
   height: 22px;
   border-radius: 50% 50% 25% 25%;
@@ -1873,10 +2097,10 @@ body.sky-night .artisan-melting-hearth {
 .candle-halo {
   position: absolute;
   top: -8px;
-  width: 52px;
-  height: 52px;
+  width: 56px;
+  height: 56px;
   border-radius: 50%;
-  background: radial-gradient(circle, rgba(245, 206, 86, 0.5) 0%, rgba(245, 206, 86, 0.15) 50%, rgba(245, 206, 86, 0) 75%);
+  background: radial-gradient(circle, rgba(245, 206, 86, 0.55) 0%, rgba(245, 206, 86, 0.18) 50%, rgba(245, 206, 86, 0) 75%);
   pointer-events: none;
   animation: candle-halo-pulse 2.2s infinite ease-in-out;
   z-index: 1;
@@ -1887,7 +2111,7 @@ body.sky-night .artisan-melting-hearth {
   bottom: -18px;
   left: 50%;
   transform: translateX(-50%);
-  font-size: 9px;
+  font-size: 8.5px;
   font-weight: 700;
   white-space: nowrap;
   background: var(--accent-pill-bg);
@@ -1915,7 +2139,7 @@ body.sky-night .artisan-melting-hearth {
 
 @keyframes candle-halo-pulse {
   0%, 100% { transform: scale(1); opacity: 0.8; }
-  50% { transform: scale(1.15); opacity: 1; }
+  50% { transform: scale(1.18); opacity: 1; }
 }
 
 /* Brass Melting Spoon Stand */
@@ -1923,6 +2147,7 @@ body.sky-night .artisan-melting-hearth {
   position: relative;
   display: flex;
   align-items: center;
+  margin-top: 4px;
 }
 
 .brass-spoon {
@@ -1935,7 +2160,7 @@ body.sky-night .artisan-melting-hearth {
 }
 
 .brass-spoon.is-pouring {
-  transform: translate(28px, 14px) rotate(48deg);
+  transform: translate(24px, 16px) rotate(52deg);
   z-index: 15;
 }
 
@@ -1954,6 +2179,16 @@ body.sky-night .artisan-melting-hearth {
   position: relative;
 }
 
+.spoon-wood-grip {
+  position: absolute;
+  left: 3px;
+  top: 1px;
+  bottom: 1px;
+  width: 20px;
+  background: #271406;
+  border-radius: 2px;
+}
+
 .spoon-neck {
   width: 12px;
   height: 5px;
@@ -1962,8 +2197,8 @@ body.sky-night .artisan-melting-hearth {
 }
 
 .spoon-bowl {
-  width: 48px;
-  height: 48px;
+  width: 52px;
+  height: 52px;
   border-radius: 50%;
   background: radial-gradient(circle at 40% 35%, #FFF0B3 0%, #D4AF37 45%, #92701F 100%);
   border: 1.5px solid #F5CE56;
@@ -1981,7 +2216,7 @@ body.sky-night .artisan-melting-hearth {
   position: absolute;
   inset: 0;
   border-radius: 50%;
-  background: radial-gradient(circle, rgba(255, 87, 34, 0.35) 0%, rgba(255, 193, 7, 0.15) 60%, rgba(0, 0, 0, 0) 100%);
+  background: radial-gradient(circle, rgba(255, 87, 34, 0.45) 0%, rgba(255, 193, 7, 0.2) 60%, rgba(0, 0, 0, 0) 100%);
   animation: spoon-heat-simmer 1.6s infinite alternate ease-in-out;
   pointer-events: none;
 }
@@ -1992,10 +2227,19 @@ body.sky-night .artisan-melting-hearth {
 }
 
 /* Wax Beads inside Spoon */
+.spoon-beads-pool {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+}
+
 .spoon-bead {
   position: absolute;
-  width: 16px;
-  height: 16px;
+  width: 15px;
+  height: 15px;
   clip-path: polygon(25% 0%, 75% 0%, 100% 50%, 75% 100%, 25% 100%, 0% 50%);
   transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
   box-shadow: 0 2px 4px rgba(0,0,0,0.3);
@@ -2004,20 +2248,25 @@ body.sky-night .artisan-melting-hearth {
 .spoon-ruby-bead {
   left: 9px;
   top: 15px;
-  background: radial-gradient(circle at 30% 30%, #EF4444 0%, #B83240 60%, #7A1822 100%);
-  border: 1px solid rgba(255, 200, 200, 0.4);
+  background: radial-gradient(circle at 30% 30%, #FFA8B5 0%, #E0838A 55%, #9E424B 100%);
 }
 
 .spoon-gold-bead {
   right: 9px;
   top: 15px;
-  background: radial-gradient(circle at 30% 30%, #FFF7D6 0%, #F5CE56 50%, #C49B24 100%);
-  border: 1px solid rgba(255, 255, 255, 0.6);
+  background: radial-gradient(circle at 30% 30%, #FFF5BD 0%, #DEB853 50%, #94711E 100%);
+}
+
+.spoon-third-bead {
+  bottom: 8px;
+  left: 18px;
+  background: radial-gradient(circle at 30% 30%, #A2D5AE 0%, #6B9E78 55%, #355C40 100%);
 }
 
 .spoon-bead.melting {
-  transform: scale(0.3);
+  transform: scale(0.2);
   opacity: 0;
+  filter: blur(2px);
 }
 
 /* Molten Wax Mixture in Spoon Bowl */
@@ -2035,6 +2284,7 @@ body.sky-night .artisan-melting-hearth {
   height: 100%;
   border-radius: 50%;
   display: block;
+  cursor: crosshair;
 }
 
 .molten-glimmer {
@@ -2045,47 +2295,68 @@ body.sky-night .artisan-melting-hearth {
   pointer-events: none;
 }
 
+.spoon-simmer-bubbles {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.simmer-bubble {
+  position: absolute;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 35%, rgba(255, 255, 255, 0.8) 0%, rgba(255, 215, 0, 0.4) 60%, transparent 100%);
+  animation: simmer-pop 0.8s ease-out forwards;
+}
+
+@keyframes simmer-pop {
+  0% { transform: scale(0.2); opacity: 0; }
+  50% { transform: scale(1.1); opacity: 0.9; }
+  100% { transform: scale(0); opacity: 0; }
+}
+
 @keyframes wax-pool-fill {
   0% { transform: scale(0); opacity: 0; }
   100% { transform: scale(1); opacity: 1; }
 }
 
-/* Glass Stirring Rod */
+/* Interactive Glass Stirring Rod */
 .glass-stirring-rod {
   position: absolute;
   right: -8px;
   top: -24px;
-  width: 8px;
-  height: 48px;
+  width: 10px;
+  height: 52px;
   cursor: pointer;
   z-index: 10;
-  touch-action: manipulation;
+  touch-action: none;
   transition: transform var(--transition-normal);
   filter: drop-shadow(0 4px 8px rgba(19, 28, 78, 0.2));
 }
 
 .glass-stirring-rod:hover {
-  transform: rotate(15deg) scale(1.1);
+  transform: rotate(18deg) scale(1.1);
 }
 
-.glass-stirring-rod:active {
-  transform: rotate(15deg) scale(0.95);
+.glass-stirring-rod:active,
+.glass-stirring-rod.is-swirling {
+  transform: rotate(25deg) scale(1.05);
 }
 
 .rod-stem {
-  width: 5px;
-  height: 38px;
-  background: linear-gradient(90deg, rgba(255,255,255,0.85) 0%, rgba(220,235,255,0.4) 50%, rgba(255,255,255,0.9) 100%);
+  width: 6px;
+  height: 42px;
+  background: linear-gradient(90deg, rgba(255,255,255,0.9) 0%, rgba(220,235,255,0.4) 50%, rgba(255,255,255,0.95) 100%);
   border: 1px solid rgba(255, 255, 255, 0.95);
   border-radius: 3px;
   margin: 0 auto;
 }
 
 .rod-tip {
-  width: 9px;
-  height: 11px;
+  width: 10px;
+  height: 12px;
   border-radius: 50% 50% 45% 45%;
-  background: radial-gradient(circle at 35% 35%, #FFFFFF 0%, rgba(230, 240, 255, 0.7) 60%, rgba(180, 210, 255, 0.5) 100%);
+  background: radial-gradient(circle at 35% 35%, #FFFFFF 0%, rgba(230, 240, 255, 0.75) 60%, rgba(180, 210, 255, 0.5) 100%);
   border: 1px solid rgba(255, 255, 255, 0.95);
   box-shadow: 0 2px 5px rgba(0,0,0,0.15);
   margin-top: -2px;
@@ -2102,7 +2373,7 @@ body.sky-night .artisan-melting-hearth {
   background: #EDE9FE;
   border: 1px solid #DDD6FE;
   color: #6D28D9;
-  padding: 1px 6px;
+  padding: 1px 7px;
   border-radius: 999px;
   box-shadow: 0 1px 4px rgba(109, 40, 217, 0.15);
   pointer-events: none;
@@ -2127,17 +2398,25 @@ body.sky-night .artisan-melting-hearth {
   100% { transform: translate(0, 0) rotate(15deg); }
 }
 
-/* Wax Beads Palette Tray */
+/* Wax Beads Palette Tray & Crest Selector */
 .wax-beads-tray {
   display: flex;
   flex-direction: column;
+  justify-content: space-between;
+  gap: 6px;
+  flex: 1;
+}
+
+.tray-header-row {
+  display: flex;
   align-items: center;
-  gap: 5px;
+  justify-content: space-between;
+  width: 100%;
 }
 
 .tray-title {
   font-family: 'Outfit', sans-serif;
-  font-size: 8px;
+  font-size: 8.5px;
   font-weight: 800;
   letter-spacing: 0.8px;
   color: var(--text-muted);
@@ -2148,10 +2427,25 @@ body.sky-night .tray-title {
   color: var(--text-subtle);
 }
 
+.tray-counter {
+  font-size: 9px;
+  color: var(--text-muted);
+}
+
+.tray-counter strong {
+  color: var(--text-navy);
+  font-weight: 800;
+}
+
+body.sky-night .tray-counter strong {
+  color: #F5CE56;
+}
+
 .beads-container {
   display: flex;
   align-items: center;
-  gap: 10px;
+  justify-content: space-between;
+  gap: 4px;
 }
 
 .wax-bead-item {
@@ -2161,6 +2455,8 @@ body.sky-night .tray-title {
   cursor: pointer;
   touch-action: manipulation;
   transition: transform var(--transition-normal);
+  padding: 2px;
+  border-radius: 6px;
 }
 
 .wax-bead-item:hover {
@@ -2168,7 +2464,13 @@ body.sky-night .tray-title {
 }
 
 .wax-bead-item:active {
-  transform: translateY(0) scale(var(--scale-active, 0.97));
+  transform: translateY(0) scale(var(--scale-active, 0.95));
+}
+
+.wax-bead-item.is-selected {
+  outline: 2px solid var(--accent-gold);
+  border-radius: 8px;
+  background: rgba(212, 175, 55, 0.15);
 }
 
 .hex-bead-shape {
@@ -2183,19 +2485,35 @@ body.sky-night .tray-title {
   transition: all var(--transition-fast);
 }
 
-.bead-ruby .hex-bead-shape {
-  background: radial-gradient(circle at 30% 30%, #EF4444 0%, #B83240 60%, #7A1822 100%);
+/* 5 Curated Vietnamese Hex Bead Colors */
+.bead-lotus .hex-bead-shape {
+  background: radial-gradient(circle at 30% 30%, #FFA8B5 0%, #E0838A 55%, #9E424B 100%);
   border: 1px solid rgba(255, 200, 200, 0.5);
 }
 
+.bead-matcha .hex-bead-shape {
+  background: radial-gradient(circle at 30% 30%, #A2D5AE 0%, #6B9E78 55%, #355C40 100%);
+  border: 1px solid rgba(200, 255, 210, 0.5);
+}
+
 .bead-gold .hex-bead-shape {
-  background: radial-gradient(circle at 30% 30%, #FFF7D6 0%, #F5CE56 50%, #C49B24 100%);
+  background: radial-gradient(circle at 30% 30%, #FFF5BD 0%, #DEB853 50%, #94711E 100%);
   border: 1px solid rgba(255, 255, 255, 0.7);
+}
+
+.bead-ivory .hex-bead-shape {
+  background: radial-gradient(circle at 30% 30%, #FFFFFF 0%, #F9F5EC 50%, #D4CBBB 100%);
+  border: 1px solid rgba(210, 200, 180, 0.7);
+}
+
+.bead-violet .hex-bead-shape {
+  background: radial-gradient(circle at 30% 30%, #D7B7E6 0%, #9B72AA 55%, #5F386E 100%);
+  border: 1px solid rgba(230, 210, 245, 0.5);
 }
 
 .bead-stamp-icon {
   font-size: 11px;
-  color: rgba(255, 255, 255, 0.9);
+  color: rgba(255, 255, 255, 0.95);
   text-shadow: 0 1px 2px rgba(0, 0, 0, 0.4);
 }
 
@@ -2203,7 +2521,8 @@ body.sky-night .tray-title {
   font-size: 8px;
   font-weight: 700;
   color: var(--text-navy);
-  margin-top: 2px;
+  margin-top: 3px;
+  white-space: nowrap;
 }
 
 body.sky-night .bead-label {
@@ -2211,13 +2530,20 @@ body.sky-night .bead-label {
 }
 
 .wax-bead-item.dropped {
-  opacity: 0.25;
-  pointer-events: none;
+  opacity: 0.35;
+  filter: grayscale(0.5);
   transform: scale(0.85);
 }
 
-/* Quick Drop Button */
-.hearth-quick-drop-btn {
+.tray-action-row {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 6px;
+}
+
+.hearth-quick-drop-btn,
+.tray-reset-btn {
   background: var(--bg-card);
   border: 1px solid var(--border-card);
   border-radius: var(--radius-pill);
@@ -2228,52 +2554,99 @@ body.sky-night .bead-label {
   color: var(--text-navy);
   cursor: pointer;
   box-shadow: 0 1px 4px rgba(19, 28, 78, 0.06);
-  transition: transform var(--transition-fast), background-color var(--transition-fast), border-color var(--transition-fast);
+  transition: all var(--transition-fast);
   white-space: nowrap;
 }
 
-.hearth-quick-drop-btn:hover {
+.hearth-quick-drop-btn:hover,
+.tray-reset-btn:hover {
   background: #FFFFFF;
   border-color: var(--text-navy);
   transform: translateY(-1px);
 }
 
-.hearth-quick-drop-btn:active {
-  transform: translateY(0) scale(var(--scale-active, 0.97));
+/* Brass Crest Motif Selector */
+.crest-selector-wrap {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  margin-top: 2px;
 }
 
-.hearth-quick-drop-btn.hidden {
-  display: none !important;
+.crest-selector-title {
+  font-size: 8px;
+  font-weight: 800;
+  color: var(--text-muted);
+  letter-spacing: 0.6px;
 }
 
-/* Mobile responsive adjustments */
-@media (max-width: 480px) {
-  .artisan-melting-hearth {
-    padding: 8px 10px;
-    gap: 8px;
-  }
-  .candle-body { width: 22px; height: 28px; }
-  .spoon-bowl { width: 42px; height: 42px; }
-  .spoon-handle { width: 34px; }
-  .hex-bead-shape { width: 25px; height: 25px; }
+body.sky-night .crest-selector-title {
+  color: var(--text-subtle);
 }
 
-/* Interactive 3D Wax Seal Workspace (Phase 2.3) */
+.crest-options-row {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.crest-opt-btn {
+  flex: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 3px;
+  padding: 3px 5px;
+  background: rgba(245, 236, 215, 0.4);
+  border: 1px solid rgba(212, 175, 55, 0.35);
+  border-radius: 6px;
+  font-family: 'Outfit', sans-serif;
+  font-size: 8.5px;
+  font-weight: 600;
+  color: var(--text-navy);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+}
+
+body.sky-night .crest-opt-btn {
+  background: rgba(255, 255, 255, 0.05);
+  color: #DCE3F2;
+}
+
+.crest-opt-btn:hover {
+  background: rgba(212, 175, 55, 0.2);
+  transform: translateY(-1px);
+}
+
+.crest-opt-btn.is-selected {
+  background: linear-gradient(135deg, #FFF4BD 0%, #ECC56C 100%);
+  border-color: #B58D2A;
+  color: #3E2413;
+  font-weight: 800;
+  box-shadow: 0 1px 4px rgba(212, 175, 55, 0.35);
+}
+
+.crest-opt-icon {
+  font-size: 10px;
+}
+
+/* Interactive 3D Wax Seal Workspace */
 .wax-seal-workspace {
   display: flex;
   align-items: center;
   justify-content: center;
   gap: clamp(16px, 5vw, 36px);
-  margin: 6px auto 16px auto;
+  margin: 6px auto 14px auto;
   position: relative;
-  min-height: 96px;
+  min-height: 105px;
   width: 100%;
 }
 
 /* Target Landing Zone */
 .wax-target-zone {
-  width: clamp(74px, 16vw, 84px);
-  height: clamp(74px, 16vw, 84px);
+  width: clamp(78px, 18vw, 92px);
+  height: clamp(78px, 18vw, 92px);
   border-radius: 50%;
   border: 2px dashed rgba(212, 175, 55, 0.45);
   background: rgba(245, 236, 215, 0.35);
@@ -2293,9 +2666,9 @@ body.sky-night .wax-target-zone {
 
 .wax-target-zone.drag-over {
   border-color: #D4AF37;
-  background: rgba(245, 206, 86, 0.22);
+  background: rgba(245, 206, 86, 0.25);
   transform: scale(1.08);
-  box-shadow: 0 0 20px rgba(245, 206, 86, 0.4);
+  box-shadow: 0 0 24px rgba(245, 206, 86, 0.5);
 }
 
 .wax-target-hint {
@@ -2319,14 +2692,14 @@ body.sky-night .wax-target-hint {
   display: none;
 }
 
-/* Molten Wax Pouring Stream from Tilted Spoon (Sub-phase 3.2) */
+/* Molten Wax Pouring Stream from Tilted Spoon */
 .wax-pour-stream {
   position: absolute;
-  top: -48px;
+  top: -52px;
   left: 50%;
   transform: translateX(-50%);
-  width: 9px;
-  height: 54px;
+  width: 10px;
+  height: 58px;
   z-index: 12;
   pointer-events: none;
   overflow: visible;
@@ -2340,9 +2713,9 @@ body.sky-night .wax-target-hint {
 .stream-liquid-core {
   width: 100%;
   height: 100%;
-  border-radius: 4px;
-  background: linear-gradient(180deg, #D32F2F 0%, #B71C1C 50%, #7F0000 100%);
-  box-shadow: 0 0 12px rgba(184, 50, 64, 0.8), inset 0 0 4px rgba(255, 255, 255, 0.4);
+  border-radius: 5px;
+  background: linear-gradient(180deg, #E0838A 0%, #DEB853 50%, #9E424B 100%);
+  box-shadow: 0 0 14px rgba(224, 131, 138, 0.8), inset 0 0 4px rgba(255, 255, 255, 0.6);
 }
 
 .stream-gold-glint {
@@ -2351,17 +2724,17 @@ body.sky-night .wax-target-hint {
   bottom: 0;
   left: 2px;
   width: 3px;
-  background: linear-gradient(180deg, rgba(255, 255, 255, 0.9) 0%, rgba(245, 206, 86, 0.85) 50%, rgba(196, 155, 36, 0.8) 100%);
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.95) 0%, rgba(245, 206, 86, 0.85) 50%, rgba(196, 155, 36, 0.8) 100%);
   border-radius: 2px;
 }
 
 @keyframes pour-stream-flow {
   0% { transform: translateX(-50%) scaleX(1); }
-  50% { transform: translateX(-50%) scaleX(1.22); }
+  50% { transform: translateX(-50%) scaleX(1.25); }
   100% { transform: translateX(-50%) scaleX(1); }
 }
 
-/* Hot Molten Wax Pool (Before Stamping - Sub-phase 3.2) */
+/* Hot Molten Wax Pool */
 .wax-hot-pool {
   position: absolute;
   top: -4px;
@@ -2375,7 +2748,7 @@ body.sky-night .wax-target-hint {
   justify-content: center;
   overflow: visible;
   animation: hot-wax-expand 0.65s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-  box-shadow: 0 8px 22px rgba(127, 0, 0, 0.45);
+  box-shadow: 0 8px 24px rgba(158, 66, 75, 0.45);
   pointer-events: none;
 }
 
@@ -2387,25 +2760,36 @@ body.sky-night .wax-target-hint {
   position: absolute;
   inset: 0;
   border-radius: inherit;
-  background: radial-gradient(circle at 35% 35%, #D32F2F 0%, #B71C1C 55%, #7F0000 100%);
+  background: radial-gradient(circle at 35% 35%, #E0838A 0%, #C96872 55%, #8B2E37 100%);
   background-size: cover;
   background-position: center;
   border: 1.5px solid rgba(245, 206, 86, 0.5);
-  box-shadow: inset 0 2px 4px rgba(255, 255, 255, 0.35), inset 0 -3px 6px rgba(0, 0, 0, 0.45);
+  box-shadow: inset 0 2px 4px rgba(255, 255, 255, 0.4), inset 0 -3px 6px rgba(0, 0, 0, 0.45);
 }
 
 .hot-wax-gloss {
   position: absolute;
   inset: 0;
   border-radius: inherit;
-  background: radial-gradient(ellipse at 35% 25%, rgba(255, 255, 255, 0.65) 0%, rgba(255, 255, 255, 0) 55%);
+  background: radial-gradient(ellipse at 35% 25%, rgba(255, 255, 255, 0.7) 0%, rgba(255, 255, 255, 0) 55%);
   pointer-events: none;
+  transition: opacity 1.5s ease;
+}
+
+/* Hardened/Cured Wax Transition */
+.hot-wax-body.cured-matte {
+  filter: saturate(0.9) brightness(0.92);
+  transition: filter 1.5s ease;
+}
+
+.hot-wax-gloss.cured-matte {
+  opacity: 0.15;
 }
 
 .wax-hot-pool.squished {
-  transform: scale(1.18, 1.12);
-  box-shadow: 0 10px 30px rgba(127, 0, 0, 0.65);
-  transition: transform 0.16s cubic-bezier(0.16, 1, 0.3, 1);
+  transform: scale(1.22, 1.15);
+  box-shadow: 0 10px 32px rgba(158, 66, 75, 0.65);
+  transition: transform 0.18s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 @keyframes hot-wax-expand {
@@ -2443,6 +2827,167 @@ body.sky-night .wax-target-hint {
   100% { transform: translateY(-32px) scale(1.6); opacity: 0; }
 }
 
+/* Sprinkled 24K Gold Flakes Layer */
+.sprinkled-gold-flakes {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 3;
+}
+
+.gold-flake-dot {
+  position: absolute;
+  border-radius: 50%;
+  background: radial-gradient(circle, #FFF5BD 0%, #DEB853 80%, #94711E 100%);
+  box-shadow: 0 0 4px #F5CE56;
+  animation: flake-sparkle 1.8s infinite alternate ease-in-out;
+}
+
+@keyframes flake-sparkle {
+  0% { transform: scale(0.8); opacity: 0.6; }
+  100% { transform: scale(1.3); opacity: 1; }
+}
+
+/* Artisan Sprinkle Vial Shaker Button */
+.artisan-sprinkle-vial {
+  position: absolute;
+  bottom: -28px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(255, 255, 255, 0.95);
+  border: 1px solid #D4AF37;
+  border-radius: 999px;
+  padding: 3px 10px;
+  font-family: 'Outfit', sans-serif;
+  font-size: 9px;
+  font-weight: 700;
+  color: #73571A;
+  box-shadow: 0 2px 8px rgba(212, 175, 55, 0.35);
+  cursor: pointer;
+  z-index: 8;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  white-space: nowrap;
+  transition: all 0.2s ease;
+  animation: badge-bob 2s infinite ease-in-out;
+}
+
+.artisan-sprinkle-vial:hover {
+  background: #FFF9E6;
+  transform: translateX(-50%) translateY(-2px) scale(1.05);
+}
+
+.artisan-sprinkle-vial.hidden {
+  display: none !important;
+}
+
+/* Wax Cooling Progress Indicator */
+.wax-cooling-indicator {
+  position: absolute;
+  top: -32px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(19, 28, 78, 0.88);
+  border: 1px solid rgba(245, 206, 86, 0.6);
+  border-radius: 999px;
+  padding: 3px 9px;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  z-index: 10;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.35);
+  pointer-events: none;
+}
+
+.wax-cooling-indicator.hidden {
+  display: none !important;
+}
+
+.cooling-ring-svg-wrap {
+  width: 14px;
+  height: 14px;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.cooling-progress-svg {
+  width: 100%;
+  height: 100%;
+  transform: rotate(-90deg);
+}
+
+.cooling-bg-ring {
+  fill: none;
+  stroke: rgba(255, 255, 255, 0.2);
+  stroke-width: 4;
+}
+
+.cooling-fill-ring {
+  fill: none;
+  stroke: #64B5F6;
+  stroke-width: 4;
+  stroke-linecap: round;
+  transition: stroke-dasharray 0.2s ease;
+}
+
+.cooling-icon {
+  position: absolute;
+  font-size: 7px;
+}
+
+.cooling-label {
+  font-size: 8.5px;
+  font-weight: 700;
+  color: #E2E8F0;
+  white-space: nowrap;
+}
+
+/* Press & Hold Guidance Gauge */
+.press-gauge-overlay {
+  position: absolute;
+  bottom: -22px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 90px;
+  height: 14px;
+  background: rgba(19, 28, 78, 0.9);
+  border: 1px solid #DEB853;
+  border-radius: 999px;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10;
+  pointer-events: none;
+}
+
+.press-gauge-overlay.hidden {
+  display: none !important;
+}
+
+.press-fill-bar {
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 0%;
+  background: linear-gradient(90deg, #F5CE56 0%, #FFA726 100%);
+  transition: width 0.1s linear;
+}
+
+.press-gauge-text {
+  position: relative;
+  font-size: 7.5px;
+  font-weight: 800;
+  color: #FFFFFF;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.8);
+  white-space: nowrap;
+  z-index: 2;
+}
+
 /* Molten Wax Seal Puddle (The Impression) */
 .wax-seal-puddle {
   position: absolute;
@@ -2451,11 +2996,11 @@ body.sky-night .wax-target-hint {
   right: -4px;
   bottom: -4px;
   border-radius: 50% 48% 52% 49% / 49% 53% 47% 51%;
-  background: radial-gradient(circle at 35% 35%, #D32F2F 0%, #B71C1C 55%, #7F0000 100%);
+  background: radial-gradient(circle at 35% 35%, #E0838A 0%, #C96872 55%, #8B2E37 100%);
   box-shadow: 
-    0 8px 22px rgba(127, 0, 0, 0.45),
-    inset 0 2px 4px rgba(255, 255, 255, 0.35),
-    inset 0 -3px 6px rgba(0, 0, 0, 0.45);
+    0 8px 24px rgba(139, 46, 55, 0.45),
+    inset 0 2px 4px rgba(255, 255, 255, 0.4),
+    inset 0 -3px 6px rgba(0, 0, 0, 0.5);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -2481,8 +3026,8 @@ body.sky-night .wax-target-hint {
   right: 3px;
   bottom: 3px;
   border-radius: 50%;
-  border: 1.5px solid rgba(255, 200, 200, 0.3);
-  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.35);
+  border: 1.5px solid rgba(255, 220, 220, 0.35);
+  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.4);
   pointer-events: none;
 }
 
@@ -2491,7 +3036,7 @@ body.sky-night .wax-target-hint {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  color: #FFE5E5;
+  color: #FFF2F2;
   text-shadow: 0 1px 2px rgba(0, 0, 0, 0.6);
   z-index: 2;
 }
@@ -2499,7 +3044,7 @@ body.sky-night .wax-target-hint {
 .wax-flower-crest {
   width: 22px;
   height: 22px;
-  color: #FFE5E5;
+  color: #FFF2F2;
   filter: drop-shadow(0 1px 1px rgba(0, 0, 0, 0.5));
 }
 
@@ -2509,21 +3054,21 @@ body.sky-night .wax-target-hint {
   font-weight: 800;
   letter-spacing: 1px;
   text-transform: uppercase;
-  max-width: 60px;
+  max-width: 65px;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
   margin-top: 1px;
 }
 
-/* Sub-phase 3.3: Artistic Dried Flower Flourish Framing the Cured Wax Seal */
+/* Artistic Dried Flower Flourish */
 .seal-botanical-flourish {
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  width: 130px;
-  height: 130px;
+  width: 135px;
+  height: 135px;
   pointer-events: none;
   z-index: 4;
   display: flex;
@@ -2568,86 +3113,10 @@ body.sky-night .wax-target-hint {
   100% { transform: scale(1.22); opacity: 1; }
 }
 
-/* Luminous Awakening Light Seedlings */
-.awakening-light-seed {
-  position: fixed;
-  width: 12px;
-  height: 12px;
-  border-radius: 50%;
-  background: radial-gradient(circle at 35% 35%, #FFFFFF 0%, #FFF4B8 45%, #F5CE56 80%, #D4AF37 100%);
-  box-shadow: 
-    0 0 12px rgba(245, 206, 86, 0.95),
-    0 0 24px rgba(232, 180, 184, 0.8),
-    0 0 40px rgba(255, 215, 0, 0.6);
-  pointer-events: none;
-  z-index: 100015;
-  filter: drop-shadow(0 0 6px rgba(255, 255, 255, 0.9));
-  will-change: transform, opacity;
-}
-
-.awakening-light-seed::after {
-  content: '';
-  position: absolute;
-  inset: -3px;
-  border-radius: 50%;
-  background: radial-gradient(circle, rgba(255, 255, 255, 0.8) 0%, rgba(245, 206, 86, 0) 70%);
-  animation: seed-pulsate 0.6s infinite alternate ease-in-out;
-}
-
-@keyframes seed-pulsate {
-  0% { transform: scale(0.9); opacity: 0.7; }
-  100% { transform: scale(1.3); opacity: 1; }
-}
-
-/* Soil Landing Golden Ripple */
-.ground-seed-ripple {
-  position: fixed;
-  width: 44px;
-  height: 22px;
-  border-radius: 50%;
-  border: 1.5px solid rgba(245, 206, 86, 0.9);
-  background: radial-gradient(ellipse at center, rgba(245, 206, 86, 0.45) 0%, rgba(232, 180, 184, 0.2) 50%, rgba(0, 0, 0, 0) 80%);
-  box-shadow: 0 0 16px rgba(245, 206, 86, 0.7);
-  transform: translate(-50%, -50%) scale(0.2);
-  animation: ripple-spread 1.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-  pointer-events: none;
-  z-index: 100010;
-}
-
-@keyframes ripple-spread {
-  0% { transform: translate(-50%, -50%) scale(0.2); opacity: 1; }
-  50% { transform: translate(-50%, -50%) scale(1.6); opacity: 0.8; border-color: rgba(245, 206, 86, 0.75); }
-  100% { transform: translate(-50%, -50%) scale(2.8); opacity: 0; border-color: rgba(245, 206, 86, 0); }
-}
-
-/* Drifting Flower Petal Particles */
-.vfx-flower-petal {
-  position: fixed;
-  width: 10px;
-  height: 14px;
-  border-radius: 50% 50% 50% 0;
-  background: linear-gradient(135deg, #FFE5E8 0%, #F3C5C9 50%, #E8B4B8 100%);
-  box-shadow: 0 2px 6px rgba(232, 180, 184, 0.5);
-  pointer-events: none;
-  z-index: 100012;
-  will-change: transform, opacity;
-}
-
-/* Garden Awakening Animation on Main Canvas */
-#wrap.awakening-garden {
-  animation: garden-awake-sway 1.8s cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-@keyframes garden-awake-sway {
-  0% { filter: brightness(1) drop-shadow(0 0 0 rgba(245, 206, 86, 0)); }
-  40% { filter: brightness(1.12) drop-shadow(0 0 25px rgba(245, 206, 86, 0.5)); transform: scale(1.015); }
-  100% { filter: brightness(1) drop-shadow(0 0 0 rgba(245, 206, 86, 0)); transform: scale(1); }
-}
-
-/* 3D Handcrafted Wax Seal Stamp */
+/* 3D Handcrafted Brass Wax Seal Stamp */
 .wax-seal-stamp {
   width: 58px;
-  height: 82px;
+  height: 84px;
   position: relative;
   cursor: grab;
   user-select: none;
@@ -2704,7 +3173,7 @@ body.sky-night .wax-target-hint {
 
 .stamp-handle-body {
   width: 16px;
-  height: 38px;
+  height: 40px;
   border-radius: 2px 2px 4px 4px;
   background: linear-gradient(to right, #1C0F08 0%, #3D1E10 40%, #5E2F1B 65%, #1C0F08 100%);
   box-shadow: 
@@ -2762,12 +3231,28 @@ body.sky-night .wax-target-hint {
   opacity: 0.15;
 }
 
-/* Wax Seal & Action Station */
+.stamp-press-halo {
+  position: absolute;
+  inset: -6px;
+  border-radius: 50%;
+  border: 2px solid rgba(212, 175, 55, 0);
+  pointer-events: none;
+  transition: all 0.2s ease;
+}
+
+.wax-seal-stamp.is-pressing .stamp-press-halo {
+  border-color: rgba(212, 175, 55, 0.8);
+  box-shadow: 0 0 14px rgba(245, 206, 86, 0.6);
+  transform: scale(1.15);
+}
+
+/* Wax Seal Action Station & Buttons */
 .wax-seal-station {
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 8px;
+  width: 100%;
 }
 
 .atelier-seal-btn,
@@ -2808,13 +3293,70 @@ body.sky-night .wax-target-hint {
 .wax-seal-guide-tip {
   font-size: 12px;
   color: var(--text-muted);
-  font-weight: 500;
+  font-weight: 600;
   line-height: 1.4;
   margin-top: 4px;
+  text-align: center;
+  min-height: 18px;
 }
 
 body.sky-night .wax-seal-guide-tip {
-  color: #8E97BC;
+  color: #C8D1EC;
+}
+
+/* Mobile & Tablet Responsive Adjustments */
+@media (max-width: 520px) {
+  .artisan-crafting-bench {
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+    padding: 10px;
+  }
+  .hearth-burner-unit {
+    flex-direction: row;
+    gap: 14px;
+    width: 100%;
+    justify-content: space-around;
+  }
+  .wax-beads-tray {
+    width: 100%;
+  }
+  .beads-container {
+    justify-content: center;
+    gap: 8px;
+  }
+  .hex-bead-shape {
+    width: 32px;
+    height: 32px;
+  }
+  .crest-options-row {
+    flex-wrap: wrap;
+  }
+  .crest-opt-btn {
+    min-width: calc(50% - 4px);
+    padding: 5px 6px;
+  }
+  .wax-seal-workspace {
+    gap: 20px;
+    min-height: 96px;
+  }
+  .step-dot i {
+    display: none;
+  }
+}
+
+@media (max-width: 380px) {
+  .ritual-step-bar {
+    padding: 4px 8px;
+    gap: 2px;
+  }
+  .step-dot {
+    font-size: 9px;
+    padding: 2px 5px;
+  }
+  .step-connector {
+    width: 4px;
+  }
 }
 
 /* Phase 2.4: Luminescent Seedlings & Ground Ripple */
