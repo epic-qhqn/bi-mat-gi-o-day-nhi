@@ -139,6 +139,13 @@
         }
     };
 
+    const hideSecretLetterButton = () => {
+        if (secretContainer) {
+            secretContainer.classList.remove('show');
+            secretContainer.classList.add('hidden');
+        }
+    };
+
     // =========================================================================
     // 3. FONT TOGGLE ENGINE (Handwriting vs Readable)
     // =========================================================================
@@ -272,6 +279,7 @@
     window.openSecretLetterModal = openSecretLetterModal;
     window.closeSecretLetterModal = closeSecretLetterModal;
     window.revealSecretLetterButton = revealSecretLetterButton;
+    window.hideSecretLetterButton = hideSecretLetterButton;
     window.updatePolaroidLetterContent = updatePolaroidLetterContent;
     window.typeWriter = typeWriter;
     window.loadContentAndAnimateText = loadContentAndAnimateText;

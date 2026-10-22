@@ -504,29 +504,36 @@
         </button>
     </div>
 
-    <!-- Sub-phase 4.3: Garden Stage Selector / Replay Toolbar -->
-    <!-- Sub-phase 4.3: Garden Stage Selector / Hành Trình Vườn Thơ -->
+    <!-- Sub-phase 4.3: Garden Stage Selector / Hành Trình Vườn Thơ (Di dời về góc dưới, dạng Drawer thu gọn) -->
     <nav id="garden-stage-selector" class="garden-stage-selector hidden" aria-label="Hành trình các giai đoạn khu vườn">
-        <div class="stage-selector-inner lyrical-panel">
+        <!-- Nút thu gọn / mở rộng góc dưới màn hình -->
+        <button id="stage-selector-toggle-btn" class="stage-selector-toggle-btn" aria-expanded="false" title="Xem lại các giai đoạn khu vườn (Lộ trình)">
+            <span class="selector-badge-icon">↺</span>
+            <span class="selector-toggle-txt">Lộ Trình</span>
+        </button>
+
+        <!-- Popover bảng giai đoạn (Chỉ mở khi bấm, tự đóng khi chọn hoặc bấm ra ngoài) -->
+        <div id="stage-selector-popover" class="stage-selector-popover hidden lyrical-panel">
             <div class="stage-selector-header">
                 <span class="selector-badge-icon">↺</span>
-                <span class="selector-title">Hành Trình</span>
+                <span class="selector-title">Hành Trình Vườn Thơ</span>
+                <button id="stage-selector-close-btn" class="stage-selector-close-btn" title="Đóng bảng giai đoạn" aria-label="Đóng">✕</button>
             </div>
             <div class="stage-buttons-group" role="tablist">
                 <div class="stage-slider-indicator" id="stage-slider-indicator" aria-hidden="true"></div>
-                <button class="stage-btn" data-stage="1" role="tab" aria-selected="false" title="Chơi lại Giai đoạn 1: Mưa sương & Chồi non">
+                <button class="stage-btn" data-stage="1" role="tab" aria-selected="false" title="Giai đoạn 1: Mưa sương & Chồi non">
                     <span class="stage-btn-icon">🌱</span>
                     <span class="stage-btn-text">Chồi Non</span>
                 </button>
-                <button class="stage-btn" data-stage="2" role="tab" aria-selected="false" title="Chơi lại Giai đoạn 2: Khúc hòa âm Simon">
+                <button class="stage-btn" data-stage="2" role="tab" aria-selected="false" title="Giai đoạn 2: Khúc hòa âm Simon">
                     <span class="stage-btn-icon">🎵</span>
                     <span class="stage-btn-text">Đồng Dao</span>
                 </button>
-                <button class="stage-btn" data-stage="3" role="tab" aria-selected="false" title="Chơi lại Giai đoạn 3: Nối chòm sao định mệnh">
+                <button class="stage-btn" data-stage="3" role="tab" aria-selected="false" title="Giai đoạn 3: Nối chòm sao định mệnh">
                     <span class="stage-btn-icon">✨</span>
                     <span class="stage-btn-text">Tinh Tú</span>
                 </button>
-                <button class="stage-btn active" data-stage="4" role="tab" aria-selected="true" title="Xem Trạng thái hoa nở hoàn mỹ">
+                <button class="stage-btn active" data-stage="4" role="tab" aria-selected="true" title="Trạng thái hoa nở hoàn mỹ">
                     <span class="stage-btn-icon">🌸</span>
                     <span class="stage-btn-text">Hoa Nở</span>
                 </button>
@@ -920,7 +927,7 @@
                 <!-- Interactive Poetic Verse Tooltip / Ribbon -->
                 <div class="ao-dai-poem-badge" id="ao-dai-poem-badge">
                     <span class="poem-lotus-icon">🪷</span>
-                    <span class="poem-verse-text" id="ao-dai-poem-text">Nét duyên con gái Việt e ấp bên đầm sen ♡</span>
+                    <span class="poem-verse-text" id="ao-dai-poem-text">Chúc nàng một ngày 20/10 vạn dặm an yên, rạng rỡ như nắng mai và ngọt ngào như đóa sen đầu hạ 🌸</span>
                     <span class="poem-sparkle">✨</span>
                 </div>
                 <!-- Floating Lotus Petals around Áo Dài -->

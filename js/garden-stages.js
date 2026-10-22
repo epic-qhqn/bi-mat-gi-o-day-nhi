@@ -81,6 +81,9 @@
 
         // Stage 2 (1): Simon Memory minigame
         if (stageId === 1 || stageId === 2 || stageId === 'all') {
+            if (typeof window.duckBgmForMinigame === 'function') {
+                window.duckBgmForMinigame(false, 2000);
+            }
             const simonContainer = document.getElementById('simon-game');
             if (simonContainer) {
                 simonContainer.style.opacity = '0';
@@ -126,6 +129,13 @@
                 aoDaiFig.classList.remove('hien-thi', 'poem-visible');
                 aoDaiFig.classList.add('hidden');
             }
+            if (typeof window.hideSecretLetterButton === 'function') window.hideSecretLetterButton();
+            if (typeof window.hideBoardingPassButton === 'function') window.hideBoardingPassButton();
+            if (typeof window.closeSecretLetterModal === 'function') window.closeSecretLetterModal();
+            if (typeof window.closeBoardingPassModal === 'function') window.closeBoardingPassModal();
+            const waxDrawer = document.getElementById('wax-ritual-drawer');
+            if (waxDrawer) waxDrawer.classList.add('hidden');
+
             if (stageId === 3 || stageId === 4 || stageId === 'all') {
                 const cloverEl = document.getElementById('sprout-lucky-clover');
                 if (cloverEl) {
@@ -398,6 +408,49 @@
         const selector = document.getElementById('garden-stage-selector');
         if (!selector) return;
 
+        const toggleBtn = document.getElementById('stage-selector-toggle-btn');
+        const popover = document.getElementById('stage-selector-popover');
+        const closeBtn = document.getElementById('stage-selector-close-btn');
+
+        const openPopover = () => {
+            if (!popover) return;
+            popover.classList.remove('hidden');
+            if (toggleBtn) toggleBtn.setAttribute('aria-expanded', 'true');
+            syncGardenStageSelector(window.gardenState.currentStage === 3 ? 4 : (window.gardenState.currentStage + 1));
+            if (typeof window.playKeyTapSFX !== 'undefined') window.playKeyTapSFX();
+        };
+
+        const closePopover = () => {
+            if (!popover) return;
+            popover.classList.add('hidden');
+            if (toggleBtn) toggleBtn.setAttribute('aria-expanded', 'false');
+        };
+
+        if (toggleBtn) {
+            toggleBtn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                if (popover && popover.classList.contains('hidden')) {
+                    openPopover();
+                } else {
+                    closePopover();
+                }
+            });
+        }
+
+        if (closeBtn) {
+            closeBtn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                closePopover();
+            });
+        }
+
+        // Tự đóng khi click ra ngoài selector
+        document.addEventListener('click', (e) => {
+            if (selector && !selector.contains(e.target)) {
+                closePopover();
+            }
+        });
+
         selector.querySelectorAll('.stage-btn').forEach(btn => {
             const onBtnClick = (e) => {
                 e.preventDefault();
@@ -405,6 +458,7 @@
                 const stage = parseInt(btn.dataset.stage, 10);
                 if (!isNaN(stage)) {
                     jumpToGardenStage(stage);
+                    closePopover();
                 }
             };
 
@@ -546,11 +600,11 @@
         const aoDaiFig = document.getElementById('ao-dai-viet-stage4');
         const poemText = document.getElementById('ao-dai-poem-text');
         const aoDaiVerses = [
-            "Nét duyên con gái Việt e ấp bên đầm sen ♡",
-            "Thướt tha áo trắng bay trong gió, dịu dàng nét ngọc gái quê hương ✨",
-            "Tháp Mười đẹp nhất bông sen, Việt Nam đẹp nhất có em dịu dàng 🌸",
-            "Chúc bạn một ngày 20/10 vạn sự an nhiên, rạng ngời như nắng sớm ☀️",
-            "Gửi trọn yêu thương vào từng đóa hoa ngát hương đồng nội 🪷🌾"
+            "Chúc nàng một ngày 20/10 vạn dặm an yên, rạng rỡ như nắng mai và ngọt ngào như đóa sen đầu hạ 🌸",
+            "Tà áo thướt tha nghiêng vành nón lá, nét duyên ngọc ngà thắp sáng cả vườn thương ✨",
+            "Mong bạn luôn kiêu hãnh tỏa sáng theo cách riêng, được yêu thương và chở che trọn vẹn 💖",
+            "Dịu dàng mà kiên cường, tựa như đóa sen tinh khiết ngát hương giữa đất trời 🪷",
+            "Cảm ơn vì sự dịu êm và những điều kỳ diệu mà bạn luôn mang đến cho cuộc đời 🌿✨"
         ];
         let verseIndex = 0;
 

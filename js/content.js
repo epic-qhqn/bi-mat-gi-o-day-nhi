@@ -7,9 +7,7 @@ Nhân dịp ngày Phụ nữ Việt Nam 20/10, chúng mình cũng có một lờ
 Mong rằng các "bóng hồng" của chúng ta sẽ ngày càng xinh đẹp, tự tin, có nhiều sức khỏe, học giỏi/công tác tốt và sẽ luôn hạnh phúc với những gì mình đang có.
 
 Ngoài ra cũng không thể quên gửi một lời cảm ơn thật to lớn đến các bạn nữ vì đã luôn đồng hành và cùng chúng mình tạo ra những kỷ niệm thật đẹp nha!
-
-<img width="100px" height="100px" src="./img/tym.png" alt="">
-[Bấm vào hoặc quét mã bên nhé!!](https://drive.google.com/drive/folders/1fILtFYl7tkBWg5vCPuzsZf9s9cpOf1NL?usp=drive_link)
+[Mở món quà bí mật và ấm áp dành riêng cho bạn tại đây nhé! 🎁](https://drive.google.com/drive/folders/1fILtFYl7tkBWg5vCPuzsZf9s9cpOf1NL?usp=drive_link)
 `;
 
 // Danh sách phong phú các lá thư gửi gắm từ các thành viên nam trong công ty / CLB

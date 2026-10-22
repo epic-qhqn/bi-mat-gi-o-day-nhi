@@ -1,65 +1,59 @@
-# KẾ HOẠCH NÂNG CẤP TOÀN DIỆN UI/UX: GIAI ĐOẠN, MASCOT, DÂY ĐÀN & LA BÀN THIÊN VĂN
+# KẾ HOẠCH NÂNG CẤP & SỬA LỖI HỆ THỐNG: ÂM THANH, LA BÀN, BỘ ĐIỀU HƯỚNG PHASE & ÁO DÀI 20/10
 
 > **Nguyên tắc cốt lõi**: Giữ vững kiến trúc **100% Web Tĩnh (Full-Static Client-Side)**, bảo toàn chuẩn mực thiết kế **Vietnamese Poetic Heritage**, tuân thủ nghiêm ngặt **Concurrent Git Protocol** và quy tắc `.antigravity/rules.md`.
 
 ---
 
-## TỔNG QUAN CÁC ĐIỂM CẢI TIẾN CỐT LÕI
+## TỔNG QUAN 6 YÊU CẦU CẢI TIẾN & KHẮC PHỤC
 
-| Hạng mục | Hiện trạng | Giải pháp nâng cấp hiện đại & thơ mộng |
-| :--- | :--- | :--- |
-| **1. Thanh trạng thái giai đoạn** | Khối vuông `border-radius: 10px`, màu sắc đơn điệu | Thiết kế **"Hành Trình Đơm Hoa" (Botanical Constellation Rail)**: đường ray chỉ số sinh trưởng hữu cơ với thanh dẫn sáng (progress vein), nút mầm sống phát sáng thở, con trượt ánh kim trôi mềm mại (fluid sliding pill), kèm nâng cấp thanh tiến trình đóng sáp (Artisan Lacquer Strand). |
-| **2. Mascot Companion** | Tay robot cơ khí thô ráp (`mascot-arm-water`, `mascot-arm-fertilize`) | **Loại bỏ triệt để cánh tay cơ học**. Thay thế bằng hệ thống tương tác cảm xúc lấy cảm hứng từ Meow Meow (`20-10.html`): đôi mắt dõi theo con trỏ chuột/chạm (pupil tracking), cử chỉ gọi mây sương/hoa đăng kỳ diệu, hiệu ứng vuốt ve cưng nựng (pet/nuzzle) với vệt ửng hồng sen e ấp (`////`) và lời đồng dao ấm áp. |
-| **3. Dây đàn hạc (Botanical Harp)** | Chiếm giữa màn hình PC (`left: 540px; top: 480px`), che khuất mầm cây và Áo Dài | Di dời khéo léo về góc dưới (Aesthetic Corner Vignette) mô phỏng đàn hạc mộc cầm uốn lượn cạnh thảm cỏ; hỗ trợ thu gọn/mở rộng thanh thoát, tối ưu trượt ngón tay glissando trên cả Mobile & Tablet mà không che tâm điểm thị giác. |
-| **4. La bàn thiên văn (Celestial Orrery)** | Giật lag khi xoay nhanh (layout thrashing do `getBoundingClientRect` liên tục); ít công dụng | **Tối ưu 60/120fps mượt mà 100%** bằng `requestAnimationFrame`, bộ đệm tọa độ (cached rect), vật lý xoay quán tính (inertia damping); bổ sung **"Kinh Độ Định Mệnh" (Celestial Wayfinding)** & nút ngọc **"Hòa Điệu Thiên Hà"** mở khóa điềm may và mưa sao băng. |
+| STT | Yêu cầu | Hiện trạng | Giải pháp xử lý hoàn hảo |
+| :--- | :--- | :--- | :--- |
+| **1** | **Xoá hẳn QR tym.png** | File `img/tym.png` tồn tại, được nhúng trong `js/content.js` dòng 11 | Xóa triệt để file `img/tym.png` khỏi git; cập nhật `js/content.js` loại bỏ thẻ `<img>`, thay câu dẫn thành lời mời mở món quà bí mật tinh tế, ấm áp. |
+| **2** | **Sửa bug xoay kim la bàn phát âm thanh đàn** | Khi xoay kim la bàn nhanh, hàm `pluckHarp` liên tục kích hoạt nốt đàn hạc gối lên nhau, gây ồn ào và lấn át BGM | Gỡ bỏ hoàn toàn việc gọi `pluckHarp` trong `handleOrreryClimateShift`. La bàn thiên văn chỉ phát tiếng bánh răng ngọc thạch tinh tế (`tickSFX`) có giới hạn tần suất (throttle 150ms) và chỉ phát chuông mùa khi dừng lại. |
+| **3** | **Phase 2 (đánh đàn): Giảm dần nhạc nền trong 2s** | Khi bước vào phase 2 (Simon hòa âm), BGM chạy bình thường lấn át các nốt nhạc ma thuật | Bổ sung cơ chế Audio Ducking: fade in chuông nốt đồng thời hạ dần âm lượng BGM (`#myAudio`) xuống ~0.02 trong đúng 2 giây (2000ms). Khi hoàn thành hoặc rời phase 2, tự động khôi phục BGM về mức ban đầu qua 2s. |
+| **4** | **Giấu thanh xem lại từng phase ở vị trí an toàn** | `#garden-stage-selector` nằm cố định ở đỉnh giữa màn hình (`top: 16px; left: 50%`), đè lên HUD trạng thái và dễ gây lỗi đè trạng thái khi tua lại | Di dời thanh về vị trí an toàn (nút bấm thu gọn góc dưới `↺ Lộ trình`). Mặc định ẩn gọn gàng, chỉ mở dạng drawer/popup khi người dùng chủ động bấm. Bổ sung dọn dẹp triệt để trạng thái minigame cũ khi tua phase. |
+| **5** | **Sửa thanh chữ bấm hiện ra 2 cô gái** | Thanh chữ `.ao-dai-poem-badge` bị tràn sang trái đè lấn các phần tử khác; nội dung câu thơ đơn điệu, sáo rỗng | Định vị lại huy hiệu thơ bay bổng ngay trên đầu 2 thiếu nữ (`left: 50%; top: -45px; transform: translateX(-50%)`), có `max-width`, tự bọc dòng, `z-index: 1000`. Soạn 5 câu thơ 20/10 sâu lắng, tôn vinh nét đẹp trí tuệ và dịu dàng. |
+| **6** | **Thu nhỏ 2 cô gái áo dài 50% & đứng dưới gốc cây** | Hiện đứng lệch phải mép màn hình (`right: 25px`) với chiều cao quá lớn (`height: 490px`) | Thu nhỏ đúng 50% (`height: 245px`), di dời vào chân gốc cây cổ thụ bên dưới thảm hoa sen (`left: 565px; bottom: 25px;` trong `#wrap`). Hưởng lợi thế từ cơ chế auto-scale của `#wrap`, co giãn hoàn hảo trên PC, tablet và mobile. |
 
 ---
 
-## KẾ HOẠCH CHI TIẾT TỪNG PHASE THỰC HIỆN
+## KẾ HOẠCH CHI TIẾT TỪNG BƯỚC THỰC HIỆN
 
-### PHASE 1: NÂNG CẤP THANH TRẠNG THÁI GIAI ĐOẠN (STAGE & RITUAL PROGRESSION)
-- **1.1. Tái thiết kế Garden Stage Selector (`#garden-stage-selector`)**:
-  - Chuyển đổi từ các nút bấm vuông thành **"Hành trình đơm hoa"**:
-    * Đường ray quang học thủy tinh mờ (`backdrop-filter`) với dải nhựa sống (growth vine) phát sáng nối 4 chặng: `1. Mầm sinh` ➔ `2. Đồng dao` ➔ `3. Tinh tú` ➔ `4. Đơm hoa`.
-    * Con trượt định vị phát sáng (gliding active thumb) chuyển động mượt mà dọc thanh ray bằng `cubic-bezier`.
-    * Hiệu ứng pulse hạt sương/vầng sáng tại giai đoạn hiện tại.
-  - Tối ưu hiển thị responsive trên Mobile (dạng micro-pill thanh mảnh, không chạm viền màn hình, tuân thủ `safe-area-inset`).
-- **1.2. Nâng cấp thanh tiến trình làm sáp (`.ritual-step-bar`)**:
-  - Thay thế các khối tròn thông thường bằng chuỗi ngọc khảm sơn mài (Artisan Filigree Beads) với đường kim tuyến nối các bước.
-  - Hiệu ứng gợn sóng ánh vàng (golden ripple) khi hoàn tất từng bước chế tác.
+### BƯỚC 1: XÓA BỎ HOÀN TOÀN QR TYM.PNG
+1. Xóa file `img/tym.png` bằng lệnh git.
+2. Sửa `js/content.js`: loại bỏ thẻ `<img>`, trau chuốt lại câu CTA mở thư/quà Google Drive trang trọng và duyên dáng.
 
-### PHASE 2: THAY THẾ MASCOT ROBOT BẰNG COMPANION CẢM XÚC (INSPIRATION TỪ 20-10.HTML)
-- **2.1. Dọn sạch cấu trúc cánh tay robot cơ học**:
-  - Gỡ bỏ hoàn toàn `#mascot-arm-water`, `#mascot-arm-fertilize`, `.hydro-blaster-prop`, `.star-wand-prop`, `.mascot-water-jet`, `.mascot-star-burst` trong `index.html`, `mascot-companion.js` và `components.css`.
-- **2.2. Xây dựng tương tác sống động**:
-  - **Ánh mắt dõi theo (Pupil/Gaze Tracking)**: Tròng mắt di chuyển tự nhiên theo hướng chuột hoặc điểm chạm của người dùng với giới hạn góc nhìn mềm mại.
-  - **Phản ứng vuốt ve (Petting Micro-Interaction)**: Khi người dùng nhấp hoặc xoa nhẹ chú bé, kích hoạt biểu cảm tít mắt cười `(>‿<)`, ửng hồng má sen `////`, kèm âm thanh tiếng rù rỉ/tiếng chuông trong trẻo và lời thì thầm chúc 20/10 dễ thương.
-  - **Cử chỉ ma thuật thay thế tưới nước & bón phân**:
-    * Tưới nước: Chú bé vẫy tay nhẹ gọi một đám mây nhỏ phát sáng buông những giọt mưa sương long lanh xuống mầm cây.
-    * Sưởi nắng: Chú bé chụm tay thắp sáng vầng hào quang ấm áp như đốm lửa đom đóm gửi đến gốc cây.
+### BƯỚC 2: KHẮC PHỤC TRIỆT ĐỂ LỖI ÂM THANH XOAY LA BÀN
+1. Trong `js/celestial-orrery.js`:
+   - Gỡ bỏ hoàn toàn `pluckHarp` và `cancelHarp` cùng các lệnh `pluckHarpIfAudible` trong `handleOrreryClimateShift`.
+   - Giữ lại tiếng khấc bánh răng đồng cổ nhẹ nhàng khi xoay, thêm throttle chống spam audio khi người dùng vẩy kim xoay tít.
+   - Âm thanh chuyển mùa chỉ kích hoạt khi kim dừng lại hoặc nhả tay (`pointerup` / inertia settle).
 
-### PHASE 3: DI DỜI DÂY ĐÀN HẠC (BOTANICAL HARP) VỀ GÓC MÀN HÌNH
-- **3.1. Thiết kế lại vị trí & khung đàn hạc mộc**:
-  - Chuyển `plant-harp-strings-wrap` khỏi tọa độ trung tâm (540px, 480px).
-  - Đặt đàn hạc tại góc dưới bên phải màn hình (hoặc góc thanh thoát cạnh đồng cỏ), tạo hình như một nhánh cây phong lan/dây leo uốn thành khung đàn hạc cổ điển.
-- **3.2. Trải nghiệm âm nhạc & cử chỉ trượt mượt mà**:
-  - Giữ nguyên cơ chế vuốt glissando và phát nốt C5-A5 trong trẻo.
-  - Tích hợp nút thu gọn/mở rộng nhẹ nhàng hoặc tự động ẩn mờ khi không tương tác để trả lại không gian ngắm trọn cây hoa và Áo Dài.
-  - Tinh chỉnh riêng cho Mobile/Tablet: Bố trí dải dây đàn dạng vertical/arc strip góc dưới thuận tay cái lướt nhẹ, bảo đảm vùng chạm tối thiểu 44px (chuẩn WCAG).
+### BƯỚC 3: XÂY DỰNG AUDIO DUCKING (GIẢM NHẠC NỀN 2S Ở PHASE 2)
+1. Trong `js/audio-vfx.js`:
+   - Bổ sung `window.duckBgmForMinigame(isDucking, durationMs = 2000)` điều khiển âm lượng nền mượt mà.
+   - Lưu lại `originalAudioVolume` để khi khôi phục không bị mất âm lượng người dùng đã chỉnh.
+2. Trong `js/garden-minigames.js` & `js/garden-stages.js`:
+   - Khi kích hoạt `startSimonGame`: gọi `duckBgmForMinigame(true, 2000)` để nhạc nền dịu xuống, làm nổi bật giai điệu mộc cầm.
+   - Khi hoàn tất minigame hoặc chuyển stage: gọi `duckBgmForMinigame(false, 2000)` để trả lại âm lượng nhạc nền.
 
-### PHASE 4: TỐI TÂN HÓA LA BÀN THIÊN VĂN (CELESTIAL ORRERY) MƯỢT 100% & THÊM TÍNH NĂNG KỲ DIỆU
-- **4.1. Khắc phục triệt để giật lag (Zero-Stutter Performance)**:
-  - Loại bỏ hoàn toàn việc gọi `getBoundingClientRect()` trong vòng lặp `pointermove`. Cache tâm xoay khi `pointerdown` hoặc `resize`.
-  - Áp dụng `requestAnimationFrame` và nội suy chuyển động (lerp damping) giúp kim xoay êm ru ở tần số quét 60fps/120fps.
-  - Tách rời việc vẽ kim la bàn khỏi logic kích hoạt hiệu ứng thời tiết nặng nề (chỉ kích hoạt hiệu ứng sau khi kim dừng lại ở mùa mới hoặc lướt dứt khoát, chống nghẽn DOM).
-  - Thêm vật lý trớn (flywheel inertia): Khi người dùng vuốt nhanh và thả tay, la bàn tiếp tục quay chậm dần rồi hít nhẹ vào góc phân vị mùa một cách tự nhiên.
-- **4.2. Bổ sung các tính năng hữu ích & lôi cuốn**:
-  - **Kinh độ kỳ diệu (Celestial Wayfinding)**: Bổ sung 4 phương vị thiên văn bí mật. Khi xoay kim trùng với phương vị, tâm la bàn rung nhẹ và nở ra chòm sao may mắn cùng thông điệp cổ thi.
-  - **Hòa Điệu Thiên Hà (Center Astrolabe Jewel)**: Nhấp vào viên ngọc trung tâm sẽ kích hoạt chuỗi hợp âm 4 mùa đồng tấu, phát tán hào quang cực quang bao phủ khu vườn.
+### BƯỚC 4: TÁI CẤU TRÚC & GIẤU THANH XEM LẠI PHASE (`#garden-stage-selector`)
+1. Trong `index.html` & `css/layout.css`:
+   - Chuyển thanh xem lại phase thành dạng drawer/popover thu gọn ở góc dưới màn hình hoặc nút ngọc `↺ Lộ trình` tinh tế.
+   - Mặc định ẩn hoàn toàn, không nổi lơ lửng trên đầu màn hình làm che khuất HUD mầm non và vòm cây.
+2. Trong `js/garden-stages.js`:
+   - Tối ưu hóa hàm `jumpToGardenStage`: reset sạch các listener cũ, dọn sạch canvas hạt giống / chùm sao / simon game trước khi nạp stage mới để chống lỗi đè dữ liệu (state collision).
 
-### PHASE 5: KIỂM THỬ ĐA THIẾT BỊ, THẨM MỸ & ĐỒNG BỘ GIT HOÀN HẢO
-- Chạy kiểm tra cú pháp toàn diện: `node -c js/*.js`.
-- Kiểm tra tính cân bằng thẻ đóng mở và dấu ngoặc CSS.
-- Kiểm thử responsive trên các viewport: Mobile Portrait (375x667, 390x844), Tablet (768x1024), PC/Desktop (1920x1080).
-- Đảm bảo website 100% web tĩnh, chạy offline mượt mà không có bất kỳ lỗi console nào.
-- Tuân thủ Concurrent Git Protocol: kiểm tra remote, dung hòa commit và đẩy lên topic branch an toàn.
+### BƯỚC 5 & 6: ĐỊNH VỊ 2 CÔ GÁI ÁO DÀI DƯỚI GỐC CÂY & NÂNG CẤP BANNER THƠ
+1. Trong `css/layout.css`:
+   - Đặt `#ao-dai-viet-stage4` ở vị trí chân gốc cây bên trong `#wrap` (`left: 565px; bottom: 25px;`).
+   - Giảm 50% kích thước: `height: 245px;` (trên mobile `145px - 160px`), kế thừa auto-scale từ `#wrap`.
+   - Chỉnh `.ao-dai-poem-badge` căn giữa đỉnh đầu, chống tràn lề, bảo đảm `z-index: 1000` không bị bất kỳ phần tử nào đè lên.
+2. Trong `js/garden-stages.js` & `index.html`:
+   - Cập nhật bộ thơ 20/10 sâu sắc, ý nghĩa và giàu cảm xúc.
+
+### BƯỚC 7: KIỂM THỬ ĐA THIẾT BỊ, THẨM MỸ & ĐỒNG BỘ GIT HOÀN HẢO
+1. Chạy `node -c js/*.js` trên tất cả file JS để đảm bảo 100% cú pháp sạch.
+2. Kiểm tra tính toàn vẹn CSS (cân bằng ngoặc nhọn).
+3. Kiểm thử hiển thị trên PC (1920x1080), Tablet (768x1024), Mobile (375x667, 390x844).
+4. Kiểm tra commit mới trên remote, commit sạch và đồng bộ git.

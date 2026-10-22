@@ -151,6 +151,13 @@
         }
     };
 
+    const hideBoardingPassButton = () => {
+        if (openBtn) {
+            openBtn.classList.add('hidden');
+            openBtn.classList.remove('attention-pulse');
+        }
+    };
+
     const triggerCameraFlash = () => {
         const flashEl = document.getElementById('camera-flash-overlay');
         if (!flashEl) return;
@@ -441,6 +448,7 @@
     window.openBoardingPassModal = openBoardingPass;
     window.closeBoardingPassModal = closeBoardingPass;
     window.revealBoardingPassButton = revealBoardingPassButton;
+    window.hideBoardingPassButton = hideBoardingPassButton;
     window.triggerCameraFlash = triggerCameraFlash;
     window.initBoardingPassKeepsake = initBoardingPassKeepsake;
 

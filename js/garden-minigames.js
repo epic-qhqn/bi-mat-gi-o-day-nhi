@@ -119,8 +119,14 @@
         rollNewMelody();
         const chosenPalette = window.activeHarmonicPalette;
 
+        // Phase 2: Fade in âm thanh đàn và giảm dần nhạc nền trong 2s (2000ms)
+        if (typeof window.duckBgmForMinigame === 'function') {
+            window.duckBgmForMinigame(true, 2000);
+        }
+
         const msg = document.getElementById('garden-message');
         if (msg) msg.textContent = `🎵 ${chosenPalette.name}: Hãy lắng nghe khúc giai điệu ma thuật...`;
+        await sleep(1200); // Chờ nhạc nền hạ dần dịu êm để làm nổi bật tiếng đàn
         await playSimonSequence();
     };
 
@@ -128,7 +134,7 @@
         simonPlaying = true;
         const replayBtn = document.getElementById('simon-replay-btn');
         if (replayBtn) replayBtn.classList.add('disabled');
-        await sleep(1000);
+        await sleep(800);
         const nodes = document.querySelectorAll('.simon-node');
         for (let i = 0; i < simonSequence.length; i++) {
             const index = simonSequence[i];
@@ -175,6 +181,10 @@
             if (msg) msg.textContent = "Đến lượt bạn lặp lại giai điệu nhé!";
         } else if (simonInput.length === simonSequence.length) {
             simonPlaying = true;
+            // Khôi phục mượt mà âm lượng BGM trong 2s
+            if (typeof window.duckBgmForMinigame === 'function') {
+                window.duckBgmForMinigame(false, 2000);
+            }
             const simonContainer = document.getElementById('simon-game');
             if (simonContainer) simonContainer.classList.add('hidden');
             const replayBtn = document.getElementById('simon-replay-btn');

@@ -243,51 +243,106 @@ body.has-stage-selector .garden-ui {
 
 .garden-stage-selector {
   position: fixed;
-  top: calc(16px + var(--sat, 12px));
-  left: 50%;
-  transform: translateX(-50%);
-  z-index: 2600;
+  bottom: calc(18px + var(--sab, 0px));
+  left: calc(18px + var(--sal, 0px));
+  z-index: 2800;
   display: flex;
-  align-items: center;
-  justify-content: center;
+  flex-direction: column;
+  align-items: flex-start;
   pointer-events: auto;
-  transition: opacity 0.5s cubic-bezier(0.16, 1, 0.3, 1), transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
-  width: auto;
-  max-width: min(94vw, 580px);
+  transition: opacity 0.4s cubic-bezier(0.16, 1, 0.3, 1), transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .garden-stage-selector.hidden {
   opacity: 0;
   pointer-events: none;
-  transform: translateX(-50%) translateY(-26px);
+  transform: translateY(14px);
 }
 
-.stage-selector-inner {
-  display: flex;
+/* Nút ngọc thu gọn góc dưới màn hình */
+.stage-selector-toggle-btn {
+  display: inline-flex;
   align-items: center;
+  gap: 7px;
+  background: var(--bg-glass-day);
+  backdrop-filter: blur(var(--blur-glass));
+  -webkit-backdrop-filter: blur(var(--blur-glass));
+  border: 1.5px solid var(--border-card);
+  border-radius: var(--radius-pill);
+  padding: 7px 15px;
+  font-family: 'Be Vietnam Pro', sans-serif;
+  font-size: 12.5px;
+  font-weight: 700;
+  color: var(--text-navy, #131C4E);
+  letter-spacing: 0.4px;
+  cursor: pointer;
+  box-shadow: 0 4px 18px rgba(19, 28, 78, 0.12), 0 2px 8px rgba(245, 206, 86, 0.15);
+  transition: all 0.28s cubic-bezier(0.16, 1, 0.3, 1);
+  user-select: none;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+}
+
+body.sky-night .stage-selector-toggle-btn {
+  background: var(--bg-glass-night);
+  color: #F5CE56;
+  border-color: rgba(245, 206, 86, 0.35);
+  box-shadow: 0 6px 22px rgba(0, 0, 0, 0.4), 0 0 12px rgba(245, 206, 86, 0.25);
+}
+
+.stage-selector-toggle-btn:hover {
+  transform: translateY(-2px);
+  border-color: #D4AF37;
+  box-shadow: 0 8px 24px rgba(212, 175, 55, 0.3);
+}
+
+.stage-selector-toggle-btn:active {
+  transform: translateY(0) scale(0.97);
+}
+
+/* Popover bảng giai đoạn (Nổi phía trên nút Lộ Trình) */
+.stage-selector-popover {
+  position: absolute;
+  bottom: calc(100% + 10px);
+  left: 0;
+  display: flex;
+  flex-direction: column;
   gap: 8px;
   background: var(--bg-glass-day);
   backdrop-filter: blur(var(--blur-glass));
   -webkit-backdrop-filter: blur(var(--blur-glass));
   border: var(--border-width-atelier) solid var(--border-card);
-  border-radius: var(--radius-pill);
-  padding: 5px 12px;
-  box-shadow: 0 10px 30px rgba(19, 28, 78, 0.12), 0 2px 8px rgba(245, 206, 86, 0.1);
+  border-radius: 18px;
+  padding: 10px 14px;
+  box-shadow: 0 16px 40px rgba(19, 28, 78, 0.18), 0 2px 10px rgba(245, 206, 86, 0.15);
   box-sizing: border-box;
+  width: max-content;
+  max-width: min(92vw, 480px);
+  transform-origin: bottom left;
+  transition: opacity 0.32s cubic-bezier(0.16, 1, 0.3, 1), transform 0.32s cubic-bezier(0.16, 1, 0.3, 1);
+  z-index: 2850;
 }
 
-body.sky-night .stage-selector-inner {
+body.sky-night .stage-selector-popover {
   background: var(--bg-glass-night);
-  border-color: rgba(245, 206, 86, 0.35);
-  box-shadow: 0 12px 34px rgba(0, 0, 0, 0.45), 0 0 16px rgba(245, 206, 86, 0.2);
+  border-color: rgba(245, 206, 86, 0.38);
+  box-shadow: 0 18px 44px rgba(0, 0, 0, 0.5), 0 0 16px rgba(245, 206, 86, 0.2);
+}
+
+.stage-selector-popover.hidden {
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(12px) scale(0.96);
+  display: none;
 }
 
 .stage-selector-header {
   display: flex;
   align-items: center;
-  gap: 5px;
-  padding: 0 10px 0 4px;
-  border-right: 1px solid rgba(85, 96, 133, 0.22);
+  justify-content: space-between;
+  gap: 10px;
+  padding-bottom: 6px;
+  border-bottom: 1px solid rgba(85, 96, 133, 0.18);
   font-family: 'Be Vietnam Pro', sans-serif;
   font-size: 11.5px;
   font-weight: 700;
@@ -298,14 +353,30 @@ body.sky-night .stage-selector-inner {
   white-space: nowrap;
 }
 
+body.sky-night .stage-selector-header {
+  color: #F5CE56;
+  border-bottom-color: rgba(245, 206, 86, 0.25);
+}
+
 .selector-badge-icon {
   font-size: 13px;
   color: #D4AF37;
 }
 
-body.sky-night .stage-selector-header {
-  color: #F5CE56;
-  border-right-color: rgba(245, 206, 86, 0.3);
+.stage-selector-close-btn {
+  background: transparent;
+  border: none;
+  color: #8892B0;
+  font-size: 13px;
+  cursor: pointer;
+  padding: 2px 6px;
+  border-radius: 6px;
+  transition: all 0.2s ease;
+}
+
+.stage-selector-close-btn:hover {
+  color: #E25555;
+  background: rgba(226, 85, 85, 0.1);
 }
 
 .stage-buttons-group {
@@ -345,11 +416,11 @@ body.sky-night .stage-slider-indicator {
   background: transparent;
   border: 1px solid transparent;
   border-radius: 10px;
-  padding: 8px 14px;
+  padding: 8px 12px;
   min-height: 38px;
   box-sizing: border-box;
   font-family: 'Be Vietnam Pro', sans-serif;
-  font-size: 13px;
+  font-size: 12.5px;
   font-weight: 600;
   color: #556085;
   cursor: pointer;
@@ -397,39 +468,37 @@ body.sky-night .stage-btn.active {
 
 @media (max-width: 768px) {
   .garden-stage-selector {
-    top: calc(10px + var(--sat, 12px));
-    width: calc(100% - 20px);
-    max-width: 440px;
+    bottom: calc(14px + var(--sab, 0px));
+    left: calc(12px + var(--sal, 0px));
   }
 
-  .stage-selector-inner {
-    padding: 4px 6px;
-    gap: 4px;
-    width: 100%;
-    justify-content: space-between;
+  .stage-selector-toggle-btn {
+    padding: 6px 12px;
+    font-size: 11.5px;
   }
 
-  .stage-selector-header {
-    display: none;
+  .stage-selector-popover {
+    left: 0;
+    max-width: calc(100vw - 24px);
+    padding: 8px 10px;
   }
 
   .stage-buttons-group {
-    width: 100%;
-    justify-content: space-between;
-    gap: 3px;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 4px;
   }
 
   .stage-btn {
     padding: 6px 8px;
     font-size: 11.5px;
-    gap: 3px;
-    flex: 1 1 0;
+    gap: 4px;
     justify-content: center;
-    min-height: 40px;
+    min-height: 36px;
   }
 
   .stage-btn-icon {
-    font-size: 13px;
+    font-size: 12.5px;
   }
 }
 
@@ -1517,18 +1586,19 @@ body.sky-night .modal-overlay {
 
 /* ==========================================================================
    BÓNG DÁNG THIẾU NỮ ÁO DÀI NÓN LÁ & HOA SEN (#ao-dai-viet-stage4)
+   Đứng dưới gốc cây cổ thụ (Chân cây x≈535px), thu nhỏ 50% và auto-scale
    ========================================================================== */
 .ao-dai-viet-stage4 {
   position: absolute;
-  right: 25px;
-  bottom: 0px;
-  height: 490px;
-  z-index: 15;
+  left: 550px;
+  bottom: 8px;
+  height: 240px;
+  z-index: 25;
   pointer-events: none;
   opacity: 0;
-  transform: translateY(24px);
-  transition: opacity 2.8s cubic-bezier(0.16, 1, 0.3, 1), transform 2.8s cubic-bezier(0.16, 1, 0.3, 1);
-  filter: drop-shadow(0 0 4px rgba(74, 53, 40, 0.55)) drop-shadow(0 0 20px rgba(212, 122, 136, 0.32));
+  transform: translateY(18px);
+  transition: opacity 2.5s cubic-bezier(0.16, 1, 0.3, 1), transform 2.5s cubic-bezier(0.16, 1, 0.3, 1);
+  filter: drop-shadow(0 0 4px rgba(74, 53, 40, 0.45)) drop-shadow(0 0 16px rgba(212, 122, 136, 0.3));
   touch-action: manipulation;
 }
 
@@ -1541,13 +1611,13 @@ body.sky-night .modal-overlay {
 
 .ao-dai-aura-mist {
   position: absolute;
-  width: 140%;
-  height: 140%;
-  top: -20%;
-  left: -20%;
+  width: 130%;
+  height: 130%;
+  top: -15%;
+  left: -15%;
   border-radius: 50%;
-  background: radial-gradient(circle at 60% 60%, rgba(250, 247, 240, 0.5) 0%, rgba(212, 122, 136, 0.22) 45%, transparent 75%);
-  filter: blur(20px);
+  background: radial-gradient(circle at 60% 60%, rgba(250, 247, 240, 0.5) 0%, rgba(212, 122, 136, 0.2) 45%, transparent 75%);
+  filter: blur(16px);
   pointer-events: none;
   animation: aoDaiMistPulse 6s ease-in-out infinite alternate;
 }
@@ -1561,7 +1631,7 @@ body.sky-night .modal-overlay {
   height: 100%;
   width: auto;
   object-fit: contain;
-  object-position: right bottom;
+  object-position: center bottom;
   user-select: none;
   display: block;
   animation: aoDaiBreezeSway 7s ease-in-out infinite alternate;
@@ -1570,33 +1640,55 @@ body.sky-night .modal-overlay {
 
 @keyframes aoDaiBreezeSway {
   0% { transform: translateY(0) rotate(0deg); }
-  50% { transform: translateY(-5px) rotate(-0.6deg); }
+  50% { transform: translateY(-4px) rotate(-0.5deg); }
   100% { transform: translateY(0) rotate(0.4deg); }
 }
 
-/* Poetic Verse Tooltip Badge */
+/* Poetic Verse Tooltip Badge - Căn giữa đỉnh đầu, nổi bật, không bị che */
 .ao-dai-poem-badge {
   position: absolute;
-  top: 18%;
-  left: -30px;
-  transform: translateX(-50%) translateY(6px);
-  background: rgba(250, 247, 240, 0.96);
+  bottom: calc(100% + 14px);
+  top: auto;
+  left: 50%;
+  transform: translateX(-50%) translateY(8px);
+  background: rgba(255, 252, 245, 0.97);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
   border: 1.5px solid #D47A88;
-  border-radius: 12px;
-  padding: 8px 14px;
+  border-radius: 14px;
+  padding: 8px 16px;
   display: flex;
   align-items: center;
-  gap: 6px;
+  justify-content: center;
+  gap: 7px;
   font-family: "Playfair Display", "Times New Roman", serif;
   font-style: italic;
-  font-size: 0.88rem;
+  font-size: 0.85rem;
+  line-height: 1.45;
   color: #4A3728;
-  white-space: nowrap;
-  box-shadow: 0 6px 20px rgba(74, 53, 40, 0.2);
+  white-space: normal;
+  width: max-content;
+  max-width: min(320px, 82vw);
+  text-align: center;
+  box-shadow: 0 10px 28px rgba(74, 53, 40, 0.22), 0 0 14px rgba(212, 122, 136, 0.25);
   pointer-events: none;
   opacity: 0;
-  transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
-  z-index: 25;
+  transition: all 0.38s cubic-bezier(0.34, 1.56, 0.64, 1);
+  z-index: 1000;
+}
+
+/* Mũi tên chỉ xuống nhẹ nhàng hướng về phía 2 thiếu nữ */
+.ao-dai-poem-badge::after {
+  content: '';
+  position: absolute;
+  bottom: -6px;
+  left: 50%;
+  transform: translateX(-50%) rotate(45deg);
+  width: 10px;
+  height: 10px;
+  background: rgba(255, 252, 245, 0.97);
+  border-right: 1.5px solid #D47A88;
+  border-bottom: 1.5px solid #D47A88;
 }
 
 .ao-dai-viet-stage4:hover .ao-dai-poem-badge,
@@ -1608,11 +1700,17 @@ body.sky-night .modal-overlay {
 
 .ao-dai-poem-badge .poem-lotus-icon {
   font-size: 1rem;
+  flex-shrink: 0;
+}
+
+.ao-dai-poem-badge .poem-verse-text {
+  flex: 1 1 auto;
 }
 
 .ao-dai-poem-badge .poem-sparkle {
   color: #DEB853;
   font-size: 0.85rem;
+  flex-shrink: 0;
 }
 
 /* Floating Lotus Petals around Áo Dài */
@@ -1625,7 +1723,7 @@ body.sky-night .modal-overlay {
 
 .ao-dai-floating-petals .petal {
   position: absolute;
-  font-size: 1.1rem;
+  font-size: 1rem;
   opacity: 0;
   animation: aoDaiPetalDrift 5s ease-in-out infinite;
 }
@@ -1652,29 +1750,26 @@ body.sky-night .modal-overlay {
   0% { transform: translateY(0) rotate(0deg) scale(0.7); opacity: 0; }
   30% { opacity: 0.85; }
   70% { opacity: 0.85; }
-  100% { transform: translateY(-38px) translateX(-20px) rotate(45deg) scale(1); opacity: 0; }
+  100% { transform: translateY(-32px) translateX(-16px) rotate(45deg) scale(1); opacity: 0; }
 }
 
 @media (max-width: 768px) {
   .ao-dai-viet-stage4 {
-    right: 4px;
-    bottom: -10px;
-    height: 310px;
+    left: 540px;
+    bottom: 8px;
+    height: 230px;
     opacity: 0;
   }
+
   .ao-dai-viet-stage4.hien-thi {
-    opacity: 0.94;
+    opacity: 0.96;
   }
+
   .ao-dai-poem-badge {
-    left: 20px;
-    transform: translateX(0) translateY(6px);
+    bottom: calc(100% + 10px);
     font-size: 0.78rem;
-    padding: 6px 10px;
-  }
-  .ao-dai-viet-stage4:hover .ao-dai-poem-badge,
-  .ao-dai-viet-stage4.active .ao-dai-poem-badge,
-  .ao-dai-viet-stage4.poem-visible .ao-dai-poem-badge {
-    transform: translateX(0) translateY(0);
+    padding: 7px 12px;
+    max-width: min(290px, 86vw);
   }
 }
 

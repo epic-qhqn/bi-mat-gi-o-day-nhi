@@ -35,8 +35,9 @@
     let inertiaRaf = null;
     let renderRaf = null;
 
-    // Throttling weather triggers during fast rotations
+    // Throttling weather triggers & audio ticks during fast rotations
     let lastClimateTriggerTime = 0;
+    let lastPointerTickTime = 0;
     let pendingClimateSeason = null;
     let climateThrottleTimer = null;
 
@@ -306,15 +307,6 @@
         if (window.WeatherFX) window.WeatherFX.breeze();
     };
 
-    let harpTimers = [];
-    const cancelHarp = () => { harpTimers.forEach(clearTimeout); harpTimers = []; };
-    const pluckHarp = (notes) => {
-        if (typeof window.pluckHarpStringByIndex !== 'function') return;
-        notes.forEach(([stringIndex, delayMs]) => {
-            harpTimers.push(setTimeout(() => window.pluckHarpStringByIndex(stringIndex), delayMs));
-        });
-    };
-
     const handleOrreryClimateShift = (seasonKey, angleDeg, options = {}) => {
         const { userTriggered = false, playSound = true } = options;
         const isSeasonChanged = seasonKey !== activeClimateSeason;
@@ -322,8 +314,6 @@
         if (!isSeasonChanged && !userTriggered) return;
         activeClimateSeason = seasonKey;
 
-        cancelHarp();
-        const pluckHarpIfAudible = playSound ? pluckHarp : () => {};
         const isReadable = document.body.classList.contains('readable-font');
 
         // 1. Shift Ambient Sky Color Gradient
@@ -344,7 +334,6 @@
 
         if (seasonKey === 'spring') {
             triggerOrrerySpringDew();
-            pluckHarpIfAudible([[1, 200], [3, 500]]);
 
             if (state.currentStage <= 2 && !state.isWatered) {
                 state.isWatered = true;
@@ -362,7 +351,6 @@
         }
         else if (seasonKey === 'summer') {
             triggerOrrerySummerSun();
-            pluckHarpIfAudible([[2, 200], [4, 500]]);
 
             if (state.currentStage <= 2 && !state.isFertilized) {
                 state.isFertilized = true;
@@ -380,7 +368,6 @@
         }
         else if (seasonKey === 'autumn') {
             triggerOrreryAutumnBreeze();
-            pluckHarpIfAudible([[0, 180], [2, 480]]);
 
             if (gardenMsg) {
                 gardenMsg.textContent = "🍃 Vòng xoay Thiên văn Mùa Thu: Gió thu khẽ hát ru ngàn lá biếc...";
@@ -390,8 +377,6 @@
             }
         }
         else if (seasonKey === 'aurora') {
-            pluckHarpIfAudible([[3, 180], [4, 480]]);
-
             if (gardenMsg) {
                 gardenMsg.textContent = "🌌 Vòng xoay Cực Quang: Bầu trời đêm lung linh vạn vì sao!";
             }
@@ -546,7 +531,7 @@
             targetOrreryDeg = deg;
             lastPointerDeg = deg;
 
-            setOrreryAngle(deg, { smooth: false, playSound: true, triggerTransition: true });
+            setOrreryAngle(deg, { smooth: false, playSound: false, triggerTransition: false });
         };
 
         const onPointerMove = (e) => {
@@ -566,9 +551,15 @@
             lastPointerDeg = deg;
             lastPointerTime = now;
 
-            // Xoay nhẹ nhàng, âm thanh và hiệu ứng được quản lý bởi scheduleClimateShift
+            // Xoay nhẹ nhàng, phát tiếng khấc bánh răng đồng có throttle chống ồn
             const season = getOrrerySeasonByDeg(deg);
-            scheduleClimateShift(season.key, deg, { force: false, playSound: true, triggerTransition: false });
+            if (season.key !== currentOrrerySeasonKey && now - lastPointerTickTime > 150) {
+                lastPointerTickTime = now;
+                if (typeof window.playOrreryTickSFX === 'function') {
+                    window.playOrreryTickSFX(false);
+                }
+            }
+            scheduleClimateShift(season.key, deg, { force: false, playSound: false, triggerTransition: false });
         };
 
         const onPointerUp = (e) => {

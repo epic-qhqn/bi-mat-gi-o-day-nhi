@@ -1072,8 +1072,8 @@ const initBgMusic = () => {
         }
     };
 
-    // Function: Fade in âm lượng mượt mà trong 5 giây (5000ms) lên mốc 20%
-    window.fadeAudioVolume = (targetVol = 0.20, durationMs = 5000) => {
+    // Function: Fade âm lượng mượt mà (có hỗ trợ ducking không ghi đè volume gốc)
+    window.fadeAudioVolume = (targetVol = 0.20, durationMs = 5000, updateOriginal = true) => {
         if (!audio) return;
         window.initAudio();
 
@@ -1081,7 +1081,7 @@ const initBgMusic = () => {
             ? targetVol 
             : 0.20; // Mặc định 20% âm lượng
 
-        if (audio.paused) {
+        if (audio.paused && finalTarget > 0.01) {
             audio.volume = 0.05;
             if (volumeSlider) volumeSlider.value = 0.05;
             audio.play().catch(e => console.log("Play on fade failed:", e));
@@ -1094,7 +1094,7 @@ const initBgMusic = () => {
         if (Math.abs(diff) < 0.005) {
             audio.volume = finalTarget;
             if (volumeSlider) volumeSlider.value = finalTarget;
-            window.originalAudioVolume = finalTarget;
+            if (updateOriginal) window.originalAudioVolume = finalTarget;
             return;
         }
 
@@ -1113,19 +1113,44 @@ const initBgMusic = () => {
             const clampedVol = Math.max(0, Math.min(1, currentVol));
             audio.volume = clampedVol;
             if (volumeSlider) volumeSlider.value = clampedVol;
-            window.originalAudioVolume = clampedVol;
+            if (updateOriginal) window.originalAudioVolume = clampedVol;
 
             if (progress < 1) {
                 window.__audioFadeTimer = requestAnimationFrame(step);
             } else {
                 audio.volume = finalTarget;
                 if (volumeSlider) volumeSlider.value = finalTarget;
-                window.originalAudioVolume = finalTarget;
+                if (updateOriginal) window.originalAudioVolume = finalTarget;
                 window.__audioFadeTimer = null;
             }
         }
 
         window.__audioFadeTimer = requestAnimationFrame(step);
+    };
+
+    // Sub-phase 3: Audio Ducking cho Phase 2 (Đánh đàn / Giai điệu ma thuật)
+    let bgmSavedVolume = 0.20;
+    let isBgmCurrentlyDucked = false;
+
+    window.duckBgmForMinigame = (duck = true, durationMs = 2000) => {
+        if (!audio) return;
+        if (duck) {
+            if (!isBgmCurrentlyDucked) {
+                bgmSavedVolume = (audio.volume && audio.volume > 0.04) 
+                    ? audio.volume 
+                    : (window.originalAudioVolume || 0.20);
+                isBgmCurrentlyDucked = true;
+            }
+            // Giảm dần BGM xuống 0.02 (rất nhỏ, êm dịu) trong 2 giây (2000ms)
+            window.fadeAudioVolume(0.02, durationMs, false);
+        } else {
+            if (isBgmCurrentlyDucked) {
+                isBgmCurrentlyDucked = false;
+                // Khôi phục mượt mà âm lượng BGM trở lại trong 2s
+                const restoreVol = bgmSavedVolume || window.originalAudioVolume || 0.20;
+                window.fadeAudioVolume(restoreVol, durationMs, true);
+            }
+        }
     };
 };
 
