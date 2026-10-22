@@ -29,8 +29,8 @@
 
 ### C. Logic Layer (`js/` - 15 Autonomous Modules)
 - `js/content.js`: Static markdown letters, 8 secret letters (`secretLettersDeck`), 12 flower profiles.
-- `js/audio-vfx.js`: Web Audio API synthesizer (chimes, clicks, wax drops, gears) & BGM audio manager.
-- `js/environment.js`: Diurnal cycle (Dawn, Day, Dusk, Night), celestial particles, 3D leaves/petals canvas.
+- `js/audio-vfx.js`: Web Audio API synthesizer (chimes, clicks, wax drops, gears), BGM manager, stoppable voices, and edge-triggered zone sound (`createZoneSoundTrigger`).
+- `js/environment.js`: Diurnal cycle (Dawn, Day, Dusk, Night), celestial particles, 3D leaves/petals canvas, dynamic meadow grass bed, and viewport-wide `WeatherFX`.
 - `js/wax-seal-ceremony.js`: Time-lock gate, marble wax melting, brass seal stamping, and garden awakening.
 - `js/atmosphere-shifter.js`: Living Weather HUD (cloud rain dewdrops, morning sunbeam, terrarium touch).
 - `js/botanical-harp.js`: 5-string botanical harp with glissando gestures and floating luminous notes.

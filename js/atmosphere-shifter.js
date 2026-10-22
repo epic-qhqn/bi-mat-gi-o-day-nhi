@@ -9,9 +9,7 @@
     const cloudShifterEl = document.getElementById('atmosphere-cloud-shifter');
     const sunShifterEl = document.getElementById('atmosphere-sun-shifter');
     const livingHudEl = document.getElementById('living-atmosphere-hud');
-    const summerRainLayerEl = document.getElementById('summer-rain-layer');
     const miniRainbowLayerEl = document.getElementById('mini-rainbow-layer');
-    const goldenPollenLayerEl = document.getElementById('golden-pollen-layer');
 
     const terrariumSurfaceEl = document.getElementById('terrarium-touch-surface');
     const terrariumVortexLayerEl = document.getElementById('terrarium-vortex-layer');
@@ -27,15 +25,35 @@
     let cumulativeRubAngle = 0;
     let rubStartTimestamp = 0;
 
+    // Seed position in #wrap's virtual 1100x680 space (see #seed-hint in layout.css: seed at x≈530)
+    const SEED_VIRTUAL = { x: 530, y: 596 };
+
     const getSeedOrSproutCenter = () => {
         const seedHint = document.getElementById('seed-hint');
         if (seedHint) {
             const rect = seedHint.getBoundingClientRect();
+            // garden-stages.js hides #seed-hint (display:none) once the seed starts growing, and a
+            // hidden element reports an all-zero rect. Trusting it pinned every rain / pollen / sunbeam
+            // effect (and the drag hit-test) to the top-left corner of the screen.
+            if (rect.width > 0 && rect.height > 0) {
+                return {
+                    x: rect.left + rect.width / 2,
+                    y: rect.top + rect.height / 2 + 15
+                };
+            }
+        }
+
+        // Hint hidden: project the seed through #wrap's autoscale transform instead
+        const wrap = document.getElementById('wrap');
+        if (wrap && wrap.offsetWidth > 0) {
+            const rect = wrap.getBoundingClientRect();
+            const scale = rect.width / wrap.offsetWidth;
             return {
-                x: rect.left + rect.width / 2,
-                y: rect.top + rect.height / 2 + 15
+                x: rect.left + SEED_VIRTUAL.x * scale,
+                y: rect.top + SEED_VIRTUAL.y * scale
             };
         }
+
         return {
             x: window.innerWidth / 2,
             y: Math.min(window.innerHeight * 0.65, window.innerHeight - 150)
@@ -65,34 +83,8 @@
 
         if (typeof window.triggerMascotWatering === 'function') window.triggerMascotWatering();
 
-        if (summerRainLayerEl) {
-            const streakCount = window.isLowEndDevice ? 18 : 36;
-            for (let i = 0; i < streakCount; i++) {
-                setTimeout(() => {
-                    const streak = document.createElement('div');
-                    streak.className = 'summer-rain-streak';
-                    const spreadX = (Math.random() - 0.5) * 160;
-                    const startX = target.x + spreadX;
-                    const startY = target.y - 140 - Math.random() * 40;
-                    streak.style.left = `${startX}px`;
-                    streak.style.top = `${startY}px`;
-                    streak.style.animationDuration = `${0.35 + Math.random() * 0.15}s`;
-                    summerRainLayerEl.appendChild(streak);
-
-                    setTimeout(() => {
-                        const splash = document.createElement('div');
-                        splash.className = 'rain-splash-ripple';
-                        splash.style.left = `${startX + 24}px`;
-                        splash.style.top = `${target.y + 10 + (Math.random() - 0.5) * 20}px`;
-                        summerRainLayerEl.appendChild(splash);
-                        setTimeout(() => {
-                            if (splash.parentNode) splash.parentNode.removeChild(splash);
-                        }, 600);
-                        if (streak.parentNode) streak.parentNode.removeChild(streak);
-                    }, 400);
-                }, i * 35);
-            }
-        }
+        // Shower over the whole viewport; a share of the drops is aimed at the seed
+        if (window.WeatherFX) window.WeatherFX.rain({ target });
 
         window.gardenState = window.gardenState || {};
         window.gardenState.isWatered = true;
@@ -153,40 +145,8 @@
         focusedRay.style.left = `${target.x}px`;
         focusedRay.classList.add('active');
 
-        if (goldenPollenLayerEl) {
-            const pollenCount = window.isLowEndDevice ? 14 : 28;
-            for (let p = 0; p < pollenCount; p++) {
-                setTimeout(() => {
-                    const pollen = document.createElement('div');
-                    pollen.className = 'golden-pollen-particle';
-                    goldenPollenLayerEl.appendChild(pollen);
-
-                    const startX = target.x + (Math.random() - 0.5) * 80;
-                    const startY = target.y - 120 + (Math.random() - 0.5) * 40;
-                    const endAngle = Math.random() * Math.PI * 2;
-                    const endRadius = 15 + Math.random() * 50;
-                    const endX = target.x + Math.cos(endAngle) * endRadius;
-                    const endY = target.y + Math.sin(endAngle) * (endRadius * 0.4);
-
-                    pollen.style.left = `${startX}px`;
-                    pollen.style.top = `${startY}px`;
-
-                    const anim = pollen.animate([
-                        { transform: 'scale(0.3) rotate(0deg)', opacity: 0 },
-                        { transform: `translate(${(endX - startX) * 0.5 + (Math.random() - 0.5) * 50}px, ${(endY - startY) * 0.5}px) scale(1.2) rotate(180deg)`, opacity: 1, offset: 0.4 },
-                        { transform: `translate(${endX - startX}px, ${endY - startY}px) scale(0.6) rotate(360deg)`, opacity: 0 }
-                    ], {
-                        duration: 1200 + Math.random() * 400,
-                        easing: 'cubic-bezier(0.16, 1, 0.3, 1)',
-                        fill: 'forwards'
-                    });
-
-                    anim.onfinish = () => {
-                        if (pollen.parentNode) pollen.parentNode.removeChild(pollen);
-                    };
-                }, p * 40);
-            }
-        }
+        // Shafts + pollen across the whole viewport; half of the pollen is drawn into the seed
+        if (window.WeatherFX) window.WeatherFX.sunlight({ target, holdMs: 1800 });
 
         window.gardenState = window.gardenState || {};
         window.gardenState.isFertilized = true;

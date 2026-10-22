@@ -1296,7 +1296,7 @@ body.sky-night .modal-overlay {
   position: fixed;
   left: 0;
   bottom: 0;
-  width: 100vw;
+  width: 100%;                      /* viewport width without the scrollbar: no horizontal overflow */
   height: clamp(140px, 25vh, 280px);
   z-index: 12;
   overflow: visible !important;
@@ -1304,6 +1304,13 @@ body.sky-night .modal-overlay {
   opacity: 0;
   transition: opacity 2s cubic-bezier(0.16, 1, 0.3, 1);
   filter: drop-shadow(0 0 2px rgba(74, 53, 40, 0.45)) drop-shadow(0 0 10px rgba(106, 141, 115, 0.3));
+}
+
+/* Track the dynamic viewport on mobile so the meadow stays glued to the real bottom edge */
+@supports (height: 1dvh) {
+  #co-hoa {
+    height: clamp(140px, 25dvh, 280px);
+  }
 }
 
 #co-hoa.hien-thi {
@@ -1315,6 +1322,14 @@ body.sky-night .modal-overlay {
   stroke-width: 1.5;
   stroke-linecap: round;
   stroke-linejoin: round;
+}
+
+/* Filled back row: translucent bodies overlap into a continuous green mass along the bottom margin */
+#co-hoa .co-ngan.co-nen {
+  fill: var(--mau, #6A8D73);
+  stroke-width: 1;
+  fill-opacity: 0.3;
+  stroke-opacity: 0.55;
 }
 
 #co-hoa .net {

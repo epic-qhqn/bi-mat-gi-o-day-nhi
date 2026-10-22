@@ -7,6 +7,12 @@ window.initAudio = () => {
     if (window.audioCtx.state === 'suspended') window.audioCtx.resume();
 };
 
+// Optional routing: SFX synths take an output node so a caller can mute them instantly (see
+// createSfxVoice). Anything that is not an AudioNode (undefined, an Event...) falls back to the speakers.
+window.resolveSfxOutput = (out) => (
+    typeof AudioNode !== 'undefined' && out instanceof AudioNode ? out : window.audioCtx.destination
+);
+
 window.playWaterSFX = () => {
     window.initAudio();
     const bufferSize = window.audioCtx.sampleRate * 1.5;
@@ -621,9 +627,10 @@ window.createBrassDustVFX = (x, y) => {
 };
 
 // Sub-phase 3.3: Celestial Crystal Bell Chime (Awakening Resonance)
-window.playChimeSFX = () => {
+window.playChimeSFX = (out) => {
     window.initAudio();
     if (!window.audioCtx) return;
+    const dest = window.resolveSfxOutput(out);
     const t = window.audioCtx.currentTime;
 
     // Harmonic partials of Solfeggio 528Hz Love Tone
@@ -643,7 +650,7 @@ window.playChimeSFX = () => {
         gain.gain.exponentialRampToValueAtTime(0.0001, t + 1.9 - idx * 0.2);
 
         osc.connect(gain);
-        gain.connect(window.audioCtx.destination);
+        gain.connect(dest);
         osc.start(t);
         osc.stop(t + 2.0);
     });
@@ -1721,9 +1728,10 @@ window.playDecoyMistSFX = (options = {}) => {
  * Crisp, tactile clockwork gear tooth click with micro metallic resonance.
  * Triggered during dial rotation on angle increments and quadrant transitions.
  */
-window.playOrreryTickSFX = (isMajor = false) => {
+window.playOrreryTickSFX = (isMajor = false, out) => {
     window.initAudio();
     if (!window.audioCtx) return;
+    const dest = window.resolveSfxOutput(out);
     const now = window.audioCtx.currentTime;
     const dur = isMajor ? 0.06 : 0.035;
 
@@ -1748,7 +1756,7 @@ window.playOrreryTickSFX = (isMajor = false) => {
 
     noise.connect(filter);
     filter.connect(gain);
-    gain.connect(window.audioCtx.destination);
+    gain.connect(dest);
     noise.start(now);
 
     // 2. Micro metallic brass ping
@@ -1762,7 +1770,7 @@ window.playOrreryTickSFX = (isMajor = false) => {
     pingGain.gain.exponentialRampToValueAtTime(0.001, now + dur);
 
     ping.connect(pingGain);
-    pingGain.connect(window.audioCtx.destination);
+    pingGain.connect(dest);
     ping.start(now);
     ping.stop(now + dur);
 };
@@ -1771,9 +1779,10 @@ window.playOrreryTickSFX = (isMajor = false) => {
  * Astrolabe Celestial Glide SFX:
  * Smooth harmonic chime when snapping or gliding between seasons
  */
-window.playOrreryGlideSFX = (seasonKey = 'spring') => {
+window.playOrreryGlideSFX = (seasonKey = 'spring', out) => {
     window.initAudio();
     if (!window.audioCtx) return;
+    const dest = window.resolveSfxOutput(out);
     const now = window.audioCtx.currentTime;
 
     // Harmonic frequencies based on season mood
@@ -1799,7 +1808,7 @@ window.playOrreryGlideSFX = (seasonKey = 'spring') => {
         gain.gain.exponentialRampToValueAtTime(0.0001, startT + dur);
 
         osc.connect(gain);
-        gain.connect(window.audioCtx.destination);
+        gain.connect(dest);
         osc.start(startT);
         osc.stop(startT + dur);
     });
@@ -1809,9 +1818,10 @@ window.playOrreryGlideSFX = (seasonKey = 'spring') => {
  * Summer Rain ASMR SFX:
  * Soft rain patter on lush leaves with gentle water drop pings.
  */
-window.playSummerRainSFX = () => {
+window.playSummerRainSFX = (out) => {
     window.initAudio();
     if (!window.audioCtx) return;
+    const dest = window.resolveSfxOutput(out);
     const now = window.audioCtx.currentTime;
     const dur = 1.6;
 
@@ -1836,7 +1846,7 @@ window.playSummerRainSFX = () => {
 
     noise.connect(filter);
     filter.connect(gain);
-    gain.connect(window.audioCtx.destination);
+    gain.connect(dest);
     noise.start(now);
 
     const dropletPitches = [1650, 1920, 2240, 2580];
@@ -1853,7 +1863,7 @@ window.playSummerRainSFX = () => {
         dropGain.gain.exponentialRampToValueAtTime(0.0001, dropT + 0.06);
 
         dropOsc.connect(dropGain);
-        dropGain.connect(window.audioCtx.destination);
+        dropGain.connect(dest);
         dropOsc.start(dropT);
         dropOsc.stop(dropT + 0.06);
     });
@@ -1863,9 +1873,10 @@ window.playSummerRainSFX = () => {
  * Sunbeam Warmth SFX:
  * Luminous warm harmonic glow with sweeping radiant filter.
  */
-window.playSunbeamSFX = () => {
+window.playSunbeamSFX = (out) => {
     window.initAudio();
     if (!window.audioCtx) return;
+    const dest = window.resolveSfxOutput(out);
     const now = window.audioCtx.currentTime;
     const dur = 1.5;
 
@@ -1889,7 +1900,7 @@ window.playSunbeamSFX = () => {
 
         osc.connect(filter);
         filter.connect(gain);
-        gain.connect(window.audioCtx.destination);
+        gain.connect(dest);
         osc.start(startT);
         osc.stop(startT + dur);
     });
@@ -1899,9 +1910,10 @@ window.playSunbeamSFX = () => {
  * Autumn Whispering Breeze SFX:
  * Gentle atmospheric wind sweep with soft air resonance.
  */
-window.playBreezeSFX = () => {
+window.playBreezeSFX = (out) => {
     window.initAudio();
     if (!window.audioCtx) return;
+    const dest = window.resolveSfxOutput(out);
     const now = window.audioCtx.currentTime;
     const dur = 1.8;
 
@@ -1928,7 +1940,100 @@ window.playBreezeSFX = () => {
 
     noise.connect(filter);
     filter.connect(gain);
-    gain.connect(window.audioCtx.destination);
+    gain.connect(dest);
     noise.start(now);
 };
 
+
+// ==========================================================================
+// ZONE-TRIGGERED TRACKS (celestial orrery: one track per compass direction zone)
+// ==========================================================================
+
+/**
+ * A voice is a private gain bus. Route sounds into `voice.out` (the optional last argument of the
+ * SFX synths) and `voice.stop()` cuts all of them together with a short fade, so no click is heard.
+ */
+window.createSfxVoice = () => {
+    window.initAudio();
+    const ctx = window.audioCtx;
+    const bus = ctx.createGain();
+    bus.connect(ctx.destination);
+    let stopped = false;
+
+    return {
+        out: bus,
+        stop(fadeSec = 0.04) {
+            if (stopped) return;
+            stopped = true;
+            const t = ctx.currentTime;
+            bus.gain.cancelScheduledValues(t);
+            bus.gain.setValueAtTime(bus.gain.value, t);
+            bus.gain.linearRampToValueAtTime(0, t + fadeSec);
+            setTimeout(() => bus.disconnect(), fadeSec * 1000 + 30);
+        }
+    };
+};
+
+// Direction zone -> SFX synth name (looked up lazily so later overrides still apply)
+window.ORRERY_ZONE_TRACKS = {
+    spring: 'playSummerRainSFX',
+    summer: 'playSunbeamSFX',
+    autumn: 'playBreezeSFX',
+    aurora: 'playChimeSFX'
+};
+
+/** Plays the gear tick + the zone's track on one stoppable voice. `glide` adds the quadrant-click chord. */
+window.playOrreryZoneTrack = (zoneKey, { glide = false } = {}) => {
+    const voice = window.createSfxVoice();
+    window.playOrreryTickSFX(true, voice.out);
+    if (glide) window.playOrreryGlideSFX(zoneKey, voice.out);
+    const track = window[window.ORRERY_ZONE_TRACKS[zoneKey]];
+    if (typeof track === 'function') track(voice.out);
+    return voice;
+};
+
+/**
+ * Edge-triggered zone sound with a lockout. Pure state machine (injectable clock, no Web Audio),
+ * so the rules are easy to test:
+ *   - entering a DIFFERENT zone: stop the previous voice, play the new one immediately, and
+ *     re-arm the lockout (lockMs). A zone change is never blocked by the lockout.
+ *   - same zone inside the lockout: ignored, nothing is retriggered or stacked ('locked').
+ *   - same zone after the lockout: ignored while rotating ('same-zone'); only an explicit
+ *     `replay` gesture (tap / click) plays it again, stopping the previous voice first.
+ * enter() returns 'switched' | 'replayed' | 'locked' | 'same-zone' | 'silent'.
+ */
+window.createZoneSoundTrigger = ({ lockMs = 200, now = () => performance.now(), play, stop } = {}) => {
+    const stopVoice = stop || ((v) => { if (v && typeof v.stop === 'function') v.stop(); });
+    let zone = null;
+    let lockedUntil = 0;
+    let voice = null;
+
+    const start = (z, opts, t) => {
+        lockedUntil = t + lockMs;
+        voice = play(z, opts);
+    };
+
+    return {
+        enter(nextZone, { replay = false, silent = false, ...opts } = {}) {
+            const t = now();
+
+            if (nextZone !== zone) {
+                stopVoice(voice);
+                voice = null;
+                zone = nextZone;
+                if (silent) { lockedUntil = 0; return 'silent'; }
+                start(nextZone, opts, t);
+                return 'switched';
+            }
+
+            if (t < lockedUntil) return 'locked';
+            if (!replay || silent) return 'same-zone';
+
+            stopVoice(voice);
+            start(nextZone, opts, t);
+            return 'replayed';
+        },
+        isLocked() { return now() < lockedUntil; },
+        get zone() { return zone; }
+    };
+};

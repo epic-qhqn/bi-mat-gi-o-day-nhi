@@ -121,6 +121,7 @@ window.startEnvironmentCycle = () => {
     const MAU_HOA = ['#D47A88', '#F2C4CE', '#FF8FD0', '#DEB853', '#FFFFFF', '#FFB6C1'];
     const MAU_TAM = ['#FFFFFF', '#DEB853', '#F5CE56'];
     let currentStrokeColor = '#FFFFFF';
+    let lastBox = { w: 0, h: 0 };   // size the meadow was last drawn for
 
     function el(tag, attrs, parent) {
         const e = document.createElementNS(SVGNS, tag);
@@ -268,44 +269,80 @@ window.startEnvironmentCycle = () => {
         hoaNam(g, p2.x + 4, p2.y - 8, 12, delay + 1.8, chon(MAU_HOA), '#FFFFFF');
     }
 
+    // Calm, rice-field greens for the filled under-layer (design-system tokens, no neon)
+    const MAU_NEN = ['#6A8D73', '#8EA885', '#5E8A6B', '#7FA58A'];
+
+    // One blade as a closed quadratic outline; `base` sits just below the frame so roots never show.
+    function ngonCo(x, base, h, w) {
+        const lean = rnd(-0.3, 0.08) * h;
+        return `M ${x - w} ${base} Q ${x - w + lean * .35} ${base - h * .55} ${x + lean} ${base - h} Q ${x + w + lean * .35} ${base - h * .5} ${x + w} ${base}`;
+    }
+
+    // Gom hàng trăm ngọn cỏ vào vài path (một path mỗi màu) để mượt mà 60fps
+    function veLopCo(parent, { W, base, hMax, hMin, step, halfW, cls, palette, fillMode, phase }) {
+        const groups = new Map(palette.map(m => [m, []]));
+        for (let x = -10; x < W + 10; x += rnd(step[0], step[1])) {
+            const wave = 0.65 + 0.35 * Math.sin(x / 85 + phase);
+            const h = hMin + (hMax - hMin) * rnd(0.35, 1) * wave;
+            groups.get(chon(palette)).push(ngonCo(x, base, h, rnd(halfW[0], halfW[1])));
+        }
+        groups.forEach((paths, mau) => {
+            if (!paths.length) return;
+            const p = el('path', { class: cls, d: paths.join(' '), stroke: mau }, parent);
+            if (fillMode) p.style.setProperty('--mau', mau);   // consumed by `.co-nen { fill: var(--mau) }`
+        });
+    }
+
+    // Soft turf bed: a gradient that is fully opaque on the bottom edge, so no sky can show
+    // through between blades along the lower margin (even before the blades finish drawing in).
+    function veNenCo(parent, W, Hh) {
+        const defs = el('defs', {}, parent);
+        const grad = el('linearGradient', { id: 'co-nen-grad', x1: '0', y1: '0', x2: '0', y2: '1' }, defs);
+        el('stop', { offset: '0', 'stop-color': '#6A8D73', 'stop-opacity': '0' }, grad);
+        el('stop', { offset: '1', 'stop-color': '#6A8D73', 'stop-opacity': '0.92' }, grad);
+        const top = Hh * 0.66;
+        el('rect', { x: -20, y: top, width: W + 40, height: Hh - top + 12, fill: 'url(#co-nen-grad)', class: 'co-nen-bed' }, parent);
+    }
+
     window.initCountrysideWildflowers = function() {
         const coHoa = document.getElementById('co-hoa');
         if (!coHoa) return;
 
-        const W = window.innerWidth;
+        // The CSS box (see #co-hoa in layout.css) is the single source of truth for the coordinate
+        // system. Deriving it from window.innerHeight instead produced a viewBox with a different
+        // aspect ratio than the box, which `meet` letterboxed into a 70%-wide strip with bare corners.
+        const box = coHoa.getBoundingClientRect();
+        const W = Math.max(1, Math.round(box.width || window.innerWidth));
+        const Hh = Math.max(1, Math.round(box.height || 160));
         const mobile = W <= 768;
-        const Hh = Math.round(Math.min(window.innerHeight * (mobile ? 0.32 : 0.36), mobile ? 240 : 320));
 
         coHoa.setAttribute('overflow', 'visible');
         coHoa.style.overflow = 'visible';
         coHoa.setAttribute('viewBox', `0 0 ${W} ${Hh}`);
-        coHoa.setAttribute('width', W);
-        coHoa.setAttribute('height', Hh);
-        coHoa.innerHTML = '';
+        coHoa.setAttribute('preserveAspectRatio', 'none');   // stretch to fill, never letterbox
+        coHoa.removeAttribute('width');                      // size comes from CSS only
+        coHoa.removeAttribute('height');
+        coHoa.replaceChildren();
         coHoa.classList.add('hien-thi');
+        lastBox = { w: W, h: Hh };
 
-        const base = Hh + 4;
+        const base = Hh + 6;
         const ph = rnd(0, 6);
-        const nhomCo = new Map(MAU_XANH.map(m => [m, []]));
 
-        // Gom hàng trăm ngọn cỏ vào vài path để mượt mà 60fps
-        const stepX = mobile ? rnd(5.5, 9.0) : rnd(4.2, 7.5);
-        for (let x = -10; x < W + 10; x += stepX) {
-            const h = Hh * (0.22 + 0.42 * rnd(0.35, 1) * (0.65 + 0.35 * Math.sin(x / 85 + ph)));
-            const lean = rnd(-0.3, 0.08) * h;
-            const w = rnd(2.2, 5.2);
-            const d = `M ${x - w} ${base} Q ${x - w + lean * .35} ${base - h * .55} ${x + lean} ${base - h} Q ${x + w + lean * .35} ${base - h * .5} ${x + w} ${base}`;
-            nhomCo.get(chon(MAU_XANH)).push(d);
-        }
+        veNenCo(coHoa, W, Hh);
 
-        nhomCo.forEach((netCo, mauCo) => {
-            if (netCo.length > 0) {
-                el('path', {
-                    class: 'co-ngan',
-                    d: netCo.join(' '),
-                    stroke: mauCo
-                }, coHoa);
-            }
+        // Back row: short, filled, heavily overlapping blades => continuous cover along the bottom margin
+        veLopCo(coHoa, {
+            W, base, phase: ph, cls: 'co-ngan co-nen', palette: MAU_NEN, fillMode: true,
+            hMin: Hh * 0.12, hMax: Hh * 0.36,
+            step: mobile ? [1.8, 3.0] : [1.4, 2.4], halfW: [2.0, 4.2]
+        });
+
+        // Front row: the original tall line-art blades, now ~2x denser
+        veLopCo(coHoa, {
+            W, base, phase: ph, cls: 'co-ngan', palette: MAU_XANH, fillMode: false,
+            hMin: Hh * 0.22, hMax: Hh * 0.64,
+            step: mobile ? [3.0, 5.0] : [2.4, 4.0], halfW: [2.2, 5.2]
         });
 
         // Cành lá bên tả bên hữu
@@ -316,7 +353,7 @@ window.startEnvironmentCycle = () => {
         }
 
         // Cụm hoa sen và hoa cúc đồng nội
-        const soHoa = mobile ? 5 : 9;
+        const soHoa = Math.max(5, Math.min(14, Math.round(W / 160)));   // keeps spacing even on wide screens
         const stepWidth = W / (soHoa + 1);
         for (let i = 0; i < soHoa; i++) {
             const x = stepWidth * (i + 1) + rnd(-15, 15);
@@ -328,17 +365,27 @@ window.startEnvironmentCycle = () => {
         }, 3600);
     };
 
+    // Redraw only when the real box changed meaningfully. Small height jitter (mobile URL bar) is
+    // absorbed by preserveAspectRatio="none", so it never opens a gap and never re-randomises the meadow.
     let resizeWildflowersTimer = null;
-    let lastWidth = window.innerWidth;
-    window.addEventListener('resize', () => {
+    const onMeadowBoxChange = () => {
         clearTimeout(resizeWildflowersTimer);
         resizeWildflowersTimer = setTimeout(() => {
-            if (Math.abs(window.innerWidth - lastWidth) > 30) {
-                lastWidth = window.innerWidth;
+            const coHoa = document.getElementById('co-hoa');
+            if (!coHoa) return;
+            const box = coHoa.getBoundingClientRect();
+            if (Math.abs(box.width - lastBox.w) > 24 || Math.abs(box.height - lastBox.h) > 24) {
                 window.initCountrysideWildflowers();
             }
-        }, 300);
-    }, { passive: true });
+        }, 200);
+    };
+
+    const meadowEl = document.getElementById('co-hoa');
+    if (meadowEl && typeof ResizeObserver === 'function') {
+        new ResizeObserver(onMeadowBoxChange).observe(meadowEl);
+    } else {
+        window.addEventListener('resize', onMeadowBoxChange, { passive: true });
+    }
 })();
 
 /* ==========================================================================
@@ -424,12 +471,20 @@ window.startEnvironmentCycle = () => {
         if (!respawn) {
             p.x = Math.random() * (w + 60);
             p.y = Math.random() * h;
-        } else if (Math.random() < 0.7) {
-            p.x = w + 40 + Math.random() * 100;
-            p.y = Math.random() * h * 0.85;
         } else {
-            p.x = Math.random() * (w + 80);
-            p.y = -40 - Math.random() * 60;
+            // Particles drift left-and-down, so they enter through the top and right edges. For an even
+            // spread over the whole canvas, each edge must feed particles in proportion to its flux
+            // (width * vy for the top, height * |vx| for the right). A fixed 70/30 right/top split piled
+            // leaves up on the right and left the left side thin (~12% vs ~22% per screen-sixth).
+            const fluxTop = w * p.vy;
+            const fluxSide = h * Math.abs(p.vx);
+            if (Math.random() < fluxTop / (fluxTop + fluxSide)) {
+                p.x = Math.random() * (w + 80);
+                p.y = -40 - Math.random() * 60;
+            } else {
+                p.x = w + 40 + Math.random() * 100;
+                p.y = Math.random() * h;
+            }
         }
     }
 
@@ -515,6 +570,174 @@ window.startEnvironmentCycle = () => {
             lastFrameTime = 0;
         }
     });
+})();
+
+/* ==========================================================================
+   VIEWPORT-WIDE WEATHER FX (rain · sunlight · wind-blown leaves)
+   Shared by the HUD tokens (atmosphere-shifter.js) and the compass (celestial-orrery.js).
+   Every effect spawns over the WHOLE viewport. The seed/sprout only receives a focused share
+   of the particles, so the "watered / warmed" feedback stays readable without the rest of the
+   screen sitting empty. Particles clean themselves up on animationend / onfinish.
+   ========================================================================== */
+(function() {
+    'use strict';
+
+    const rnd = (a, b) => a + Math.random() * (b - a);
+    const clamp = (v, lo, hi) => Math.max(lo, Math.min(hi, v));
+    const budget = (n) => (window.isLowEndDevice ? Math.ceil(n / 2) : n);
+    const RAIN_TILT = Math.tan(14 * Math.PI / 180);   // matches rotate(14deg) of .summer-rain-streak
+
+    function seedTarget() {
+        return typeof window.getSeedOrSproutCenter === 'function'
+            ? window.getSeedOrSproutCenter()
+            : { x: window.innerWidth / 2, y: window.innerHeight * 0.7 };
+    }
+
+    // Vertical band of the meadow where drops land and splash
+    function groundBand(h) {
+        const meadow = document.getElementById('co-hoa');
+        const top = meadow ? meadow.getBoundingClientRect().top : h * 0.78;
+        return { top: clamp(top + 16, h * 0.5, h - 24), bottom: h - 6 };
+    }
+
+    function splash(layer, x, y) {
+        const ripple = document.createElement('div');
+        ripple.className = 'rain-splash-ripple';
+        ripple.style.left = `${x}px`;
+        ripple.style.top = `${y}px`;
+        ripple.addEventListener('animationend', () => ripple.remove(), { once: true });
+        layer.appendChild(ripple);
+    }
+
+    // A rain shower: drops fall everywhere and land on the meadow; ~25% are aimed at the seed.
+    function rain(options = {}) {
+        const layer = document.getElementById('summer-rain-layer');
+        if (!layer) return;
+
+        const w = window.innerWidth;
+        const h = window.innerHeight;
+        const target = options.target || seedTarget();
+        const ground = groundBand(h);
+        const total = budget(clamp(Math.round(w / 20), 28, 90));
+        const focused = Math.round(total * 0.25);
+        const spanMs = options.durationMs || 1400;
+        const frag = document.createDocumentFragment();
+
+        for (let i = 0; i < total; i++) {
+            const atSeed = i < focused;
+            const landX = atSeed ? target.x + rnd(-90, 90) : rnd(0, w);
+            const landY = atSeed ? target.y + rnd(-6, 16) : rnd(ground.top, ground.bottom);
+            const startY = atSeed ? target.y - rnd(150, 230) : rnd(-60, Math.max(-40, landY - 220));
+            const fall = landY - startY;
+            const drift = fall * RAIN_TILT;
+
+            const streak = document.createElement('div');
+            streak.className = 'summer-rain-streak';
+            streak.style.left = `${(landX - drift).toFixed(1)}px`;
+            streak.style.top = `${startY.toFixed(1)}px`;
+            streak.style.setProperty('--fall-x', `${drift.toFixed(1)}px`);
+            streak.style.setProperty('--fall-y', `${fall.toFixed(1)}px`);
+            streak.style.animationDuration = `${(fall / rnd(1100, 1500)).toFixed(2)}s`;
+            streak.style.animationDelay = `${Math.round(rnd(0, spanMs))}ms`;
+            streak.addEventListener('animationend', () => {
+                streak.remove();
+                if (atSeed || Math.random() < 0.5) splash(layer, landX, landY);
+            }, { once: true });
+            frag.appendChild(streak);
+        }
+        layer.appendChild(frag);
+    }
+
+    function pollenMote(layer, from, to, delayMs) {
+        const mote = document.createElement('div');
+        mote.className = 'golden-pollen-particle';
+        mote.style.left = `${from.x}px`;
+        mote.style.top = `${from.y}px`;
+        layer.appendChild(mote);
+
+        const dx = to.x - from.x;
+        const dy = to.y - from.y;
+        const anim = mote.animate([
+            { transform: 'scale(0.3) rotate(0deg)', opacity: 0 },
+            { transform: `translate(${dx * 0.5 + rnd(-25, 25)}px, ${dy * 0.5}px) scale(1.2) rotate(180deg)`, opacity: 1, offset: 0.4 },
+            { transform: `translate(${dx}px, ${dy}px) scale(0.6) rotate(360deg)`, opacity: 0 }
+        ], { duration: rnd(1200, 1800), delay: delayMs, easing: 'cubic-bezier(0.16, 1, 0.3, 1)', fill: 'both' });
+        anim.onfinish = () => mote.remove();
+    }
+
+    // Sunlight: soft shafts across the full width + golden pollen through the whole frame.
+    // Half of the pollen drifts into the seed (feedback); the rest floats freely across the screen.
+    function sunlight(options = {}) {
+        const w = window.innerWidth;
+        const h = window.innerHeight;
+        const target = options.target || seedTarget();
+        const holdMs = options.holdMs || 3200;
+
+        const rays = clamp(Math.round(w / 280), 3, 7);
+        const cell = w / rays;
+        for (let i = 0; i < rays; i++) {
+            const ray = document.createElement('div');
+            ray.className = 'sunbeam-ambient';
+            ray.style.left = `${(cell * (i + 0.5) + rnd(-cell * 0.2, cell * 0.2)).toFixed(1)}px`;
+            ray.style.setProperty('--ray-w', `${Math.round(rnd(90, 190))}px`);
+            document.body.appendChild(ray);
+            const fade = ray.animate(
+                [{ opacity: 0 }, { opacity: 0.9, offset: 0.25 }, { opacity: 0.9, offset: 0.7 }, { opacity: 0 }],
+                { duration: holdMs, delay: i * 90, easing: 'ease-in-out', fill: 'both' }
+            );
+            fade.onfinish = () => ray.remove();
+        }
+
+        const layer = document.getElementById('golden-pollen-layer') || document.body;
+        const total = budget(clamp(Math.round(w / 45), 22, 44));
+        for (let i = 0; i < total; i++) {
+            const delay = Math.round(rnd(0, 1000));
+            if (i % 2 === 0) {
+                const angle = rnd(0, Math.PI * 2);
+                const radius = rnd(15, 60);
+                pollenMote(layer,
+                    { x: target.x + rnd(-45, 45), y: target.y - 120 + rnd(-20, 20) },
+                    { x: target.x + Math.cos(angle) * radius, y: target.y + Math.sin(angle) * radius * 0.4 },
+                    delay);
+            } else {
+                const from = { x: rnd(0, w), y: rnd(h * 0.08, h * 0.8) };
+                pollenMote(layer, from, { x: from.x + rnd(-60, 90), y: from.y + rnd(-90, 30) }, delay);
+            }
+        }
+    }
+
+    // Wind: leaves are blown across the whole screen (not just the left half), farther on wider screens.
+    function breeze() {
+        let layer = document.getElementById('autumn-breeze-layer');
+        if (!layer) {
+            layer = document.createElement('div');
+            layer.id = 'autumn-breeze-layer';
+            layer.className = 'autumn-breeze-layer';
+            document.body.appendChild(layer);
+        }
+
+        const w = window.innerWidth;
+        const h = window.innerHeight;
+        const reach = clamp(w / 1440, 0.6, 1.4);
+        const total = budget(clamp(Math.round(w / 55), 14, 34));
+        const frag = document.createDocumentFragment();
+
+        for (let i = 0; i < total; i++) {
+            const leaf = document.createElement('div');
+            leaf.className = 'autumn-leaf-particle';
+            leaf.style.left = `${rnd(-w * 0.03, w * 0.97).toFixed(1)}px`;
+            leaf.style.top = `${rnd(-20, h * 0.7).toFixed(1)}px`;
+            leaf.style.setProperty('--dx', `${Math.round(rnd(200, 380) * reach)}px`);
+            leaf.style.setProperty('--dy', `${Math.round(rnd(90, 190))}px`);
+            leaf.style.animationDuration = `${rnd(2.4, 3.6).toFixed(2)}s`;
+            leaf.style.animationDelay = `${Math.round(rnd(0, 1100))}ms`;
+            leaf.addEventListener('animationend', () => leaf.remove(), { once: true });
+            frag.appendChild(leaf);
+        }
+        layer.appendChild(frag);
+    }
+
+    window.WeatherFX = { rain, sunlight, breeze };
 })();
 
 // Tự động kích hoạt phong cảnh đồng quê khi trang web sẵn sàng

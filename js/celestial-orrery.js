@@ -20,9 +20,15 @@
     const lodestarSeasonPipEl = document.getElementById('lodestar-season-pip');
 
     let currentOrreryDeg = 45; // Starts at 45° (Spring Dew / Mưa Sương Mai)
-    let lastOrreryTickDeg = 45;
     let isDraggingOrrery = false;
     let currentOrrerySeasonKey = 'spring';
+
+    // Direction-zone audio: a zone change plays its track immediately (cutting the previous one);
+    // input inside the same zone is ignored, with a 200ms lockout against stacking (see audio-vfx.js).
+    const ZONE_LOCK_MS = 200;
+    const zoneSound = typeof window.createZoneSoundTrigger === 'function'
+        ? window.createZoneSoundTrigger({ lockMs: ZONE_LOCK_MS, play: (zoneKey, opts) => window.playOrreryZoneTrack(zoneKey, opts) })
+        : { enter: () => 'silent', isLocked: () => false };
 
     const ORRERY_SEASONS = {
         spring: {
@@ -75,7 +81,8 @@
         const {
             smooth = false,
             playSound = true,
-            triggerTransition = false
+            triggerTransition = false,   // explicit gesture (tap / click): may replay the current zone
+            glide = false                // quadrant click: add the harmonic glide chord
         } = options;
 
         const norm = ((deg % 360) + 360) % 360;
@@ -97,19 +104,15 @@
         }
 
         const season = getOrrerySeasonByDeg(norm);
-        const seasonChanged = season.key !== currentOrrerySeasonKey;
+        currentOrrerySeasonKey = season.key;
 
-        if (seasonChanged) {
-            currentOrrerySeasonKey = season.key;
-            if (playSound && typeof window.playOrreryTickSFX === 'function') {
-                window.playOrreryTickSFX(true);
-            }
-        } else if (playSound && Math.abs(norm - lastOrreryTickDeg) >= 15) {
-            lastOrreryTickDeg = norm;
-            if (typeof window.playOrreryTickSFX === 'function') {
-                window.playOrreryTickSFX(false);
-            }
-        }
+        // Audio is decided by the zone state machine only. Rotating inside a zone is silent (the old
+        // per-15° gear ticks and per-pointermove replays were the repeated-trigger bug).
+        const outcome = zoneSound.enter(season.key, {
+            replay: triggerTransition,
+            silent: !playSound,
+            glide
+        });
 
         // Update Quadrant active classes
         const quadrants = document.querySelectorAll('.orrery-quadrant');
@@ -132,8 +135,9 @@
             orreryStatusBadgeEl.style.boxShadow = `0 4px 18px ${season.color}33`;
         }
 
-        // Sub-phase 4.2 real-time climate shift
-        handleOrreryClimateShift(season.key, norm, { userTriggered: triggerTransition });
+        // Sub-phase 4.2 real-time climate shift: visuals follow the same decision as the audio,
+        // so a replay is only honoured when it also passed the lockout.
+        handleOrreryClimateShift(season.key, norm, { userTriggered: outcome === 'replayed', playSound });
     };
 
     // =========================================================================
@@ -141,52 +145,16 @@
     // =========================================================================
     let activeClimateSeason = null;
 
-    const getSeedOrSproutCenter = () => {
-        const seedHint = document.getElementById('seed-hint');
-        if (seedHint) {
-            const rect = seedHint.getBoundingClientRect();
-            return {
-                x: rect.left + rect.width / 2,
-                y: rect.top + rect.height / 2 + 15
-            };
-        }
-        return {
-            x: window.innerWidth / 2,
-            y: Math.min(window.innerHeight * 0.65, window.innerHeight - 150)
-        };
-    };
+    // Single shared implementation lives in atmosphere-shifter.js (loaded earlier)
+    const getSeedOrSproutCenter = () => (
+        typeof window.getSeedOrSproutCenter === 'function'
+            ? window.getSeedOrSproutCenter()
+            : { x: window.innerWidth / 2, y: Math.min(window.innerHeight * 0.65, window.innerHeight - 150) }
+    );
 
     const triggerOrrerySpringDew = () => {
-        const rainLayer = document.getElementById('summer-rain-layer');
-        if (!rainLayer) return;
-
-        const target = getSeedOrSproutCenter();
-        const streakCount = 28;
-        for (let i = 0; i < streakCount; i++) {
-            setTimeout(() => {
-                const streak = document.createElement('div');
-                streak.className = 'summer-rain-streak';
-                const spreadX = (Math.random() - 0.5) * 150;
-                const startX = target.x + spreadX;
-                const startY = target.y - 130 - Math.random() * 30;
-                streak.style.left = `${startX}px`;
-                streak.style.top = `${startY}px`;
-                streak.style.animationDuration = `${0.35 + Math.random() * 0.15}s`;
-                rainLayer.appendChild(streak);
-
-                setTimeout(() => {
-                    const splash = document.createElement('div');
-                    splash.className = 'rain-splash-ripple';
-                    splash.style.left = `${startX + 24}px`;
-                    splash.style.top = `${target.y + 10 + (Math.random() - 0.5) * 15}px`;
-                    rainLayer.appendChild(splash);
-                    setTimeout(() => {
-                        if (splash.parentNode) splash.parentNode.removeChild(splash);
-                    }, 600);
-                    if (streak.parentNode) streak.parentNode.removeChild(streak);
-                }, 400);
-            }, i * 30);
-        }
+        // Shower over the whole viewport; a share of the drops is aimed at the seed
+        if (window.WeatherFX) window.WeatherFX.rain({ target: getSeedOrSproutCenter() });
 
         const miniRainbow = document.getElementById('mini-rainbow-layer');
         if (miniRainbow) {
@@ -213,79 +181,35 @@
             if (focusedRay) focusedRay.classList.remove('active');
         }, 3200);
 
-        if (pollenLayer) {
-            const pollenCount = 22;
-            for (let p = 0; p < pollenCount; p++) {
-                setTimeout(() => {
-                    const pollen = document.createElement('div');
-                    pollen.className = 'golden-pollen-particle';
-                    pollenLayer.appendChild(pollen);
-
-                    const startX = target.x + (Math.random() - 0.5) * 70;
-                    const startY = target.y - 110 + (Math.random() - 0.5) * 35;
-                    const endAngle = Math.random() * Math.PI * 2;
-                    const endRadius = 15 + Math.random() * 45;
-                    const endX = target.x + Math.cos(endAngle) * endRadius;
-                    const endY = target.y + Math.sin(endAngle) * (endRadius * 0.4);
-
-                    pollen.style.left = `${startX}px`;
-                    pollen.style.top = `${startY}px`;
-
-                    const anim = pollen.animate([
-                        { transform: 'scale(0.3) rotate(0deg)', opacity: 0 },
-                        { transform: `translate(${(endX - startX) * 0.5 + (Math.random() - 0.5) * 40}px, ${(endY - startY) * 0.5}px) scale(1.2) rotate(180deg)`, opacity: 1, offset: 0.4 },
-                        { transform: `translate(${endX - startX}px, ${endY - startY}px) scale(0.6) rotate(360deg)`, opacity: 0 }
-                    ], {
-                        duration: 1200 + Math.random() * 400,
-                        easing: 'cubic-bezier(0.16, 1, 0.3, 1)',
-                        fill: 'forwards'
-                    });
-
-                    anim.onfinish = () => {
-                        if (pollen.parentNode) pollen.parentNode.removeChild(pollen);
-                    };
-                }, p * 40);
-            }
-        }
+        // Shafts + pollen across the whole viewport; half of the pollen is drawn into the seed
+        if (window.WeatherFX) window.WeatherFX.sunlight({ target, holdMs: 3200 });
     };
 
+    // Wind-blown leaves across the whole viewport (previously spawned in the left half only)
     const triggerOrreryAutumnBreeze = () => {
-        let autumnLayer = document.getElementById('autumn-breeze-layer');
-        if (!autumnLayer) {
-            autumnLayer = document.createElement('div');
-            autumnLayer.id = 'autumn-breeze-layer';
-            autumnLayer.className = 'autumn-breeze-layer';
-            document.body.appendChild(autumnLayer);
-        }
+        if (window.WeatherFX) window.WeatherFX.breeze();
+    };
 
-        const leafCount = 12;
-        const vW = window.innerWidth;
-        const vH = window.innerHeight;
-
-        for (let i = 0; i < leafCount; i++) {
-            setTimeout(() => {
-                const leaf = document.createElement('div');
-                leaf.className = 'autumn-leaf-particle';
-                const startX = Math.random() * (vW * 0.5);
-                const startY = Math.random() * (vH * 0.6);
-                leaf.style.left = `${startX}px`;
-                leaf.style.top = `${startY}px`;
-                leaf.style.animationDuration = `${2.4 + Math.random() * 1.2}s`;
-                autumnLayer.appendChild(leaf);
-
-                setTimeout(() => {
-                    if (leaf.parentNode) leaf.parentNode.removeChild(leaf);
-                }, 3800);
-            }, i * 90);
-        }
+    // Zone harp plucks are delayed; keep their timers so a quick zone switch cancels the old zone's
+    // pending notes instead of letting them sound over the new track.
+    let harpTimers = [];
+    const cancelHarp = () => { harpTimers.forEach(clearTimeout); harpTimers = []; };
+    const pluckHarp = (notes) => {
+        if (typeof window.pluckHarpStringByIndex !== 'function') return;
+        notes.forEach(([stringIndex, delayMs]) => {
+            harpTimers.push(setTimeout(() => window.pluckHarpStringByIndex(stringIndex), delayMs));
+        });
     };
 
     const handleOrreryClimateShift = (seasonKey, angleDeg, options = {}) => {
-        const { userTriggered = false } = options;
+        const { userTriggered = false, playSound = true } = options;
         const isSeasonChanged = seasonKey !== activeClimateSeason;
 
         if (!isSeasonChanged && !userTriggered) return;
         activeClimateSeason = seasonKey;
+
+        cancelHarp();
+        const pluckHarpIfAudible = playSound ? pluckHarp : () => {};
 
         const isReadable = document.body.classList.contains('readable-font');
 
@@ -306,15 +230,9 @@
         const state = window.gardenState || { currentStage: 0 };
 
         if (seasonKey === 'spring') {
-            if (typeof window.playSummerRainSFX === 'function') {
-                window.playSummerRainSFX();
-            }
             triggerOrrerySpringDew();
 
-            if (typeof window.pluckHarpStringByIndex === 'function') {
-                setTimeout(() => window.pluckHarpStringByIndex(1), 200);
-                setTimeout(() => window.pluckHarpStringByIndex(3), 500);
-            }
+            pluckHarpIfAudible([[1, 200], [3, 500]]);
 
             // Growth stimulation: Water the plant
             if (state.currentStage <= 2 && !state.isWatered) {
@@ -332,15 +250,9 @@
             }
         }
         else if (seasonKey === 'summer') {
-            if (typeof window.playSunbeamSFX === 'function') {
-                window.playSunbeamSFX();
-            }
             triggerOrrerySummerSun();
 
-            if (typeof window.pluckHarpStringByIndex === 'function') {
-                setTimeout(() => window.pluckHarpStringByIndex(2), 200);
-                setTimeout(() => window.pluckHarpStringByIndex(4), 500);
-            }
+            pluckHarpIfAudible([[2, 200], [4, 500]]);
 
             // Growth stimulation: Fertilize & warm with sun
             if (state.currentStage <= 2 && !state.isFertilized) {
@@ -358,15 +270,9 @@
             }
         }
         else if (seasonKey === 'autumn') {
-            if (typeof window.playBreezeSFX === 'function') {
-                window.playBreezeSFX();
-            }
             triggerOrreryAutumnBreeze();
 
-            if (typeof window.pluckHarpStringByIndex === 'function') {
-                setTimeout(() => window.pluckHarpStringByIndex(0), 180);
-                setTimeout(() => window.pluckHarpStringByIndex(2), 480);
-            }
+            pluckHarpIfAudible([[0, 180], [2, 480]]);
 
             if (gardenMsg) {
                 gardenMsg.textContent = "🍃 Vòng xoay Thiên văn Mùa Thu: Gió thu khẽ hát ru ngàn lá biếc...";
@@ -376,14 +282,7 @@
             }
         }
         else if (seasonKey === 'aurora') {
-            if (typeof window.playChimeSFX === 'function') {
-                window.playChimeSFX();
-            }
-
-            if (typeof window.pluckHarpStringByIndex === 'function') {
-                setTimeout(() => window.pluckHarpStringByIndex(3), 180);
-                setTimeout(() => window.pluckHarpStringByIndex(4), 480);
-            }
+            pluckHarpIfAudible([[3, 180], [4, 480]]);
 
             if (gardenMsg) {
                 gardenMsg.textContent = "🌌 Vòng xoay Cực Quang: Bầu trời đêm lung linh vạn vì sao!";
@@ -486,14 +385,16 @@
             if (celestialOrreryEl) celestialOrreryEl.classList.add('is-dragging');
             try { orreryFrameEl.setPointerCapture(e.pointerId); } catch (_) {}
 
+            // A press is a discrete gesture: it may replay the current zone (after the lockout)
             const deg = calcAngleFromPointer(e.clientX, e.clientY);
             setOrreryAngle(deg, { smooth: false, playSound: true, triggerTransition: true });
         };
 
         const onPointerMove = (e) => {
             if (!isDraggingOrrery) return;
+            // Rotation never replays: audio and effects fire only when the pointer enters another zone
             const deg = calcAngleFromPointer(e.clientX, e.clientY);
-            setOrreryAngle(deg, { smooth: false, playSound: true, triggerTransition: true });
+            setOrreryAngle(deg, { smooth: false, playSound: true, triggerTransition: false });
         };
 
         const onPointerUp = (e) => {
@@ -501,7 +402,8 @@
                 isDraggingOrrery = false;
                 if (celestialOrreryEl) celestialOrreryEl.classList.remove('is-dragging');
                 try { orreryFrameEl.releasePointerCapture(e.pointerId); } catch (_) {}
-                if (typeof window.playOrreryTickSFX === 'function') {
+                // "Snap" tick on release, unless a zone sound just started (no stacking)
+                if (!zoneSound.isLocked() && typeof window.playOrreryTickSFX === 'function') {
                     window.playOrreryTickSFX(true);
                 }
             }
@@ -528,13 +430,13 @@
             if (delta !== 0) {
                 e.preventDefault();
                 const newDeg = ((currentOrreryDeg + delta) % 360 + 360) % 360;
-                setOrreryAngle(newDeg, { smooth: true, playSound: true, triggerTransition: true });
+                // Arrow / Home / End rotate the dial: same rule as dragging (zone change only)
+                setOrreryAngle(newDeg, { smooth: true, playSound: true, triggerTransition: false });
             }
         };
 
-        if (orreryPointerArmEl) {
-            orreryPointerArmEl.addEventListener('keydown', onKeyDown);
-        }
+        // One listener on the frame: keydown from the focused needle bubbles up to it. Binding the needle
+        // as well ran the handler twice per press (+30° instead of +15°).
         orreryFrameEl.addEventListener('keydown', onKeyDown);
 
         // Quadrant clicks
@@ -545,10 +447,8 @@
                 const seasonKey = q.dataset.quadrant;
                 const seasonData = ORRERY_SEASONS[seasonKey];
                 if (seasonData) {
-                    if (typeof window.playOrreryGlideSFX === 'function') {
-                        window.playOrreryGlideSFX(seasonKey);
-                    }
-                    setOrreryAngle(seasonData.centerDeg, { smooth: true, playSound: false, triggerTransition: true });
+                    // The glide chord now rides on the zone voice, so it is cut like the track itself
+                    setOrreryAngle(seasonData.centerDeg, { smooth: true, playSound: true, triggerTransition: true, glide: true });
                 }
             };
 
