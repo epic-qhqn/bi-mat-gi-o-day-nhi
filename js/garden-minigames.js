@@ -84,18 +84,18 @@
         }
 
         const celestialArcSlots = [
-            { minL: 28, maxL: 37, minT: 28, maxT: 40 },
-            { minL: 39, maxL: 48, minT: 20, maxT: 29 },
-            { minL: 52, maxL: 61, minT: 20, maxT: 29 },
-            { minL: 63, maxL: 72, minT: 28, maxT: 40 }
+            { l: 23, t: 35 },
+            { l: 38, t: 22 },
+            { l: 62, t: 22 },
+            { l: 77, t: 35 }
         ];
 
         const noteIcons = ['🌸', '🎵', '✨', '🎶'];
         const noteColors = ['#fbb6ce', '#90cdf4', '#fbd38d', '#bbf7d0'];
 
         celestialArcSlots.forEach((slot, idx) => {
-            const l = slot.minL + Math.random() * (slot.maxL - slot.minL);
-            const t = slot.minT + Math.random() * (slot.maxT - slot.minT);
+            const l = slot.l + (Math.random() * 2 - 1);
+            const t = slot.t + (Math.random() * 2 - 1);
 
             const node = document.createElement('div');
             node.className = 'simon-node';

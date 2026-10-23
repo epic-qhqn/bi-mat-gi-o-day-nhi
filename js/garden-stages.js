@@ -207,6 +207,8 @@
         if (typeof window.playKeyTapSFX !== 'undefined') window.playKeyTapSFX();
 
         cleanupStage('all');
+        document.body.classList.remove('stage-1-active', 'stage-2-active', 'stage-3-active', 'stage-4-active');
+        document.body.classList.add('stage-' + stageNum + '-active');
         if (typeof window.notifyStageHint === 'function') {
             window.notifyStageHint(stageNum);
         }

@@ -228,7 +228,7 @@
                     message: 'Lắng nghe chuông hoa và chạm lại các phím theo đúng thứ tự giai điệu vừa nghe 🎵',
                     icon: '🎵',
                     targetSelector: firstNode ? '.simon-node' : '#simon-game',
-                    pointerDirection: 'bottom',
+                    pointerDirection: 'top',
                     pointerText: 'Chạm chuông hoa'
                 };
             }

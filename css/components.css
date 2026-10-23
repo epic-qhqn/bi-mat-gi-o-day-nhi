@@ -3570,8 +3570,8 @@ body.sky-night .wax-seal-guide-tip {
    ========================================================================== */
 .celestial-weather-orrery {
   position: fixed;
-  top: calc(18px + var(--sat, 12px));
-  right: 28px;
+  top: calc(16px + var(--sat, 10px));
+  right: calc(20px + var(--sar, 10px));
   z-index: 1005;
   display: flex;
   flex-direction: column;
@@ -4662,7 +4662,7 @@ body.sky-night .terrarium-gesture-hint {
    ========================================================================== */
 .plant-harp-strings-wrap {
   position: absolute;
-  left: 885px;
+  left: 830px;
   top: 480px;
   transform: translate(-50%, -50%);
   width: 180px;
@@ -5178,12 +5178,12 @@ body.sky-night .found-letter-slot.filled {
    ========================================================================== */
 .mascot-companion-wrap {
   position: fixed;
-  bottom: calc(20px + var(--sab, 0px));
-  right: clamp(16px, 4vw, 55px);
-  width: clamp(110px, 16vw, 190px);
-  max-width: min(190px, calc(100vw - 32px));
+  bottom: calc(66px + var(--sab, 0px));
+  right: calc(18px + var(--sar, 0px));
+  width: clamp(96px, 13vw, 145px);
+  max-width: min(150px, calc(100vw - 32px));
   aspect-ratio: 367 / 466;
-  z-index: 1000;
+  z-index: 2000;
   cursor: pointer;
   user-select: none;
   touch-action: manipulation;
@@ -5200,17 +5200,17 @@ body.sky-night .found-letter-slot.filled {
 
 @media (max-width: 768px) {
   .mascot-companion-wrap {
-    bottom: calc(15px + var(--sab, 10px));
-    right: calc(14px + var(--sar, 0px));
-    width: clamp(90px, 22vw, 130px);
+    bottom: calc(56px + var(--sab, 8px));
+    right: calc(12px + var(--sar, 0px));
+    width: clamp(80px, 18vw, 110px);
   }
 }
 
 @media (max-height: 540px) and (orientation: landscape) {
   .mascot-companion-wrap {
-    bottom: calc(8px + var(--sab, 0px));
+    bottom: calc(48px + var(--sab, 0px));
     right: calc(12px + var(--sar, 0px));
-    width: clamp(68px, 11vw, 92px);
+    width: clamp(64px, 10vw, 86px);
   }
 }
 
@@ -7274,8 +7274,8 @@ body.sky-night .found-letter-slot.filled {
 
 .guide-button-container {
   position: fixed;
-  top: calc(20px + var(--sat, 12px));
-  left: calc(22px + var(--sal, 12px));
+  top: calc(16px + var(--sat, 10px));
+  left: calc(20px + var(--sal, 10px));
   z-index: 100005;
   display: flex;
   flex-direction: column;
@@ -7898,7 +7898,7 @@ body.sky-night .hint-bubble-text {
 
 .realtime-guide-hud {
   position: fixed;
-  top: calc(18px + var(--sat, 12px));
+  top: calc(16px + var(--sat, 10px));
   left: 50%;
   transform: translateX(-50%);
   z-index: 100006;

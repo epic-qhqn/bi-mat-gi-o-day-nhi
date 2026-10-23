@@ -1018,6 +1018,8 @@
             document.querySelectorAll('.awakening-light-seed, .ground-seed-ripple, .vfx-flower-petal').forEach(p => p.remove());
         }, 500);
 
+        document.body.classList.remove('stage-1-active', 'stage-2-active', 'stage-3-active', 'stage-4-active');
+        document.body.classList.add('stage-1-active');
         const gardenUI = document.getElementById('garden-ui');
         if (gardenUI) gardenUI.style.opacity = '1';
         const livingHud = document.getElementById('living-atmosphere-hud');
