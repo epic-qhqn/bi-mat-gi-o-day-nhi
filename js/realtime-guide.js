@@ -283,22 +283,20 @@
                     stepTag: 'GIAI ĐOẠN 2',
                     message: 'Lắng nghe khúc hòa âm chuông hoa và ghi nhớ các nốt nhạc ngân vang... 🎧🎶',
                     icon: '🎧',
-                    targetSelector: '#simon-game',
+                    targetSelector: null, // Không hiển thị ô vuông spotlight theo yêu cầu
                     pointerDirection: 'top',
-                    pointerText: 'Lắng nghe giai điệu'
+                    pointerText: ''
                 };
             }
 
-            const simonContainer = document.getElementById('simon-game');
-            const targetNode = simonContainer ? simonContainer.querySelector('.simon-node') : null;
             return {
                 key: 'stage-2-simon-playing',
                 stepTag: 'GIAI ĐOẠN 2',
                 message: 'Đến lượt bạn! Chạm vào các phím chuông hoa theo đúng giai điệu vừa nghe 🎵',
                 icon: '🎵',
-                targetSelector: targetNode || '#simon-game',
+                targetSelector: null, // Không hiển thị ô vuông spotlight theo yêu cầu
                 pointerDirection: 'top',
-                pointerText: 'Chạm chuông hoa'
+                pointerText: ''
             };
         }
 
