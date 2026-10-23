@@ -348,17 +348,21 @@
 
         pointerBadgeEl.textContent = pointerText;
 
-        // Position pointer hand relative to target box
+        // Position pointer hand relative to target box (hand points directly AT the target)
         pointerHandEl.className = `realtime-pointer-hand dir-${pointerDir}`;
         const handGlyph = pointerHandEl.querySelector('.pointer-hand-glyph');
 
         if (pointerDir === 'top') {
-            if (handGlyph) handGlyph.textContent = '👆';
-        } else if (pointerDir === 'bottom') {
+            // Container is ABOVE target -> hand points DOWN towards target
             if (handGlyph) handGlyph.textContent = '👇';
+        } else if (pointerDir === 'bottom') {
+            // Container is BELOW target -> hand points UP towards target
+            if (handGlyph) handGlyph.textContent = '👆';
         } else if (pointerDir === 'left') {
+            // Container is LEFT of target -> hand points RIGHT towards target
             if (handGlyph) handGlyph.textContent = '👉';
         } else {
+            // Container is RIGHT of target -> hand points LEFT towards target
             if (handGlyph) handGlyph.textContent = '👈';
         }
     };

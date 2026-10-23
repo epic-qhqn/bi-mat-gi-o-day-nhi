@@ -8124,7 +8124,7 @@ body.sky-night .realtime-guide-msg {
   left: 50%;
   transform: translateX(-50%);
   flex-direction: column;
-  animation: hand-bounce-down 1.2s ease-in-out infinite;
+  animation: hand-bounce-towards-up 1.2s ease-in-out infinite;
 }
 
 .realtime-pointer-hand.dir-top {
@@ -8132,7 +8132,7 @@ body.sky-night .realtime-guide-msg {
   left: 50%;
   transform: translateX(-50%);
   flex-direction: column-reverse;
-  animation: hand-bounce-up 1.2s ease-in-out infinite;
+  animation: hand-bounce-towards-down 1.2s ease-in-out infinite;
 }
 
 .realtime-pointer-hand.dir-left {
@@ -8140,7 +8140,7 @@ body.sky-night .realtime-guide-msg {
   right: calc(100% + 8px);
   transform: translateY(-50%);
   flex-direction: row-reverse;
-  animation: hand-bounce-left 1.2s ease-in-out infinite;
+  animation: hand-bounce-towards-right 1.2s ease-in-out infinite;
 }
 
 .realtime-pointer-hand.dir-right {
@@ -8148,27 +8148,27 @@ body.sky-night .realtime-guide-msg {
   left: calc(100% + 8px);
   transform: translateY(-50%);
   flex-direction: row;
-  animation: hand-bounce-right 1.2s ease-in-out infinite;
+  animation: hand-bounce-towards-left 1.2s ease-in-out infinite;
 }
 
-@keyframes hand-bounce-down {
+@keyframes hand-bounce-towards-up {
   0%, 100% { transform: translate(-50%, 0); }
-  50% { transform: translate(-50%, 6px); }
+  50% { transform: translate(-50%, -7px); }
 }
 
-@keyframes hand-bounce-up {
+@keyframes hand-bounce-towards-down {
   0%, 100% { transform: translate(-50%, 0); }
-  50% { transform: translate(-50%, -6px); }
+  50% { transform: translate(-50%, 7px); }
 }
 
-@keyframes hand-bounce-left {
+@keyframes hand-bounce-towards-right {
   0%, 100% { transform: translate(0, -50%); }
-  50% { transform: translate(-6px, -50%); }
+  50% { transform: translate(7px, -50%); }
 }
 
-@keyframes hand-bounce-right {
+@keyframes hand-bounce-towards-left {
   0%, 100% { transform: translate(0, -50%); }
-  50% { transform: translate(6px, -50%); }
+  50% { transform: translate(-7px, -50%); }
 }
 
 .pointer-hand-glyph {
