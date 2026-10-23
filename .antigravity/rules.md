@@ -92,7 +92,8 @@
 1. **Validation Standards**:
    - Every JS file must pass syntax validation: `node -c <file.js>`.
    - Every CSS file must maintain strictly balanced braces (`{}` count matches).
-2. **Concurrent Git Protocol**:
-   - Always run `git fetch origin` before starting work to integrate remote team changes.
-   - Develop features in isolated topic branches, verify zero merge conflicts, and push cleanly.
+2. **Team Concurrent Git & Auto-Sync Protocol (Strict Invariant)**:
+   - **Start of Every Turn**: Execute `git fetch --all --prune`. Check for any new commits from teammates across all branches. Harmonize/rebase/merge cleanly before making edits. If working on a parallel feature, create or use dedicated feature branch to eliminate risk of conflict.
+   - **End of Every Turn**: Re-check remote (`git fetch`), verify zero conflict markers, commit and push stable code.
+   - **Silent & Token-Efficient**: Execute all git synchronization routines silently in the background without verbose explanations. Focus output strictly on user deliverables.
    - Never track ephemeral reference assets (e.g., `20-10.html` must remain gitignored).
