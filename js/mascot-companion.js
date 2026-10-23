@@ -27,6 +27,7 @@
         "Mỗi người con gái đều là một đóa hoa thơm ngát của quê hương! 🌺✨",
         "Tháng Mười hoa cúc vàng ươm, gửi trao cô gái ngát hương dịu dàng! 🌼🌾",
         "Bình yên là khi ngắm nhìn mầm cây lớn lên từng ngày cùng bạn! 🌿🕊️",
+        "Chưa rõ phải làm gì ư? Chạm vào nút '📖 Hướng Dẫn' góc trên tớ chỉ cho nha! 💡✨",
         "Tớ luôn ở đây cùng bạn ngân nga câu hát đồng dao! (≗ω≗) ♡"
     ];
 

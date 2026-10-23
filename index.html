@@ -20,6 +20,20 @@
 
 <body class="sky-day">
     
+    <!-- Floating Experience Guide Pill Button & Quick Hint Bubble (Top-Left Zone) -->
+    <div id="guide-button-container" class="guide-button-container">
+        <button id="guide-toggle-btn" class="guide-toggle-btn" title="Mở cẩm nang hướng dẫn trải nghiệm khu vườn" aria-label="Hướng dẫn trải nghiệm">
+            <span class="guide-btn-icon">📖</span>
+            <span class="guide-btn-text">Hướng Dẫn</span>
+            <span class="guide-btn-sparkle">✨</span>
+        </button>
+        <div id="guide-quick-hint-bubble" class="guide-quick-hint-bubble hidden" role="tooltip" title="Bấm để xem cẩm nang hướng dẫn chi tiết">
+            <span class="hint-bubble-arrow"></span>
+            <span class="hint-bubble-icon">💡</span>
+            <span id="guide-quick-hint-text" class="hint-bubble-text">Chưa rõ phải làm gì? Bấm vào đây để xem cẩm nang nhé! ✨</span>
+        </div>
+    </div>
+
     <!-- Orientation Hint -->
     <div id="orientation-hint-overlay" class="modal-overlay hidden">
         <div class="orientation-hint">
@@ -536,6 +550,11 @@
                 <button class="stage-btn active" data-stage="4" role="tab" aria-selected="true" title="Trạng thái hoa nở hoàn mỹ">
                     <span class="stage-btn-icon">🌸</span>
                     <span class="stage-btn-text">Hoa Nở</span>
+                </button>
+            </div>
+            <div class="stage-selector-footer">
+                <button type="button" class="stage-guide-link-btn" id="stage-guide-link-btn" title="Xem cẩm nang hướng dẫn chi tiết">
+                    <span>📖 Cẩm nang hướng dẫn</span>
                 </button>
             </div>
         </div>
@@ -1297,6 +1316,229 @@
         </div>
     </div>
 
+    <!-- Modal: Cẩm Nang Khám Phá Khu Vườn Bí Mật (Experience Guide & Journey Walkthrough) -->
+    <div id="experience-guide-modal" class="modal-overlay hidden" style="z-index: 100004;">
+        <div class="guide-dialog lyrical-panel">
+            <button id="guide-close-btn" class="guide-close-btn" aria-label="Đóng cẩm nang hướng dẫn" title="Đóng cẩm nang">✕</button>
+            
+            <!-- Ribbon & Botanical Header -->
+            <div class="guide-header">
+                <div class="guide-sprig-wrap">
+                    <svg class="guide-botanical-branch" viewBox="0 0 120 30" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M10 25 C 40 18, 70 12, 110 5" stroke="#7A8B7B" stroke-width="1.8" stroke-linecap="round"/>
+                        <circle cx="35" cy="20" r="3" fill="#D47A88" opacity="0.9"/>
+                        <circle cx="65" cy="14" r="3" fill="#E0838A" opacity="0.9"/>
+                        <circle cx="95" cy="8" r="3" fill="#F3C5C9" opacity="0.9"/>
+                    </svg>
+                </div>
+                <div class="guide-badge">🌸 CẨM NANG KHÁM PHÁ · 20/10 🌸</div>
+                <h2 class="guide-title">HÀNH TRÌNH ĐÁNH THỨC VƯỜN HOA BÍ MẬT</h2>
+                <p class="guide-subtitle">Hướng dẫn chi tiết từng bước trải nghiệm và những điều kỳ diệu đang chờ đón bạn ✨</p>
+            </div>
+
+            <!-- Tab Navigation Bar -->
+            <div class="guide-tabs-bar" role="tablist">
+                <button class="guide-tab-btn active" data-tab="steps" role="tab" aria-selected="true">
+                    <span class="tab-icon">🗺️</span>
+                    <span class="tab-text">5 Chặng Hành Trình</span>
+                </button>
+                <button class="guide-tab-btn" data-tab="secrets" role="tab" aria-selected="false">
+                    <span class="tab-icon">✨</span>
+                    <span class="tab-text">Bí Mật Kỳ Diệu</span>
+                </button>
+                <button class="guide-tab-btn" data-tab="tips" role="tab" aria-selected="false">
+                    <span class="tab-icon">💡</span>
+                    <span class="tab-text">Mẹo Trải Nghiệm</span>
+                </button>
+            </div>
+
+            <!-- Tab Content Container -->
+            <div class="guide-body-scroll">
+                <!-- PANE 1: 5 CHẶNG HÀNH TRÌNH -->
+                <div id="guide-pane-steps" class="guide-tab-pane active" role="tabpanel">
+                    <div class="guide-steps-list">
+                        <!-- Chặng 0: Khắc Dấu Mở Cổng -->
+                        <div class="guide-step-card step-0">
+                            <div class="step-card-badge">
+                                <span class="badge-num">0</span>
+                                <span class="badge-tag">Khởi Đầu</span>
+                            </div>
+                            <div class="step-card-content">
+                                <h3 class="step-card-title">Khắc Dấu Mở Cổng Bí Mật 💮</h3>
+                                <p class="step-card-desc">Tự tay đúc con dấu sáp thủ công theo phong cách quý tộc cổ điển:</p>
+                                <ul class="step-instructions">
+                                    <li><strong>1. Ghi tên:</strong> Nhập tên nàng thơ lên khuôn dập đồng.</li>
+                                    <li><strong>2. Phối sáp:</strong> Chọn 3 hạt sáp yêu thích (hoặc bấm <em>"Phối màu nhanh ✨"</em>) và chọn hoa văn triện.</li>
+                                    <li><strong>3. Đun sáp:</strong> Chạm quẹt diêm để thắp nến thơm, đun thìa đồng cho sáp tan chảy.</li>
+                                    <li><strong>4. Đóng dấu:</strong> Chạm thìa rót sáp lên phong thư, rắc vàng lá 24K rồi dập con dấu đồng để mở cổng hoa!</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <!-- Chặng 1: Mầm Sinh & Mưa Nắng -->
+                        <div class="guide-step-card step-1">
+                            <div class="step-card-badge">
+                                <span class="badge-num">1</span>
+                                <span class="badge-tag">Mầm Sinh</span>
+                            </div>
+                            <div class="step-card-content">
+                                <div class="step-title-row">
+                                    <h3 class="step-card-title">Mầm Sinh & Thời Tiết Đồng Nội 🌱</h3>
+                                    <button type="button" class="guide-step-jump-btn" data-jump-stage="1" title="Chuyển tới Chặng 1">Chơi chặng này ↗</button>
+                                </div>
+                                <p class="step-card-desc">Nuôi dưỡng mầm cây tình yêu với khí hậu đất trời:</p>
+                                <ul class="step-instructions">
+                                    <li><strong>Tưới nước sương mai:</strong> Chạm hoặc kéo biểu tượng <strong>Mây Mưa Sương Sớm</strong> 🌧️ để tưới mát mầm non.</li>
+                                    <li><strong>Sưởi nắng ban mai:</strong> Chạm hoặc kéo biểu tượng <strong>Nắng Vàng Ban Mai</strong> ☀️ để mang hơi ấm đất mẹ đến chồi non.</li>
+                                    <li><strong>Cỏ 4 lá may mắn:</strong> Chạm vào nhánh <strong>Cỏ bốn lá 🍀</strong> xuất hiện bên mầm cây để nhận lời chúc bình an!</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <!-- Chặng 2: Khúc Ca Đồng Dao -->
+                        <div class="guide-step-card step-2">
+                            <div class="step-card-badge">
+                                <span class="badge-num">2</span>
+                                <span class="badge-tag">Vươn Cành</span>
+                            </div>
+                            <div class="step-card-content">
+                                <div class="step-title-row">
+                                    <h3 class="step-card-title">Khúc Hòa Âm Đồng Dao 🎵</h3>
+                                    <button type="button" class="guide-step-jump-btn" data-jump-stage="2" title="Chuyển tới Chặng 2">Chơi chặng này ↗</button>
+                                </div>
+                                <p class="step-card-desc">Giai điệu âm nhạc tiếp thêm sức sống cho cây vươn cành:</p>
+                                <ul class="step-instructions">
+                                    <li><strong>Lắng nghe chuông hoa:</strong> Quan sát và lắng nghe các chuông hoa phát sáng theo một giai điệu ma thuật.</li>
+                                    <li><strong>Gõ lại giai điệu:</strong> Chạm lại đúng các phím hoa theo thứ tự vừa nghe.</li>
+                                    <li><strong>Mẹo nhỏ:</strong> Nếu quên, bạn có thể bấm nút <em>"♫ Nghe lại giai điệu"</em> bất cứ lúc nào!</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <!-- Chặng 3: Chòm Sao Định Mệnh -->
+                        <div class="guide-step-card step-3">
+                            <div class="step-card-badge">
+                                <span class="badge-num">3</span>
+                                <span class="badge-tag">Đơm Nụ</span>
+                            </div>
+                            <div class="step-card-content">
+                                <div class="step-title-row">
+                                    <h3 class="step-card-title">Chòm Sao Định Mệnh Astra Nova ✨</h3>
+                                    <button type="button" class="guide-step-jump-btn" data-jump-stage="3" title="Chuyển tới Chặng 3">Chơi chặng này ↗</button>
+                                </div>
+                                <p class="step-card-desc">Thắp sáng bầu trời đêm bằng chòm sao trái tim:</p>
+                                <ul class="step-instructions">
+                                    <li><strong>Nối sao:</strong> Chạm lần lượt vào 5 ngôi sao rực rỡ từ số 1 đến số 5 để vẽ nên dải ngân hà.</li>
+                                    <li><strong>Cẩn thận sao ảo:</strong> Trên trời có các ngôi sao nhấp nháy nghi binh, hãy nhìn kỹ các vì sao có vầng hào quang vàng son nhé!</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <!-- Chặng 4: Hoa Nở Hoàn Mỹ & Quà Tặng 20/10 -->
+                        <div class="guide-step-card step-4">
+                            <div class="step-card-badge">
+                                <span class="badge-num">4</span>
+                                <span class="badge-tag">Hoa Nở</span>
+                            </div>
+                            <div class="step-card-content">
+                                <div class="step-title-row">
+                                    <h3 class="step-card-title">Hoa Nở Hoàn Mỹ & Đón Nhận Quà Tặng 🌸</h3>
+                                    <button type="button" class="guide-step-jump-btn" data-jump-stage="4" title="Chuyển tới Chặng 4">Chơi chặng này ↗</button>
+                                </div>
+                                <p class="step-card-desc">Cây tình yêu bung nở hàng ngàn đóa hoa trái tim rực rỡ bên bóng dáng thiếu nữ Áo Dài nón lá. Hãy tận hưởng những món quà 20/10 đặc biệt:</p>
+                                <ul class="step-instructions">
+                                    <li><strong>Bóng dáng Áo Dài:</strong> Chạm vào hình cô gái bên gốc cây để đọc bài thơ 20/10 ngọt ngào.</li>
+                                    <li><strong>Thư Bí Mật 💌:</strong> Bấm nút góc dưới bên trái để mở phong thư Polaroid 3D đong đầy tình cảm.</li>
+                                    <li><strong>Bưu Thiếp Kỷ Niệm 9:16:</strong> Bấm nút góc dưới bên phải để tạo thiệp hoa cá nhân hóa và tải về máy!</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- PANE 2: BÍ MẬT KỲ DIỆU -->
+                <div id="guide-pane-secrets" class="guide-tab-pane hidden" role="tabpanel">
+                    <div class="guide-features-grid">
+                        <div class="guide-feature-box">
+                            <span class="feature-icon">💌</span>
+                            <h4>Thư Polaroid Bí Mật 20/10</h4>
+                            <p>Nằm ở góc dưới bên trái. Chạm để lật thiệp, đọc lời chúc yêu thương và bấm <em>"Đổi lời chúc khác 🎲"</em> để khám phá nhiều bức thư khác nhau.</p>
+                        </div>
+                        <div class="guide-feature-box">
+                            <span class="feature-icon">🪷</span>
+                            <h4>Bưu Thiếp Kỷ Niệm Story 9:16</h4>
+                            <p>Nằm ở góc dưới bên phải. Mở niêm phong thư, xem loài hoa tâm hồn của nàng, chèn ảnh selfie vào nhụy hoa và tải ảnh Story 9:16 siêu nét về lưu niệm.</p>
+                        </div>
+                        <div class="guide-feature-box">
+                            <span class="feature-icon">🎶</span>
+                            <h4>Mộc Cầm Thảo Mộc Ngân Vang</h4>
+                            <p>Ở góc phải khu vườn có 5 dây đàn thảo mộc: <strong>Đô - Rê - Mi - Sol - La</strong>. Hãy chạm hoặc vuốt lướt tay qua các dây đàn để tấu lên khúc nhạc bình yên!</p>
+                        </div>
+                        <div class="guide-feature-box">
+                            <span class="feature-icon">🧭</span>
+                            <h4>Bánh Xe Thiên Văn 360°</h4>
+                            <p>Chạm vào vì sao phương bắc ở góc trên bên phải để mở la bàn thiên văn. Xoay kim 360° để ngắm khu vườn qua 4 mùa: Mưa Xuân, Nắng Hạ, Gió Thu, Cực Quang.</p>
+                        </div>
+                        <div class="guide-feature-box">
+                            <span class="feature-icon">🌾</span>
+                            <h4>Chú Bé Đồng Dao (Mascot Robot)</h4>
+                            <p>Chú bé đội nón lá đứng ở góc vườn luôn sẵn sàng trò chuyện cùng bạn! Chạm vào chú bé để nghe những lời chúc dễ thương và mộc mạc.</p>
+                        </div>
+                        <div class="guide-feature-box">
+                            <span class="feature-icon">🪄</span>
+                            <h4>Cảm Ứng Terrarium Tinh Tế</h4>
+                            <p>Gõ đúp 2 lần lên màn hình để ngưng tụ giọt sương mai rớt xuống, hoặc vuốt nhẹ vùng gốc cây để truyền hơi ấm cho đất mẹ.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- PANE 3: MẸO TRẢI NGHIỆM -->
+                <div id="guide-pane-tips" class="guide-tab-pane hidden" role="tabpanel">
+                    <div class="guide-tips-stack">
+                        <div class="guide-tip-item">
+                            <span class="tip-glyph">📱</span>
+                            <div class="tip-text">
+                                <strong>Xoay ngang màn hình điện thoại:</strong>
+                                <p>Nếu đang dùng điện thoại di động, bạn hãy xoay ngang thiết bị để tận hưởng góc nhìn toàn cảnh Cinematic trọn vẹn và thoáng đãng nhất.</p>
+                            </div>
+                        </div>
+                        <div class="guide-tip-item">
+                            <span class="tip-glyph">🎧</span>
+                            <div class="tip-text">
+                                <strong>Đeo tai nghe / Bật âm lượng:</strong>
+                                <p>Trải nghiệm được thiết kế hệ thống âm thanh ASMR đa chiều: tiếng nến lách tách, tiếng sáp rót, tiếng chuông gió và tiếng đàn mộc cầm thư thái.</p>
+                            </div>
+                        </div>
+                        <div class="guide-tip-item">
+                            <span class="tip-glyph">↺</span>
+                            <div class="tip-text">
+                                <strong>Thanh điều hướng "Lộ Trình" (Góc dưới bên trái):</strong>
+                                <p>Bạn muốn chơi lại khúc đàn Simon, ngắm lại chòm sao hay quay lại xem chồi non? Bấm nút <strong>"↺ Lộ Trình"</strong> để thoải mái chuyển đổi bất kỳ giai đoạn nào!</p>
+                            </div>
+                        </div>
+                        <div class="guide-tip-item">
+                            <span class="tip-glyph">Aa</span>
+                            <div class="tip-text">
+                                <strong>Chuyển đổi phông chữ dễ đọc:</strong>
+                                <p>Tại khung thơ và thư bí mật, bạn có thể bấm nút <strong>"Aa"</strong> bất cứ lúc nào để đổi giữa chữ viết tay nghệ thuật và phông chữ rõ ràng dễ đọc.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Footer Action Bar -->
+            <div class="guide-footer">
+                <button type="button" id="guide-acknowledge-btn" class="guide-acknowledge-btn">
+                    <span>Khám Phá Khu Vườn Ngay ✨</span>
+                </button>
+                <div class="guide-footer-note">
+                    <span>💡 Bạn có thể mở lại cẩm nang bất kỳ lúc nào bằng nút <strong>"📖 Hướng Dẫn"</strong> ở góc trên bên trái.</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- 100% Static Modular JavaScript Engine -->
     <script src="./js/content.js"></script>
     <script src="./js/audio-vfx.js"></script>
@@ -1308,6 +1550,7 @@
     <script src="./js/celestial-orrery.js"></script>
     <script src="./js/garden-minigames.js"></script>
     <script src="./js/garden-stages.js"></script>
+    <script src="./js/experience-guide.js"></script>
     <script src="./js/secret-letter.js"></script>
     <script src="./js/boarding-pass-modal.js"></script>
     <script src="./js/boarding-pass-canvas.js"></script>

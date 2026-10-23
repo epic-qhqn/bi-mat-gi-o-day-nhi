@@ -207,6 +207,9 @@
         if (typeof window.playKeyTapSFX !== 'undefined') window.playKeyTapSFX();
 
         cleanupStage('all');
+        if (typeof window.notifyStageHint === 'function') {
+            window.notifyStageHint(stageNum);
+        }
 
         const steps = document.querySelectorAll('.growth-progress .step');
         const gardenUI = document.getElementById('garden-ui');
@@ -451,6 +454,17 @@
             }
         });
 
+        const guideLinkBtn = document.getElementById('stage-guide-link-btn');
+        if (guideLinkBtn) {
+            guideLinkBtn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                closePopover();
+                if (typeof window.openExperienceGuide === 'function') {
+                    window.openExperienceGuide('steps');
+                }
+            });
+        }
+
         selector.querySelectorAll('.stage-btn').forEach(btn => {
             const onBtnClick = (e) => {
                 e.preventDefault();
@@ -475,6 +489,9 @@
         syncGrowthProgressVisual(completedStage + 1);
         window.gardenState.currentStage++;
         syncGardenStageSelector(window.gardenState.currentStage === 3 ? 4 : (window.gardenState.currentStage + 1));
+        if (typeof window.notifyStageHint === 'function') {
+            window.notifyStageHint(window.gardenState.currentStage);
+        }
 
         // Sub-phase 4.3: Auto-minimize Orrery into sparkling lodestar upon stage completion
         if (completedStage === 0 || window.gardenState.currentStage >= 1) {
