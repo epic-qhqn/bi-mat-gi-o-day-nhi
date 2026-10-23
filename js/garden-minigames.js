@@ -62,6 +62,13 @@
         container.classList.remove('hidden');
         container.innerHTML = '';
 
+        document.body.classList.remove('stage-1-active', 'stage-3-active', 'stage-4-active');
+        document.body.classList.add('stage-2-active');
+        const hintEl = document.getElementById('terrarium-gesture-hint');
+        if (hintEl) hintEl.style.display = 'none';
+        const instructionEl = document.querySelector('.garden-ui .instruction');
+        if (instructionEl) instructionEl.style.display = 'none';
+
         const replayBtn = document.getElementById('simon-replay-btn');
         if (replayBtn) {
             replayBtn.classList.remove('hidden');
@@ -84,10 +91,10 @@
         }
 
         const celestialArcSlots = [
-            { l: 23, t: 35 },
-            { l: 38, t: 22 },
-            { l: 62, t: 22 },
-            { l: 77, t: 35 }
+            { l: 20, t: 34 },
+            { l: 33, t: 48 },
+            { l: 67, t: 48 },
+            { l: 80, t: 34 }
         ];
 
         const noteIcons = ['🌸', '🎵', '✨', '🎶'];
@@ -265,6 +272,8 @@
         const isSafeDistance = (cx, cy, existingList) => {
             // Avoid tree canopy top center if cy is in crown zone
             if (cy > 235 && cx > 480 && cx < 620) return false;
+            // Avoid center header zone under garden UI ribbon
+            if (cy < 135 && cx > 370 && cx < 730) return false;
 
             for (let i = 0; i < existingList.length; i++) {
                 const p = existingList[i];
@@ -811,6 +820,13 @@
         container.style.display = 'block';
         container.style.opacity = '1';
         container.style.pointerEvents = 'auto';
+
+        document.body.classList.remove('stage-1-active', 'stage-2-active', 'stage-4-active');
+        document.body.classList.add('stage-3-active');
+        const hintEl = document.getElementById('terrarium-gesture-hint');
+        if (hintEl) hintEl.style.display = 'none';
+        const instructionEl = document.querySelector('.garden-ui .instruction');
+        if (instructionEl) instructionEl.style.display = 'none';
 
         constellationInput = [];
         isDraggingConstellation = false;

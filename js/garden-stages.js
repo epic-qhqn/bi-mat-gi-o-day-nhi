@@ -233,6 +233,10 @@
             window.gardenState.isFertilized = false;
 
             if (gardenUI) gardenUI.classList.remove('hidden');
+            const hintEl = document.getElementById('terrarium-gesture-hint');
+            if (hintEl) hintEl.style.display = '';
+            const instructionEl = document.querySelector('.garden-ui .instruction');
+            if (instructionEl) instructionEl.style.display = '';
             const celestialOrrery = document.getElementById('celestial-weather-orrery');
             if (celestialOrrery) {
                 celestialOrrery.classList.remove('hidden', 'orrery-minimized');
@@ -490,7 +494,10 @@
         cleanupStage(completedStage);
         syncGrowthProgressVisual(completedStage + 1);
         window.gardenState.currentStage++;
-        syncGardenStageSelector(window.gardenState.currentStage === 3 ? 4 : (window.gardenState.currentStage + 1));
+        const activeStageNum = window.gardenState.currentStage === 3 ? 4 : (window.gardenState.currentStage + 1);
+        document.body.classList.remove('stage-1-active', 'stage-2-active', 'stage-3-active', 'stage-4-active');
+        document.body.classList.add('stage-' + activeStageNum + '-active');
+        syncGardenStageSelector(activeStageNum);
         if (typeof window.notifyStageHint === 'function') {
             window.notifyStageHint(window.gardenState.currentStage);
         }
