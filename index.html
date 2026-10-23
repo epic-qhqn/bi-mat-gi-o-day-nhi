@@ -34,6 +34,36 @@
         </div>
     </div>
 
+    <!-- Real-Time Interactive Guidance HUD & Dynamic Mission Bar -->
+    <div id="realtime-guide-hud" class="realtime-guide-hud" role="status" aria-live="polite">
+        <div class="realtime-guide-pill">
+            <div class="realtime-guide-pulse-ring"></div>
+            <span class="realtime-guide-icon" id="realtime-guide-icon">💡</span>
+            <div class="realtime-guide-text-group">
+                <span class="realtime-guide-step-tag" id="realtime-guide-step-tag">NHIỆM VỤ</span>
+                <span class="realtime-guide-msg" id="realtime-guide-msg">Đang khởi tạo chỉ dẫn thời gian thực...</span>
+            </div>
+            <button type="button" class="realtime-guide-toggle-btn" id="realtime-guide-toggle-btn" title="Ẩn/Hiện chỉ dẫn thời gian thực" aria-label="Ẩn hiện chỉ dẫn">
+                <span class="toggle-eye-icon" id="realtime-toggle-icon">👁️</span>
+            </button>
+        </div>
+    </div>
+
+    <!-- Real-Time Dynamic Spotlight & Pointer Overlay -->
+    <div id="realtime-spotlight-overlay" class="realtime-spotlight-overlay" aria-hidden="true">
+        <div class="realtime-target-box" id="realtime-target-box">
+            <div class="realtime-target-glow"></div>
+            <div class="realtime-target-corners">
+                <span class="c-tl"></span><span class="c-tr"></span>
+                <span class="c-bl"></span><span class="c-br"></span>
+            </div>
+            <div class="realtime-pointer-hand" id="realtime-pointer-hand">
+                <span class="pointer-hand-glyph">👇</span>
+                <span class="pointer-action-badge" id="realtime-pointer-badge">Chạm vào đây</span>
+            </div>
+        </div>
+    </div>
+
     <!-- Orientation Hint -->
     <div id="orientation-hint-overlay" class="modal-overlay hidden">
         <div class="orientation-hint">
@@ -1551,6 +1581,7 @@
     <script src="./js/garden-minigames.js"></script>
     <script src="./js/garden-stages.js"></script>
     <script src="./js/experience-guide.js"></script>
+    <script src="./js/realtime-guide.js"></script>
     <script src="./js/secret-letter.js"></script>
     <script src="./js/boarding-pass-modal.js"></script>
     <script src="./js/boarding-pass-canvas.js"></script>

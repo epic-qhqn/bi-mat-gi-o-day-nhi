@@ -7892,6 +7892,337 @@ body.sky-night .hint-bubble-text {
   }
 }
 
+/* ==========================================================================
+   REAL-TIME LIVE GUIDANCE HUD & DYNAMIC SPOTLIGHT POINTER
+   ========================================================================== */
+
+.realtime-guide-hud {
+  position: fixed;
+  top: calc(18px + var(--sat, 12px));
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 100006;
+  pointer-events: auto;
+  user-select: none;
+  -webkit-user-select: none;
+  transition: opacity 0.35s ease, transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+  max-width: min(560px, 92vw);
+}
+
+.realtime-guide-hud.hidden {
+  opacity: 0 !important;
+  pointer-events: none !important;
+  transform: translateX(-50%) translateY(-16px);
+}
+
+.realtime-guide-hud.is-minimized .realtime-guide-text-group {
+  display: none;
+}
+
+.realtime-guide-hud.is-minimized .realtime-guide-pill {
+  padding: 6px 10px;
+}
+
+.realtime-guide-pill {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: rgba(250, 247, 240, 0.94);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1.5px solid #D4AF37;
+  border-radius: 999px;
+  padding: 8px 14px 8px 16px;
+  box-shadow: 
+    0 8px 28px rgba(19, 28, 78, 0.16),
+    0 0 16px rgba(212, 175, 55, 0.22),
+    inset 0 1px 2px rgba(255, 255, 255, 0.8);
+  cursor: pointer;
+  position: relative;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+body.sky-night .realtime-guide-pill {
+  background: rgba(20, 28, 48, 0.92);
+  border-color: rgba(212, 175, 55, 0.6);
+  box-shadow: 
+    0 8px 32px rgba(0, 0, 0, 0.5),
+    0 0 20px rgba(212, 175, 55, 0.3);
+}
+
+.realtime-guide-pill:hover {
+  transform: translateY(-2px);
+  box-shadow: 
+    0 12px 32px rgba(19, 28, 78, 0.22),
+    0 0 24px rgba(212, 175, 55, 0.4);
+}
+
+.realtime-guide-pulse-ring {
+  position: absolute;
+  inset: -3px;
+  border-radius: 999px;
+  border: 1.5px solid rgba(212, 175, 55, 0.5);
+  animation: realtime-hud-pulse 2.5s ease-out infinite;
+  pointer-events: none;
+}
+
+@keyframes realtime-hud-pulse {
+  0% { transform: scale(0.98); opacity: 0.8; }
+  70% { transform: scale(1.05, 1.15); opacity: 0; }
+  100% { transform: scale(1.05, 1.15); opacity: 0; }
+}
+
+.realtime-guide-icon {
+  font-size: 17px;
+  line-height: 1;
+  flex-shrink: 0;
+  animation: realtime-icon-bob 2.2s ease-in-out infinite;
+}
+
+@keyframes realtime-icon-bob {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.2) rotate(6deg); }
+}
+
+.realtime-guide-text-group {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+.realtime-guide-step-tag {
+  background: linear-gradient(135deg, #1E2749 0%, #111736 100%);
+  color: #F8F5EE;
+  font-family: 'Be Vietnam Pro', sans-serif;
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.8px;
+  padding: 3px 8px;
+  border-radius: 999px;
+  border: 1px solid rgba(212, 175, 55, 0.6);
+  flex-shrink: 0;
+  text-transform: uppercase;
+}
+
+body.sky-night .realtime-guide-step-tag {
+  background: linear-gradient(135deg, #D4AF37 0%, #B89025 100%);
+  color: #131C4E;
+}
+
+.realtime-guide-msg {
+  font-family: 'Be Vietnam Pro', sans-serif;
+  font-size: 12.5px;
+  font-weight: 600;
+  color: var(--text-navy, #131C4E);
+  line-height: 1.4;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  transition: opacity 0.2s ease;
+}
+
+body.sky-night .realtime-guide-msg {
+  color: #FFFDF5;
+}
+
+.realtime-guide-msg.text-pop {
+  animation: realtime-text-pop 0.3s ease;
+}
+
+@keyframes realtime-text-pop {
+  0% { opacity: 0.3; transform: translateY(-3px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+
+.realtime-guide-toggle-btn {
+  background: transparent;
+  border: none;
+  font-size: 14px;
+  line-height: 1;
+  padding: 4px;
+  cursor: pointer;
+  color: #8C7355;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: transform 0.2s ease, color 0.2s ease;
+}
+
+.realtime-guide-toggle-btn:hover {
+  transform: scale(1.15);
+  color: #D4AF37;
+}
+
+/* REAL-TIME DYNAMIC SPOTLIGHT OVERLAY */
+.realtime-spotlight-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 100003;
+  pointer-events: none;
+  overflow: hidden;
+  contain: strict;
+}
+
+.realtime-target-box {
+  position: absolute;
+  top: 0;
+  left: 0;
+  border-radius: 14px;
+  border: 2px solid #D4AF37;
+  pointer-events: none;
+  opacity: 0;
+  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), width 0.35s cubic-bezier(0.16, 1, 0.3, 1), height 0.35s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.3s ease;
+  will-change: transform, width, height, opacity;
+}
+
+.realtime-target-glow {
+  position: absolute;
+  inset: -6px;
+  border-radius: 18px;
+  box-shadow: 
+    0 0 16px rgba(212, 175, 55, 0.7),
+    0 0 32px rgba(245, 206, 86, 0.35),
+    inset 0 0 12px rgba(212, 175, 55, 0.4);
+  animation: realtime-glow-pulse 1.8s ease-in-out infinite alternate;
+}
+
+@keyframes realtime-glow-pulse {
+  0% { opacity: 0.6; transform: scale(0.99); }
+  100% { opacity: 1; transform: scale(1.02); }
+}
+
+.realtime-target-corners span {
+  position: absolute;
+  width: 8px;
+  height: 8px;
+  border-color: #FFFDF5;
+  border-style: solid;
+}
+
+.realtime-target-corners .c-tl { top: -2px; left: -2px; border-width: 2.5px 0 0 2.5px; border-top-left-radius: 4px; }
+.realtime-target-corners .c-tr { top: -2px; right: -2px; border-width: 2.5px 2.5px 0 0; border-top-right-radius: 4px; }
+.realtime-target-corners .c-bl { bottom: -2px; left: -2px; border-width: 0 0 2.5px 2.5px; border-bottom-left-radius: 4px; }
+.realtime-target-corners .c-br { bottom: -2px; right: -2px; border-width: 0 2.5px 2.5px 0; border-bottom-right-radius: 4px; }
+
+/* Pointer Hand & Action Badge */
+.realtime-pointer-hand {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  pointer-events: none;
+  user-select: none;
+  z-index: 10;
+}
+
+.realtime-pointer-hand.dir-bottom {
+  top: calc(100% + 8px);
+  left: 50%;
+  transform: translateX(-50%);
+  flex-direction: column;
+  animation: hand-bounce-down 1.2s ease-in-out infinite;
+}
+
+.realtime-pointer-hand.dir-top {
+  bottom: calc(100% + 8px);
+  left: 50%;
+  transform: translateX(-50%);
+  flex-direction: column-reverse;
+  animation: hand-bounce-up 1.2s ease-in-out infinite;
+}
+
+.realtime-pointer-hand.dir-left {
+  top: 50%;
+  right: calc(100% + 8px);
+  transform: translateY(-50%);
+  flex-direction: row-reverse;
+  animation: hand-bounce-left 1.2s ease-in-out infinite;
+}
+
+.realtime-pointer-hand.dir-right {
+  top: 50%;
+  left: calc(100% + 8px);
+  transform: translateY(-50%);
+  flex-direction: row;
+  animation: hand-bounce-right 1.2s ease-in-out infinite;
+}
+
+@keyframes hand-bounce-down {
+  0%, 100% { transform: translate(-50%, 0); }
+  50% { transform: translate(-50%, 6px); }
+}
+
+@keyframes hand-bounce-up {
+  0%, 100% { transform: translate(-50%, 0); }
+  50% { transform: translate(-50%, -6px); }
+}
+
+@keyframes hand-bounce-left {
+  0%, 100% { transform: translate(0, -50%); }
+  50% { transform: translate(-6px, -50%); }
+}
+
+@keyframes hand-bounce-right {
+  0%, 100% { transform: translate(0, -50%); }
+  50% { transform: translate(6px, -50%); }
+}
+
+.pointer-hand-glyph {
+  font-size: 26px;
+  line-height: 1;
+  filter: drop-shadow(0 4px 8px rgba(19, 28, 78, 0.4));
+}
+
+.pointer-action-badge {
+  background: #1E2749;
+  color: #FFFDF5;
+  border: 1.2px solid #D4AF37;
+  border-radius: 999px;
+  padding: 3px 10px;
+  font-family: 'Be Vietnam Pro', sans-serif;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.3px;
+  white-space: nowrap;
+  box-shadow: 0 4px 14px rgba(19, 28, 78, 0.3);
+}
+
+body.sky-night .pointer-action-badge {
+  background: #FAF7F0;
+  color: #131C4E;
+}
+
+/* Mobile Adjustments for Real-time HUD */
+@media (max-width: 600px) {
+  .realtime-guide-hud {
+    top: calc(56px + var(--sat, 4px));
+    max-width: 94vw;
+  }
+  .realtime-guide-pill {
+    padding: 6px 10px 6px 12px;
+    gap: 7px;
+  }
+  .realtime-guide-msg {
+    font-size: 11.5px;
+  }
+  .realtime-guide-step-tag {
+    font-size: 9px;
+    padding: 2px 6px;
+  }
+  .pointer-hand-glyph {
+    font-size: 20px;
+  }
+  .pointer-action-badge {
+    font-size: 10px;
+    padding: 2px 7px;
+  }
+}
+
+
 
 
 
