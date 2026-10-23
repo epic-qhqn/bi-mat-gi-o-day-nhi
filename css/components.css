@@ -5179,7 +5179,8 @@ body.sky-night .found-letter-slot.filled {
 .mascot-companion-wrap {
   position: fixed;
   bottom: calc(66px + var(--sab, 0px));
-  right: calc(18px + var(--sar, 0px));
+  left: calc(18px + var(--sal, 0px));
+  right: auto;
   width: clamp(96px, 13vw, 145px);
   max-width: min(150px, calc(100vw - 32px));
   aspect-ratio: 367 / 466;
@@ -5201,7 +5202,8 @@ body.sky-night .found-letter-slot.filled {
 @media (max-width: 768px) {
   .mascot-companion-wrap {
     bottom: calc(56px + var(--sab, 8px));
-    right: calc(12px + var(--sar, 0px));
+    left: calc(12px + var(--sal, 0px));
+    right: auto;
     width: clamp(80px, 18vw, 110px);
   }
 }
@@ -5209,7 +5211,8 @@ body.sky-night .found-letter-slot.filled {
 @media (max-height: 540px) and (orientation: landscape) {
   .mascot-companion-wrap {
     bottom: calc(48px + var(--sab, 0px));
-    right: calc(12px + var(--sar, 0px));
+    left: calc(12px + var(--sal, 0px));
+    right: auto;
     width: clamp(64px, 10vw, 86px);
   }
 }
@@ -5217,8 +5220,8 @@ body.sky-night .found-letter-slot.filled {
 /* Relocate Mascot Companion to left side when Polaroid appears (Task 9.1) */
 .mascot-companion-wrap.relocated-for-letter {
   right: auto !important;
-  left: clamp(16px, 4vw, 55px) !important;
-  transition: left 1.4s cubic-bezier(0.34, 1.56, 0.64, 1), transform 0.35s ease !important;
+  left: calc(18px + var(--sal, 0px)) !important;
+  transition: transform 0.35s ease !important;
 }
 
 .mascot-companion-wrap.relocated-for-letter .mascot-puppet-container {
@@ -5284,11 +5287,12 @@ body.sky-night .found-letter-slot.filled {
   height: 100%;
   animation: mascotFloat 4s ease-in-out infinite;
   transform-origin: center bottom;
+  transform: scaleX(-1);
 }
 
 @keyframes mascotFloat {
-  0%, 100% { transform: translateY(0px) rotate(0deg); }
-  50% { transform: translateY(-9px) rotate(1.2deg); }
+  0%, 100% { transform: scaleX(-1) translateY(0px) rotate(0deg); }
+  50% { transform: scaleX(-1) translateY(-9px) rotate(-1.2deg); }
 }
 
 /* Cheer Jump Bounce Animation */
@@ -5297,11 +5301,11 @@ body.sky-night .found-letter-slot.filled {
 }
 
 @keyframes mascotJump {
-  0% { transform: scale(1, 1) translateY(0); }
-  25% { transform: scale(1.14, 0.86) translateY(5px); }
-  55% { transform: scale(0.92, 1.15) translateY(-22px); }
-  80% { transform: scale(1.05, 0.96) translateY(-4px); }
-  100% { transform: scale(1, 1) translateY(0); }
+  0% { transform: scaleX(-1) scale(1, 1) translateY(0); }
+  25% { transform: scaleX(-1) scale(1.14, 0.86) translateY(5px); }
+  55% { transform: scaleX(-1) scale(0.92, 1.15) translateY(-22px); }
+  80% { transform: scaleX(-1) scale(1.05, 0.96) translateY(-4px); }
+  100% { transform: scaleX(-1) scale(1, 1) translateY(0); }
 }
 
 /* Base Authentic Artwork Layer */
@@ -5623,7 +5627,7 @@ body.sky-night .found-letter-slot.filled {
 }
 
 .mascot-companion-wrap.is-petted .mascot-puppet-container {
-  transform: scale(1.06) rotate(-2deg);
+  transform: scaleX(-1) scale(1.06) rotate(-2deg);
 }
 
 .mascot-companion-wrap.is-petted .mascot-blush {
@@ -5635,9 +5639,10 @@ body.sky-night .found-letter-slot.filled {
 .mascot-speech-bubble {
   position: absolute;
   bottom: calc(100% + 10px);
-  right: 0;
+  left: 0;
+  right: auto;
   transform: scale(0.88);
-  transform-origin: bottom right;
+  transform-origin: bottom left;
   background: #FFFFFF;
   border: 1.5px solid var(--border-card);
   border-radius: 16px;
@@ -5649,7 +5654,7 @@ body.sky-night .found-letter-slot.filled {
   white-space: normal;
   max-width: min(260px, calc(100vw - 32px));
   width: max-content;
-  text-align: right;
+  text-align: left;
   pointer-events: none;
   opacity: 0;
   transition: all 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
@@ -5666,7 +5671,8 @@ body.sky-night .found-letter-slot.filled {
 .bubble-tail {
   position: absolute;
   bottom: -7px;
-  right: 24px;
+  left: 24px;
+  right: auto;
   width: 0;
   height: 0;
   border-left: 7px solid transparent;
