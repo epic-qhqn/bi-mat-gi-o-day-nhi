@@ -81,6 +81,9 @@
 
         // Stage 2 (1): Simon Memory minigame
         if (stageId === 1 || stageId === 2 || stageId === 'all') {
+            if (typeof window.stopSimonGame === 'function') {
+                window.stopSimonGame();
+            }
             if (typeof window.duckBgmForMinigame === 'function') {
                 window.duckBgmForMinigame(false, 2000);
             }

@@ -14,7 +14,8 @@
     let simonSequence = [];
     let simonInput = [];
     let simonPlaying = false;
-    let lastSimonTapTime = 0;
+    let simonGenerationId = 0;
+    let lastTapNodeTime = 0;
 
     // Tạo dãy nốt ngẫu nhiên: 4-5 nốt, không lặp liền nhau, có >= 3 nốt khác nhau.
     const generateRandomSequence = () => {
@@ -56,10 +57,23 @@
         simonInput = [];
     };
 
+    const stopSimonGame = () => {
+        simonPlaying = false;
+        simonGenerationId++;
+        simonInput = [];
+    };
+
     const startSimonGame = async () => {
+        const currentGen = ++simonGenerationId;
+        simonPlaying = false;
+        simonInput = [];
+
         const container = document.getElementById('simon-game');
         if (!container) return;
         container.classList.remove('hidden');
+        container.style.display = 'block';
+        container.style.opacity = '1';
+        container.style.pointerEvents = 'auto';
         container.innerHTML = '';
 
         document.body.classList.remove('stage-1-active', 'stage-3-active', 'stage-4-active');
@@ -72,6 +86,8 @@
         const replayBtn = document.getElementById('simon-replay-btn');
         if (replayBtn) {
             replayBtn.classList.remove('hidden');
+            replayBtn.style.display = 'flex';
+            replayBtn.style.pointerEvents = 'auto';
             if (!replayBtn.dataset.bound) {
                 replayBtn.dataset.bound = 'true';
                 const triggerReplay = async (e) => {
@@ -83,8 +99,7 @@
                     const msg = document.getElementById('garden-message');
                     if (msg) msg.textContent = "Đang phát lại giai điệu ma thuật...";
                     if (typeof window.playKeyTapSFX !== 'undefined') window.playKeyTapSFX();
-                    await playSimonSequence();
-                    if (msg) msg.textContent = "Đến lượt bạn lặp lại giai điệu nhé!";
+                    await playSimonSequence(simonGenerationId);
                 };
                 replayBtn.addEventListener('click', triggerReplay);
             }
@@ -112,14 +127,22 @@
             node.style.setProperty('--note-color', noteColors[idx]);
             node.innerHTML = `<span class="simon-icon">${noteIcons[idx]}</span>`;
 
-            const triggerNote = (e) => {
+            // Chống hiện tượng ghost-click / duplicate event giữa pointerdown và click
+            let handledByPointer = false;
+            node.addEventListener('pointerdown', (e) => {
                 e.preventDefault();
                 e.stopPropagation();
+                handledByPointer = true;
+                setTimeout(() => { handledByPointer = false; }, 400);
                 handleSimonClick(node, idx);
-            };
+            });
+            node.addEventListener('click', (e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                if (handledByPointer) return;
+                handleSimonClick(node, idx);
+            });
 
-            node.addEventListener('pointerdown', triggerNote);
-            node.addEventListener('click', triggerNote);
             container.appendChild(node);
         });
 
@@ -133,19 +156,23 @@
 
         const msg = document.getElementById('garden-message');
         if (msg) msg.textContent = `🎵 ${chosenPalette.name}: Hãy lắng nghe khúc giai điệu ma thuật...`;
-        await sleep(1200); // Chờ nhạc nền hạ dần dịu êm để làm nổi bật tiếng đàn
-        await playSimonSequence();
+        await sleep(1200);
+        if (currentGen !== simonGenerationId) return;
+        await playSimonSequence(currentGen);
     };
 
-    const playSimonSequence = async () => {
+    const playSimonSequence = async (genId) => {
         simonPlaying = true;
         const replayBtn = document.getElementById('simon-replay-btn');
         if (replayBtn) replayBtn.classList.add('disabled');
-        await sleep(800);
-        const nodes = document.querySelectorAll('.simon-node');
+        await sleep(600);
+        if (genId && genId !== simonGenerationId) return;
+
+        const container = document.getElementById('simon-game');
         for (let i = 0; i < simonSequence.length; i++) {
+            if (genId && genId !== simonGenerationId) return;
             const index = simonSequence[i];
-            const node = nodes[index];
+            const node = container ? container.querySelector(`.simon-node[data-index="${index}"]`) : null;
             if (node) {
                 node.classList.add('highlight');
                 if (typeof window.playSimonSFX !== 'undefined') window.playSimonSFX(index);
@@ -154,14 +181,17 @@
                 await sleep(220);
             }
         }
+        if (genId && genId !== simonGenerationId) return;
         simonPlaying = false;
         if (replayBtn) replayBtn.classList.remove('disabled');
+        const msg = document.getElementById('garden-message');
+        if (msg) msg.textContent = "Đến lượt bạn lặp lại giai điệu nhé! 🌸";
     };
 
     const handleSimonClick = async (node, index) => {
         const now = Date.now();
-        if (now - lastSimonTapTime < 200) return;
-        lastSimonTapTime = now;
+        if (now - lastTapNodeTime < 220) return;
+        lastTapNodeTime = now;
 
         const state = window.gardenState || {};
         if (simonPlaying || (state.currentStage !== undefined && state.currentStage !== 1)) return;
@@ -180,15 +210,13 @@
             node.classList.add('wrong');
             setTimeout(() => node.classList.remove('wrong'), 500);
             await sleep(1000);
-            // Bấm sai -> đổi sang bản nhạc + dãy nốt ngẫu nhiên mới cho lượt kế tiếp
+            const currentGen = ++simonGenerationId;
             rollNewMelody();
             const paletteName = window.activeHarmonicPalette ? window.activeHarmonicPalette.name : 'Khúc ca';
             if (msg) msg.textContent = `🎵 ${paletteName}: giai điệu mới, hãy lắng nghe...`;
-            await playSimonSequence();
-            if (msg) msg.textContent = "Đến lượt bạn lặp lại giai điệu nhé!";
+            await playSimonSequence(currentGen);
         } else if (simonInput.length === simonSequence.length) {
             simonPlaying = true;
-            // Khôi phục mượt mà âm lượng BGM trong 2s
             if (typeof window.duckBgmForMinigame === 'function') {
                 window.duckBgmForMinigame(false, 2000);
             }
@@ -200,6 +228,12 @@
             setTimeout(() => {
                 if (typeof window.advanceStage === 'function') window.advanceStage(1);
             }, 1000);
+        } else {
+            // Nốt đúng nhưng chưa hết dãy -> thông báo động viên & số nốt còn lại
+            if (msg) {
+                const remaining = simonSequence.length - simonInput.length;
+                msg.textContent = `Tuyệt vời! 🎶 Còn ${remaining} nốt nữa...`;
+            }
         }
     };
 
@@ -930,6 +964,7 @@
 
     // Public API
     window.startSimonGame = startSimonGame;
+    window.stopSimonGame = stopSimonGame;
     window.playSimonSequence = playSimonSequence;
     window.startConstellationGame = startConstellationGame;
     window.connectStar = connectStar;
