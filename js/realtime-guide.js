@@ -23,12 +23,21 @@
     let pollInterval = null;
     let lastStateKey = '';
 
+    // Smart Exploration Memory: Tracks features user has already opened or interacted with in Stage 4
+    const userInteractions = {
+        openedLetter: false,
+        openedPostcard: false,
+        interactedAoDai: false,
+        clickedClover: false,
+        pluckedHarp: false,
+        toggledOrrery: false
+    };
+
     // Step Matrix Evaluator: Returns { key, stepTag, message, icon, targetSelector, pointerDirection, pointerText }
     const evaluateCurrentState = () => {
         // 1. TIME LOCK GATE
         const timeLockModal = document.getElementById('time-lock-modal');
         if (timeLockModal && !timeLockModal.classList.contains('hidden') && timeLockModal.style.display !== 'none') {
-            const input = document.getElementById('time-lock-input');
             return {
                 key: 'time-lock',
                 stepTag: 'CỔNG THỜI GIAN',
@@ -140,10 +149,8 @@
                 };
             }
 
-            // Step 2.7: Stamp Seal or Sprinkle Gold Flakes
+            // Step 2.7: Stamp Seal
             if (isWaxPoured && !isWaxStamped) {
-                const sprinkleBtn = document.getElementById('artisan-sprinkle-vial');
-                const hasSprinkled = sprinkleBtn && sprinkleBtn.classList.contains('hidden');
                 return {
                     key: 'atelier-stamp',
                     stepTag: 'BƯỚC 6/6',
@@ -169,20 +176,67 @@
             }
         }
 
-        // 3. GARDEN ACTIVE STAGES
+        // 3. FULL MODALS CHECK (Secret Letter, Boarding Pass, Handbook)
+        // If a modal is actively open, guide the user's focus on the modal without background distraction
+        const secretModal = document.getElementById('secret-letter-modal');
+        if (secretModal && !secretModal.classList.contains('hidden') && secretModal.style.display !== 'none') {
+            userInteractions.openedLetter = true;
+            return {
+                key: 'modal-letter-open',
+                stepTag: 'THƯ BÍ MẬT',
+                message: 'Đang mở Thư Polaroid Bí Mật 💌 Cuộn đọc tâm tình hoặc bấm Đóng/Rút thư mới',
+                icon: '💌',
+                targetSelector: null,
+                pointerDirection: 'top',
+                pointerText: ''
+            };
+        }
+
+        const passModal = document.getElementById('boarding-pass-modal');
+        if (passModal && !passModal.classList.contains('hidden') && passModal.style.display !== 'none') {
+            userInteractions.openedPostcard = true;
+            return {
+                key: 'modal-postcard-open',
+                stepTag: 'BƯU THIẾP 9:16',
+                message: 'Đang xem Bưu Thiếp Kỷ Niệm 📥 Chạm đổi loài hoa hoặc bấm "Tải về" để lưu giữ ảnh thẻ hoa',
+                icon: '📥',
+                targetSelector: '#save-boarding-pass-btn',
+                pointerDirection: 'bottom',
+                pointerText: 'Lưu bưu thiếp'
+            };
+        }
+
+        const handbookModal = document.getElementById('experience-guide-modal');
+        if (handbookModal && !handbookModal.classList.contains('hidden') && handbookModal.style.display !== 'none') {
+            return {
+                key: 'modal-handbook-open',
+                stepTag: 'SỔ TAY HÀNH TRÌNH',
+                message: 'Đang mở Sổ Tay Trải Nghiệm 📖 Bạn có thể xem lộ trình 4 giai đoạn hoặc khám phá bí mật',
+                icon: '📖',
+                targetSelector: null,
+                pointerDirection: 'top',
+                pointerText: ''
+            };
+        }
+
+        // 4. GARDEN ACTIVE STAGES (Zero Overlap between stages!)
         const gState = window.gardenState || { currentStage: 0 };
         const stageNum = gState.currentStage;
 
-        // Stage 1: Climate, Sprout & Clover
-        if (stageNum === 0 || stageNum === 1) {
+        // --- GIAI ĐOẠN 1: Hạt giống & Mầm non (stageNum === 0) ---
+        if (stageNum === 0) {
             const isWatered = Boolean(gState.isWatered);
             const isFertilized = Boolean(gState.isFertilized);
 
             if (!isWatered) {
+                const cloudShifter = document.getElementById('atmosphere-cloud-shifter');
+                const isCloudActive = cloudShifter && (cloudShifter.classList.contains('shifter-active') || cloudShifter.classList.contains('shifter-completed'));
                 return {
                     key: 'stage-1-water',
                     stepTag: 'GIAI ĐOẠN 1',
-                    message: 'Chồi non đang khát! Chạm hoặc kéo Đám Mây Mưa để gọi giọt sương mai tưới tắm 🌧️',
+                    message: isCloudActive
+                        ? 'Mưa sương sớm đang tưới tắm mát lành cho mầm non... 🌧️✨'
+                        : 'Chồi non đang khát! Chạm hoặc kéo Đám Mây Mưa để gọi giọt sương mai tưới tắm 🌧️',
                     icon: '🌧️',
                     targetSelector: '#atmosphere-cloud-shifter',
                     pointerDirection: 'bottom',
@@ -191,10 +245,14 @@
             }
 
             if (!isFertilized) {
+                const sunShifter = document.getElementById('atmosphere-sun-shifter');
+                const isSunActive = sunShifter && (sunShifter.classList.contains('shifter-active') || sunShifter.classList.contains('shifter-completed'));
                 return {
                     key: 'stage-1-sun',
                     stepTag: 'GIAI ĐOẠN 1',
-                    message: 'Mầm cây cần ánh ấm! Chạm hoặc kéo Vệt Nắng Ban Mai để sưởi ấm chồi non ☀️',
+                    message: isSunActive
+                        ? 'Ánh nắng ấm áp đang sưởi ấm chồi non nảy mầm... ☀️✨'
+                        : 'Mầm cây cần ánh ấm! Chạm hoặc kéo Vệt Nắng Ban Mai để sưởi ấm chồi non ☀️',
                     icon: '☀️',
                     targetSelector: '#atmosphere-sun-shifter',
                     pointerDirection: 'bottom',
@@ -202,12 +260,116 @@
                 };
             }
 
-            // Check if clover is visible
-            const clover = document.getElementById('sprout-lucky-clover');
-            if (clover && !clover.classList.contains('hidden') && clover.offsetParent) {
+            // Both watered and fertilized in Stage 1 -> sprouting celebration
+            return {
+                key: 'stage-1-sprouting',
+                stepTag: 'GIAI ĐOẠN 1',
+                message: 'Tuyệt vời! Mầm non đã đủ sương nắng và đang vươn mình lớn lên... 🌱✨',
+                icon: '🌱',
+                targetSelector: '#tree',
+                pointerDirection: 'top',
+                pointerText: 'Mầm non thức giấc'
+            };
+        }
+
+        // --- GIAI ĐOẠN 2: Hòa âm Simon (stageNum === 1) ---
+        if (stageNum === 1) {
+            const isSimonPlaying = (typeof window.isSimonPlaying === 'function' && window.isSimonPlaying())
+                || Boolean(document.querySelector('#simon-game .simon-node.highlight'));
+
+            if (isSimonPlaying) {
                 return {
-                    key: 'stage-1-clover',
-                    stepTag: 'MAY MẮN',
+                    key: 'stage-2-simon-listening',
+                    stepTag: 'GIAI ĐOẠN 2',
+                    message: 'Lắng nghe khúc hòa âm chuông hoa và ghi nhớ các nốt nhạc ngân vang... 🎧🎶',
+                    icon: '🎧',
+                    targetSelector: '#simon-game',
+                    pointerDirection: 'top',
+                    pointerText: 'Lắng nghe giai điệu'
+                };
+            }
+
+            const simonContainer = document.getElementById('simon-game');
+            const targetNode = simonContainer ? simonContainer.querySelector('.simon-node') : null;
+            return {
+                key: 'stage-2-simon-playing',
+                stepTag: 'GIAI ĐOẠN 2',
+                message: 'Đến lượt bạn! Chạm vào các phím chuông hoa theo đúng giai điệu vừa nghe 🎵',
+                icon: '🎵',
+                targetSelector: targetNode || '#simon-game',
+                pointerDirection: 'top',
+                pointerText: 'Chạm chuông hoa'
+            };
+        }
+
+        // --- GIAI ĐOẠN 3: Chòm sao Định Mệnh (stageNum === 2) ---
+        if (stageNum === 2) {
+            const constellationGame = document.getElementById('constellation-game');
+            let targetStar = null;
+            if (constellationGame) {
+                targetStar = constellationGame.querySelector('.star-node.next-target')
+                    || constellationGame.querySelector('.star-node:not(.active):not(.decoy-star)');
+            }
+
+            return {
+                key: 'stage-3-stars',
+                stepTag: 'GIAI ĐOẠN 3',
+                message: 'Chạm hoặc nối các vì sao theo thứ tự để thắp sáng chòm sao Định Mệnh ✨🌌',
+                icon: '✨',
+                targetSelector: targetStar || '#constellation-game',
+                pointerDirection: 'bottom',
+                pointerText: 'Nối ngôi sao này'
+            };
+        }
+
+        // --- GIAI ĐOẠN 4: Vườn hoa nở rộ & Quà tặng (stageNum >= 3) ---
+        if (stageNum >= 3) {
+            // Prioritize unvisited gifts so the user is guided to each experience,
+            // without ever nagging about something they have already opened!
+            const secretBtn = document.getElementById('secret-letter-trigger-btn');
+            if (!userInteractions.openedLetter && secretBtn && secretBtn.offsetParent) {
+                return {
+                    key: 'stage-4-letter',
+                    stepTag: 'THƯ BÍ MẬT',
+                    message: 'Mở bức Thư Polaroid Bí Mật ở góc trái để đọc lời chúc yêu thương 💌',
+                    icon: '💌',
+                    targetSelector: '#secret-letter-trigger-btn',
+                    pointerDirection: 'top',
+                    pointerText: 'Mở thư bí mật'
+                };
+            }
+
+            const passBtn = document.getElementById('open-boarding-pass-btn');
+            if (!userInteractions.openedPostcard && passBtn && !passBtn.classList.contains('hidden') && passBtn.offsetParent) {
+                return {
+                    key: 'stage-4-postcard',
+                    stepTag: 'BƯU THIẾP 9:16',
+                    message: 'Bấm nhận Bưu Thiếp Kỷ Niệm 20/10 ở góc phải để tạo ảnh thẻ hoa lưu niệm 📥',
+                    icon: '📥',
+                    targetSelector: '#open-boarding-pass-btn',
+                    pointerDirection: 'top',
+                    pointerText: 'Nhận bưu thiếp'
+                };
+            }
+
+            const aoDai = document.getElementById('ao-dai-viet-stage4');
+            if (!userInteractions.interactedAoDai && aoDai && !aoDai.classList.contains('hidden') && aoDai.offsetParent) {
+                return {
+                    key: 'stage-4-aodai',
+                    stepTag: 'NÀNG THƠ ÁO DÀI',
+                    message: 'Chạm vào cô gái Áo Dài bên hoa sen để thưởng thức bài thơ 20/10 ngọt ngào 🪷',
+                    icon: '🪷',
+                    targetSelector: '#ao-dai-viet-stage4',
+                    pointerDirection: 'top',
+                    pointerText: 'Chạm nàng thơ Áo Dài'
+                };
+            }
+
+            const clover = document.getElementById('sprout-lucky-clover');
+            if (!userInteractions.clickedClover && clover && !clover.classList.contains('hidden') && clover.offsetParent) {
+                return {
+                    key: 'stage-4-clover',
+                    stepTag: 'CỎ 4 LÁ MAY MẮN',
                     message: 'Chạm vào nhánh Cỏ 4 Lá May Mắn để nhận thông điệp bình an ngày 20/10 🍀',
                     icon: '🍀',
                     targetSelector: '#sprout-lucky-clover',
@@ -215,100 +377,13 @@
                     pointerText: 'Chạm cỏ 4 lá'
                 };
             }
-        }
 
-        // Stage 2: Simon Melody Minigame
-        if (stageNum === 1 || stageNum === 2) {
-            const simonContainer = document.getElementById('simon-game');
-            if (simonContainer && !simonContainer.classList.contains('hidden') && simonContainer.children.length > 0) {
-                const firstNode = simonContainer.querySelector('.simon-node');
-                return {
-                    key: 'stage-2-simon',
-                    stepTag: 'GIAI ĐOẠN 2',
-                    message: 'Lắng nghe chuông hoa và chạm lại các phím theo đúng thứ tự giai điệu vừa nghe 🎵',
-                    icon: '🎵',
-                    targetSelector: firstNode ? '.simon-node' : '#simon-game',
-                    pointerDirection: 'top',
-                    pointerText: 'Chạm chuông hoa'
-                };
-            }
-        }
-
-        // Stage 3: Constellation Linker Minigame
-        if (stageNum === 2 || stageNum === 3) {
-            const constellationGame = document.getElementById('constellation-game');
-            if (constellationGame && !constellationGame.classList.contains('hidden')) {
-                // Find next target star (unconnected star with lowest index)
-                const stars = Array.from(constellationGame.querySelectorAll('.constellation-star:not(.connected):not(.decoy)'));
-                const targetStar = stars[0];
-                return {
-                    key: 'stage-3-stars',
-                    stepTag: 'GIAI ĐOẠN 3',
-                    message: 'Chạm các vì sao có vầng hào quang rực rỡ để nối chòm sao Trái Tim Ngân Hà ✨',
-                    icon: '✨',
-                    targetSelector: targetStar ? targetStar : '#constellation-game',
-                    pointerDirection: 'bottom',
-                    pointerText: 'Chạm nối ngôi sao'
-                };
-            }
-        }
-
-        // Stage 4: Full Blossom & Gifts
-        if (stageNum >= 3) {
-            // Rotating guide suggestions for the 4 hidden gifts in Stage 4
-            const sec = Math.floor(Date.now() / 8000) % 4;
-
-            if (sec === 0) {
-                const aoDai = document.getElementById('ao-dai-viet-stage4');
-                if (aoDai && !aoDai.classList.contains('hidden')) {
-                    return {
-                        key: 'stage-4-aodai',
-                        stepTag: 'HOA NỞ RỰC RỠ',
-                        message: 'Chạm vào cô gái Áo Dài bên hoa sen để đọc bài thơ 20/10 ngọt ngào 🪷',
-                        icon: '🪷',
-                        targetSelector: '#ao-dai-viet-stage4',
-                        pointerDirection: 'top',
-                        pointerText: 'Chạm nàng thơ Áo Dài'
-                    };
-                }
-            }
-
-            if (sec === 1) {
-                const secretBtn = document.getElementById('secret-letter-trigger-btn');
-                if (secretBtn && secretBtn.offsetParent) {
-                    return {
-                        key: 'stage-4-letter',
-                        stepTag: 'THƯ BÍ MẬT',
-                        message: 'Mở bức Thư Polaroid Bí Mật ở góc trái để đọc lời chúc yêu thương 💌',
-                        icon: '💌',
-                        targetSelector: '#secret-letter-trigger-btn',
-                        pointerDirection: 'top',
-                        pointerText: 'Mở thư bí mật'
-                    };
-                }
-            }
-
-            if (sec === 2) {
-                const passBtn = document.getElementById('open-boarding-pass-btn');
-                if (passBtn && !passBtn.classList.contains('hidden') && passBtn.offsetParent) {
-                    return {
-                        key: 'stage-4-postcard',
-                        stepTag: 'BƯU THIẾP 9:16',
-                        message: 'Bấm nhận Bưu Thiếp Kỷ Niệm 20/10 ở góc phải để tạo ảnh thẻ hoa lưu niệm 📥',
-                        icon: '📥',
-                        targetSelector: '#open-boarding-pass-btn',
-                        pointerDirection: 'top',
-                        pointerText: 'Nhận bưu thiếp'
-                    };
-                }
-            }
-
-            // Default Stage 4: Harp & Weather Orrery
+            // When all primary gifts have been opened, invite free ambient interaction
             return {
-                key: 'stage-4-harp',
-                stepTag: 'MỘC CẦM & 4 MÙA',
-                message: 'Vuốt dây Mộc Cầm góc phải hoặc xoay Bánh xe thiên văn góc trên để đổi 4 mùa 🎶',
-                icon: '🎶',
+                key: 'stage-4-ambient',
+                stepTag: 'VƯỜN HOA NỞ RỘ',
+                message: 'Khu vườn đã nở hoa trọn vẹn! Vuốt đàn Mộc Cầm hoặc xoay Bánh xe thiên văn để đổi 4 mùa 🌸🎶',
+                icon: '🌸',
                 targetSelector: '#plant-harp-strings-wrap',
                 pointerDirection: 'left',
                 pointerText: 'Gảy đàn Mộc Cầm'
@@ -346,23 +421,31 @@
         targetBoxEl.style.height = `${boxHeight}px`;
         targetBoxEl.style.opacity = '1';
 
-        pointerBadgeEl.textContent = pointerText;
+        pointerBadgeEl.textContent = pointerText || '';
 
-        // Position pointer hand relative to target box (hand points directly AT the target)
-        pointerHandEl.className = `realtime-pointer-hand dir-${pointerDir}`;
+        // Dynamic edge detection to prevent hand clipping
+        let effectiveDir = pointerDir;
+        if (effectiveDir === 'top' && boxTop < 75) {
+            effectiveDir = 'bottom';
+        } else if (effectiveDir === 'bottom' && boxTop + boxHeight > window.innerHeight - 80) {
+            effectiveDir = 'top';
+        }
+        if (effectiveDir === 'left' && boxLeft < 120) {
+            effectiveDir = 'right';
+        } else if (effectiveDir === 'right' && boxLeft + boxWidth > window.innerWidth - 120) {
+            effectiveDir = 'left';
+        }
+
+        pointerHandEl.className = `realtime-pointer-hand dir-${effectiveDir}`;
         const handGlyph = pointerHandEl.querySelector('.pointer-hand-glyph');
 
-        if (pointerDir === 'top') {
-            // Container is ABOVE target -> hand points DOWN towards target
+        if (effectiveDir === 'top') {
             if (handGlyph) handGlyph.textContent = '👇';
-        } else if (pointerDir === 'bottom') {
-            // Container is BELOW target -> hand points UP towards target
+        } else if (effectiveDir === 'bottom') {
             if (handGlyph) handGlyph.textContent = '👆';
-        } else if (pointerDir === 'left') {
-            // Container is LEFT of target -> hand points RIGHT towards target
+        } else if (effectiveDir === 'left') {
             if (handGlyph) handGlyph.textContent = '👉';
         } else {
-            // Container is RIGHT of target -> hand points LEFT towards target
             if (handGlyph) handGlyph.textContent = '👈';
         }
     };
@@ -452,8 +535,34 @@
             });
         }
 
+        // Capture user interactions on Stage 4 elements so we never repeatedly guide already-done features
+        document.addEventListener('click', (e) => {
+            const target = e.target;
+            if (!target) return;
+            if (target.closest('#secret-letter-trigger-btn') || target.closest('#secret-letter-modal')) {
+                userInteractions.openedLetter = true;
+            }
+            if (target.closest('#open-boarding-pass-btn') || target.closest('#boarding-pass-modal')) {
+                userInteractions.openedPostcard = true;
+            }
+            if (target.closest('#ao-dai-viet-stage4')) {
+                userInteractions.interactedAoDai = true;
+            }
+            if (target.closest('#sprout-lucky-clover')) {
+                userInteractions.clickedClover = true;
+            }
+            if (target.closest('#plant-harp-strings-wrap') || target.closest('.harp-string')) {
+                userInteractions.pluckedHarp = true;
+            }
+            if (target.closest('#celestial-weather-orrery')) {
+                userInteractions.toggledOrrery = true;
+            }
+            setTimeout(tickRealtimeGuide, 50);
+            setTimeout(tickRealtimeGuide, 280);
+        }, true);
+
         // Real-time Event Hooks (react immediately on clicks/inputs)
-        ['click', 'input', 'change', 'touchend'].forEach(evt => {
+        ['input', 'change', 'touchend'].forEach(evt => {
             document.addEventListener(evt, () => {
                 setTimeout(tickRealtimeGuide, 60);
                 setTimeout(tickRealtimeGuide, 280);
@@ -477,6 +586,12 @@
     // Public API
     window.refreshRealtimeGuide = tickRealtimeGuide;
     window.toggleRealtimeGuide = toggleGuide;
+    window.markRealtimeGuideActionDone = (actionKey) => {
+        if (actionKey in userInteractions) {
+            userInteractions[actionKey] = true;
+            tickRealtimeGuide();
+        }
+    };
 
     if (document.readyState === 'loading') {
         document.addEventListener('DOMContentLoaded', initRealtimeGuide);

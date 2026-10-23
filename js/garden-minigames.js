@@ -965,6 +965,7 @@
     // Public API
     window.startSimonGame = startSimonGame;
     window.stopSimonGame = stopSimonGame;
+    window.isSimonPlaying = () => simonPlaying;
     window.playSimonSequence = playSimonSequence;
     window.startConstellationGame = startConstellationGame;
     window.connectStar = connectStar;
