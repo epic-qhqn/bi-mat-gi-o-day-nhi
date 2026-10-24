@@ -5,12 +5,13 @@
 ---
 
 ### Phase 1: Kiến Trúc Xoay Màn Hình Linh Hoạt & Chống Lộ Bí Mật (Dual-Orientation & Anti-Spoiler)
-- [ ] 1.1: Xóa bỏ hoàn toàn văn bản và huy hiệu có chữ "20/10" trong `#rotate-device-overlay` tại `index.html` (thay bằng "✦ NÉT ĐẸP KHU VƯỜN ✦" và lời mời xoay màn hình thi vị, không spoil bí mật).
-- [ ] 1.2: Thiết kế lại mỹ thuật màn hình nhắc xoay trong `css/components.css`: chuyển từ nền đen tuyền `#0d090d` sang nền lụa giấy Dó ngà `rgba(250, 247, 240, 0.96)`, viền vàng đồng `#D4AF37`, cánh sen chao liệng và icon điện thoại xoay chuyển mượt mà.
-- [ ] 1.3: Nâng cấp `js/orientation-guard.js` hỗ trợ cơ chế định hướng 2 chiều linh hoạt:
+- [x] 1.1: Xóa bỏ hoàn toàn văn bản và huy hiệu có chữ "20/10" trong `#rotate-device-overlay` tại `index.html` (thay bằng "✦ NÉT ĐẸP KHU VƯỜN ✦" và lời mời xoay màn hình thi vị, không spoil bí mật).
+- [x] 1.2: Thiết kế lại mỹ thuật màn hình nhắc xoay trong `css/components.css`: chuyển từ nền đen tuyền `#0d090d` sang nền lụa giấy Dó ngà `rgba(250, 247, 240, 0.96)`, viền vàng đồng `#D4AF37`, cánh sen chao liệng và icon điện thoại xoay chuyển mượt mà.
+- [x] 1.3: Nâng cấp `js/orientation-guard.js` hỗ trợ cơ chế định hướng 2 chiều linh hoạt:
   - `require-landscape`: Áp dụng cho Vườn hoa chính (Stage 1-4) & Minigames.
   - `require-portrait`: Khuyến khích khi ở Bàn chế tác dập sáp Stage 0, Trắc nghiệm hoa 3D, Thiệp bưu hoa di sản 9:16.
-- [ ] 1.4: Bổ sung nút bấm thi vị "Tiếp tục ở góc nhìn này" (Bypass) để người dùng khóa xoay màn hình vẫn có thể tiếp tục trải nghiệm mà không bị chặn cứng.
+- [x] 1.4: Bổ sung nút bấm thi vị "Tiếp tục ở góc nhìn này" (Bypass) để người dùng khóa xoay màn hình vẫn có thể tiếp tục trải nghiệm mà không bị chặn cứng.
+- [x] 1.5 (Bổ sung): Triệt tiêu độ trễ âm thanh 5s trên iPhone 14/Safari: Mở khóa âm thanh từ cú chạm đầu tiên, rút ngắn fade từ 5000ms xuống 1500ms xuất phát ở mức nghe rõ 0.12, kích hoạt BGM tức thì ngay thời khắc dập con dấu son.
 
 ---
 

@@ -1172,6 +1172,14 @@
         if (typeof window.playChimeSFX === 'function') window.playChimeSFX();
         if (typeof window.playFloralBloomSFX === 'function') window.playFloralBloomSFX();
 
+        // Kích hoạt BGM ngay tức thì khi hoàn tất dập dấu, xóa bỏ độ trễ 5s trên iPhone 14/Safari
+        if (typeof window.fadeAudioVolume === 'function') {
+            window.fadeAudioVolume(0.20, 1500);
+        } else if (window.bgAudio && window.bgAudio.paused) {
+            window.bgAudio.volume = 0.20;
+            window.bgAudio.play().catch(e => console.log("Direct awakening audio play failed:", e));
+        }
+
         const desc = document.getElementById('name-prompt-desc') || document.querySelector('#name-modal .name-panel p');
         if (desc) {
             const recipientName = (name || window.currentUserName || 'BẠN').toUpperCase();
@@ -1266,8 +1274,13 @@
         if (typeof window.initAudio === 'function') window.initAudio();
         if (typeof window.startEnvironmentCycle === 'function') window.startEnvironmentCycle();
 
+        // Chuyển góc nhìn tối ưu sang 'landscape' khi bắt đầu Stage 1 ngắm toàn cảnh vườn
+        if (typeof window.setPreferredOrientation === 'function') {
+            window.setPreferredOrientation('landscape');
+        }
+
         if (typeof window.fadeAudioVolume === 'function') {
-            window.fadeAudioVolume(0.20, 5000);
+            window.fadeAudioVolume(0.20, 1200);
         } else if (window.bgAudio && window.bgAudio.paused) {
             window.bgAudio.play().then(() => {
                 if (window.musicToggleBtn) window.musicToggleBtn.classList.add('playing');

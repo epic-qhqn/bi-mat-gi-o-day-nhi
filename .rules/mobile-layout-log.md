@@ -281,6 +281,37 @@
     - **Tổng số: 56/56 bài kiểm thử ĐẠT 100%**.
   - Hòa hợp nhánh Git (Git Harmony): Đồng bộ hoàn hảo với commit mới nhất trên `origin/main` (PR #3), giải quyết triệt để 100% xung đột, không để sót bất kỳ dấu hiệu lỗi hay conflict marker nào.
 
+---
+
+### Phase 1 (Nâng Cấp Mới): Kiến Trúc Xoay Màn Hình Linh Hoạt, Chống Lộ Bí Mật & Triệt Tiêu Độ Trễ Âm Thanh - [HOÀN THÀNH 100%]
+- **Vấn đề thực tế phát hiện qua ảnh chụp iPhone 14 Safari**:
+  - Lớp màn `#rotate-device-overlay` cũ chứa văn bản `"KHU VƯỜN DI SẢN 20/10"` và lời chúc làm lộ bí mật của trang web ngay khi người nhận vừa truy cập.
+  - Tông màu nền đen tuyền `#0d090d` thô ráp, không ăn nhập với phong cách Giấy Dó Thơ Ca.
+  - Cơ chế cũ chỉ khóa cứng 1 chiều xoay ngang, trong khi Bàn chế tác dập sáp Stage 0, Trắc nghiệm hoa 3D và Bưu thiếp di sản $1080 \times 1920$ hiển thị ở chiều dọc (Portrait) thoáng đãng và tráng lệ hơn nhiều lần.
+  - **Lỗi trễ âm thanh 5s trên iPhone 14**: Sau khi nhập pass và dập con dấu vào Phase 1, phải mất tới hơn 5 giây sau mới nghe thấy nhạc nền BGM.
+- **Nguyên nhân gốc rễ**:
+  1. *Độ trễ âm thanh*: Hàm `fadeAudioVolume(0.20, 5000)` có thời gian chuyển tiếp kéo dài 5000ms với mức âm lượng xuất phát chỉ 0.05 (quá nhỏ khiến loa điện thoại không thể nghe thấy trong 3 giây đầu). Đồng thời, `completePuzzle()` bị lồng sau chuỗi `setTimeout` 3.35s sau cú dập dấu.
+  2. *Chính sách Autoplay của Safari iOS*: Gọi `audio.play()` sau `setTimeout` dài bị Safari coi là không xuất phát từ tương tác người dùng trực tiếp.
+- **Công thức & Giải pháp chuẩn hóa**:
+  1. **Khử Bỏ 100% Spoilers & Mỹ Thuật Di Sản Giấy Dó**:
+     - Xóa bỏ mọi từ ngữ "20/10" khỏi overlay, thay bằng huy hiệu `✦ Nét Đẹp Khu Vườn ✦` và `✦ Nét Đẹp Thủ Công ✦`.
+     - Chuyển nền overlay sang lụa sương đêm giấy Dó (`radial-gradient`), viền vàng đồng `#D4AF37`, biểu tượng điện thoại nghiêng và cánh sen bay lượn.
+  2. **Kiến Trúc Điều Phối Xoay Linh Hoạt 2 Chiều (`setPreferredOrientation`)**:
+     - `require-portrait`: Bàn chế tác sáp Stage 0, Trắc nghiệm hoa 3D, Thiệp bưu hoa di sản 9:16.
+     - `require-landscape`: Vườn hoa chính (Stage 1-4), Cây tim nở rộ, Minigames.
+     - Bổ sung nút bấm cứu nguy `[Tiếp tục ở góc nhìn hiện tại]` (`.rotate-bypass-btn`) giúp người dùng bật khóa xoay màn hình không bao giờ bị kẹt cứng.
+  3. **Xử Lý Triệt Để Trễ Âm Thanh Trên iOS Safari**:
+     - Bổ sung bộ lắng nghe cử chỉ chạm đầu tiên (`pointerdown`/`touchstart`) để đánh thức và nạp trước Audio Context.
+     - Kích hoạt BGM ngay trong `startGardenAwakeningTransition` (ngay lúc ngón tay người dùng vừa dập con dấu son xuống phong thư).
+     - Rút ngắn thời gian fade còn 1200ms - 1500ms, khởi động ở mức âm lượng nghe rõ `0.12` rồi tăng nhanh lên `0.20`.
+- **Kiểm định chất lượng**:
+  - `node -c js/orientation-guard.js`: Không lỗi cú pháp (Exit code 0).
+  - `node -c js/audio-vfx.js`: Không lỗi cú pháp (Exit code 0).
+  - `node -c js/wax-seal-ceremony.js`: Không lỗi cú pháp (Exit code 0).
+  - `node -c js/boarding-pass-modal.js`: Không lỗi cú pháp (Exit code 0).
+  - `node -c js/secret-letter.js`: Không lỗi cú pháp (Exit code 0).
+  - Cân bằng ngoặc nhọn CSS (`base.css`: 36, `layout.css`: 313, `components.css`: 1750): Đạt 100%.
+
 
 
 

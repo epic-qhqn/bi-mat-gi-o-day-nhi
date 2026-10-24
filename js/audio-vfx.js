@@ -1229,13 +1229,25 @@ const initBgMusic = () => {
       });
     }
 
-    // Function: Kích hoạt nhạc ở âm lượng 5% khi người dùng bắt đầu nhập pass hoặc tên
+    // Helper: Mở khóa âm thanh tức thì trên iOS Safari ngay từ cú chạm đầu tiên
+    const unlockAudioOnFirstInteraction = () => {
+        if (typeof window.initAudio === 'function') window.initAudio();
+        if (audio && audio.paused && audio.src) {
+            audio.load();
+        }
+        window.removeEventListener('pointerdown', unlockAudioOnFirstInteraction, true);
+        window.removeEventListener('touchstart', unlockAudioOnFirstInteraction, true);
+    };
+    window.addEventListener('pointerdown', unlockAudioOnFirstInteraction, true);
+    window.addEventListener('touchstart', unlockAudioOnFirstInteraction, true);
+
+    // Function: Kích hoạt nhạc ở âm lượng 8% khi người dùng bắt đầu nhập pass hoặc tên
     window.startGateMusicLow = () => {
         if (!audio) return;
         window.initAudio();
         if (audio.paused) {
-            audio.volume = 0.05; // 5% âm lượng nhẹ nhàng dịu tai
-            if (volumeSlider) volumeSlider.value = 0.05;
+            audio.volume = 0.08; // 8% âm lượng êm dịu, nghe rõ trên loa điện thoại
+            if (volumeSlider) volumeSlider.value = 0.08;
             audio.play().then(() => {
                 if (musicToggleBtn) musicToggleBtn.classList.add('playing');
                 if (musicIconPath) musicIconPath.setAttribute("d", pausePath);
@@ -1245,8 +1257,8 @@ const initBgMusic = () => {
         }
     };
 
-    // Function: Fade âm lượng mượt mà (có hỗ trợ ducking không ghi đè volume gốc)
-    window.fadeAudioVolume = (targetVol = 0.20, durationMs = 5000, updateOriginal = true) => {
+    // Function: Fade âm lượng mượt mà và tức thì (1.5s thay vì 5s trễ)
+    window.fadeAudioVolume = (targetVol = 0.20, durationMs = 1500, updateOriginal = true) => {
         if (!audio) return;
         window.initAudio();
 
@@ -1255,8 +1267,9 @@ const initBgMusic = () => {
             : 0.20; // Mặc định 20% âm lượng
 
         if (audio.paused && finalTarget > 0.01) {
-            audio.volume = 0.05;
-            if (volumeSlider) volumeSlider.value = 0.05;
+            // Khởi động ở mức nghe rõ ngay (0.12) thay vì mức 0.05 quá nhỏ gây cảm giác trễ
+            audio.volume = Math.min(finalTarget, 0.12);
+            if (volumeSlider) volumeSlider.value = audio.volume;
             audio.play().catch(e => console.log("Play on fade failed:", e));
             if (musicToggleBtn) musicToggleBtn.classList.add('playing');
             if (musicIconPath) musicIconPath.setAttribute("d", pausePath);

@@ -118,6 +118,10 @@
 
     const openSecretLetterModal = () => {
         if (!secretLetterModal) return;
+        // Trắc nghiệm tính cách hoa & thư giấy Dó: Khuyến khích góc nhìn dọc thanh nhã
+        if (typeof window.setPreferredOrientation === 'function') {
+            window.setPreferredOrientation('portrait');
+        }
         secretLetterModal.classList.remove('hidden');
         if (typeof window.playKeyTapSFX !== 'undefined') window.playKeyTapSFX();
     };
@@ -130,6 +134,10 @@
             updatePolaroidBadge();
         }
         syncQuizDialogMode();
+        // Quay về góc nhìn toàn cảnh khu vườn
+        if (typeof window.setPreferredOrientation === 'function') {
+            window.setPreferredOrientation('landscape');
+        }
         if (typeof window.playKeyTapSFX !== 'undefined') window.playKeyTapSFX();
     };
 
