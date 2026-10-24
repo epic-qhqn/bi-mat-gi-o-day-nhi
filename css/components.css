@@ -10415,7 +10415,8 @@ body.zen-mode-active .garden-stage-selector {
     margin-top: 3px !important;
   }
   .simon-replay-btn,
-  .simon-skip-btn {
+  .simon-skip-btn,
+  .constellation-skip-btn {
     min-height: 36px !important;
     padding: 5px 12px !important;
     font-size: 11px !important;
@@ -10424,7 +10425,8 @@ body.zen-mode-active .garden-stage-selector {
     position: relative;
   }
   .simon-replay-btn::before,
-  .simon-skip-btn::before {
+  .simon-skip-btn::before,
+  .constellation-skip-btn::before {
     content: "";
     position: absolute;
     inset: -6px;
@@ -10433,19 +10435,19 @@ body.zen-mode-active .garden-stage-selector {
 
   /* Stage 3: Constellation Linker Star Nodes & Decoys */
   .star-node {
-    width: 82px !important;
-    height: 82px !important;
-    font-size: 26px !important;
+    width: 88px !important;
+    height: 88px !important;
+    font-size: 28px !important;
   }
   .star-node::before {
-    width: 18px !important;
-    height: 18px !important;
+    width: 20px !important;
+    height: 20px !important;
   }
   .star-node::after {
-    top: -16px !important;
-    left: -16px !important;
-    right: -16px !important;
-    bottom: -16px !important;
+    top: -18px !important;
+    left: -18px !important;
+    right: -18px !important;
+    bottom: -18px !important;
   }
   .star-node.decoy-star {
     width: 74px !important;

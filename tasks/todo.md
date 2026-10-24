@@ -38,9 +38,9 @@
 ---
 
 ### Phase 5: Cân Chỉnh Minigame Stage 3 & Bán Kính Chạm An Toàn (Constellation Linker & Skip Fallback)
-- [ ] 5.1: Giới hạn thuật toán phân bổ tọa độ 5 ngôi sao thật và 2 ngôi sao phụ trong vùng an toàn tuyệt đối của canvas ngang, tránh xa thanh tiến độ trên đỉnh và dock điều khiển 2 bên.
-- [ ] 5.2: Tăng bán kính nhận diện chạm nối sao (`proximityRadius`) lên $\ge 48\text{px}$ trên màn hình cảm ứng Safari iOS.
-- [ ] 5.3: Tích hợp nút bỏ qua cứu nguy cho Stage 3: nếu nối sai quá 5 lần hoặc quá 40 giây, hiển thị nút `[Sao Sáng Dẫn Lối · Đi Tiếp ✦✨]`, tự động nối hoàn chỉnh chòm sao và kích hoạt cây trổ hoa (Stage 4).
+- [x] 5.1: Giới hạn thuật toán phân bổ tọa độ 5 ngôi sao thật và 2 ngôi sao phụ trong vùng an toàn tuyệt đối của canvas ngang, tránh xa thanh tiến độ trên đỉnh và dock điều khiển 2 bên.
+- [x] 5.2: Tăng bán kính nhận diện chạm nối sao (`proximityRadius`) lên $\ge 48\text{px}$ trên màn hình cảm ứng Safari iOS.
+- [x] 5.3: Tích hợp nút bỏ qua cứu nguy cho Stage 3: nếu nối sai quá 5 lần hoặc quá 40 giây, hiển thị nút `[Sao Sáng Dẫn Lối · Đi Tiếp ✦✨]`, tự động nối hoàn chỉnh chòm sao và kích hoạt cây trổ hoa (Stage 4).
 
 ---
 

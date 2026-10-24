@@ -123,6 +123,12 @@
                 const previewLine = document.getElementById('constellation-preview-line');
                 if (previewLine) previewLine.style.display = 'none';
             }
+            const constSkipBtn = document.getElementById('constellation-skip-btn');
+            if (constSkipBtn) {
+                constSkipBtn.classList.add('hidden');
+                constSkipBtn.style.display = 'none';
+                constSkipBtn.style.pointerEvents = 'none';
+            }
             if (typeof window.removeConstellationHint === 'function') window.removeConstellationHint();
             if (typeof window.cleanupConstellationDecoys === 'function') window.cleanupConstellationDecoys();
             document.querySelectorAll('.constellation-hint, #constellation-hint-badge, .decoy-smoke-puff, .decoy-sparkle-ember').forEach(el => el.remove());

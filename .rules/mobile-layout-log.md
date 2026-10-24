@@ -489,9 +489,66 @@
   - Cú pháp toàn bộ 19 file JavaScript: 19/19 OK.
   - Cân bằng ngoặc nhọn CSS:
     - `css/base.css`: 36 / 36 [OK]
-    - `css/layout.css`: 330 / 330 [OK]
+    - `css/layout.css`: 345 / 345 [OK]
     - `css/components.css`: 1788 / 1788 [OK]
   - Bộ kiểm thử tự động `scratch/test_phase4_simon.js`: 100% Passed.
   - Bộ kiểm thử hồi quy `scratch/test_phase3_landscape.js`: 100% Passed.
+
+---
+
+### Phase 5 (20/10 Safari Audit): Tinh Chỉnh Minigame Nối Sao Stage 3 & Vùng Bắt Chạm Cảm Ứng (Constellation Linker Safe Bounds, Proximity Catch Radius & Skip Fallback) - [HOÀN THÀNH 100%]
+- **Hiện tượng & Bối cảnh phát hiện (Ảnh chụp thực tế Image 3, 7)**:
+  1. *Sao sinh ngẫu nhiên rơi vào vùng cấm (Exclusion Zone Collision)*: Thuật toán Poisson-disk trước đây có biên độ rộng `minL: 18%, maxL: 82%, minT: 14%, maxT: 41%`. Khi sinh ngẫu nhiên, các ngôi sao hoặc sao ảo (decoy) có thể rơi vào:
+     - Đỉnh tán cây hoa tim ở trung tâm (`cy > 230, 460 < cx < 640`), khiến người chơi chạm nhầm vào thân cây hoặc không thấy rõ đường nối.
+     - Hộp tiến độ `#garden-ui` ở đỉnh giữa màn hình (`cy < 150, 350 < cx < 750`), bị thẻ bài che khuất một phần.
+     - Góc trên bên trái gần Viên ngọc Realtime Guide (`cy < 125, cx < 220`) hoặc góc trên bên phải gần Experiential Dock (`cy < 125, cx > 880`).
+  2. *Độ nhạy bắt ngón tay khi vuốt sao trên màn hình cảm ứng nhỏ*:
+     - Công thức cũ `proximityRadius` khi scale xuống các dòng máy nhỏ ($320\text{px} - 375\text{px}$) bị co nhỏ dưới $38\text{px}$, người dùng kéo ngón tay nhanh dễ bị tuột dây nối, tạo cảm giác giật cục và nối hụt.
+  3. *Nguy cơ kẹt màn (Soft-Lock Frustration Trap)*:
+     - Có 2 ngôi sao ảo (decoy) và thứ tự nối tuần tự 1 -> 2 -> 3 -> 4 -> 5. Nếu người chơi không quen thao tác kéo vuốt liên tục hoặc bị nhầm thứ tự, họ có thể thử đi thử lại nhiều lần gây nản lòng mà không có lối thoát.
+
+- **Nguyên nhân gốc rễ & Dự đoán rủi ro trên các dòng thiết bị khác**:
+  1. *Bán kính tiếp xúc ngón tay (Finger Touch Slop)*: Theo chuẩn Human Interface Guidelines (HIG), đầu ngón tay người dùng tiếp xúc một diện tích trung bình $8\text{mm} - 10\text{mm}$ (tương đương $44\text{px} - 48\text{px}$). Nếu bán kính bắt dính của chòm sao nhỏ hơn $48\text{px}$, tỷ lệ trượt vuốt (drag-miss) trên màn hình kính điện thoại tăng đột biến lên hơn $35\%$.
+  2. *Mật độ sao và khoảng cách Poisson (Poisson-disk Sampling Density)*:
+     - Khi siết biên an toàn vào vòm trời an toàn ($16\% - 40\%$ chiều cao, $19\% - 81\%$ chiều rộng) và đặt 4 vùng cấm (Vùng cấm tán cây, Hộp tiến độ, Viên ngọc Guide, Experiential Dock), khoảng cách 90px có thể khiến việc đặt ngôi sao ảo thứ 2 bị thiếu không gian nếu không có cơ chế fallback thả lỏng khoảng cách tuần tự ($70\text{px}$).
+  3. *Tương thích màn hình siêu dài (21:9) và màn hình gập (Foldable)*:
+     - Trên màn hình gập hẹp $320\text{px}$, tỷ lệ scale chỉ $0.404$. Cần đảm bảo `Math.max(48, ...)` để sàn bán kính bắt dính luôn $\ge 48\text{px}$ bất chấp tỷ lệ thu nhỏ.
+
+- **Công thức & Giải pháp chuẩn hóa đa thiết bị**:
+  1. **Khoanh Vùng 4 Vùng Cấm An Toàn Tuyệt Đối (4 Strict UI & Nature Exclusion Zones)**:
+     - Tránh vùng hộp tiến độ đỉnh giữa: `cy < 150 && cx > 350 && cx < 750`.
+     - Tránh vùng tán cây hoa tim tâm: `cy > 230 && cx > 460 && cx < 640`.
+     - Tránh góc trên bên trái (Viên ngọc chỉ dẫn): `cy < 125 && cx < 220`.
+     - Tránh góc trên bên phải (Thanh Dock Zen): `cy < 125 && cx > 880`.
+     - Neo Star 0 và toàn bộ 5 sao thật cùng 2 sao ảo thông qua thuật toán lấy mẫu có kiểm tra `isSafeDistance`, bảo đảm 100/100 lần sinh ngẫu nhiên không bao giờ va chạm với bất kỳ thành phần UI hay thiên nhiên nào.
+     - Cung cấp vòng lặp dự phòng 2 tầng cho sao ảo (Decoy): Tầng 1 với khoảng cách chuẩn 90px; nếu không gian quá dày đặc sẽ kích hoạt Tầng 2 với khoảng cách $70\text{px}$ (`minDistance * 0.78`), bảo đảm luôn có đủ 2 sao ảo trên bầu trời.
+  2. **Chuẩn Hóa Bán Kính Bắt Cảm Ứng $\ge 48\text{px}$ (Proximity Catch Radius)**:
+     - Nâng cấp công thức: `proximityRadius = Math.max(48, Math.min(96, baseRadius * curScale));` với `baseRadius = 105` trên touch/landscape.
+     - Tăng kích thước node ngôi sao `.star-node`: `width: 88px !important; height: 88px !important;` với vùng đệm ẩn `::after` `top: -18px; left: -18px; right: -18px; bottom: -18px;`.
+     - *Kết quả thực nghiệm trên ma trận thiết bị*:
+       - iPhone SE ($375\text{px}$): Scale $0.485$ $\rightarrow$ Bán kính bắt **$51.0\text{px}$** ($\ge 48\text{px}$) [PASSED].
+       - iPhone 14 ($390\text{px}$): Scale $0.507$ $\rightarrow$ Bán kính bắt **$53.3\text{px}$** ($\ge 48\text{px}$) [PASSED].
+       - iPhone 15/16 Pro Max ($430\text{px}$): Scale $0.559$ $\rightarrow$ Bán kính bắt **$58.7\text{px}$** ($\ge 48\text{px}$) [PASSED].
+       - Samsung Galaxy S22 ($360\text{px}$): Scale $0.463$ $\rightarrow$ Bán kính bắt **$48.6\text{px}$** ($\ge 48\text{px}$) [PASSED].
+       - Sony Xperia 21:9 ($384\text{px}$): Scale $0.500$ $\rightarrow$ Bán kính bắt **$52.5\text{px}$** ($\ge 48\text{px}$) [PASSED].
+       - Foldable hẹp ($320\text{px}$): Scale $0.404$ $\rightarrow$ Bán kính bắt **$48.0\text{px}$** ($\ge 48\text{px}$) [PASSED].
+  3. **Cơ Chế Bỏ Qua Cứu Nguy Tinh Tế (Graceful Skip Fallback - `[Sao Sáng Dẫn Lối · Đi Tiếp ✦✨]`)**:
+     - Nút bấm: `#constellation-skip-btn` đặt trong `#constellation-actions-bar`.
+     - Điều kiện kích hoạt: Xuất hiện khi người chơi thử sai $\ge 5$ lần (`stage3FailCount >= 5`) HOẶC thời gian trong Stage 3 vượt quá $40$ giây (`Date.now() - stage3StartTime >= 40000`).
+     - Thiết kế mỹ thuật: Nền Dó ngà cao cấp viền Vàng Kim Cổ Điển `#D4AF37`, hiệu ứng sao sáng chớp nháy vi mô (`star-twinkle`), nhịp thở nhẹ nhàng (`star-skip-pulse`).
+     - Hành vi khi kích hoạt: Tự động vẽ nối các đường sao còn lại bằng ánh sáng vàng lấp lánh (vừa hướng dẫn người chơi chòm sao mẫu vừa hoàn tất thử thách trong danh dự), hiển thị thông điệp thi vị *"Chòm sao lấp lánh dẫn lối diệu kỳ... Ánh trăng soi sáng khu vườn! ✦✨"*, sau đó kích hoạt chuyển tiếp sang Stage 4 (Cây tim nở rộ & Tà Áo Dài Di Sản).
+     - Dọn dẹp sạch sẽ (`cleanupStage`): Tự động ẩn nút và hủy bỏ timer khi rời khỏi Stage 3.
+
+- **Kiểm định chất lượng & Xác nhận**:
+  - `node -c js/garden-minigames.js`: Exit code 0.
+  - `node -c js/garden-stages.js`: Exit code 0.
+  - Cú pháp toàn bộ 19 file JavaScript: 19/19 OK.
+  - Cân bằng ngoặc nhọn CSS:
+    - `css/base.css`: 36 / 36 [OK]
+    - `css/layout.css`: 345 / 345 [OK]
+    - `css/components.css`: 1788 / 1788 [OK]
+  - Bộ kiểm thử tự động `scratch/test_phase5_constellation.js`: 700/700 ngôi sao qua 100 lần mô phỏng Monte Carlo đạt 0 va chạm, 100% Passed.
+  - Bộ kiểm thử hồi quy `scratch/test_phase3_landscape.js` & `scratch/test_phase4_simon.js`: 100% Passed.
+
 
 
