@@ -1041,22 +1041,12 @@ a:hover {
 }
 
 #main-container {
-  width: 100vw;
-  height: 100vh;
-  height: 100dvh;
-  position: relative;
-  overflow: hidden;
-  z-index: 102;
-  pointer-events: none;
-}
-
-#main-container {
   position: fixed;
   inset: 0;
   width: 100vw;
   height: 100vh;
+  height: 100dvh;
   overflow: hidden !important;
-  contain: strict;
   pointer-events: none;
   z-index: 2;
 }
@@ -1287,7 +1277,8 @@ body.readable-font .polaroid-back .letter-content {
   }
 
   #co-hoa {
-    height: clamp(100px, 16vh, 140px) !important;
+    height: clamp(120px, 18vh, 160px) !important;
+    z-index: 15 !important;
   }
 }
 
@@ -1340,6 +1331,12 @@ body.readable-font .polaroid-back .letter-content {
   height: 680px;
   position: relative;
   z-index: 10;
+  background: transparent !important;
+  will-change: transform;
+  transform: translateZ(0);
+  -webkit-transform: translateZ(0);
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
 }
 
 #seed-hint {

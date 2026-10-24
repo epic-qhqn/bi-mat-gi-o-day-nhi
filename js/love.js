@@ -400,8 +400,6 @@
             ctx.save();
             ctx.beginPath();
             ctx.fillStyle = 'rgb(35, 31, 32)';
-            ctx.shadowColor = 'rgb(35, 31, 32)';
-            ctx.shadowBlur = 2;
             ctx.moveTo(p.x, p.y);
             ctx.arc(p.x, p.y, this.radius, 0, 2 * Math.PI);
             ctx.closePath();

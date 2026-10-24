@@ -17,6 +17,10 @@
   const height = canvas.clientHeight || 680;
   canvas.width = width;
   canvas.height = height;
+  const initCtx = canvas.getContext('2d');
+  if (initCtx) {
+    initCtx.clearRect(0, 0, width, height);
+  }
 
   const opts = {
     seed: {

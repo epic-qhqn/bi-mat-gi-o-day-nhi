@@ -741,11 +741,17 @@ window.startEnvironmentCycle = () => {
 })();
 
 // Tự động kích hoạt phong cảnh đồng quê khi trang web sẵn sàng
-document.addEventListener('DOMContentLoaded', () => {
+function bootCountrysideEnvironment() {
     if (typeof window.initCountrysideWildflowers === 'function') {
         window.initCountrysideWildflowers();
     }
     if (typeof window.initFallingLeavesCanvas === 'function') {
         window.initFallingLeavesCanvas();
     }
-});
+}
+
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', bootCountrysideEnvironment);
+} else {
+    bootCountrysideEnvironment();
+}

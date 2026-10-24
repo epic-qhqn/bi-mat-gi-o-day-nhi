@@ -272,8 +272,24 @@
             };
         }
 
-        // --- GIAI ĐOẠN 2: Hòa âm Simon (stageNum === 1) ---
+        // --- GIAI ĐOẠN 2: Vươn Cành & Hòa âm Simon (stageNum === 1) ---
         if (stageNum === 1) {
+            if (!gState.isWatered) {
+                const cloudShifter = document.getElementById('atmosphere-cloud-shifter');
+                const isCloudActive = cloudShifter && (cloudShifter.classList.contains('shifter-active') || cloudShifter.classList.contains('shifter-completed'));
+                return {
+                    key: 'stage-2-water',
+                    stepTag: 'GIAI ĐOẠN 2',
+                    message: isCloudActive
+                        ? 'Mưa sương sớm đang tưới tắm mát lành cho mầm non... 🌧️✨'
+                        : 'Chồi non đang khát! Chạm hoặc kéo Đám Mây Mưa gọi sương mai tưới tắm 🌧️',
+                    icon: '🌧️',
+                    targetSelector: '#atmosphere-cloud-shifter',
+                    pointerDirection: 'bottom',
+                    pointerText: 'Chạm gọi mưa sương'
+                };
+            }
+
             const isSimonPlaying = (typeof window.isSimonPlaying === 'function' && window.isSimonPlaying())
                 || Boolean(document.querySelector('#simon-game .simon-node.highlight'));
 
@@ -300,8 +316,24 @@
             };
         }
 
-        // --- GIAI ĐOẠN 3: Chòm sao Định Mệnh (stageNum === 2) ---
+        // --- GIAI ĐOẠN 3: Đơm Nụ & Chòm sao Định Mệnh (stageNum === 2) ---
         if (stageNum === 2) {
+            if (!gState.isFertilized) {
+                const sunShifter = document.getElementById('atmosphere-sun-shifter');
+                const isSunActive = sunShifter && (sunShifter.classList.contains('shifter-active') || sunShifter.classList.contains('shifter-completed'));
+                return {
+                    key: 'stage-3-sun',
+                    stepTag: 'GIAI ĐOẠN 3',
+                    message: isSunActive
+                        ? 'Ánh nắng ấm áp đang sưởi ấm cành mầm chuẩn bị đơm nụ... ☀️✨'
+                        : 'Cành lá cần nắng ấm! Chạm hoặc kéo Vệt Nắng Ban Mai để sưởi ấm khu vườn ☀️',
+                    icon: '☀️',
+                    targetSelector: '#atmosphere-sun-shifter',
+                    pointerDirection: 'bottom',
+                    pointerText: 'Chạm sưởi ấm cành'
+                };
+            }
+
             const constellationGame = document.getElementById('constellation-game');
             let targetStar = null;
             if (constellationGame) {
