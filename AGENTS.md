@@ -36,8 +36,9 @@
 - `css/layout.css`: Spatial layouts, 4-phase diurnal sky, canvas `#wrap`, Áo Dài silhouette, responsive viewports.
 - `css/components.css`: Interactive UI widgets (Wax Seal, Orrery, Minigames, Postcard, Letter, Mascot, Guide).
 
-### C. Logic Layer (`js/` - 17 Autonomous Modules)
-- `js/content.js`: Static datasets: 8 secret letters (`secretLettersDeck`), 12 heritage flower personality profiles.
+### C. Logic Layer (`js/` - 18 Autonomous Modules)
+- `js/flowers-data.js`: Dedicated database of 27 heritage flower profiles, matching rules, and accessors.
+- `js/content.js`: Static datasets: 8 secret letters (`secretLettersDeck`), 23 colleague wishes, markdown text.
 - `js/audio-vfx.js`: Web Audio API synthesizer (wind chimes, clicks, wax drops), BGM manager, audio ducking, triggers.
 - `js/environment.js`: Diurnal cycle (Dawn, Day, Dusk, Night), celestial particles, 3D falling petals/leaves, WeatherFX.
 - `js/wax-seal-ceremony.js`: Time-lock gate, marble wax melting, brass seal stamping, garden awakening (Stage 0).

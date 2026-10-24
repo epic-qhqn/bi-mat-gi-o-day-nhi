@@ -212,51 +212,183 @@
     // points: { <flowerId>: điểm } — flowerId khớp window.flowerProfiles[].id (js/content.js).
     // Thêm câu hỏi mới chỉ cần push thêm 1 object vào mảng này.
     const FLOWER_QUIZ_QUESTIONS = [
+        // Câu 1: Nhịp sống & Năng lượng sớm mai
         {
-            category: 'Đi chơi nhóm',
-            art: { emoji: '🌻🪴', tone: 'blue' },
-            text: 'Cả nhóm bàn mãi vẫn chưa chốt được đi đâu, lúc đó bạn sẽ...',
+            category: 'Nhịp sống đầu ngày',
+            art: { emoji: '🌅☕', tone: 'sun' },
+            text: 'Khoảnh khắc mở mắt đón ngày mới, điều gì mang lại cho bạn cảm giác tràn đầy năng lượng nhất?',
             options: [
-                { text: 'Nhắn riêng cho đứa thân nhất: “Đi đâu cũng được, có cậu là vui.”', points: { daisy: 2, lotus: 1 } },
-                { text: 'Thôi để mình quyết, rồi giao việc luôn cho từng người.', points: { peony: 2, tulip: 1 } },
-                { text: 'Rủ cả nhóm thử một chỗ chưa ai từng đến.', points: { poppy: 2, allium: 1 } },
-                { text: 'Ngồi yên quan sát, để ý xem ai đang không thoải mái.', points: { lotus: 2, tulip: 1 } }
+                { text: 'Một tách trà thơm, ngắm mầm cây đón nắng sớm trong sự tĩnh lặng an nhiên.', points: { lotus: 3, lavender: 2, jasmine: 2, water_lily: 1 } },
+                { text: 'Bật một bản nhạc rộn rã, lên kế hoạch cho những dự định mới mẻ và bùng nổ.', points: { sunflower: 3, gerbera: 3, poppy: 2, allium: 2 } },
+                { text: 'Tin nhắn hỏi han ấm áp từ người thân, lời dặn dò "hôm nay nhớ ăn sáng nha".', points: { carnation: 3, daisy: 2, baby_breath: 2, peach_blossom: 2 } },
+                { text: 'Chuẩn bị một bộ trang phục thanh lịch, tự tin nhìn mình trong gương mỉm cười.', points: { peony: 3, rose: 3, orchid: 2, tulip: 2, magnolia: 1 } }
             ]
         },
+        // Câu 2: Giao tế & Khí chất giữa đám đông
         {
-            category: 'Chiều rảnh rỗi',
-            art: { emoji: '☕📖', tone: 'blush' },
-            text: 'Một buổi chiều không phải làm gì cả, bạn thường...',
+            category: 'Giao tế & Bạn bè',
+            art: { emoji: '✨🥂', tone: 'blush' },
+            text: 'Trong một buổi họp mặt hay sự kiện đông người, bạn thường cảm thấy thoải mái nhất khi...',
             options: [
-                { text: 'Pha trà, mở nhạc và đọc nốt cuốn sách dang dở.', points: { lotus: 2, tulip: 1 } },
-                { text: 'Nghĩ ra một trò điên rồ rồi rủ cả hội thử.', points: { allium: 2, poppy: 1 } },
-                { text: 'Gọi điện hỏi thăm một người lâu rồi chưa nói chuyện.', points: { sunflower: 2, daisy: 1 } },
-                { text: 'Nấu một bữa thật ngon rồi nhắn mọi người ghé qua.', points: { peony: 2, sunflower: 1 } }
+                { text: 'Là tâm điểm khuấy động tiếng cười, kết nối mọi người xung quanh lại với nhau.', points: { sunflower: 2, poppy: 3, gerbera: 3, allium: 2 } },
+                { text: 'Ngồi bên những người bạn thân thiết, tỉ tê trò chuyện sâu sắc và chân thành.', points: { daisy: 3, forget_me_not: 3, baby_breath: 2, camellia: 1 } },
+                { text: 'Phong thái đĩnh đạc, giao tiếp chừng mực, tao nhã và để lại ấn tượng khó quên.', points: { orchid: 3, magnolia: 3, tulip: 2, lily: 2 } },
+                { text: 'Chu đáo quan sát, chăm lo từ ly nước đến chỗ ngồi cho mọi người cảm thấy ấm cúng.', points: { carnation: 2, marigold: 3, hydrangea: 2, peony: 1 } }
             ]
         },
+        // Câu 3: Ngã rẽ 4 phương (Nhánh định hình)
         {
-            category: 'Khi áp lực',
-            art: { emoji: '⏰🌧️', tone: 'sage' },
-            text: 'Deadline dí sát nút mà mọi thứ rối tung, bạn sẽ...',
+            category: 'Lạc bước vào vườn',
+            art: { emoji: '🧭🌿', tone: 'sage' },
+            text: 'Đứng trước 4 cánh cổng rẽ nhánh dẫn sâu vào khu vườn bí mật, trực giác mách bảo bạn chọn lối nào?',
             options: [
-                { text: 'Hít thở sâu, làm từng việc một cho tới khi xong.', points: { tulip: 2, lotus: 1 } },
-                { text: 'Đổi hẳn cách làm, biết đâu lại nhanh hơn.', points: { allium: 2, poppy: 1 } },
-                { text: 'Cười trừ, rồi kéo mọi người làm cùng cho vui.', points: { sunflower: 2, daisy: 1 } },
-                { text: 'Nhận phần việc khó nhất về mình, không để ai phải lo.', points: { peony: 2, tulip: 1 } }
+                { text: '[Lối Mộc] Lối mòn rợp bóng trúc mai, thoảng hương hoa dại mộc mạc và tiếng suối reo.', points: { lotus: 3, jasmine: 3, water_lily: 2, plumeria: 2, daisy: 1 } },
+                { text: '[Lối Hồng] Cây cầu gỗ phủ đầy hoa hồng và mẫu đơn dẫn tới tòa lâu đài nguy nga.', points: { rose: 3, peony: 3, tulip: 2, orchid: 2, magnolia: 1 } },
+                { text: '[Lối Nắng] Thảo nguyên vàng rực ngập tràn ánh dương, hoa hướng dương và cánh bướm.', points: { sunflower: 3, apricot_blossom: 3, gerbera: 2, poppy: 2, cherry_blossom: 1 } },
+                { text: '[Lối Suối] Dòng suối trăng biếc soi bóng bầu trời sao huyền ảo và sắc hoa oải hương.', points: { hydrangea: 3, lavender: 3, forget_me_not: 2, statice: 2, lily: 1 } }
             ]
         },
+        // Câu 4: (Kịch bản thích ứng theo lối rẽ của Câu 3)
         {
-            category: 'Nét duyên của bạn',
-            art: { emoji: '💌🌷', tone: 'sun' },
-            text: 'Người ta quý bạn nhất vì điều gì?',
+            category: 'Duyên kỳ ngộ',
+            art: { emoji: '🕊️🔮', tone: 'blue' },
+            text: 'Đi sâu vào con đường bạn chọn, bạn bất ngờ gặp một điều kỳ diệu đang chờ đón. Bạn sẽ...',
             options: [
-                { text: 'Luôn lắng nghe và không bao giờ phán xét.', points: { daisy: 2, lotus: 1 } },
-                { text: 'Dám nói thật và sống hết mình.', points: { poppy: 2, sunflower: 1 } },
-                { text: 'Ở cạnh bạn ai cũng thấy được tiếp thêm năng lượng.', points: { sunflower: 2, allium: 1 } },
-                { text: 'Là chỗ dựa vững vàng mỗi khi người ta cần.', points: { peony: 2, tulip: 1 } }
+                { text: 'Dịu dàng nâng niu, dùng sự chân thành và kiên nhẫn để chăm sóc nâng đỡ.', points: { baby_breath: 3, daisy: 2, plumeria: 3, jasmine: 2 } },
+                { text: 'Khám phá bí mật ẩn giấu, tìm hiểu nguồn gốc và giải mã điều kỳ bí ấy.', points: { orchid: 2, allium: 3, poppy: 2, cherry_blossom: 2 } },
+                { text: 'Tự tin tiếp nhận, sẵn sàng đảm đương trách nhiệm dẫn dắt và bảo bọc.', points: { peony: 2, rose: 2, magnolia: 3, apricot_blossom: 2 } },
+                { text: 'Lắng nghe thông điệp từ trái tim, đồng cảm sâu sắc với vẻ đẹp tâm hồn.', points: { hydrangea: 2, forget_me_not: 2, lavender: 2, statice: 3 } }
+            ]
+        },
+        // Câu 5: Đối diện áp lực & Thử thách
+        {
+            category: 'Trước giông bão',
+            art: { emoji: '⛈️🌧️', tone: 'slate' },
+            text: 'Khi deadline hay những biến cố bất ngờ ập đến làm mọi dự định đảo lộn, bạn sẽ...',
+            options: [
+                { text: 'Tĩnh lặng hít thở sâu, giữ trọn tâm an nhiên: "Sóng gió nào rồi cũng sẽ qua".', points: { lotus: 3, apricot_blossom: 2, water_lily: 3, plumeria: 2 } },
+                { text: 'Quyết liệt hành động, phân chia mục tiêu rõ ràng và biến áp lực thành động lực.', points: { peony: 2, rose: 3, magnolia: 2, tulip: 2 } },
+                { text: 'Linh hoạt đổi góc nhìn, tìm ra giải pháp sáng tạo bất ngờ mà chưa ai nghĩ tới.', points: { allium: 3, poppy: 2, gerbera: 2, hibiscus: 3 } },
+                { text: 'Bảo vệ và động viên tinh thần mọi người, cùng nhau san sẻ không để ai lẻ loi.', points: { carnation: 3, marigold: 2, hydrangea: 2, daisy: 1 } }
+            ]
+        },
+        // Câu 6: Ngôn ngữ của tình yêu
+        {
+            category: 'Khi trao yêu thương',
+            art: { emoji: '💌🕊️', tone: 'rose' },
+            text: 'Đối với bạn, điều thiêng liêng nhất tạo nên một mối tình đẹp bền vững là...',
+            options: [
+                { text: 'Lòng chung thủy son sắt, âm thầm chở che qua thăng trầm năm tháng.', points: { forget_me_not: 3, statice: 3, camellia: 3, lotus: 1 } },
+                { text: 'Sự chăm sóc chu đáo từ những điều vụn vặt: bữa cơm ấm, chiếc áo khoác ngày lạnh.', points: { carnation: 3, daisy: 2, marigold: 2, hydrangea: 2 } },
+                { text: 'Ngọn lửa đam mê rực cháy, yêu hết mình và cùng nhau tỏa sáng giữa đời.', points: { rose: 3, poppy: 3, sunflower: 2, peach_blossom: 2 } },
+                { text: 'Sự thấu hiểu tâm hồn, tôn trọng tự do và cùng nhau hoàn thiện bản thân.', points: { lily: 3, orchid: 2, tulip: 3, water_lily: 1 } }
+            ]
+        },
+        // Câu 7: Khi người bên cạnh gặp chuyện buồn
+        {
+            category: 'Sự thấu cảm',
+            art: { emoji: '🫂🍵', tone: 'warm' },
+            text: 'Một người bạn thân gõ cửa nhà bạn với đôi mắt ướt nhòe vì vừa trải qua tổn thương...',
+            options: [
+                { text: 'Không hỏi dồn, chỉ im lặng ôm bạn thật chặt và nấu một bát cháo nóng thơm bùi.', points: { carnation: 2, daisy: 3, baby_breath: 3, plumeria: 2 } },
+                { text: 'Lắng nghe hết mực, đứng về phía bạn và kiên quyết bảo vệ bạn trước bất công.', points: { rose: 2, peony: 3, magnolia: 2, marigold: 2 } },
+                { text: 'Đặt mình vào nỗi đau ấy, cùng khóc cùng sẻ chia để bạn vơi bớt tủi thân.', points: { hydrangea: 3, forget_me_not: 2, lavender: 2, lily: 2 } },
+                { text: 'Kéo bạn đứng dậy, đưa bạn đi dạo hít thở khí trời và giúp bạn tìm lại nụ cười.', points: { sunflower: 2, gerbera: 3, poppy: 2, peach_blossom: 2 } }
+            ]
+        },
+        // Câu 8: Khí chất độc bản của bạn
+        {
+            category: 'Khí chất của bạn',
+            art: { emoji: '🎨🪞', tone: 'violet' },
+            text: 'Điều gì khiến bạn trở nên độc nhất vô nhị và luôn được mọi người trân quý?',
+            options: [
+                { text: 'Sự sáng tạo phóng khoáng, góc nhìn nghệ thuật độc đáo không rập khuôn.', points: { allium: 3, poppy: 2, hibiscus: 3, cherry_blossom: 2 } },
+                { text: 'Cốt cách thanh bạch, chuẩn mực đoan trang và tấm lòng trong sáng như gương.', points: { lily: 3, lotus: 3, magnolia: 2, jasmine: 2 } },
+                { text: 'Nụ cười tỏa nắng, tấm lòng thơm thảo và năng lượng chữa lành cho mọi người.', points: { daisy: 2, sunflower: 3, gerbera: 2, baby_breath: 2 } },
+                { text: 'Sự độc lập, tự chủ và phong thái kiêu hãnh của một người phụ nữ hiện đại.', points: { tulip: 3, orchid: 3, rose: 2, apricot_blossom: 2 } }
+            ]
+        },
+        // Câu 9: Chiếc rương kỷ niệm bí mật
+        {
+            category: 'Ký ức & Tri ân',
+            art: { emoji: '📦🗝️', tone: 'amber' },
+            text: 'Nếu có một chiếc rương cất giữ những báu vật tinh thần quý giá nhất đời bạn, trong đó sẽ có...',
+            options: [
+                { text: 'Những cánh thư tay cũ, tấm ảnh ố vàng và kỷ vật tình thân đong đầy hồi ức.', points: { forget_me_not: 3, statice: 3, camellia: 3, carnation: 1 } },
+                { text: 'Chiếc vé máy bay đến những vùng đất mới và cuốn nhật ký của tuổi trẻ rực rỡ.', points: { cherry_blossom: 3, poppy: 2, allium: 2, water_lily: 2 } },
+                { text: 'Những tấm bằng khen, kỷ niệm chương ghi dấu bao nỗ lực kiên cường vượt khó.', points: { apricot_blossom: 3, magnolia: 3, peony: 2, orchid: 2 } },
+                { text: 'Một cành hoa thơm sấy khô, chiếc chuông gió nhỏ và những lời chúc bình an.', points: { lavender: 3, jasmine: 3, baby_breath: 2, lotus: 1 } }
+            ]
+        },
+        // Câu 10: Lời tự tình gửi đến chính mình (20/10)
+        {
+            category: 'Gửi đóa hoa rạng rỡ',
+            art: { emoji: '💐✨', tone: 'gold' },
+            text: 'Nhân ngày Phụ nữ Việt Nam 20/10, lời chúc đẹp nhất bạn muốn nhắn nhủ đến chính mình là...',
+            options: [
+                { text: '"Hãy luôn kiêu hãnh và yêu thương bản thân, bạn xứng đáng với những điều tuyệt vời nhất!"', points: { rose: 3, peony: 3, orchid: 2, tulip: 2 } },
+                { text: '"Mỗi ngày thức dậy đều là một niềm vui, hãy giữ mãi nụ cười rạng ngời và hồn nhiên này nhé!"', points: { sunflower: 2, gerbera: 3, daisy: 2, peach_blossom: 3 } },
+                { text: '"Bình an trong tâm hồn là thứ tài sản quý giá nhất, hãy sống an nhiên và hạnh phúc."', points: { lotus: 3, water_lily: 2, plumeria: 3, jasmine: 2 } },
+                { text: '"Cảm ơn bạn vì đã luôn kiên cường, bền bỉ và không bao giờ ngừng tỏa hương thơm."', points: { apricot_blossom: 2, magnolia: 2, camellia: 2, carnation: 2, statice: 2 } }
             ]
         }
     ];
+
+    // Nhánh kịch bản thích ứng linh hoạt cho Câu 4 dựa trên lựa chọn Câu 3
+    const ADAPTIVE_BRANCH_QUESTIONS = [
+        {
+            category: 'Duyên kỳ ngộ · Lối Mộc',
+            art: { emoji: '🕊️🌿', tone: 'sage' },
+            text: 'Bước trên Lối Mộc sương sớm, bạn thấy một chú chim non lạc mẹ đang run rẩy bên khóm hoa dại. Bạn sẽ...',
+            options: [
+                { text: 'Nhẹ nhàng bế chú chim sưởi ấm, tìm lại tổ trên cành cao cho nó.', points: { lotus: 3, jasmine: 3, baby_breath: 2, daisy: 2 } },
+                { text: 'Quan sát tỉ mỉ chung quanh, tìm dấu vết chim mẹ và bảo vệ từ xa.', points: { orchid: 2, camellia: 3, tulip: 2, plumeria: 2 } },
+                { text: 'Tự tay dựng một chiếc tổ nhỏ ấm áp dưới tán lá râm mát che mưa nắng.', points: { carnation: 3, marigold: 2, hydrangea: 2, water_lily: 2 } },
+                { text: 'Khẽ huýt sáo một giai điệu quen thuộc để gọi đàn chim mẹ quay về.', points: { peach_blossom: 2, cherry_blossom: 3, allium: 2, poppy: 1 } }
+            ]
+        },
+        {
+            category: 'Duyên kỳ ngộ · Lối Hồng',
+            art: { emoji: '🏰🗝️', tone: 'rose' },
+            text: 'Đứng trước cánh cổng Lâu Đài Hoa Hồng tráng lệ, người giữ cổng trao bạn chiếc chìa khóa cổ bằng bạc. Bạn sẽ...',
+            options: [
+                { text: 'Tự tin bước qua đại sảnh, sẵn sàng đón nhận thử thách để tỏa sáng.', points: { peony: 3, rose: 3, magnolia: 2, tulip: 2 } },
+                { text: 'Trân trọng mở căn phòng thư viện cổ kính, tìm kiếm tri thức và điều huyền bí.', points: { orchid: 3, lily: 2, allium: 2, magnolia: 2 } },
+                { text: 'Mang theo chìa khóa mở khu vườn thượng uyển mời tất cả bạn bè vào cùng chung vui.', points: { sunflower: 2, gerbera: 3, carnation: 2, peach_blossom: 2 } },
+                { text: 'Lặng ngắm kiến trúc tuyệt mỹ, chiêm nghiệm nét đẹp vượt thời gian của tòa thành.', points: { camellia: 3, lotus: 2, statice: 2, lavender: 2 } }
+            ]
+        },
+        {
+            category: 'Duyên kỳ ngộ · Lối Nắng',
+            art: { emoji: '🦋🌻', tone: 'sun' },
+            text: 'Giữa Thảo Nguyên Nắng vàng rực rỡ, một cơn gió ấm mang theo cánh bướm ngũ sắc lượn quanh bạn. Bạn sẽ...',
+            options: [
+                { text: 'Đưa tay đón lấy cánh bướm, cười giòn tan và cùng nó khiêu vũ dưới ánh mặt trời.', points: { sunflower: 3, gerbera: 3, poppy: 2, peach_blossom: 2 } },
+                { text: 'Lấy máy ảnh ghi lại khoảnh khắc rực rỡ, lưu giữ vẻ đẹp thanh xuân bất tận.', points: { cherry_blossom: 3, apricot_blossom: 2, allium: 2, tulip: 2 } },
+                { text: 'Dừng chân cắm một nhành hoa thơm, cảm tạ sự trù phú và kỳ diệu của đất trời.', points: { lotus: 2, plumeria: 3, water_lily: 2, daisy: 2 } },
+                { text: 'Hái những bông hoa rực rỡ nhất kết thành vòng hoa tặng người mình thương quý.', points: { carnation: 2, marigold: 3, baby_breath: 2, rose: 2 } }
+            ]
+        },
+        {
+            category: 'Duyên kỳ ngộ · Lối Suối',
+            art: { emoji: '🌌🪻', tone: 'blue' },
+            text: 'Bên Dòng Suối Trăng biếc lấp lánh phản chiếu ngàn sao, một viên pha lê phát sáng dưới đáy nước. Bạn sẽ...',
+            options: [
+                { text: 'Khẽ lội xuống làn nước mát, nâng niu viên pha lê lắng nghe âm vang vũ trụ.', points: { hydrangea: 3, lavender: 3, water_lily: 2, forget_me_not: 2 } },
+                { text: 'Để viên pha lê tỏa sáng tự nhiên dưới lòng suối, trân trọng nét đẹp nguyên sơ.', points: { lotus: 3, jasmine: 2, statice: 3, plumeria: 2 } },
+                { text: 'Cầu nguyện một điều ước chân thành cho người mình yêu quý và gia đình.', points: { carnation: 2, lily: 3, forget_me_not: 3, marigold: 2 } },
+                { text: 'Tìm hiểu quy luật khúc xạ ánh sáng huyền ảo, chia sẻ bí mật này với tri kỷ.', points: { orchid: 2, allium: 3, magnolia: 2, poppy: 1 } }
+            ]
+        }
+    ];
+
+    const getActiveQuestion = (state, index) => {
+        if (index === 3) {
+            const branchChoice = (state && state.answers && state.answers[2] !== undefined) ? state.answers[2] : 0;
+            return ADAPTIVE_BRANCH_QUESTIONS[branchChoice] || FLOWER_QUIZ_QUESTIONS[3];
+        }
+        return FLOWER_QUIZ_QUESTIONS[index];
+    };
 
     // Nhãn 3 dòng chi tiết ↔ khóa trong flowerProfiles[].checklist
     const FLOWER_QUIZ_DETAIL_ROWS = [
@@ -265,7 +397,7 @@
         { key: 'pressure', label: 'Khi đối diện âu lo' }
     ];
 
-    // Dữ liệu kết quả = window.flowerProfiles (content.js). Dự phòng nếu content.js chưa tải.
+    // Dữ liệu kết quả = window.flowerProfiles (js/flowers-data.js). Dự phòng nếu chưa tải.
     const FLOWER_QUIZ_FALLBACK_RESULT = {
         id: 'lotus', emoji: '🪷', petalColor: '#D47A88',
         title: 'Bạn là đóa Sen Lụa thanh tao.',
@@ -287,7 +419,9 @@
 
     const answerQuestion = (state, optionIndex) => {
         if (isQuizFinished(state)) return state;
-        const options = state.questions[getQuizIndex(state)].options;
+        const currentQ = getActiveQuestion(state, getQuizIndex(state));
+        if (!currentQ || !currentQ.options) return state;
+        const options = currentQ.options;
         if (!Number.isInteger(optionIndex) || optionIndex < 0 || optionIndex >= options.length) return state;
         return { ...state, answers: [...state.answers, optionIndex] };
     };
@@ -297,19 +431,37 @@
     const computeQuizScores = (state) => {
         const scores = {};
         state.answers.forEach((optionIndex, questionIndex) => {
-            const points = state.questions[questionIndex].options[optionIndex].points || {};
+            const q = getActiveQuestion(state, questionIndex);
+            if (!q || !q.options || !q.options[optionIndex]) return;
+            const points = q.options[optionIndex].points || {};
             Object.keys(points).forEach((id) => { scores[id] = (scores[id] || 0) + points[id]; });
         });
         return scores;
     };
 
-    // Điểm cao nhất thắng; hòa điểm → loại đứng trước trong danh sách profiles.
-    const pickWinningResult = (scores, results) => {
+    // Điểm cao nhất thắng; ưu tiên tương thích nhánh rẽ Câu 3 khi hòa điểm
+    const pickWinningResult = (scores, results, state) => {
         let best = results[0];
         let bestScore = -1;
+
+        const branchFamilies = [
+            ['lotus', 'jasmine', 'water_lily', 'plumeria', 'camellia', 'daisy', 'baby_breath'],
+            ['rose', 'peony', 'orchid', 'tulip', 'magnolia', 'carnation'],
+            ['sunflower', 'gerbera', 'poppy', 'allium', 'apricot_blossom', 'peach_blossom', 'cherry_blossom'],
+            ['hydrangea', 'lavender', 'forget_me_not', 'statice', 'marigold', 'lily', 'hibiscus']
+        ];
+        const branchIdx = (state && state.answers && state.answers[2] !== undefined) ? state.answers[2] : null;
+        const favoredFamily = (branchIdx !== null && branchFamilies[branchIdx]) ? branchFamilies[branchIdx] : [];
+
         results.forEach((r) => {
-            const sc = scores[r.id] || 0;
-            if (sc > bestScore) { best = r; bestScore = sc; }
+            let sc = scores[r.id] || 0;
+            if (favoredFamily.includes(r.id)) {
+                sc += 0.05; // Ưu tiên nhẹ nhàng để phá vỡ thế hòa điểm theo đúng hướng rẽ tâm hồn
+            }
+            if (sc > bestScore) {
+                best = r;
+                bestScore = sc;
+            }
         });
         return best;
     };
@@ -396,7 +548,7 @@
     const buildQuestionStage = () => {
         const index = getQuizIndex(quizState);
         const total = quizState.questions.length;
-        const question = quizState.questions[index];
+        const question = getActiveQuestion(quizState, index);
         const stage = el('div');
 
         const header = el('div', 'flower-quiz__header');
@@ -457,7 +609,7 @@
     };
 
     const buildResultStage = () => {
-        const result = pickWinningResult(computeQuizScores(quizState), getFlowerResults());
+        const result = pickWinningResult(computeQuizScores(quizState), getFlowerResults(), quizState);
         const stage = el('div');
 
         const medallion = el('div', 'flower-quiz__medallion', result.emoji || '🌸');
