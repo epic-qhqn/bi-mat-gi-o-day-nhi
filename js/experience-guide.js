@@ -3,7 +3,7 @@
  * Autonomous module providing interactive walkthrough, step-by-step stage guides,
  * easter eggs showcase, and intelligent contextual hint bubbles.
  */
-(function() {
+(function () {
     'use strict';
 
     // DOM Element References
@@ -112,7 +112,7 @@
         1: 'Chạm đám mây gọi mưa sương hoặc kéo vệt nắng ấm để tưới tắm chồi non và chạm cỏ 4 lá 🍀',
         2: 'Lắng nghe chuông hoa và gõ lại đúng giai điệu Đồng Dao để giúp cây vươn cành mạnh mẽ 🎵',
         3: 'Nối các vì sao sáng rực rỡ để vẽ nên chòm sao Trái Tim Ngân Hà lung linh ✨',
-        4: 'Hoa đã nở rộ! Đừng quên mở Thư Bí Mật 💌, Bưu Thiếp Kỷ Niệm 9:16 và gảy phím Mộc Cầm nhé 🌸'
+        4: 'Hoa đã nở rộ! Đừng quên mở Thư Bí Mật 💌 và Bưu Thiếp Kỷ Niệm 9:16 nhé 🌸'
     };
 
     // Public API for Stage Observers

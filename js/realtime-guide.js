@@ -3,7 +3,7 @@
  * Automatically senses current journey phase, user inputs, and environmental state.
  * Real-time dynamic pointer hand, spotlight reticle, and live quest mission bar.
  */
-(function() {
+(function () {
     'use strict';
 
     // DOM Elements
@@ -376,15 +376,15 @@
                 };
             }
 
-            // When all primary gifts have been opened, invite free ambient interaction
+            // When all primary gifts have been opened, celebrate completed journey
             return {
                 key: 'stage-4-ambient',
-                stepTag: 'VƯỜN HOA NỞ RỘ',
-                message: 'Khu vườn đã nở hoa trọn vẹn! Vuốt đàn Mộc Cầm hoặc xoay Bánh xe thiên văn để đổi 4 mùa 🌸🎶',
+                stepTag: 'VƯỜN HOA HOÀN MỸ',
+                message: 'Khu vườn 20/10 đã nở hoa trọn vẹn! Chúc các bóng hồng luôn xinh đẹp và hạnh phúc 🌸✨',
                 icon: '🌸',
-                targetSelector: '#plant-harp-strings-wrap',
-                pointerDirection: 'left',
-                pointerText: 'Gảy đàn Mộc Cầm'
+                targetSelector: null,
+                pointerDirection: 'none',
+                pointerText: ''
             };
         }
 
