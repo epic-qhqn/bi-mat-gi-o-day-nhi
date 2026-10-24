@@ -67,12 +67,16 @@
         </div>
     </div>
 
-    <!-- Orientation Hint -->
-    <div id="orientation-hint-overlay" class="modal-overlay hidden">
-        <div class="orientation-hint">
-            <svg viewBox="0 0 24 24" class="rotate-icon"><path fill="currentColor" d="M4 8h16c1.1 0 2 .9 2 2v4c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2v-4c0-1.1.9-2 2-2zm0 6h16v-4H4v4z"/></svg>
-            <p>Hãy xoay ngang điện thoại để trải nghiệm trọn vẹn nhất nhé!</p>
+    <!-- Force-Landscape Overlay (mobile portrait only; shown/hidden purely by CSS media queries) -->
+    <div id="rotate-device-overlay" class="rotate-device-overlay" role="alertdialog" aria-modal="true" aria-live="assertive" aria-label="Please rotate your phone">
+        <div class="rotate-device-stage" aria-hidden="true">
+            <div class="rotate-phone">
+                <span class="rotate-phone-speaker"></span>
+                <span class="rotate-phone-screen"></span>
+                <span class="rotate-phone-home"></span>
+            </div>
         </div>
+        <p class="rotate-device-text">Please rotate your phone</p>
     </div>
 
     <!-- Time Lock Gateway Modal (Khóa thời gian đến 12h trưa 25/10/2026) -->
@@ -231,7 +235,7 @@
                         <div class="crest-selector-wrap" id="crest-selector-wrap">
                             <span class="crest-selector-title">HOA VĂN KHẮC TRIỆN:</span>
                             <div class="crest-options-row" role="radiogroup" aria-label="Chọn hoa văn khắc con dấu">
-                                <button type="button" class="crest-opt-btn is-selected" data-crest="lotus" role="radio" aria-checked="true" title="Hoa Sen Tinh Khôi">
+                                <button type="button" class="crest-opt-btn" data-crest="lotus" role="radio" aria-checked="false" title="Hoa Sen Tinh Khôi">
                                     <span class="crest-opt-icon">🪷</span>
                                     <span class="crest-opt-name">Hoa Sen</span>
                                 </button>
@@ -358,13 +362,7 @@
                                     <div class="wax-inner-core">
                                         <!-- Dynamic SVG Crest Face -->
                                         <div class="wax-crest-display" id="wax-crest-display">
-                                            <svg class="wax-flower-crest crest-svg-lotus" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-                                                <path d="M12 4 C 10 9, 8 13, 12 18 C 16 13, 14 9, 12 4 Z"/>
-                                                <path d="M12 18 C 6 15, 3 11, 5 7 C 8 9, 10 13, 12 18 Z"/>
-                                                <path d="M12 18 C 18 15, 21 11, 19 7 C 16 9, 14 13, 12 18 Z"/>
-                                                <path d="M5 19 C 9 17, 15 17, 19 19" stroke-width="1.5"/>
-                                            </svg>
-                                        </div>
+</div>
                                         <div class="wax-name-imprint" id="wax-name-imprint">TRIỆN SON</div>
                                     </div>
                                 </div>
@@ -414,7 +412,7 @@
                                     <div class="stamp-handle-body"></div>
                                     <div class="stamp-brass-collar"></div>
                                     <div class="stamp-brass-head">
-                                        <div class="stamp-engraving-face" id="stamp-engraving-face">🪷</div>
+                                        <div class="stamp-engraving-face" id="stamp-engraving-face">✦</div>
                                     </div>
                                 </div>
                                 <div class="stamp-shadow"></div>
@@ -1529,6 +1527,7 @@
     <script src="./js/audio-vfx.js"></script>
     <script src="./js/environment.js"></script>
     <script src="./js/mascot-companion.js"></script>
+    <script src="./js/orientation-guard.js"></script>
     <script src="./js/wax-seal-ceremony.js"></script>
     <script src="./js/atmosphere-shifter.js"></script>
     <script src="./js/botanical-harp.js"></script>

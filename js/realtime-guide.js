@@ -22,6 +22,10 @@
     let currentTargetEl = null;
     let pollInterval = null;
     let lastStateKey = '';
+    let currentLockDirection = false;
+    let revealedStateKey = '';
+    let currentPointerDir = 'bottom';
+    let currentPointerText = '';
 
     // Smart Exploration Memory: Tracks features user has already opened or interacted with in Stage 4
     const userInteractions = {
@@ -59,7 +63,7 @@
             if (!nameVal) {
                 return {
                     key: 'atelier-name',
-                    stepTag: 'BƯỚC 1/6',
+                    stepTag: 'BƯỚC 1/7',
                     message: 'Hãy gõ tên của bạn lên khuôn đồng để bắt đầu nghi thức đúc triện son 🪶',
                     icon: '✍️',
                     targetSelector: '#name-input',
@@ -75,12 +79,31 @@
             if (beadCount < 3) {
                 return {
                     key: 'atelier-beads',
-                    stepTag: 'BƯỚC 2/6',
+                    stepTag: 'BƯỚC 2/7',
                     message: `Đã chọn ${beadCount}/3 viên sáp. Chạm chọn thêm sáp hoặc bấm 'Phối màu nhanh ✨' 🎨`,
                     icon: '🎨',
                     targetSelector: quickDropBtn && quickDropBtn.offsetParent ? '#hearth-quick-drop-btn' : '#wax-beads-tray',
-                    pointerDirection: 'bottom',
-                    pointerText: 'Bấm phối màu nhanh hoặc chọn sáp'
+                    // Hand sits ABOVE the target and points DOWN at it
+                    pointerDirection: 'top',
+                    lockDirection: true,
+                    pointerText: 'Bấm phối màu nhanh hoặc chọn sáp',
+                    // As soon as >=1 wax is picked the hand is hidden; it only returns at Step 3 (engraving crest)
+                    hideHand: beadCount >= 1
+                };
+            }
+
+            // Step 2.2b: Choose engraving pattern (Hoa văn khắc triện) - no default is preselected
+            const crestChosen = document.querySelector('.crest-opt-btn.is-selected');
+            if (!crestChosen) {
+                return {
+                    key: 'atelier-crest',
+                    stepTag: 'BƯỚC 3/7',
+                    message: 'Chọn một hoa văn khắc triện để khắc lên con dấu đồng 🪷🌼🦋🌙',
+                    icon: '🪷',
+                    targetSelector: '#crest-selector-wrap',
+                    pointerDirection: 'top',
+                    lockDirection: true,
+                    pointerText: 'Chọn hoa văn khắc triện'
                 };
             }
 
@@ -93,7 +116,7 @@
             if (!isMatchLit && !isCandleLit) {
                 return {
                     key: 'atelier-match',
-                    stepTag: 'BƯỚC 3/6',
+                    stepTag: 'BƯỚC 4/7',
                     message: 'Chạm hoặc kéo que diêm để quẹt lửa đánh thức ngọn nến thơm 🔥',
                     icon: '⚡',
                     targetSelector: '#match-striker-strip',
@@ -106,7 +129,7 @@
             if (isMatchLit && !isCandleLit) {
                 return {
                     key: 'atelier-candle',
-                    stepTag: 'BƯỚC 3/6',
+                    stepTag: 'BƯỚC 4/7',
                     message: 'Que diêm đã cháy! Hãy chạm vào ngọn nến để thắp sáng 🕯️',
                     icon: '🕯️',
                     targetSelector: '#artisan-candle',
@@ -127,7 +150,7 @@
                 const rodEl = document.getElementById('glass-stirring-rod');
                 return {
                     key: 'atelier-melting',
-                    stepTag: 'BƯỚC 4/6',
+                    stepTag: 'BƯỚC 5/7',
                     message: 'Sáp đang được đun tan chảy trong thìa đồng... Có thể chạm đũa khuấy vân cẩm thạch 🪄',
                     icon: '♨️',
                     targetSelector: (rodEl && !rodEl.classList.contains('hidden')) ? '#glass-stirring-rod' : '#brass-spoon',
@@ -140,7 +163,7 @@
             if (isWaxMelted && !isWaxPoured && !isWaxStamped) {
                 return {
                     key: 'atelier-pour',
-                    stepTag: 'BƯỚC 5/6',
+                    stepTag: 'BƯỚC 6/7',
                     message: 'Sáp đã tan chảy hoàn mỹ! Chạm vào thìa đồng để rót sáp lỏng sang phong thư 🍯',
                     icon: '🍯',
                     targetSelector: '#brass-spoon',
@@ -153,7 +176,7 @@
             if (isWaxPoured && !isWaxStamped) {
                 return {
                     key: 'atelier-stamp',
-                    stepTag: 'BƯỚC 6/6',
+                    stepTag: 'BƯỚC 7/7',
                     message: 'Chạm hoặc kéo con dấu đồng dập vào vũng sáp son để khai mở cổng hoa 💮',
                     icon: '💮',
                     targetSelector: '#wax-seal-stamp',
@@ -424,7 +447,7 @@
     };
 
     // Update Spotlight Position to Wrap Target Element
-    const updateSpotlightPosition = (targetEl, pointerDir = 'bottom', pointerText = 'Chạm vào đây') => {
+    const updateSpotlightPosition = (targetEl, pointerDir = 'bottom', pointerText = 'Chạm vào đây', lockDirection = false) => {
         if (!targetBoxEl || !pointerHandEl || !pointerBadgeEl) return;
 
         if (!targetEl || !isGuideEnabled) {
@@ -455,7 +478,9 @@
 
         // Dynamic edge detection to prevent hand clipping
         let effectiveDir = pointerDir;
-        if (effectiveDir === 'top' && boxTop < 75) {
+        if (lockDirection) {
+            // Direction is part of the tutorial contract (e.g. hand above, pointing down): never flip it
+        } else if (effectiveDir === 'top' && boxTop < 75) {
             effectiveDir = 'bottom';
         } else if (effectiveDir === 'bottom' && boxTop + boxHeight > window.innerHeight - 80) {
             effectiveDir = 'top';
@@ -478,6 +503,23 @@
         } else {
             if (handGlyph) handGlyph.textContent = '👈';
         }
+    };
+
+    // Scroll the atelier card (if it scrolls) so the target is on screen AND a hand drawn above it has room.
+    // Returns true once the target is comfortably visible.
+    const revealTargetForHand = (el, headroom) => {
+        const scroller = el.closest('.atelier-paper-card');
+        if (!scroller) return true;
+        const rect = el.getBoundingClientRect();
+        const bottomLimit = window.innerHeight - 24;
+        let delta = 0;
+        if (rect.top < headroom) {
+            delta = rect.top - headroom;                         // negative: scroll up
+        } else if (rect.bottom > bottomLimit) {
+            delta = Math.min(rect.bottom - bottomLimit, rect.top - headroom); // scroll down, but keep headroom
+        }
+        if (delta) scroller.scrollTop += delta;
+        return true;
     };
 
     // Main Update Loop
@@ -510,8 +552,22 @@
             targetEl = document.querySelector(state.targetSelector);
         }
 
+        // Tutorial hand temporarily hidden by the state machine (HUD message stays visible)
+        if (state.hideHand) targetEl = null;
+
+        // When a hand-above state first appears, scroll its target into view inside the card.
+        // Deferred while the user is typing (soft keyboard open) so the name field never jumps away.
+        if (state.lockDirection && state.key !== revealedStateKey && targetEl) {
+            const ae = document.activeElement;
+            const isTyping = ae && (ae.tagName === 'INPUT' || ae.tagName === 'TEXTAREA');
+            if (!isTyping && revealTargetForHand(targetEl, 96)) revealedStateKey = state.key;
+        }
+
         currentTargetEl = targetEl;
-        updateSpotlightPosition(targetEl, state.pointerDirection, state.pointerText);
+        currentLockDirection = Boolean(state.lockDirection);
+        currentPointerDir = state.pointerDirection;
+        currentPointerText = state.pointerText;
+        updateSpotlightPosition(targetEl, state.pointerDirection, state.pointerText, currentLockDirection);
         lastStateKey = state.key;
     };
 
@@ -601,7 +657,7 @@
 
         window.addEventListener('resize', () => {
             if (currentTargetEl) {
-                updateSpotlightPosition(currentTargetEl);
+                updateSpotlightPosition(currentTargetEl, currentPointerDir, currentPointerText, currentLockDirection);
             }
         });
 

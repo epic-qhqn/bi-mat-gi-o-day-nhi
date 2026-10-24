@@ -18,7 +18,6 @@
     const nameModal = document.getElementById('name-modal');
     const nameInputEl = document.getElementById('name-input');
     const startBtn = document.getElementById('start-btn');
-    const orientationHint = document.getElementById('orientation-hint-overlay');
     const embossWrapEl = document.getElementById('emboss-preview-wrap');
 
     const artisanCandleEl = document.getElementById('artisan-candle');
@@ -73,7 +72,7 @@
     let isMatchLit = false;
     let isCandleLit = false;
     let selectedBeads = []; // up to 3 beads
-    let selectedCrest = 'lotus';
+    let selectedCrest = null; // no engraving pattern is preselected - the user must choose one
     let isWaxMelted = false;
     let isWaxStirred = false;
     let isWaxPoured = false;
@@ -496,6 +495,7 @@
 
     const lightMatch = (e) => {
         if (isMatchLit) return;
+        if (!selectedCrest) { promptCrestSelection(); return; }
         isMatchLit = true;
         if (typeof window.initAudio === 'function') window.initAudio();
         if (typeof window.playMatchStrikeSFX === 'function') window.playMatchStrikeSFX();
@@ -608,22 +608,72 @@
         setRitualStep(2);
     };
 
+    const CREST_NAMES = { lotus: 'Hoa Sen', daisy: 'Cúc Họa Mi', butterfly: 'Cánh Bướm', moon: 'Trăng Non' };
+
+    // Initial / blank state: nothing engraved, nothing highlighted
+    const resetCrestMotif = () => {
+        selectedCrest = null;
+        document.querySelectorAll('.crest-opt-btn').forEach(btn => {
+            btn.classList.remove('is-selected');
+            btn.setAttribute('aria-checked', 'false');
+        });
+        if (stampEngravingFace) stampEngravingFace.textContent = '✦';
+        if (waxCrestDisplay) waxCrestDisplay.innerHTML = '';
+        if (crestSelectorWrap) crestSelectorWrap.classList.remove('needs-attention');
+    };
+
     const selectCrestMotif = (crestId) => {
+        if (!CREST_SVG_MAP[crestId]) return;
         selectedCrest = crestId;
         document.querySelectorAll('.crest-opt-btn').forEach(btn => {
             const isMatch = btn.getAttribute('data-crest') === crestId;
             btn.classList.toggle('is-selected', isMatch);
             btn.setAttribute('aria-checked', isMatch ? 'true' : 'false');
         });
+        if (crestSelectorWrap) crestSelectorWrap.classList.remove('needs-attention');
 
         const iconMap = { lotus: '🪷', daisy: '🌼', butterfly: '🦋', moon: '🌙' };
-        if (stampEngravingFace) stampEngravingFace.textContent = iconMap[crestId] || '🪷';
-        if (waxCrestDisplay && CREST_SVG_MAP[crestId]) {
-            waxCrestDisplay.innerHTML = CREST_SVG_MAP[crestId];
-        }
+        if (stampEngravingFace) stampEngravingFace.textContent = iconMap[crestId] || '✦';
+        if (waxCrestDisplay) waxCrestDisplay.innerHTML = CREST_SVG_MAP[crestId];
 
+        if (waxSealGuideTip) {
+            waxSealGuideTip.innerHTML = `<span>Đã khắc hoa văn ${CREST_NAMES[crestId] || ''} lên con dấu đồng ✨</span>`;
+        }
         if (typeof window.initAudio === 'function') window.initAudio();
         if (typeof window.playBeadChimeSFX === 'function') window.playBeadChimeSFX(1200);
+        if (typeof window.refreshRealtimeGuide === 'function') {
+            window.refreshRealtimeGuide();
+            setTimeout(window.refreshRealtimeGuide, 120);
+        }
+    };
+
+    // Gate: the ritual cannot move past "choose wax & crest" until an engraving pattern is picked
+    let lastCrestPromptAt = 0;
+    const promptCrestSelection = () => {
+        const now = Date.now();
+        if (now - lastCrestPromptAt < 900) return; // throttle (matchstick drag fires this on every pointermove)
+        lastCrestPromptAt = now;
+
+        if (waxSealGuideTip) {
+            waxSealGuideTip.innerHTML = `<span>🪷 Hãy chọn một hoa văn khắc triện trước khi thắp nến nhé!</span>`;
+        }
+        if (crestSelectorWrap) {
+            crestSelectorWrap.classList.add('needs-attention');
+            crestSelectorWrap.animate([
+                { transform: 'translateX(0)' },
+                { transform: 'translateX(-6px)' },
+                { transform: 'translateX(6px)' },
+                { transform: 'translateX(-4px)' },
+                { transform: 'translateX(4px)' },
+                { transform: 'translateX(0)' }
+            ], { duration: 350 });
+            if (typeof crestSelectorWrap.scrollIntoView === 'function') {
+                crestSelectorWrap.scrollIntoView({ block: 'center', behavior: 'smooth' });
+            }
+            setTimeout(() => crestSelectorWrap.classList.remove('needs-attention'), 2600);
+        }
+        if (navigator.vibrate) navigator.vibrate(20);
+        if (typeof window.refreshRealtimeGuide === 'function') window.refreshRealtimeGuide();
     };
 
     // =========================================================================
@@ -800,6 +850,11 @@
                 waxSealGuideTip.innerHTML = `<span>✨ Hãy ghi tên của bạn lên khuôn đồng trước nhé!</span>`;
             }
             if (navigator.vibrate) navigator.vibrate(20);
+            return { ready: false, step: 0 };
+        }
+
+        if (!selectedCrest) {
+            promptCrestSelection();
             return { ready: false, step: 0 };
         }
 
@@ -1251,6 +1306,11 @@
                     return;
                 }
 
+                if (!selectedCrest) {
+                    promptCrestSelection();
+                    return;
+                }
+
                 window.currentUserName = val;
                 if (waxNameImprintEl) waxNameImprintEl.textContent = val.toUpperCase();
                 if (typeof window.initAudio === 'function') window.initAudio();
@@ -1390,7 +1450,7 @@
 
         // Initial setup
         setRitualStep(1);
-        selectCrestMotif('lotus');
+        resetCrestMotif();
     };
 
     // Public API
