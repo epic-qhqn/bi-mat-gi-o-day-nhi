@@ -19,6 +19,10 @@
     const nameInputEl = document.getElementById('name-input');
     const startBtn = document.getElementById('start-btn');
     const embossWrapEl = document.getElementById('emboss-preview-wrap');
+    const giftPersonalizedTag = document.getElementById('gift-personalized-tag');
+    const namePromptDesc = document.getElementById('name-prompt-desc');
+    const copyCustomGiftLinkBtn = document.getElementById('copy-custom-gift-link-btn');
+    const giftLinkCopiedHint = document.getElementById('gift-link-copied-hint');
 
     const artisanCandleEl = document.getElementById('artisan-candle');
     const candleHaloEl = document.getElementById('candle-halo');
@@ -83,6 +87,88 @@
     let prevNameValue = '';
 
     // =========================================================================
+    // 0. DEEP LINK GIFTING & PARAMETERS (PHASE 13)
+    // =========================================================================
+    const escapeHTML = (str) => {
+        if (!str) return '';
+        return String(str)
+            .replace(/&/g, '&amp;')
+            .replace(/</g, '&lt;')
+            .replace(/>/g, '&gt;')
+            .replace(/"/g, '&quot;')
+            .replace(/'/g, '&#39;');
+    };
+
+    const getDeepLinkGiftParams = () => {
+        const params = new URLSearchParams();
+
+        // 1. Search params (?to=...&crest=...)
+        if (window.location.search) {
+            try {
+                const searchParams = new URLSearchParams(window.location.search);
+                searchParams.forEach((val, key) => {
+                    params.set(key.toLowerCase(), val);
+                });
+            } catch (_) {}
+        }
+
+        // 2. Hash params (#to=...&crest=...)
+        if (window.location.hash) {
+            try {
+                const hashStr = window.location.hash.replace(/^[#!\/]+/, '');
+                if (hashStr) {
+                    const hashParams = new URLSearchParams(hashStr);
+                    hashParams.forEach((val, key) => {
+                        params.set(key.toLowerCase(), val);
+                    });
+                }
+            } catch (_) {}
+        }
+
+        const decodeParam = (raw) => {
+            if (!raw) return '';
+            try {
+                const withSpaces = String(raw).replace(/\+/g, ' ');
+                return decodeURIComponent(withSpaces).trim();
+            } catch (_) {
+                return String(raw).replace(/\+/g, ' ').trim();
+            }
+        };
+
+        const rawTo = params.get('to') || params.get('name') || params.get('recipient') || '';
+        let recipientName = decodeParam(rawTo);
+        recipientName = recipientName
+            .replace(/<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/gi, '')
+            .replace(/<style\b[^<]*(?:(?!<\/style>)<[^<]*)*<\/style>/gi, '')
+            .replace(/<[^>]*>/g, '')
+            .replace(/[<>]/g, '')
+            .trim();
+        if (recipientName.length > 20) {
+            recipientName = recipientName.slice(0, 20).trim();
+        }
+
+        const rawCrest = (params.get('crest') || params.get('motif') || params.get('seal') || '').toLowerCase().trim();
+        const CREST_ALIASES = {
+            'lotus': 'lotus',
+            'sen': 'lotus',
+            'hoasen': 'lotus',
+            'daisy': 'daisy',
+            'cuc': 'daisy',
+            'cuchoami': 'daisy',
+            'butterfly': 'butterfly',
+            'buom': 'butterfly',
+            'canhbuom': 'butterfly',
+            'moon': 'moon',
+            'trang': 'moon',
+            'trangnon': 'moon'
+        };
+        const validCrests = ['lotus', 'daisy', 'butterfly', 'moon'];
+        const crestId = CREST_ALIASES[rawCrest] || (validCrests.includes(rawCrest) ? rawCrest : null);
+
+        return { recipientName, crestId };
+    };
+
+    // =========================================================================
     // 1. TIME LOCK GATEWAY
     // =========================================================================
     const getTimeLockState = () => {
@@ -92,7 +178,6 @@
             return 'PASSWORD_REQUIRED';
         }
         if (params.get('unlock') === '1') return 'UNLOCKED';
-        if (params.get('teststrict') === '1' || params.get('testlock') === '1') return 'STRICT_LOCK';
         if (params.get('testpass') === '1') {
             sessionStorage.removeItem('epic_gate_unlocked');
             return 'PASSWORD_REQUIRED';
@@ -101,21 +186,15 @@
         const now = window.__mockLockDate || new Date();
         const targetDate = new Date(2026, 9, 25, 12, 0, 0); // 12h trưa 25/10/2026
 
+        // Sau 12h trưa ngày 25/10/2026: Tự động mở cửa, bỏ qua mật mã
         if (now >= targetDate) return 'UNLOCKED';
 
-        const year = now.getFullYear();
-        const month = now.getMonth();
-        const date = now.getDate();
-        const hours = now.getHours();
-
-        if (year === 2026 && month === 9 && date === 25 && hours >= 0 && hours < 12) {
-            return 'STRICT_LOCK';
-        }
-
+        // Đã nhập đúng mật mã trong phiên làm việc này
         if (sessionStorage.getItem('epic_gate_unlocked') === 'true') {
             return 'UNLOCKED';
         }
 
+        // Trước 12h trưa ngày 25/10/2026: Yêu cầu mật mã (nhập đúng là vào được)
         return 'PASSWORD_REQUIRED';
     };
 
@@ -174,25 +253,24 @@
             if (typeof window.startGateMusicLow === 'function') window.startGateMusicLow();
         };
 
-        if (state === 'STRICT_LOCK') {
-            if (lockSubtitle) {
-                lockSubtitle.innerHTML = 'Cổng thời gian đang giữ bí mật món quà đặc biệt ⏳<br><strong class="highlight-time">Hẹn bạn đúng 12:00 trưa ngày 25/10/2026 cổng sẽ tự động mở nhé!</strong> ✨';
-            }
-            if (timeLockInput) timeLockInput.placeholder = "Cổng đang tạm đóng...";
-        } else {
-            if (lockSubtitle) {
+        const giftParams = getDeepLinkGiftParams();
+        if (lockSubtitle) {
+            if (giftParams.recipientName) {
+                lockSubtitle.innerHTML = `Món quà bí mật dành riêng cho <strong>${escapeHTML(giftParams.recipientName)}</strong> 🌸<br>Hãy nhập mật mã để mở khóa cổng bí mật ✨<br><small style="opacity: 0.85;">(Khu vườn sẽ mở tự do sau 12:00 trưa ngày 25/10/2026)</small>`;
+            } else {
                 lockSubtitle.innerHTML = 'Hãy nhập mật mã để mở khóa cổng bí mật ✨<br><small style="opacity: 0.85;">(Khu vườn sẽ mở tự do sau 12:00 trưa ngày 25/10/2026)</small>';
             }
-            if (timeLockInput) {
-                timeLockInput.placeholder = "Nhập mật mã mở sớm...";
-                setTimeout(() => timeLockInput.focus(), 350);
-                timeLockInput.addEventListener('input', () => {
-                    triggerStartMusicAt20();
-                    if (timeLockMsg && timeLockMsg.classList.contains('wrong')) timeLockMsg.textContent = '';
-                });
-                timeLockInput.addEventListener('keydown', triggerStartMusicAt20);
-                timeLockInput.addEventListener('focus', triggerStartMusicAt20);
-            }
+        }
+
+        if (timeLockInput) {
+            timeLockInput.placeholder = "Nhập mật mã mở sớm...";
+            setTimeout(() => timeLockInput.focus(), 350);
+            timeLockInput.addEventListener('input', () => {
+                triggerStartMusicAt20();
+                if (timeLockMsg && timeLockMsg.classList.contains('wrong')) timeLockMsg.textContent = '';
+            });
+            timeLockInput.addEventListener('keydown', triggerStartMusicAt20);
+            timeLockInput.addEventListener('focus', triggerStartMusicAt20);
         }
 
         const updateClock = () => {
@@ -208,20 +286,6 @@
 
         const handleAttempt = () => {
             const entered = (timeLockInput ? timeLockInput.value : '').trim();
-            const currentState = getTimeLockState();
-
-            if (currentState === 'STRICT_LOCK') {
-                const strictFailQuotes = [
-                    "Chưa tới giờ mở cổng rồi nè! Đúng 12:00 trưa nay khu vườn mới bật mí nhé ⏳✨",
-                    "Khu vườn đang được chăm chút những khâu cuối cùng, hẹn bạn đúng 12h trưa quay lại nha! 🌸",
-                    "Uống một ngụm trà ấm thảnh thơi chờ tới 12:00 trưa nay nhé 🧋✨",
-                    "Cổng thời gian đang giữ kín bất ngờ, đúng 12h trưa nay sẽ tự động mở toang đón bạn! 🚀"
-                ];
-                const msg = strictFailQuotes[failQuoteIndex % strictFailQuotes.length];
-                failQuoteIndex++;
-                showLockError(msg);
-                return;
-            }
 
             if (entered.toLowerCase() === 'acndaptrai') {
                 clearInterval(clockTimer);
@@ -645,6 +709,106 @@
             window.refreshRealtimeGuide();
             setTimeout(window.refreshRealtimeGuide, 120);
         }
+    };
+
+    // =========================================================================
+    // 6.5. DEEP LINK GIFTING APPLICATION & LINK GENERATION (PHASE 13)
+    // =========================================================================
+    const applyDeepLinkGifting = () => {
+        const { recipientName, crestId } = getDeepLinkGiftParams();
+        if (!recipientName && !crestId) return false;
+
+        if (recipientName) {
+            window.currentUserName = recipientName;
+            if (window.gardenState) {
+                window.gardenState.userName = recipientName;
+            }
+
+            if (nameInputEl) {
+                nameInputEl.value = recipientName;
+            }
+            updateLetterpressDisplay(recipientName);
+
+            if (waxNameImprintEl) {
+                waxNameImprintEl.textContent = recipientName.toUpperCase();
+            }
+
+            if (giftPersonalizedTag) {
+                giftPersonalizedTag.classList.remove('hidden');
+                giftPersonalizedTag.innerHTML = `<span class="gift-tag-icon">🎁</span><span class="gift-tag-text">Món Quà Dành Tặng <strong>${escapeHTML(recipientName)}</strong></span>`;
+            }
+
+            if (namePromptDesc) {
+                namePromptDesc.innerHTML = `Khuôn đồng đã khắc sẵn tên <strong>${escapeHTML(recipientName)}</strong>. Bạn có thể giữ nguyên hoặc sửa đổi để đun sáp mở cổng vườn ✨`;
+            }
+
+            if (waxSealGuideTip) {
+                if (crestId) {
+                    waxSealGuideTip.innerHTML = `<span>🎁 Món quà cho <strong>${escapeHTML(recipientName)}</strong> với triện <strong>${CREST_NAMES[crestId] || 'sen'}</strong> đã sẵn sàng! Thắp nến nhé 🔥</span>`;
+                } else {
+                    waxSealGuideTip.innerHTML = `<span>🎁 Khuôn đồng đã khắc sẵn tên <strong>${escapeHTML(recipientName)}</strong>. Hãy chọn hoa văn con dấu bạn thích nhé 💮</span>`;
+                }
+            }
+        }
+
+        if (crestId) {
+            selectCrestMotif(crestId);
+        }
+
+        return true;
+    };
+
+    const generateGiftLink = (name, crest) => {
+        const base = window.location.origin + window.location.pathname;
+        const n = (name || (nameInputEl ? nameInputEl.value : '') || window.currentUserName || '').trim();
+        const c = crest || selectedCrest || 'lotus';
+        if (!n) return base;
+        const encodedName = encodeURIComponent(n).replace(/%20/g, '+');
+        return `${base}#to=${encodedName}&crest=${encodeURIComponent(c)}`;
+    };
+
+    const copyGiftLink = (name, crest) => {
+        const link = generateGiftLink(name, crest);
+        const recipient = (name || (nameInputEl ? nameInputEl.value : '') || window.currentUserName || 'bạn').trim();
+
+        const showToast = () => {
+            if (giftLinkCopiedHint) {
+                giftLinkCopiedHint.classList.remove('hidden');
+                setTimeout(() => giftLinkCopiedHint.classList.add('hidden'), 3500);
+            }
+            if (waxSealGuideTip) {
+                waxSealGuideTip.innerHTML = `<span>🔗 Đã sao chép link quà tặng cho <strong>${escapeHTML(recipient)}</strong>! Bạn gửi cho bạn ấy ngay nhé ✨</span>`;
+            }
+            if (typeof window.triggerHaptic === 'function') window.triggerHaptic('tap');
+        };
+
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+            navigator.clipboard.writeText(link).then(showToast).catch(() => {
+                promptCopyFallback(link);
+            });
+        } else {
+            promptCopyFallback(link);
+        }
+    };
+
+    const promptCopyFallback = (text) => {
+        const textarea = document.createElement('textarea');
+        textarea.value = text;
+        textarea.style.position = 'fixed';
+        textarea.style.opacity = '0';
+        document.body.appendChild(textarea);
+        textarea.select();
+        try {
+            document.execCommand('copy');
+            if (giftLinkCopiedHint) {
+                giftLinkCopiedHint.classList.remove('hidden');
+                setTimeout(() => giftLinkCopiedHint.classList.add('hidden'), 3500);
+            }
+            if (typeof window.triggerHaptic === 'function') window.triggerHaptic('tap');
+        } catch (_) {
+            window.prompt("Sao chép liên kết quà tặng này để gửi:", text);
+        }
+        document.body.removeChild(textarea);
     };
 
     // Gate: the ritual cannot move past "choose wax & crest" until an engraving pattern is picked
@@ -1437,7 +1601,11 @@
             nameInputEl.addEventListener('focus', triggerMusic);
             nameInputEl.addEventListener('input', (e) => {
                 triggerMusic();
-                updateLetterpressDisplay(e.target.value);
+                const val = e.target.value;
+                window.currentUserName = val.trim();
+                if (window.gardenState) window.gardenState.userName = val.trim();
+                if (waxNameImprintEl) waxNameImprintEl.textContent = (val.trim() || 'TRIỆN SON').toUpperCase();
+                updateLetterpressDisplay(val);
             });
             nameInputEl.addEventListener('keydown', (e) => {
                 triggerMusic();
@@ -1448,9 +1616,22 @@
             });
         }
 
+        // Deep Link Gift Link copy button (Phase 13)
+        if (copyCustomGiftLinkBtn) {
+            copyCustomGiftLinkBtn.addEventListener('click', (e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                copyGiftLink();
+            });
+        }
+
         // Initial setup
         setRitualStep(1);
         resetCrestMotif();
+
+        // Phase 13 Deep Link & URL Hash Gifting initialization
+        applyDeepLinkGifting();
+        window.addEventListener('hashchange', applyDeepLinkGifting);
     };
 
     // Public API
@@ -1458,6 +1639,10 @@
     window.completePuzzle = completePuzzle;
     window.startGardenAwakeningTransition = startGardenAwakeningTransition;
     window.performWaxSealStamp = performWaxSealStamp;
+    window.generateGiftLink = generateGiftLink;
+    window.copyGiftLink = copyGiftLink;
+    window.getDeepLinkGiftParams = getDeepLinkGiftParams;
+    window.applyDeepLinkGifting = applyDeepLinkGifting;
 
     if (document.readyState === 'loading') {
         document.addEventListener('DOMContentLoaded', initWaxSealCeremony);

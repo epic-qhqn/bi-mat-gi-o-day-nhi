@@ -44,7 +44,7 @@
 ---
 
 ### Phase 13: Cá Nhân Hóa Quà Tặng Qua Liên Kết Bí Mật (`js/main.js`, `js/wax-seal-ceremony.js`)
-- [ ] 13.1: **Hỗ Trợ Deep Link & URL Hash Gifting**: Đọc tham số URL dạng `#to=ThuHuong&crest=lotus` hoặc `?to=Thu+Huong`. Tên người nhận sẽ được tự động khắc sẵn lên khuôn triện son hoặc hiển thị lời chào trân trọng bất ngờ khi bạn nữ mở link. 100% client-side, bảo mật, không cần backend.
+- [x] 13.1: **Hỗ Trợ Deep Link & URL Hash Gifting**: Đọc tham số URL dạng `#to=ThuHuong&crest=lotus` hoặc `?to=Thu+Huong`. Tên người nhận sẽ được tự động khắc sẵn lên khuôn triện son hoặc hiển thị lời chào trân trọng bất ngờ khi bạn nữ mở link. 100% client-side, bảo mật, không cần backend. Đã loại bỏ strict lock ngày 25/10 cho phép nhập pass trước 12h trưa, và tự động mở cổng không cần pass sau 12h trưa.
 
 ---
 

@@ -209,6 +209,7 @@
                 </div>
 
                 <div class="atelier-header">
+                    <div id="gift-personalized-tag" class="gift-personalized-tag hidden" aria-live="polite"></div>
                     <h2>GỬI TÊN BẠN VÀO KHU VƯỜN</h2>
                     <p id="name-prompt-desc">Hãy để lại tên hoặc biệt danh để dập nên con dấu sáp riêng, mở lối bước vào khu vườn hoa di sản ✨</p>
                 </div>
@@ -221,11 +222,21 @@
                     <span class="brass-rivet rivet-br"></span>
                     <div class="plate-inner-rim">
                         <div class="plate-engraving-label">✦ VINTAGE BRASS LETTERPRESS ✦</div>
-                        <input type="text" id="name-input" class="lyrical-input portal-input atelier-input" placeholder="Tên hoặc biệt danh của bạn..." autocomplete="off" maxlength="15">
+                        <input type="text" id="name-input" class="lyrical-input portal-input atelier-input" placeholder="Tên hoặc biệt danh của bạn..." autocomplete="off" maxlength="20">
                         <div id="emboss-preview-wrap" class="emboss-preview-wrap" aria-hidden="true">
                             <span class="emboss-placeholder">✦ Gõ tên bạn để xem mẫu dập đồng ✦</span>
                         </div>
                     </div>
+                </div>
+
+                <!-- Deep Link Gift Action Toolbar (Phase 13) -->
+                <div class="gift-link-action-bar">
+                    <button type="button" id="copy-custom-gift-link-btn" class="gift-share-link-btn" title="Sao chép link tặng bạn nữ với tên đã khắc trên khuôn đồng">
+                        <span class="link-icon">🎁</span>
+                        <span class="link-text">Sao chép link quà tặng đã khắc tên</span>
+                        <span class="link-sparkle">✨</span>
+                    </button>
+                    <span id="gift-link-copied-hint" class="gift-link-copied-hint hidden">Đã sao chép liên kết quà tặng!</span>
                 </div>
 
                 <!-- Wax Seal & Action Station (Phase 3: Artisan Multi-Sensory Ritual) -->
