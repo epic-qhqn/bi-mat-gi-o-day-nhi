@@ -1,32 +1,40 @@
-# TODO LIST: SỬA LỖI & NÂNG CẤP HỆ THỐNG THEO YÊU CẦU
+# TODO LIST: MỞ RỘNG TRẮC NGHIỆM HOA & ĐẠI PHẪU THUẬT VĂN PHONG TIẾNG VIỆT
 
-## Mục 1: Xoá Hẳn QR tym.png
-- [x] 1.1: Xóa file `img/tym.png` khỏi dự án.
-- [x] 1.2: Cập nhật `js/content.js` gỡ bỏ thẻ `<img src="./img/tym.png">` và hoàn thiện câu chúc mở quà tặng bí mật 20/10.
+> **Trạng thái**: Đã lập kế hoạch chi tiết, đang chờ User duyệt kế hoạch trước khi bắt tay thực hiện từng Phase.
 
-## Mục 2: Sửa Bug Xoay Kim La Bàn Đổi Thời Gian Gây Ồn
-- [x] 2.1: Gỡ bỏ việc kích hoạt nốt đàn hạc (`pluckHarp`, `pluckHarpIfAudible`) khi xoay kim la bàn trong `js/celestial-orrery.js`.
-- [x] 2.2: Tối ưu throttle âm thanh bánh răng khi xoay nhanh, chỉ phát âm thanh chuyển mùa trọn vẹn khi kim đã dừng hẳn.
+---
 
-## Mục 3: Phase 2 Đánh Đàn - Fade In Âm Thanh 2s Để Giảm Nhạc Nền
-- [x] 3.1: Xây dựng hàm `window.duckBgmForMinigame(isDucking, durationMs = 2000)` trong `js/audio-vfx.js`.
-- [x] 3.2: Tích hợp giảm dần BGM trong 2s khi bắt đầu chơi Simon game và tự động khôi phục BGM qua 2s khi hoàn thành trong `js/garden-minigames.js` & `js/garden-stages.js`.
+## Phase 1: Mở rộng Trắc nghiệm & Xây dựng Nhánh Rẽ Tâm Hồn Sâu Sắc
+- [ ] 1.1: Brainstorm và soạn thảo 14 - 16 câu hỏi trắc nghiệm giác quan, đậm chất tự sự và tâm lý phụ nữ.
+- [ ] 1.2: Thiết kế cấu trúc 4 nhánh rẽ thích ứng đa tầng (Thanh tịnh mộc mạc, Kiêu sa vương giả, Rạng rỡ nắng ấm, Thấu cảm hoài niệm).
+- [ ] 1.3: Cân chỉnh ma trận điểm số và thuật toán phá thế hòa điểm thông minh cho 27 loài hoa trong `js/secret-letter.js`.
+- [ ] 1.4: Thử nghiệm thực tế toàn bộ các nhánh rẽ và kiểm tra tính tự nhiên của câu từ.
 
-## Mục 4: Giấu Thanh Xem Lại Phase Ở Vị Trí Kín Đáo & Ngừa Lỗi Đè Trạng Thái
-- [x] 4.1: Di dời `#garden-stage-selector` từ đỉnh giữa màn hình về nút ngọc thu gọn `↺ Lộ trình` ở góc dưới.
-- [x] 4.2: Thiết kế giao diện đóng/mở popover gọn gàng cho cả PC lẫn Mobile.
-- [x] 4.3: Tối ưu hóa logic `cleanupStage` và `jumpToGardenStage` để reset sạch sẽ trạng thái minigame cũ, không để lỗi mới đè lỗi cũ.
+---
 
-## Mục 5: Sửa Thanh Chữ Hiện Ra 2 Cô Gái & Nâng Cấp Nội Dung Thơ
-- [x] 5.1: Sửa vị trí `.ao-dai-poem-badge` căn giữa đỉnh đầu, xử lý `max-width`, tự xuống dòng và `z-index: 1000` không bị che khuất hay tràn mép màn hình.
-- [x] 5.2: Viết lại 5 câu thơ 20/10 sâu sắc, tinh tế, giàu chất thơ và tôn vinh người phụ nữ Việt Nam trong `js/garden-stages.js` và `index.html`.
+## Phase 2: Đại Phẫu Thuật Văn Phong Nghi Thức Mở Vườn, Mascot & Stage HUD
+- [ ] 2.1: Viết lại lời dẫn nghi thức nung sáp, đóng dấu đồng trong `js/wax-seal-ceremony.js` và `index.html` (trang nhã, tôn vinh người nhận).
+- [ ] 2.2: Làm mới toàn bộ hệ thống thoại của Mascot trong `js/mascot-companion.js` (hóm hỉnh, mộc mạc, ấm áp, xóa sạch giọng máy móc).
+- [ ] 2.3: Viết lại chỉ dẫn tương tác và lời thơ của Stage 1 (Mầm non), Stage 2 (Giai điệu Simon), Stage 3 (Nối sao), Stage 4 (Cây tim & Áo dài).
 
-## Mục 6: Thu Nhỏ 2 Cô Gái Áo Dài 50%, Đặt Dưới Gốc Cây & Auto-Scale
-- [x] 6.1: Đặt `#ao-dai-viet-stage4` ở vị trí chân gốc cây cổ thụ bên trong `#wrap` (`left: 550px; bottom: 8px;`).
-- [x] 6.2: Thu nhỏ kích thước đúng 50% (`height: 240px;` trên desktop, `230px` trên mobile), thừa hưởng auto-scale từ `#wrap`.
-- [x] 6.3: Kiểm thử hiển thị trên các thiết bị PC, tablet, mobile.
+---
 
-## Kiểm Thử & Đồng Bộ Git
-- [x] 7.1: Chạy kiểm tra cú pháp toàn diện: `node -c js/*.js` - 15/15 files passed OK.
-- [x] 7.2: Kiểm tra cân bằng cú pháp CSS - 3/3 files balanced OK.
-- [x] 7.3: Kiểm tra `git fetch origin`, commit sạch sẽ và bàn giao.
+## Phase 3: Viết Lại Thư Chúc 20/10 & 23 Lời Chúc Nam Đồng Nghiệp
+- [ ] 3.1: Soạn lại bức thư ngỏ chính trong `js/content.js` (`letterContent`) bằng ngôn từ chân thành, tri ân sâu sắc, duyên dáng và không sáo rỗng.
+- [ ] 3.2: Viết lại toàn bộ 23 lời chúc cá nhân của các bạn nam trong `js/content.js` (`randomClubLetters`), tạo dựng cá tính riêng biệt, ấm áp và đời thường.
+- [ ] 3.3: Kiểm tra hiển thị typewriter và định dạng bưu phẩm Polaroid 3D trong `js/secret-letter.js`.
+
+---
+
+## Phase 4: Nâng Tầm Ngôn Từ 27 Hồ Sơ Hoa Di Sản & Phân Tích Tương Hợp
+- [ ] 4.1: Soạn lại 27 câu quote và tiêu đề tôn vinh cho 27 loài hoa trong `js/flowers-data.js`.
+- [ ] 4.2: Trau chuốt lại bộ ba phân tích tính cách (`checklist: friend, love, pressure`) sắc sảo, tâm lý, chạm đến cảm xúc thật của phái nữ.
+- [ ] 4.3: Viết lại lời bình giải thích Tương Hợp (`match`) và Tương Khắc (`clash`) thông minh, hài hước, nhân văn.
+
+---
+
+## Phase 5: Tinh Chỉnh Bưu Thiếp Story, Realtime Guide & Thẩm Định Toàn Diện
+- [ ] 5.1: Chuẩn hóa ngôn từ trên bưu thiếp Di sản xuất ảnh Canvas 1080x1920 trong `js/boarding-pass-modal.js` và `js/boarding-pass-canvas.js`.
+- [ ] 5.2: Tinh chỉnh câu chữ trong HUD hướng dẫn thời gian thực (`js/realtime-guide.js`, `js/experience-guide.js`).
+- [ ] 5.3: Thực hiện kiểm định cú pháp JS (`node -c js/*.js`), cân bằng CSS và kiểm thử giao diện responsive trên mọi thiết bị.
+- [ ] 5.4: Báo cáo kết quả và đồng bộ Git sạch sẽ.
