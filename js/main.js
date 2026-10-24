@@ -200,6 +200,9 @@
       await flowAnimate();
       await moveAnimate();
 
+      document.body.classList.remove('stage-1-active', 'stage-2-active', 'stage-3-active');
+      document.body.classList.add('stage-4-active', 'has-letter-open');
+
       // Reveal love letter typewriter
       if (typeof window.loadContentAndAnimateText === 'function') {
         window.loadContentAndAnimateText();

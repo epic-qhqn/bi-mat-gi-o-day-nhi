@@ -287,15 +287,11 @@
   box-shadow: 0 2px 8px rgba(245, 206, 86, 0.3);
 }
 
-/* Non-blocking Toast for Orientation Hint (Mobile) */
+/* Non-blocking Toast for Orientation Hint (Mobile - suppressed in favor of native responsive mobile UI) */
 #orientation-hint-overlay {
-  background: transparent !important;
-  backdrop-filter: none !important;
-  -webkit-backdrop-filter: none !important;
+  display: none !important;
+  visibility: hidden !important;
   pointer-events: none !important;
-  align-items: flex-start;
-  padding-top: calc(16px + var(--sat, 12px));
-  z-index: 10005;
 }
 
 .orientation-hint {
@@ -811,9 +807,10 @@ body.aurora-active .aurora {
 
 @media (max-width: 768px) {
   .bottom-right-action-dock {
-    bottom: calc(14px + var(--sab, 6px));
+    bottom: calc(12px + var(--sab, 6px));
     right: calc(12px + var(--sar, 0px));
-    gap: 8px;
+    gap: 6px;
+    z-index: 2500;
   }
 }
 
@@ -824,6 +821,7 @@ body.aurora-active .aurora {
     flex-direction: row;
     align-items: center;
     gap: 8px;
+    z-index: 2500;
   }
 }
 
@@ -4087,12 +4085,12 @@ body.sky-night .wax-seal-guide-tip {
 /* Mobile responsive layout */
 @media (max-width: 768px) {
   .celestial-weather-orrery {
-    top: calc(66px + var(--sat, 10px));
+    top: calc(56px + var(--sat, 8px));
     right: 12px;
   }
   .celestial-weather-orrery.orrery-minimized {
-    top: calc(16px + var(--sat, 8px));
-    right: 14px;
+    top: calc(10px + var(--sat, 6px));
+    right: 12px;
     width: 38px;
     height: 38px;
   }
@@ -4490,18 +4488,29 @@ body.sky-night .shifter-pill-label {
 
 @media (max-width: 768px) {
   .living-atmosphere-hud {
-    top: calc(62px + var(--sat, 10px));
-    width: 95vw;
+    top: calc(126px + var(--sat, 8px));
+    width: min(94vw, 380px);
+    left: 50%;
+    transform: translateX(-50%);
+    justify-content: space-between;
+    z-index: 1005;
+  }
+  .atmosphere-shifter-token.cloud-shifter {
+    margin-left: 2px;
+  }
+  .atmosphere-shifter-token.sun-shifter {
+    margin-right: 2px;
   }
   .cloud-svg {
-    width: 68px;
-  }
-  .sun-svg {
     width: 62px;
   }
+  .sun-svg {
+    width: 56px;
+  }
   .shifter-pill-label {
-    font-size: 10.5px;
-    padding: 3px 10px;
+    font-size: 10px;
+    padding: 3px 8px;
+    white-space: nowrap;
   }
 }
 
@@ -5269,11 +5278,32 @@ body.sky-night .found-letter-slot.filled {
   left: 24px;
 }
 
-@media (max-width: 768px) {
+@media (max-width: 768px) and (orientation: portrait) {
+  .mascot-companion-wrap.relocated-for-letter,
+  body.stage-4-active .mascot-companion-wrap {
+    left: calc(10px + var(--sal, 0px)) !important;
+    right: auto !important;
+    top: calc(23% + var(--sat, 6px)) !important;
+    bottom: auto !important;
+    width: 66px !important;
+    z-index: 1400 !important;
+  }
+  .mascot-companion-wrap.relocated-for-letter .mascot-speech-bubble,
+  body.stage-4-active .mascot-companion-wrap .mascot-speech-bubble {
+    left: 0 !important;
+    right: auto !important;
+    top: calc(100% + 6px) !important;
+    bottom: auto !important;
+    max-width: min(200px, 60vw) !important;
+    font-size: 11px !important;
+  }
+}
+
+@media (max-width: 768px) and (orientation: landscape) {
   .mascot-companion-wrap.relocated-for-letter {
     left: calc(10px + var(--sal, 0px)) !important;
     right: auto !important;
-    bottom: calc(15px + var(--sab, 10px)) !important;
+    bottom: calc(8px + var(--sab, 0px)) !important;
   }
 }
 
@@ -8226,29 +8256,69 @@ body.sky-night .pointer-action-badge {
   color: #131C4E;
 }
 
-/* Mobile Adjustments for Real-time HUD */
-@media (max-width: 600px) {
+/* Mobile Adjustments for Real-time HUD & Minigame Touch Targets */
+@media (max-width: 768px) {
   .realtime-guide-hud {
-    top: calc(56px + var(--sat, 4px));
-    max-width: 94vw;
+    top: calc(10px + var(--sat, 4px)) !important;
+    left: 50% !important;
+    transform: translateX(-50%) !important;
+    max-width: calc(100vw - 124px) !important;
+    z-index: 10001 !important;
   }
   .realtime-guide-pill {
-    padding: 6px 10px 6px 12px;
-    gap: 7px;
+    padding: 4px 8px 4px 10px !important;
+    gap: 6px !important;
+    min-height: 32px !important;
   }
   .realtime-guide-msg {
-    font-size: 11.5px;
+    font-size: 10.5px !important;
+    max-width: calc(100vw - 200px) !important;
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
   }
   .realtime-guide-step-tag {
-    font-size: 9px;
-    padding: 2px 6px;
+    font-size: 8.5px !important;
+    padding: 2px 5px !important;
   }
   .pointer-hand-glyph {
     font-size: 20px;
   }
   .pointer-action-badge {
     font-size: 10px;
-    padding: 2px 7px;
+    padding: 2px 8px;
+    max-width: min(220px, 78vw);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  /* Simon Says Nodes scaled up for touch on mobile */
+  .simon-node {
+    width: 104px !important;
+    height: 104px !important;
+    font-size: 42px !important;
+  }
+  .simon-node::after {
+    top: -22px !important;
+    left: -22px !important;
+    right: -22px !important;
+    bottom: -22px !important;
+  }
+
+  /* Constellation Stars scaled up for touch on mobile */
+  .star-node {
+    width: 90px !important;
+    height: 90px !important;
+    font-size: 32px !important;
+  }
+  .star-node::before {
+    inset: -18px !important;
+  }
+  .star-node.decoy-star {
+    width: 80px !important;
+    height: 80px !important;
+    font-size: 28px !important;
   }
 }
 

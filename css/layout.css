@@ -204,10 +204,40 @@ body.sky-night .stars {
 
 @media (max-width: 768px) {
   .garden-ui {
-    top: calc(58px + var(--sat, 8px));
+    top: calc(52px + var(--sat, 6px));
     padding: 6px 14px;
     border-radius: 16px;
-    max-width: min(94vw, 330px);
+    max-width: min(92vw, 340px);
+  }
+  .garden-ui .instruction {
+    font-size: 11px;
+    line-height: 1.35;
+    margin-bottom: 3px;
+  }
+  .garden-ui .growth-progress {
+    margin: 4px 0;
+  }
+  .garden-ui .garden-message {
+    font-size: 11px;
+    line-height: 1.35;
+  }
+}
+
+@media (max-height: 540px) and (orientation: landscape) {
+  .garden-ui {
+    top: calc(8px + var(--sat, 4px));
+    padding: 4px 12px;
+    border-radius: 14px;
+    max-width: min(78vw, 360px);
+  }
+  .garden-ui .instruction {
+    font-size: 10px;
+  }
+  .garden-ui .growth-progress {
+    margin: 2px 0;
+  }
+  .garden-ui .garden-message {
+    font-size: 10.5px;
   }
 }
 
@@ -238,7 +268,7 @@ body.has-stage-selector .garden-ui {
 
 @media (max-width: 768px) {
   body.has-stage-selector .garden-ui {
-    top: calc(58px + var(--sat, 8px));
+    top: calc(52px + var(--sat, 6px));
   }
 }
 
@@ -1043,7 +1073,13 @@ a:hover {
 /* On mobile portrait (iPhone 14, etc.), elevate #wrap so blooming tree is in upper center */
 @media (max-width: 768px) and (orientation: portrait) {
   #wrap {
-    top: 38%;
+    top: 42%;
+    transition: top 0.9s cubic-bezier(0.16, 1, 0.3, 1), transform 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  body.stage-4-active #wrap,
+  body.has-letter-open #wrap,
+  body:has(.text-panel.show) #wrap {
+    top: 27%;
   }
 }
 
@@ -1193,12 +1229,15 @@ body.readable-font .polaroid-back .letter-content {
   .text-panel {
     left: 50% !important;
     top: auto !important;
-    bottom: calc(16px + var(--sab, 16px)) !important;
+    bottom: calc(72px + var(--sab, 10px)) !important;
     transform: translateX(-50%) translateY(20px) !important;
-    width: min(92vw, 420px) !important;
-    max-height: 50vh !important;
-    padding: 24px 20px !important;
+    width: min(94vw, 420px) !important;
+    max-height: 44vh !important;
+    padding: 20px 18px !important;
     border-radius: var(--radius-panel) !important;
+    z-index: 1500 !important;
+    -webkit-overflow-scrolling: touch;
+    box-shadow: 0 12px 36px rgba(19, 28, 78, 0.22), 0 2px 8px rgba(212, 175, 55, 0.18) !important;
   }
 
   .text-panel.show {
@@ -1206,12 +1245,13 @@ body.readable-font .polaroid-back .letter-content {
   }
 
   #code {
-    font-size: 15px !important;
+    font-size: 14.5px !important;
     line-height: 1.65 !important;
   }
 
   .say {
-    font-size: 23px !important;
+    font-size: 21px !important;
+    line-height: 1.45 !important;
   }
 }
 

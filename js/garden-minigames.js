@@ -746,9 +746,10 @@
         const rect = targetStar.el.getBoundingClientRect();
         const centerX = rect.left + rect.width / 2;
         const centerY = rect.top + rect.height / 2;
-        const dist = Math.hypot(centerX - clientX, centerY - clientY);
+        const curScale = window.currentWrapScale || 1;
+        const proximityRadius = Math.max(28, Math.min(72, 68 * curScale));
 
-        if (dist < 72) {
+        if (dist < proximityRadius) {
             connectStar(nextExpectedIdx);
         }
     };
