@@ -607,6 +607,23 @@
 
     // Main Update Loop
     const tickRealtimeGuide = () => {
+        // Modal & Atelier Overlay Guard: Keep HUD and tutorial overlays quiet while modals are open
+        const nameModalEl = document.getElementById('name-modal');
+        const timeLockModalEl = document.getElementById('time-lock-modal');
+        const rotateOverlayEl = document.getElementById('rotate-device-overlay');
+        const isModalActive = Boolean(
+            (nameModalEl && !nameModalEl.classList.contains('hidden') && nameModalEl.style.display !== 'none') ||
+            (timeLockModalEl && !timeLockModalEl.classList.contains('hidden') && timeLockModalEl.style.display !== 'none') ||
+            (rotateOverlayEl && !rotateOverlayEl.classList.contains('hidden'))
+        );
+
+        if (isModalActive) {
+            if (hudEl) hudEl.classList.add('hidden');
+            if (targetBoxEl) targetBoxEl.style.opacity = '0';
+            updateGestureTrail(null, null);
+            return;
+        }
+
         const state = evaluateCurrentState();
         if (!state) {
             if (hudEl) hudEl.classList.add('hidden');

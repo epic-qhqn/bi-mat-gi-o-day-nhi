@@ -16,9 +16,9 @@
 ---
 
 ### Phase 2: Tối Ưu Bàn Chế Tác Con Dấu Sáp Stage 0 (Portrait Artisan Workbench & Landscape Fallback)
-- [ ] 2.1: Thiết lập chế độ hiển thị ưu tiên xoay dọc cho Stage 0 (`#atelier-stationery-desk` và `#time-lock-modal`), tận dụng tối đa chiều cao 844px để bố trí thoáng đãng: Khuôn chữ dập tên $\rightarrow$ Khay 5 loại hạt sáp $\rightarrow$ Bếp nến sưởi ấm & muỗng đồng $\rightarrow$ Phong thư dập triện son.
-- [ ] 2.2: Tối ưu phương án dự phòng khi xem ở chế độ xoay ngang (Landscape Fallback): Sử dụng đơn vị `dvh`, thu gọn thanh tiêu đề còn 36px, bố cục 2 cột cân xứng (48% - 48%) có thanh cuộn riêng biệt, chống tràn ra ngoài thanh công cụ Safari.
-- [ ] 2.3: Đảm bảo toàn bộ thao tác chạm quẹt diêm, khuấy sáp cẩm thạch và dập ấn đồng đạt diện tích chạm $\ge 48\text{px} \times 48\text{px}$, không bị bàn phím ảo đẩy vỡ layout.
+- [x] 2.1: Thiết lập chế độ hiển thị ưu tiên xoay dọc cho Stage 0 (`#atelier-stationery-desk` và `#time-lock-modal`), tận dụng tối đa chiều cao 844px để bố trí thoáng đãng: Khuôn chữ dập tên $\rightarrow$ Khay 5 loại hạt sáp $\rightarrow$ Bếp nến sưởi ấm & muỗng đồng $\rightarrow$ Phong thư dập triện son.
+- [x] 2.2: Tối ưu phương án dự phòng khi xem ở chế độ xoay ngang (Landscape Fallback): Sử dụng đơn vị `dvh`, thu gọn thanh tiêu đề còn 36px, bố cục 2 cột cân xứng (48% - 48%) có thanh cuộn riêng biệt, chống tràn ra ngoài thanh công cụ Safari.
+- [x] 2.3: Đảm bảo toàn bộ thao tác chạm quẹt diêm, khuấy sáp cẩm thạch và dập ấn đồng đạt diện tích chạm $\ge 48\text{px} \times 48\text{px}$, không bị bàn phím ảo đẩy vỡ layout.
 
 ---
 

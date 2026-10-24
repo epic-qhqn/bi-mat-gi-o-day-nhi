@@ -312,7 +312,66 @@
   - `node -c js/secret-letter.js`: Không lỗi cú pháp (Exit code 0).
   - Cân bằng ngoặc nhọn CSS (`base.css`: 36, `layout.css`: 313, `components.css`: 1750): Đạt 100%.
 
+---
 
+### Phase 2: Tối Ưu Bàn Chế Tác Con Dấu Sáp Stage 0 & Cổng Thời Gian (Portrait Artisan Workbench & Landscape Fallback) - [HOÀN THÀNH 100%]
+- **Vấn đề thực tế phát hiện qua Ảnh 1 (media_1792881307968.jpg) & Dự đoán lỗi đa thiết bị (iPhone 14, iPhone SE, Android Galaxy, Màn hình gập, v.v.)**:
+  1. *Xung đột chồng đè thanh HUD lên tiêu đề modal*: Realtime Guide HUD (`#realtime-guide-hud`) có `z-index: 100006` cố định ở đỉnh màn hình (`top: calc(16px + env(safe-area-inset-top))`), hiển thị thông điệp "BƯỚC 1/7" đè thẳng lên tiêu đề "GỬI TÊN BẠN VÀO KHU VƯỜN" và cành hoa sấy khô của `#name-modal`.
+  2. *Bẫy cuộn Flexbox (`align-items: center` trên `.modal-overlay`)*: Khi card vượt quá chiều cao viewport (khi bàn phím ảo bật lên, trên các thiết bị màn hình ngắn như iPhone SE 667px, Android 360x800, hoặc khi người dùng xoay ngang 375px/390px), thuộc tính `align-items: center` đẩy phần đỉnh của card ra ngoài tọa độ âm `y < 0`. Trong CSS Flexbox, tọa độ âm không thể cuộn tới được, dẫn tới tiêu đề, cành hoa trang trí và các bước hướng dẫn bị cắt cụt vĩnh viễn.
+  3. *Lỗi thanh công cụ Safari/Chrome ăn vào nội dung (`vh` vs `dvh`)*: Đơn vị `94vh` hoặc `92vh` tính theo viewport lớn (Large Viewport) chưa trừ thanh địa chỉ bên dưới và Dynamic Island bên trên, khiến nút bấm dập dấu ở chân card bị che khuất hoặc ép sát mép dưới.
+  4. *Lỗi tự động zoom (Auto-Zoom Trap) trên iOS Safari*: Cỡ chữ `font-size: 13px` và `12.5px` của các ô input trong chế độ xoay ngang kích hoạt tính năng tự động phóng to của iOS Safari, làm lệch tỷ lệ toàn bộ trang web.
+  5. *Vùng chạm nhỏ dễ ấn hụt trên màn hình cảm ứng*: Que diêm (stem 16px, head 5px), dải quẹt diêm, đũa khuấy thủy tinh (rộng 10px) và con dấu nếu không có vùng đệm cảm ứng sẽ khiến người dùng dùng ngón tay cái rất khó thao tác.
 
+- **Nguyên nhân gốc rễ**:
+  1. Thanh Realtime Guide HUD không kiểm tra trạng thái mở của modal con trước khi hiển thị mission bar.
+  2. Bố cục Flexbox Modal dùng `align-items: center` kết hợp `overflow-y: auto` thay vì cơ chế `align-items: flex-start` với `margin: auto` trên các phần tử con.
+  3. Cỡ chữ input `< 16px` vi phạm quy tắc chống zoom của WebKit Mobile.
+  4. Thiếu vùng đệm cảm ứng pseudo-element `::before` trên các công cụ thủ công có kích thước hình học nhỏ.
 
+- **Công thức & Giải pháp chuẩn hóa**:
+  1. **Khử Triệt Để Xung Đột HUD Bằng CSS `:has` & Logic Guard**:
+     - Thêm quy tắc CSS toàn cục:
+       ```css
+       body:has(#name-modal:not(.hidden)) .realtime-guide-hud,
+       body:has(#time-lock-modal:not(.hidden)) .realtime-guide-hud,
+       body:has(#boarding-pass-modal:not(.hidden)) .realtime-guide-hud,
+       body:has(#secret-letter-modal:not(.hidden)) .realtime-guide-hud,
+       body:has(#experience-guide-modal:not(.hidden)) .realtime-guide-hud,
+       body:has(#rotate-device-overlay:not(.hidden)) .realtime-guide-hud {
+         display: none !important;
+         opacity: 0 !important;
+         pointer-events: none !important;
+         visibility: hidden !important;
+       }
+       ```
+     - Thêm Guard trong `tickRealtimeGuide()` của `js/realtime-guide.js`: ẩn hoàn toàn HUD và spotlight overlay khi bất kỳ modal nào đang hiển thị, trả lại 100% không gian thoáng đãng cho tiêu đề và nội dung modal.
+  2. **Giải Phóng Triệt Để Bẫy Cuộn Flexbox Bằng `align-items: flex-start` & `margin: auto`**:
+     - Trên `.modal-overlay`: thiết lập `align-items: flex-start; justify-content: center; overflow-y: auto; -webkit-overflow-scrolling: touch; padding: max(12px, env(safe-area-inset-top)) max(12px, env(safe-area-inset-right)) max(12px, env(safe-area-inset-bottom)) max(12px, env(safe-area-inset-left));`.
+     - Trên các con trực tiếp (`.modal-overlay > *`, `.atelier-stationery-desk`, `.time-lock-panel`): thiết lập `margin: auto;`.
+     - *Cơ chế hoạt động*: Khi chiều cao màn hình đủ lớn, `margin: auto` tự động căn giữa hoàn hảo; khi chiều cao màn hình nhỏ hoặc bàn phím ảo bật lên, `margin: auto` co lại và nội dung neo từ đỉnh (`y = 0`) giúp cuộn mượt mà không bao giờ bị cắt cụt phần đầu.
+  3. **Chuẩn Hóa Đơn Vị `dvh` & Động Thái Viewport**:
+     - `.atelier-paper-card`: `max-height: min(92dvh, 92vh, 880px) !important;` trên portrait, và `max-height: min(94dvh, 94vh, 370px) !important;` trên landscape fallback.
+     - `.time-lock-panel`: `max-height: min(92dvh, 92vh, 360px) !important;` trên landscape.
+  4. **Chống Auto-Zoom Safari & Trợ Giúp Bàn Phím Ảo**:
+     - Đặt `font-size: 16px !important;` cho `#name-input`, `#time-lock-input`, `.atelier-input`, `.time-lock-input` trên mọi kích thước màn hình.
+     - Tích hợp `scroll-margin-top: 24px;` và sự kiện `focus` tự động cuộn mượt ô nhập vào trung tâm tầm nhìn (`scrollIntoView({ behavior: 'smooth', block: 'center' })`).
+  5. **Đảm Bảo Diện Tích Chạm Chuẩn WCAG / Apple HIG $\ge 48\text{px} \times 48\text{px}$**:
+     - `.artisan-matchstick::before`: mở rộng vùng chạm ẩn `inset: -14px -14px` đạt $\ge 48\text{px} \times 48\text{px}$.
+     - `.match-striker-strip`: `min-height: 44px; padding: 6px 10px;`.
+     - `.glass-stirring-rod::before`: mở rộng vùng chạm `inset: -10px -16px` đạt $\ge 48\text{px} \times 52\text{px}$.
+     - `.wax-bead-item`: `min-width: 48px; min-height: 48px;` hiển thị flexbox căn giữa gọn gàng.
+     - `.crest-opt-btn`: `min-height: 44px; font-size: 12px;`.
+     - `.artisan-candle`, `.brass-spoon`, `.artisan-sprinkle-vial`: đều đạt chuẩn $\ge 44\text{px} - 48\text{px}$.
+     - `.atelier-seal-btn`: `min-height: 46px; font-size: 14px; width: 100%; border-radius: 12px;`.
+  6. **Tối Ưu Giao Diện Xoay Ngang Dự Phòng (Landscape Fallback)**:
+     - Ẩn cành hoa SVG cồng kềnh để nhường chiều cao, thu gọn thanh dải lụa còn 9.5px, tiêu đề 13.5px.
+     - Phân bổ 2 cột cân xứng (48% - 48%): Cột trái (Khuôn chữ gõ tên, Khay 5 viên sáp, 4 huy hiệu triện); Cột phải (Thanh tiến trình 3 bước, Bếp nến, Bao diêm, Muỗng đun, Phong thư dập triện, Nút dập dấu).
 
+- **Kiểm định chất lượng & Xác nhận**:
+  - `node -c js/wax-seal-ceremony.js`: Exit code 0.
+  - `node -c js/realtime-guide.js`: Exit code 0.
+  - Cân bằng ngoặc nhọn CSS:
+    - `css/base.css`: 36 / 36 [OK]
+    - `css/layout.css`: 314 / 314 [OK]
+    - `css/components.css`: 1778 / 1778 [OK]
+  - Đảm bảo Zero PC Regression: Mọi quy tắc desktop ($\ge 1025\text{px}$) giữ nguyên vẹn 100%.

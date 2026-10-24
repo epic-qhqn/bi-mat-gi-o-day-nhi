@@ -1630,7 +1630,7 @@ body.sky-night .shooting-star {
   backdrop-filter: blur(var(--blur-glass));
   -webkit-backdrop-filter: blur(var(--blur-glass));
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   justify-content: center;
   z-index: 9999;
   opacity: 1;
@@ -1638,6 +1638,11 @@ body.sky-night .shooting-star {
   overflow-y: auto;
   -webkit-overflow-scrolling: touch;
   box-sizing: border-box;
+  padding: max(12px, env(safe-area-inset-top)) max(12px, env(safe-area-inset-right)) max(12px, env(safe-area-inset-bottom)) max(12px, env(safe-area-inset-left));
+}
+
+.modal-overlay > * {
+  margin: auto;
 }
 
 body.sky-night .modal-overlay {
