@@ -748,6 +748,7 @@
         const centerY = rect.top + rect.height / 2;
         const curScale = window.currentWrapScale || 1;
         const proximityRadius = Math.max(28, Math.min(72, 68 * curScale));
+        const dist = Math.hypot(centerX - clientX, centerY - clientY);
 
         if (dist < proximityRadius) {
             connectStar(nextExpectedIdx);
