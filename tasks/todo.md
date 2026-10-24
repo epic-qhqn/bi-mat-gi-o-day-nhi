@@ -16,10 +16,10 @@
 ## MILESTONE 2: ĐẠI NÂNG CẤP 54 LOÀI HOA DI SẢN & TRẮC NGHIỆM TÂM HỒN ĐA TẦNG
 
 ### Phase 6: Bách Khoa Toàn Thư 54 Loài Hoa Di Sản (`js/flowers-data.js`)
-- [ ] 6.1: Bảo tồn và chuẩn hóa 27 loài hoa hiện tại, giữ tính tương thích 100% với các tính năng đang chạy.
-- [ ] 6.2: Nghiên cứu và soạn thảo 27 loài hoa di sản bổ sung (Cát Tường, Linh Lan, Quỳnh, Ngọc Lan, Thiên Điểu, Mộc Hương, Bồ Công Anh, Thanh Liễu, Diên Vĩ, Thược Dược, Tử Đằng, Cúc Thạch Thảo, Thủy Tiên, Sim Rừng, Mộc Miên, Bách Nhật, Cúc Tana, Sử Quân Tử, Dạ Lan Hương, Huệ Ta, Phong Lữ, Hoa Mua, Dừa Cạn, Tuyết Mai, Hồng Môn, Lan Vũ Nữ, Bằng Lăng).
-- [ ] 6.3: Thiết kế đầy đủ bộ nhận diện cho 27 loài hoa mới (`title`, `quote`, `traits`, `match`, `clash`, `checklist: friend, love, pressure`).
-- [ ] 6.4: Kiểm tra tính cân bằng cảm xúc và tâm lý học giữa các loài hoa, đảm bảo không có loài nào bị lép vế hay thiếu chiều sâu.
+- [x] 6.1: Bảo tồn và chuẩn hóa 27 loài hoa hiện tại, giữ tính tương thích 100% với các tính năng đang chạy.
+- [x] 6.2: Nghiên cứu và soạn thảo 27 loài hoa di sản bổ sung (Cát Tường, Linh Lan, Quỳnh, Ngọc Lan, Thiên Điểu, Mộc Hương, Bồ Công Anh, Thanh Liễu, Diên Vĩ, Thược Dược, Tử Đằng, Cúc Thạch Thảo, Thủy Tiên, Sim Rừng, Mộc Miên, Bách Nhật, Cúc Tana, Sử Quân Tử, Dạ Lan Hương, Huệ Ta, Phong Lữ, Hoa Mua, Dừa Cạn, Tuyết Mai, Hồng Môn, Lan Vũ Nữ, Bằng Lăng).
+- [x] 6.3: Thiết kế đầy đủ bộ nhận diện cho 27 loài hoa mới (`title`, `quote`, `traits`, `match`, `clash`, `checklist: friend, love, pressure`).
+- [x] 6.4: Kiểm tra tính cân bằng cảm xúc và tâm lý học giữa các loài hoa, đảm bảo không có loài nào bị lép vế hay thiếu chiều sâu (54 loài hoa, 0 trùng lặp, 100% đầy đủ thuộc tính).
 
 ---
 
