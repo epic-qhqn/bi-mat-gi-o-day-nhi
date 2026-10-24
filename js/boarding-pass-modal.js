@@ -123,6 +123,20 @@
             if (desc2) desc2.textContent = profile.checklist.love || '';
             if (desc3) desc3.textContent = profile.checklist.pressure || '';
         }
+
+        // ✦ Phonk Easter Egg trigger on Postcard (chỉ hiển thị nếu đúng 1 số loài hoa rực lửa / cá tính)
+        const ticketPhonkBtn = document.getElementById('ticket-phonk-btn');
+        if (ticketPhonkBtn) {
+            const isEligible = window.PHONK_ELIGIBLE_FLOWERS && window.PHONK_ELIGIBLE_FLOWERS.includes(profile.id);
+            if (isEligible) {
+                ticketPhonkBtn.classList.remove('hidden');
+                ticketPhonkBtn.classList.toggle('is-active', Boolean(window.isPhonkActive));
+                const flame = ticketPhonkBtn.querySelector('.phonk-flame');
+                if (flame) flame.textContent = window.isPhonkActive ? '🔥' : '⚡';
+            } else {
+                ticketPhonkBtn.classList.add('hidden');
+            }
+        }
     };
 
     // =========================================================================
@@ -374,6 +388,16 @@
                     if (typeof window.triggerHaptic === 'function') window.triggerHaptic('tap');
                     if (typeof window.playBubblePopSFX === 'function') window.playBubblePopSFX();
                     showTicketToast(`Khám phá: ${nextProfile.flowerName} (${nextProfile.vietnameseName}) ✨`);
+                }
+            });
+        }
+
+        const ticketPhonkBtn = document.getElementById('ticket-phonk-btn');
+        if (ticketPhonkBtn) {
+            ticketPhonkBtn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                if (typeof window.togglePhonkMode === 'function') {
+                    window.togglePhonkMode();
                 }
             });
         }

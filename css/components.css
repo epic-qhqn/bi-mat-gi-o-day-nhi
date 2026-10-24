@@ -10674,3 +10674,138 @@ body.readable-font .polaroid-back .letter-content {
   }
 }
 
+/* ==========================================================================
+   PHONK EASTER EGG & AUDIO SUITE STYLING
+   ========================================================================== */
+
+/* 1. Nút bí ẩn trên thanh Music Panel (Giấu kín nhưng khám phá được) */
+.garden-secret-phonk-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 26px;
+  height: 26px;
+  min-width: 26px;
+  min-height: 26px;
+  padding: 0;
+  margin-left: 2px;
+  border-radius: 50%;
+  background: rgba(212, 175, 55, 0.08);
+  border: 1px solid rgba(212, 175, 55, 0.35);
+  color: #B8860B;
+  cursor: pointer;
+  position: relative;
+  transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Vùng chạm an toàn >= 44px WCAG */
+.garden-secret-phonk-btn::after {
+  content: '';
+  position: absolute;
+  inset: -9px;
+}
+
+.garden-secret-phonk-btn:hover {
+  background: rgba(234, 179, 8, 0.2);
+  border-color: #EAB308;
+  color: #D97706;
+  transform: scale(1.15) rotate(15deg);
+  box-shadow: 0 0 10px rgba(234, 179, 8, 0.5);
+}
+
+.garden-secret-phonk-btn .phonk-secret-star {
+  font-size: 13px;
+  line-height: 1;
+  display: inline-block;
+  transition: transform 0.3s ease;
+}
+
+/* Trạng thái Phonk Mode đang kích hoạt */
+.garden-secret-phonk-btn.is-active {
+  background: linear-gradient(135deg, #FF4500, #FF1493);
+  border-color: #FFD700;
+  color: #FFFFFF;
+  box-shadow: 0 0 14px rgba(255, 69, 0, 0.7);
+  animation: phonkEmberPulse 1.2s infinite alternate;
+}
+
+.music-panel.phonk-mode-active {
+  border-color: rgba(255, 69, 0, 0.55) !important;
+  box-shadow: 0 0 18px rgba(255, 69, 0, 0.3), var(--shadow-subtle) !important;
+}
+
+.music-btn-inner.phonk-active {
+  color: #FF4500 !important;
+  filter: drop-shadow(0 0 6px rgba(255, 69, 0, 0.8));
+}
+
+/* 2. Nút Phonk trên Bưu thiếp Postcard */
+.ticket-phonk-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 4px 10px;
+  font-size: 11px;
+  font-weight: 600;
+  border-radius: var(--radius-pill);
+  background: linear-gradient(135deg, rgba(255, 69, 0, 0.12), rgba(255, 20, 147, 0.12));
+  border: 1px solid rgba(255, 69, 0, 0.45);
+  color: #C0392B;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  min-height: 30px;
+}
+
+.ticket-phonk-btn:hover {
+  background: linear-gradient(135deg, #FF4500, #FF1493);
+  color: #FFFFFF;
+  border-color: #FFD700;
+  transform: translateY(-1px);
+  box-shadow: 0 3px 10px rgba(255, 69, 0, 0.35);
+}
+
+.ticket-phonk-btn.is-active {
+  background: linear-gradient(135deg, #FF4500, #FF1493);
+  color: #FFFFFF;
+  border-color: #FFD700;
+  box-shadow: 0 0 12px rgba(255, 69, 0, 0.6);
+  animation: phonkEmberPulse 1.2s infinite alternate;
+}
+
+/* 3. Nút Phonk trên Thư bí mật (Quiz kết quả) */
+.flower-quiz__phonk-easter-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 4px 12px;
+  font-size: 11px;
+  font-weight: 600;
+  border-radius: var(--radius-pill);
+  background: linear-gradient(135deg, rgba(255, 69, 0, 0.15), rgba(255, 20, 147, 0.15));
+  border: 1px solid rgba(255, 69, 0, 0.5);
+  color: #B91C1C;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  min-height: 28px;
+}
+
+.flower-quiz__phonk-easter-btn:hover,
+.flower-quiz__phonk-easter-btn.is-active {
+  background: linear-gradient(135deg, #FF4500, #FF1493);
+  color: #FFFFFF;
+  border-color: #FFD700;
+  box-shadow: 0 0 12px rgba(255, 69, 0, 0.5);
+}
+
+@keyframes phonkEmberPulse {
+  0% {
+    transform: scale(1);
+    box-shadow: 0 0 6px rgba(255, 69, 0, 0.4);
+  }
+  100% {
+    transform: scale(1.08);
+    box-shadow: 0 0 16px rgba(255, 69, 0, 0.8), 0 0 24px rgba(255, 20, 147, 0.5);
+  }
+}
+
+

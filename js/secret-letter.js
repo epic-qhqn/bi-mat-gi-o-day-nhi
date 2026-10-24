@@ -872,6 +872,17 @@
 
         const badges = el('div', 'flower-quiz__badges');
         (result.traits || []).slice(0, 3).forEach((t) => badges.appendChild(el('span', 'flower-quiz__badge', t)));
+        if (window.PHONK_ELIGIBLE_FLOWERS && window.PHONK_ELIGIBLE_FLOWERS.includes(result.id)) {
+            const phonkBtn = el('button', 'flower-quiz__phonk-easter-btn' + (window.isPhonkActive ? ' is-active' : ''), '⚡ Phonk Secret Beat 🔥');
+            phonkBtn.type = 'button';
+            phonkBtn.title = 'Mở khóa giai điệu Phonk bí ẩn dành riêng cho tính cách rực lửa của bạn';
+            phonkBtn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                if (typeof window.togglePhonkMode === 'function') window.togglePhonkMode();
+                phonkBtn.classList.toggle('is-active', Boolean(window.isPhonkActive));
+            });
+            badges.appendChild(phonkBtn);
+        }
 
         const compat = el('div', 'flower-quiz__compat');
         compat.append(

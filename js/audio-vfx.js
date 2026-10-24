@@ -1057,6 +1057,8 @@ const initBgMusic = () => {
     const musicToggleBtn = document.getElementById("music-toggle");
     const musicIconPath = document.querySelector("#music-icon path");
     const volumeSlider = document.getElementById("volume-slider");
+    const secretPhonkBtn = document.getElementById("garden-secret-phonk-btn");
+    const musicPanel = document.querySelector(".music-panel");
 
     const playPath = "M8 5v14l11-7z"; // Play icon
     const pausePath = "M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z"; // Music note
@@ -1069,8 +1071,130 @@ const initBgMusic = () => {
     window.playPath = playPath;
     window.volumeSlider = volumeSlider;
 
+    // BGM Playlist: Random 1 of 2 tracks on entry, then cycle when current track ends
+    const BGM_PLAYLIST = [
+        { src: './audio/nhac_1.webm', title: 'MONO - Em Xinh 🌸' },
+        { src: './audio/nhac_2.webm', title: 'Mắt Bão (OST Tiểu Đội 1978) 🌾' }
+    ];
+    const PHONK_TRACK = { src: './audio/nhac_phonk.webm', title: 'Most Viral Phonk 2026 🔥' };
+
+    // Danh sách 5 loài hoa rực lửa / cá tính được mở khóa Phonk Easter Egg
+    window.PHONK_ELIGIBLE_FLOWERS = ['bombax', 'poppy', 'bird_of_paradise', 'anthurium', 'queen_of_the_night'];
+
+    // Chọn ngẫu nhiên 1 trong 2 file lúc người dùng vào web (50% / 50%)
+    let currentTrackIdx = Math.floor(Math.random() * BGM_PLAYLIST.length);
+    let isPhonkActive = false;
+    window.isPhonkActive = false;
+
     // Track baseline volume (mặc định 0.05 lúc đầu theo yêu cầu Phase 1)
     window.originalAudioVolume = volumeSlider ? parseFloat(volumeSlider.value) : 0.05;
+
+    // Cập nhật giao diện các nút Phonk trên toàn hệ thống
+    const updatePhonkUI = () => {
+        const btns = document.querySelectorAll('.phonk-indicator, #garden-secret-phonk-btn, #ticket-phonk-btn, .flower-quiz__phonk-easter-btn');
+        btns.forEach(btn => {
+            btn.classList.toggle('is-active', isPhonkActive);
+            const icon = btn.querySelector('.phonk-btn-icon, .phonk-secret-star, .phonk-flame');
+            if (icon) {
+                icon.textContent = isPhonkActive ? '🔥' : '✦';
+            }
+        });
+        if (musicPanel) {
+            musicPanel.classList.toggle('phonk-mode-active', isPhonkActive);
+        }
+        if (musicToggleBtn) {
+            musicToggleBtn.classList.toggle('phonk-active', isPhonkActive);
+        }
+    };
+
+    // Hàm chuyển đổi Phonk Easter Egg
+    window.togglePhonkMode = (forceState) => {
+        if (!audio) return;
+        if (typeof window.initAudio === 'function') window.initAudio();
+
+        const targetState = (forceState !== undefined) ? Boolean(forceState) : !isPhonkActive;
+        isPhonkActive = targetState;
+        window.isPhonkActive = isPhonkActive;
+
+        if (typeof window.triggerHaptic === 'function') window.triggerHaptic('heavy');
+        if (typeof window.playMatchStrikeSFX === 'function') window.playMatchStrikeSFX();
+
+        if (isPhonkActive) {
+            // Chuyển sang file nhạc Phonk bí mật
+            audio.src = PHONK_TRACK.src;
+            audio.currentTime = 0;
+            const phonkVol = Math.max(0.12, Math.min(0.35, (window.originalAudioVolume || 0.15) * 1.4));
+            audio.volume = phonkVol;
+            if (volumeSlider) volumeSlider.value = phonkVol;
+
+            audio.play().then(() => {
+                if (musicToggleBtn) {
+                    musicToggleBtn.classList.add('playing', 'phonk-active');
+                    if (musicIconPath) musicIconPath.setAttribute("d", pausePath);
+                }
+            }).catch(e => console.log("Phonk play err:", e));
+
+            if (typeof window.showMascotSpeech === 'function') {
+                window.showMascotSpeech("Ủa gì cháy dữ vậy nè?! Nhạc Phonk underground siêu căng luôn nha bạn ơi! 🔥😎", 5000);
+            }
+        } else {
+            // Chuyển lại giai điệu êm đềm bình thường
+            audio.src = BGM_PLAYLIST[currentTrackIdx].src;
+            audio.currentTime = 0;
+            const calmVol = window.originalAudioVolume || 0.15;
+            audio.volume = calmVol;
+            if (volumeSlider) volumeSlider.value = calmVol;
+
+            audio.play().then(() => {
+                if (musicToggleBtn) {
+                    musicToggleBtn.classList.remove('phonk-active');
+                    musicToggleBtn.classList.add('playing');
+                    if (musicIconPath) musicIconPath.setAttribute("d", pausePath);
+                }
+            }).catch(e => console.log("BGM restore err:", e));
+
+            if (typeof window.showMascotSpeech === 'function') {
+                window.showMascotSpeech("Đã trở về giai điệu thơ êm đềm của khu vườn rồi nha! 🌸✨", 3500);
+            }
+        }
+
+        updatePhonkUI();
+    };
+
+    // Khởi tạo audio element
+    if (audio) {
+        audio.loop = false; // Tắt loop đơn để sự kiện 'ended' kích hoạt chuyển bài
+        audio.src = BGM_PLAYLIST[currentTrackIdx].src;
+
+        // Xử lý khi bài hát kết thúc: người dùng ở lại đủ lâu sẽ phát tiếp bài còn lại
+        audio.addEventListener('ended', () => {
+            if (isPhonkActive) {
+                audio.currentTime = 0;
+                audio.play().catch(e => console.log("Phonk repeat error:", e));
+                return;
+            }
+            // Chuyển sang bài còn lại trong danh sách
+            currentTrackIdx = (currentTrackIdx + 1) % BGM_PLAYLIST.length;
+            audio.src = BGM_PLAYLIST[currentTrackIdx].src;
+            audio.play().then(() => {
+                if (musicToggleBtn) {
+                    musicToggleBtn.classList.add('playing');
+                    if (musicIconPath) musicIconPath.setAttribute("d", pausePath);
+                }
+                if (typeof window.showMascotSpeech === 'function' && window.gardenState && window.gardenState.currentStage >= 1) {
+                    window.showMascotSpeech(`🎵 Giai điệu tiếp theo: ${BGM_PLAYLIST[currentTrackIdx].title}`, 4000);
+                }
+            }).catch(e => console.log("Next track error:", e));
+        });
+    }
+
+    // Nút giấu Phonk Easter Egg trong Music Panel
+    if (secretPhonkBtn) {
+        secretPhonkBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            window.togglePhonkMode();
+        });
+    }
 
     // Set default volume
     if (audio && volumeSlider) {
@@ -1092,9 +1216,11 @@ const initBgMusic = () => {
       musicToggleBtn.addEventListener("click", (e) => {
         e.stopPropagation();
         if (audio.paused) {
-          audio.play();
-          musicToggleBtn.classList.add('playing');
-          musicIconPath.setAttribute("d", pausePath);
+          audio.play().then(() => {
+            musicToggleBtn.classList.add('playing');
+            if (isPhonkActive) musicToggleBtn.classList.add('phonk-active');
+            musicIconPath.setAttribute("d", pausePath);
+          }).catch(e => console.log("Audio play error:", e));
         } else {
           audio.pause();
           musicToggleBtn.classList.remove('playing');
