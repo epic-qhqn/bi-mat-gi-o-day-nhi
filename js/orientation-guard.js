@@ -11,7 +11,15 @@
     const root = document.documentElement;
     // Same condition as the CSS block: touch-first device, portrait, phone-sized short edge.
     const blockQuery = window.matchMedia('(orientation: portrait) and (hover: none) and (pointer: coarse) and (max-width: 820px)');
-    const BACKGROUND_IDS = ['wrap', 'name-modal', 'time-lock-modal'];
+    const BACKGROUND_IDS = [
+        'wrap',
+        'name-modal',
+        'time-lock-modal',
+        'secret-letter-modal',
+        'garden-polaroid-modal',
+        'boarding-pass-modal',
+        'experience-guide-modal'
+    ];
 
     const setInert = (on) => {
         BACKGROUND_IDS.forEach((id) => {

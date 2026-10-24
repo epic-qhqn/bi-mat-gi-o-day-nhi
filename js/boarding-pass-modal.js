@@ -371,6 +371,7 @@
                 if (typeof window.getNextFlowerProfile === 'function') {
                     const nextProfile = window.getNextFlowerProfile();
                     applyFlowerProfileToUI(nextProfile);
+                    if (typeof window.triggerHaptic === 'function') window.triggerHaptic('tap');
                     if (typeof window.playBubblePopSFX === 'function') window.playBubblePopSFX();
                     showTicketToast(`Khám phá: ${nextProfile.flowerName} (${nextProfile.vietnameseName}) ✨`);
                 }
@@ -399,6 +400,7 @@
         if (waxSeal) {
             waxSeal.addEventListener('click', (e) => {
                 e.stopPropagation();
+                if (typeof window.triggerHaptic === 'function') window.triggerHaptic('tap');
                 if (typeof window.playBubblePopSFX === 'function') window.playBubblePopSFX();
                 const rect = waxSeal.getBoundingClientRect();
                 const cx = rect.left + rect.width / 2;
@@ -436,6 +438,7 @@
                 } else {
                     showTicketToast('Lời chúc: ' + textToCopy);
                 }
+                if (typeof window.triggerHaptic === 'function') window.triggerHaptic('tap');
                 if (typeof window.playBubblePopSFX === 'function') window.playBubblePopSFX();
             });
         }

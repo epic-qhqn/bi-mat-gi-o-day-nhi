@@ -146,42 +146,75 @@
     </div>
 
     <!-- Force-Landscape Overlay (mobile portrait only; shown/hidden purely by CSS media queries) -->
-    <div id="rotate-device-overlay" class="rotate-device-overlay" role="alertdialog" aria-modal="true" aria-live="assertive" aria-label="Please rotate your phone">
-        <div class="rotate-device-stage" aria-hidden="true">
-            <div class="rotate-phone">
-                <span class="rotate-phone-speaker"></span>
-                <span class="rotate-phone-screen"></span>
-                <span class="rotate-phone-home"></span>
+    <div id="rotate-device-overlay" class="rotate-device-overlay" role="alertdialog" aria-modal="true" aria-live="assertive" aria-label="Vui lòng xoay ngang màn hình">
+        <div class="rotate-ambient-mist" aria-hidden="true">
+            <span class="rotate-petal p1"></span>
+            <span class="rotate-petal p2"></span>
+            <span class="rotate-petal p3"></span>
+            <span class="rotate-petal p4"></span>
+        </div>
+        <div class="rotate-device-card">
+            <div class="rotate-silk-ribbon" aria-hidden="true">
+                <span class="silk-ribbon-gem">✦</span>
+                <span class="silk-ribbon-text">Khu Vườn Di Sản 20/10</span>
+                <span class="silk-ribbon-gem">✦</span>
+            </div>
+            <div class="rotate-device-stage" aria-hidden="true">
+                <svg class="rotate-motion-arc" viewBox="0 0 160 160" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path class="arc-track" d="M 125,48 A 56,56 0 0 1 48,125" stroke="rgba(212, 175, 55, 0.45)" stroke-width="2" stroke-dasharray="4 4"/>
+                    <path class="arc-arrow" d="M 42,114 L 48,125 L 60,123" stroke="#D4AF37" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+                <div class="rotate-phone rotate-artisan-phone">
+                    <span class="rotate-phone-speaker artisan-phone-notch"></span>
+                    <div class="rotate-phone-screen artisan-phone-screen">
+                        <div class="screen-lotus-core">
+                            <span class="lotus-glow-pulse"></span>
+                            <span class="lotus-icon">🪷</span>
+                        </div>
+                    </div>
+                    <span class="rotate-phone-home artisan-phone-chin"></span>
+                </div>
+            </div>
+            <h2 class="rotate-poetic-title">Góc Nhìn Trọn Vẹn</h2>
+            <p class="rotate-device-text">Để cảm nhận trọn vẹn khu vườn hoa di sản 20/10, bạn vui lòng xoay ngang màn hình nhé ✨</p>
+            <div class="rotate-hint-sub">
+                <span class="hint-dot"></span>
+                <span>Khung trời hoa lá &amp; giai điệu bình yên đang chờ đón</span>
             </div>
         </div>
-        <p class="rotate-device-text">Please rotate your phone</p>
     </div>
 
     <!-- Time Lock Gateway Modal (Khóa thời gian đến 12h trưa 25/10/2026) -->
     <div id="time-lock-modal" class="modal-overlay" style="z-index: 100000;">
         <div class="time-lock-panel lyrical-panel">
-            <div class="lock-icon-container">
-                <div class="lock-glow-ring"></div>
-                <div class="lock-svg-wrap">
-                    <svg viewBox="0 0 24 24" width="44" height="44" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
-                        <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
-                    </svg>
+            <div class="time-lock-split-wrap">
+                <div class="time-lock-col-left">
+                    <div class="lock-icon-container">
+                        <div class="lock-glow-ring"></div>
+                        <div class="lock-svg-wrap">
+                            <svg viewBox="0 0 24 24" width="44" height="44" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+                                <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+                            </svg>
+                        </div>
+                    </div>
+                    <div class="portal-badge" style="margin-bottom: 12px;">⏳ SPECIAL GATEWAY · 20/10 ⏳</div>
+                    <h2>CỔNG THỜI GIAN BÍ MẬT</h2>
+                    <p class="lock-subtitle" id="lock-subtitle">
+                        Hãy nhập mật mã để mở khóa cổng bí mật ✨<br>
+                        <small style="opacity: 0.85;">(Khu vườn sẽ mở tự do sau 12:00 trưa ngày 25/10/2026)</small>
+                    </p>
                 </div>
-            </div>
-            <div class="portal-badge" style="margin-bottom: 12px;">⏳ SPECIAL GATEWAY · 20/10 ⏳</div>
-            <h2>CỔNG THỜI GIAN BÍ MẬT</h2>
-            <p class="lock-subtitle" id="lock-subtitle">
-                Hãy nhập mật mã để mở khóa cổng bí mật ✨<br>
-                <small style="opacity: 0.85;">(Khu vườn sẽ mở tự do sau 12:00 trưa ngày 25/10/2026)</small>
-            </p>
-            <div class="lock-input-group">
-                <input type="text" id="time-lock-input" class="lyrical-input time-lock-input" placeholder="Nhập mật mã mở sớm..." autocomplete="off" maxlength="20">
-                <button id="time-lock-btn" class="lyrical-btn time-lock-btn">Mở Khóa Ngay 🔓</button>
-            </div>
-            <div id="time-lock-msg" class="time-lock-msg"></div>
-            <div class="time-lock-footer">
-                <span id="time-lock-clock" class="time-lock-clock"></span>
+                <div class="time-lock-col-right">
+                    <div class="lock-input-group">
+                        <input type="text" id="time-lock-input" class="lyrical-input time-lock-input" placeholder="Nhập mật mã mở sớm..." autocomplete="off" maxlength="20">
+                        <button id="time-lock-btn" class="lyrical-btn time-lock-btn">Mở Khóa Ngay 🔓</button>
+                    </div>
+                    <div id="time-lock-msg" class="time-lock-msg"></div>
+                    <div class="time-lock-footer">
+                        <span id="time-lock-clock" class="time-lock-clock"></span>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -214,315 +247,322 @@
                     <p id="name-prompt-desc">Hãy để lại tên hoặc biệt danh để dập nên con dấu sáp riêng, mở lối bước vào khu vườn hoa di sản ✨</p>
                 </div>
 
-                <!-- Vintage Brass Letterpress Plate -->
-                <div class="letterpress-brass-plate" id="letterpress-brass-plate">
-                    <span class="brass-rivet rivet-tl"></span>
-                    <span class="brass-rivet rivet-tr"></span>
-                    <span class="brass-rivet rivet-bl"></span>
-                    <span class="brass-rivet rivet-br"></span>
-                    <div class="plate-inner-rim">
-                        <div class="plate-engraving-label">✦ VINTAGE BRASS LETTERPRESS ✦</div>
-                        <input type="text" id="name-input" class="lyrical-input portal-input atelier-input" placeholder="Tên hoặc biệt danh của bạn..." autocomplete="off" maxlength="20">
-                        <div id="emboss-preview-wrap" class="emboss-preview-wrap" aria-hidden="true">
-                            <span class="emboss-placeholder">✦ Gõ tên bạn để xem mẫu dập đồng ✦</span>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Deep Link Gift Action Toolbar (Phase 13) -->
-                <div class="gift-link-action-bar">
-                    <button type="button" id="copy-custom-gift-link-btn" class="gift-share-link-btn" title="Sao chép link tặng bạn nữ với tên đã khắc trên khuôn đồng">
-                        <span class="link-icon">🎁</span>
-                        <span class="link-text">Sao chép link quà tặng đã khắc tên</span>
-                        <span class="link-sparkle">✨</span>
-                    </button>
-                    <span id="gift-link-copied-hint" class="gift-link-copied-hint hidden">Đã sao chép liên kết quà tặng!</span>
-                </div>
-
-                <!-- Wax Seal & Action Station (Phase 3: Artisan Multi-Sensory Ritual) -->
-                <div class="wax-seal-station" id="wax-seal-station">
-                    <!-- 3-Phase Poetic Ritual Breadcrumbs -->
-                    <!-- 3-Phase Poetic Ritual Breadcrumbs (Thanh Chuỗi Sơn Mài & Triện Sáp) -->
-                    <div class="ritual-step-bar" id="ritual-step-bar" aria-label="Các bước chế tác con dấu sáp">
-                        <div class="ritual-strand-track" aria-hidden="true">
-                            <div class="ritual-strand-progress" id="ritual-strand-progress"></div>
-                        </div>
-                        <span class="step-dot is-active" data-step="1" title="Bước 1: Chọn sắc sáp & hoa văn triện">
-                            <span class="step-dot-icon">🎨</span>
-                            <span class="step-dot-label"><i>1. Chọn sáp & triện</i></span>
-                            <span class="step-dot-sparkle">✦</span>
-                        </span>
-                        <span class="step-connector"></span>
-                        <span class="step-dot" data-step="2" title="Bước 2: Đun nóng & rót sáp lên phong thư">
-                            <span class="step-dot-icon">🔥</span>
-                            <span class="step-dot-label"><i>2. Đun & rót sáp</i></span>
-                            <span class="step-dot-sparkle">✦</span>
-                        </span>
-                        <span class="step-connector"></span>
-                        <span class="step-dot" data-step="3" title="Bước 3: Dập triện son & đánh thức vườn">
-                            <span class="step-dot-icon">💮</span>
-                            <span class="step-dot-label"><i>3. Dập triện mở cổng</i></span>
-                            <span class="step-dot-sparkle">✦</span>
-                        </span>
-                    </div>
-
-                    <!-- 5-Color Vietnamese Wax Beads Palette & Seal Crest Options (Full-Width Row) -->
-                    <div class="wax-beads-tray" id="wax-beads-tray">
-                        <div class="tray-header-row">
-                            <span class="tray-title">SẮC SÁP ĐỒNG NỘI</span>
-                            <div class="tray-actions-group">
-                                <span class="tray-counter" id="tray-counter">Đã chọn: <strong id="bead-count-val">0</strong>/3</span>
-                                <button type="button" class="hearth-quick-drop-btn" id="hearth-quick-drop-btn" title="Tự động chọn phối màu hoàn hảo vào thìa">
-                                    <span>Phối màu nhanh ✨</span>
-                                </button>
-                                <button type="button" class="tray-reset-btn hidden" id="tray-reset-btn" title="Chọn lại các viên sáp khác">
-                                    <span>Đổi màu ↺</span>
-                                </button>
-                            </div>
-                        </div>
-                        <div class="beads-container" id="beads-container" role="group" aria-label="Khay hạt sáp niêm phong">
-                            <!-- 1. Cánh Sen Hồng -->
-                            <div class="wax-bead-item bead-ruby bead-lotus" id="wax-bead-lotus" data-bead-id="lotus" data-color="#E0838A" data-name="Cánh Sen" role="button" tabindex="0" title="Chạm để chọn Sáp Cánh Sen Hồng">
-                                <div class="hex-bead-shape">
-                                    <span class="bead-stamp-icon">🪷</span>
-                                </div>
-                                <span class="bead-label">Cánh Sen</span>
-                            </div>
-                            <!-- Backward compat alias for ruby -->
-                            <div id="wax-bead-ruby" class="hidden-compat-alias" aria-hidden="true" style="display:none;"></div>
-                            <!-- 2. Cốm Non Ngọc Bích -->
-                            <div class="wax-bead-item bead-matcha" id="wax-bead-matcha" data-bead-id="matcha" data-color="#6B9E78" data-name="Cốm Non" role="button" tabindex="0" title="Chạm để chọn Sáp Cốm Non Ngọc Bích">
-                                <div class="hex-bead-shape">
-                                    <span class="bead-stamp-icon">🍃</span>
-                                </div>
-                                <span class="bead-label">Cốm Non</span>
-                            </div>
-                            <!-- 3. Hoàng Yến Ánh Kim -->
-                            <div class="wax-bead-item bead-gold" id="wax-bead-gold" data-bead-id="gold" data-color="#DEB853" data-name="Hoàng Yến" role="button" tabindex="0" title="Chạm để chọn Sáp Hoàng Yến Ánh Kim">
-                                <div class="hex-bead-shape">
-                                    <span class="bead-stamp-icon">✦</span>
-                                </div>
-                                <span class="bead-label">Hoàng Yến</span>
-                            </div>
-                            <!-- 4. Trắng Dó Phủ Điệp -->
-                            <div class="wax-bead-item bead-ivory" id="wax-bead-ivory" data-bead-id="ivory" data-color="#F9F5EC" data-name="Trắng Dó" role="button" tabindex="0" title="Chạm để chọn Sáp Trắng Dó Điệp">
-                                <div class="hex-bead-shape">
-                                    <span class="bead-stamp-icon">✿</span>
-                                </div>
-                                <span class="bead-label">Trắng Dó</span>
-                            </div>
-                            <!-- 5. Tím Bằng Lăng Thơ Mộng -->
-                            <div class="wax-bead-item bead-violet" id="wax-bead-violet" data-bead-id="violet" data-color="#9B72AA" data-name="Bằng Lăng" role="button" tabindex="0" title="Chạm để chọn Sáp Tím Bằng Lăng">
-                                <div class="hex-bead-shape">
-                                    <span class="bead-stamp-icon">🌸</span>
-                                </div>
-                                <span class="bead-label">Bằng Lăng</span>
-                            </div>
-                        </div>
-
-                        <!-- Brass Stamp Crest Motif Selector -->
-                        <div class="crest-selector-wrap" id="crest-selector-wrap">
-                            <span class="crest-selector-title">HOA VĂN KHẮC TRIỆN:</span>
-                            <div class="crest-options-row" role="radiogroup" aria-label="Chọn hoa văn khắc con dấu">
-                                <button type="button" class="crest-opt-btn" data-crest="lotus" role="radio" aria-checked="false" title="Hoa Sen Tinh Khôi">
-                                    <span class="crest-opt-icon">🪷</span>
-                                    <span class="crest-opt-name">Hoa Sen</span>
-                                </button>
-                                <button type="button" class="crest-opt-btn" data-crest="daisy" role="radio" aria-checked="false" title="Cúc Họa Mi Dịu Dàng">
-                                    <span class="crest-opt-icon">🌼</span>
-                                    <span class="crest-opt-name">Cúc Họa Mi</span>
-                                </button>
-                                <button type="button" class="crest-opt-btn" data-crest="butterfly" role="radio" aria-checked="false" title="Cánh Bướm Mộng Du">
-                                    <span class="crest-opt-icon">🦋</span>
-                                    <span class="crest-opt-name">Cánh Bướm</span>
-                                </button>
-                                <button type="button" class="crest-opt-btn" data-crest="moon" role="radio" aria-checked="false" title="Vầng Trăng Khuyết & Tinh Tú">
-                                    <span class="crest-opt-icon">🌙</span>
-                                    <span class="crest-opt-name">Trăng Non</span>
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Artisan Hearth & Crafting Bench (2 Columns: Hearth on Left, Envelope on Right) -->
-                    <div class="artisan-crafting-bench" id="artisan-crafting-bench">
-                        <!-- Left: Matchbox, Candle & Brass Spoon Hearth -->
-                        <div class="hearth-burner-unit" id="hearth-burner-unit">
-                            <span class="hearth-column-title">BẾP NẤU SÁP</span>
-                            <!-- Vintage Lotus Matchbox with Striker Strip -->
-                            <div class="artisan-matchbox-wrap" id="artisan-matchbox-wrap" title="Bao diêm gỗ hoa sen cổ điển">
-                                <div class="matchbox-drawer">
-                                    <div class="matchbox-label">
-                                        <span class="matchbox-lotus-icon">🪷</span>
-                                        <span class="matchbox-brand">DIÊM THƠ</span>
-                                    </div>
-                                    <div class="match-striker-strip" id="match-striker-strip" role="button" tabindex="0" title="Chạm để quẹt que diêm đánh lửa">
-                                        <span class="striker-grit"></span>
-                                        <span class="striker-hint">Quẹt diêm ⚡</span>
-                                    </div>
-                                </div>
-                                <!-- Interactive Wooden Matchstick -->
-                                <div class="artisan-matchstick" id="artisan-matchstick" role="button" tabindex="0" title="Chạm hoặc kéo que diêm quẹt lửa">
-                                    <div class="match-head" id="match-head"></div>
-                                    <div class="match-stem"></div>
-                                    <div class="match-flame hidden" id="match-flame">
-                                        <div class="flame-core"></div>
-                                        <div class="flame-glow"></div>
-                                    </div>
-                                </div>
-                                <div class="match-sparks-wrap" id="match-sparks-wrap" aria-hidden="true"></div>
-                            </div>
-
-                            <!-- Aromatherapy Candle -->
-                            <div class="artisan-candle" id="artisan-candle" role="button" tabindex="0" title="Chạm để thắp ngọn nến thơm">
-                                <div class="candle-halo hidden" id="candle-halo"></div>
-                                <div class="candle-flame hidden" id="candle-flame">
-                                    <div class="flame-core"></div>
-                                    <div class="flame-glow"></div>
-                                </div>
-                                <div class="candle-wick"></div>
-                                <div class="candle-body"></div>
-                                <div class="candle-holder"></div>
-                                <span class="candle-badge" id="candle-badge">Chạm thắp nến 🕯️</span>
-                            </div>
-
-                            <!-- Polished Brass Melting Spoon & Heat Stand -->
-                            <div class="brass-spoon-stand" id="brass-spoon-stand">
-                                <div class="brass-spoon" id="brass-spoon" role="button" tabindex="0" title="Chạm để rót sáp lỏng sang phong thư">
-                                    <div class="spoon-handle">
-                                        <div class="spoon-wood-grip"></div>
-                                    </div>
-                                    <div class="spoon-neck"></div>
-                                    <div class="spoon-bowl" id="spoon-bowl">
-                                        <div class="spoon-heat-glow hidden" id="spoon-heat-glow"></div>
-                                        <!-- Dropped wax beads in spoon (Up to 3 beads) -->
-                                        <div class="spoon-beads-pool" id="spoon-beads-pool">
-                                            <div class="spoon-bead spoon-ruby-bead hidden" id="spoon-ruby-bead"></div>
-                                            <div class="spoon-bead spoon-gold-bead hidden" id="spoon-gold-bead"></div>
-                                            <div class="spoon-bead spoon-third-bead hidden" id="spoon-third-bead"></div>
-                                        </div>
-                                        <!-- Molten wax pool with real-time interactive canvas swirl -->
-                                        <div class="spoon-molten-wax hidden" id="spoon-molten-wax">
-                                            <canvas id="marbled-swirl-canvas" class="marbled-swirl-canvas" width="120" height="120"></canvas>
-                                            <div class="molten-glimmer"></div>
-                                            <div class="spoon-simmer-bubbles" id="spoon-simmer-bubbles"></div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <!-- Glass stirring rod with interactive pointer swirl -->
-                                <div class="glass-stirring-rod hidden" id="glass-stirring-rod" role="button" tabindex="0" title="Chạm để khuấy vân cẩm thạch">
-                                    <div class="rod-stem"></div>
-                                    <div class="rod-tip"></div>
-                                    <span class="rod-tip-badge" id="rod-tip-badge">Khuấy vân 🪄</span>
+                <div class="atelier-workbench-grid">
+                    <!-- Cột Trái (Khuôn Chữ & Hạt Sáp) -->
+                    <div class="workbench-col-materials">
+                        <!-- Vintage Brass Letterpress Plate -->
+                        <div class="letterpress-brass-plate" id="letterpress-brass-plate">
+                            <span class="brass-rivet rivet-tl"></span>
+                            <span class="brass-rivet rivet-tr"></span>
+                            <span class="brass-rivet rivet-bl"></span>
+                            <span class="brass-rivet rivet-br"></span>
+                            <div class="plate-inner-rim">
+                                <div class="plate-engraving-label">✦ VINTAGE BRASS LETTERPRESS ✦</div>
+                                <input type="text" id="name-input" class="lyrical-input portal-input atelier-input" placeholder="Tên hoặc biệt danh của bạn..." autocomplete="off" maxlength="20">
+                                <div id="emboss-preview-wrap" class="emboss-preview-wrap" aria-hidden="true">
+                                    <span class="emboss-placeholder">✦ Gõ tên bạn để xem mẫu dập đồng ✦</span>
                                 </div>
                             </div>
                         </div>
 
-                        <!-- Right: Phong Thư, Wax Target Zone & 3D Stamp Workspace -->
-                        <div class="wax-seal-workspace" id="wax-seal-workspace">
-                            <span class="workspace-column-title">PHONG THƯ & TRIỆN SON</span>
-                            <!-- Target Pedestal for the Wax Pool -->
-                            <div class="wax-target-zone" id="wax-target-zone" role="button" tabindex="0" title="Khu vực đóng triện sáp son (Chạm hoặc đặt con dấu vào đây)">
-                                <span class="wax-target-ring"></span>
-                                <span class="wax-target-hint">ĐẶT DẤU VÀO ĐÂY</span>
-
-                                <!-- Molten Wax Pouring Stream from Tilted Spoon -->
-                                <div class="wax-pour-stream hidden" id="wax-pour-stream">
-                                    <div class="stream-liquid-core" id="stream-liquid-core"></div>
-                                    <div class="stream-gold-glint"></div>
-                                </div>
-
-                                <!-- Hot Molten Wax Pool (Spreads organically with steam before stamping) -->
-                                <div class="wax-hot-pool hidden" id="wax-hot-pool">
-                                    <div class="hot-wax-body" id="hot-wax-body"></div>
-                                    <div class="hot-wax-gloss" id="hot-wax-gloss"></div>
-                                    <!-- Sprinkled 24K Gold Flakes Layer -->
-                                    <div class="sprinkled-gold-flakes hidden" id="sprinkled-gold-flakes" aria-hidden="true"></div>
-                                    <div class="wax-steam-container">
-                                        <span class="steam-wisp wisp-1"></span>
-                                        <span class="steam-wisp wisp-2"></span>
-                                        <span class="steam-wisp wisp-3"></span>
-                                    </div>
-                                </div>
-                                
-                                <!-- Molten Wax Pool Imprint (The Cured Wax Seal) -->
-                                <div class="wax-seal-puddle hidden" id="wax-seal-puddle">
-                                    <div class="wax-outer-crease"></div>
-                                    <div class="wax-inner-core">
-                                        <!-- Dynamic SVG Crest Face -->
-                                        <div class="wax-crest-display" id="wax-crest-display">
-</div>
-                                        <div class="wax-name-imprint" id="wax-name-imprint">TRIỆN SON</div>
-                                    </div>
-                                </div>
-
-                                <!-- Wax Solidification / Cooling Progress Indicator -->
-                                <div class="wax-cooling-indicator hidden" id="wax-cooling-indicator">
-                                    <div class="cooling-ring-svg-wrap">
-                                        <svg class="cooling-progress-svg" viewBox="0 0 36 36">
-                                            <path class="cooling-bg-ring" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"/>
-                                            <path class="cooling-fill-ring" id="cooling-fill-ring" stroke-dasharray="0, 100" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"/>
-                                        </svg>
-                                        <span class="cooling-icon">❄️</span>
-                                    </div>
-                                    <span class="cooling-label">Sáp đang đông...</span>
-                                </div>
-
-                                <!-- Press & Hold Guidance Gauge -->
-                                <div class="press-gauge-overlay hidden" id="press-gauge-overlay">
-                                    <div class="press-fill-bar" id="press-fill-bar"></div>
-                                    <span class="press-gauge-text">Giữ chắc con dấu...</span>
-                                </div>
-
-                                <!-- Artistic Dried Flower Flourish & Golden Radiance Halo -->
-                                <div class="seal-botanical-flourish hidden" id="seal-botanical-flourish" aria-hidden="true">
-                                    <svg class="botanical-wreath-svg" viewBox="0 0 140 140" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                        <path class="wreath-branch branch-left" d="M32 110 C 14 78, 20 40, 52 18 C 60 13, 68 10, 70 10" stroke="#C5A030" stroke-width="1.8" stroke-linecap="round"/>
-                                        <path class="wreath-branch branch-right" d="M108 110 C 126 78, 120 40, 88 18 C 80 13, 72 10, 70 10" stroke="#C5A030" stroke-width="1.8" stroke-linecap="round"/>
-                                        <path class="wreath-leaf" d="M22 84 C 12 79, 14 69, 24 73 C 28 77, 26 82, 22 84 Z" fill="#94A796" opacity="0.95"/>
-                                        <path class="wreath-leaf" d="M20 56 C 10 50, 16 40, 26 46 C 28 51, 24 55, 20 56 Z" fill="#889E8A" opacity="0.95"/>
-                                        <path class="wreath-leaf" d="M35 30 C 27 22, 37 14, 45 22 C 43 27, 38 29, 35 30 Z" fill="#94A796" opacity="0.95"/>
-                                        <circle class="wreath-bud" cx="28" cy="44" r="3" fill="#E8B4B8"/>
-                                        <circle class="wreath-bud" cx="44" cy="20" r="2.5" fill="#F5CE56"/>
-                                        <path class="wreath-leaf" d="M118 84 C 128 79, 126 69, 116 73 C 112 77, 114 82, 118 84 Z" fill="#94A796" opacity="0.95"/>
-                                        <path class="wreath-leaf" d="M120 56 C 130 50, 124 40, 114 46 C 112 51, 116 55, 120 56 Z" fill="#889E8A" opacity="0.95"/>
-                                        <path class="wreath-leaf" d="M105 30 C 113 22, 103 14, 95 22 C 97 27, 102 29, 105 30 Z" fill="#94A796" opacity="0.95"/>
-                                        <circle class="wreath-bud" cx="112" cy="44" r="3" fill="#E8B4B8"/>
-                                        <circle class="wreath-bud" cx="96" cy="20" r="2.5" fill="#F5CE56"/>
-                                    </svg>
-                                    <div class="seal-radiance-halo"></div>
-                                </div>
-                            </div>
-
-                            <!-- 3D Interactive Handcrafted Wax Seal Stamp -->
-                            <div class="wax-seal-stamp" id="wax-seal-stamp" role="button" tabindex="0" title="Chạm hoặc kéo con dấu để đóng triện son">
-                                <div class="stamp-3d-wrap">
-                                    <div class="stamp-handle-top"></div>
-                                    <div class="stamp-handle-body"></div>
-                                    <div class="stamp-brass-collar"></div>
-                                    <div class="stamp-brass-head">
-                                        <div class="stamp-engraving-face" id="stamp-engraving-face">✦</div>
-                                    </div>
-                                </div>
-                                <div class="stamp-shadow"></div>
-                                <div class="stamp-press-halo" id="stamp-press-halo"></div>
-                            </div>
-
-                            <!-- Artisan Gold Flakes Tool (Below Target Zone in Right Column) -->
-                            <button type="button" class="artisan-sprinkle-vial hidden" id="artisan-sprinkle-vial" title="Chạm để rắc vụn vàng lá 24K điểm xuyết lên vũng sáp">
-                                <span class="vial-icon">✨</span>
-                                <span class="vial-text">Rắc vụn vàng 24K</span>
+                        <!-- Deep Link Gift Action Toolbar (Phase 13) -->
+                        <div class="gift-link-action-bar">
+                            <button type="button" id="copy-custom-gift-link-btn" class="gift-share-link-btn" title="Sao chép link tặng bạn nữ với tên đã khắc trên khuôn đồng">
+                                <span class="link-icon">🎁</span>
+                                <span class="link-text">Sao chép link quà tặng đã khắc tên</span>
+                                <span class="link-sparkle">✨</span>
                             </button>
+                            <span id="gift-link-copied-hint" class="gift-link-copied-hint hidden">Đã sao chép liên kết quà tặng!</span>
+                        </div>
+
+                        <!-- 5-Color Vietnamese Wax Beads Palette & Seal Crest Options (Full-Width Row) -->
+                        <div class="wax-beads-tray" id="wax-beads-tray">
+                            <div class="tray-header-row">
+                                <span class="tray-title">SẮC SÁP ĐỒNG NỘI</span>
+                                <div class="tray-actions-group">
+                                    <span class="tray-counter" id="tray-counter">Đã chọn: <strong id="bead-count-val">0</strong>/3</span>
+                                    <button type="button" class="hearth-quick-drop-btn" id="hearth-quick-drop-btn" title="Tự động chọn phối màu hoàn hảo vào thìa">
+                                        <span>Phối màu nhanh ✨</span>
+                                    </button>
+                                    <button type="button" class="tray-reset-btn hidden" id="tray-reset-btn" title="Chọn lại các viên sáp khác">
+                                        <span>Đổi màu ↺</span>
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="beads-container" id="beads-container" role="group" aria-label="Khay hạt sáp niêm phong">
+                                <!-- 1. Cánh Sen Hồng -->
+                                <div class="wax-bead-item bead-ruby bead-lotus" id="wax-bead-lotus" data-bead-id="lotus" data-color="#E0838A" data-name="Cánh Sen" role="button" tabindex="0" title="Chạm để chọn Sáp Cánh Sen Hồng">
+                                    <div class="hex-bead-shape">
+                                        <span class="bead-stamp-icon">🪷</span>
+                                    </div>
+                                    <span class="bead-label">Cánh Sen</span>
+                                </div>
+                                <!-- Backward compat alias for ruby -->
+                                <div id="wax-bead-ruby" class="hidden-compat-alias" aria-hidden="true" style="display:none;"></div>
+                                <!-- 2. Cốm Non Ngọc Bích -->
+                                <div class="wax-bead-item bead-matcha" id="wax-bead-matcha" data-bead-id="matcha" data-color="#6B9E78" data-name="Cốm Non" role="button" tabindex="0" title="Chạm để chọn Sáp Cốm Non Ngọc Bích">
+                                    <div class="hex-bead-shape">
+                                        <span class="bead-stamp-icon">🍃</span>
+                                    </div>
+                                    <span class="bead-label">Cốm Non</span>
+                                </div>
+                                <!-- 3. Hoàng Yến Ánh Kim -->
+                                <div class="wax-bead-item bead-gold" id="wax-bead-gold" data-bead-id="gold" data-color="#DEB853" data-name="Hoàng Yến" role="button" tabindex="0" title="Chạm để chọn Sáp Hoàng Yến Ánh Kim">
+                                    <div class="hex-bead-shape">
+                                        <span class="bead-stamp-icon">✦</span>
+                                    </div>
+                                    <span class="bead-label">Hoàng Yến</span>
+                                </div>
+                                <!-- 4. Trắng Dó Phủ Điệp -->
+                                <div class="wax-bead-item bead-ivory" id="wax-bead-ivory" data-bead-id="ivory" data-color="#F9F5EC" data-name="Trắng Dó" role="button" tabindex="0" title="Chạm để chọn Sáp Trắng Dó Điệp">
+                                    <div class="hex-bead-shape">
+                                        <span class="bead-stamp-icon">✿</span>
+                                    </div>
+                                    <span class="bead-label">Trắng Dó</span>
+                                </div>
+                                <!-- 5. Tím Bằng Lăng Thơ Mộng -->
+                                <div class="wax-bead-item bead-violet" id="wax-bead-violet" data-bead-id="violet" data-color="#9B72AA" data-name="Bằng Lăng" role="button" tabindex="0" title="Chạm để chọn Sáp Tím Bằng Lăng">
+                                    <div class="hex-bead-shape">
+                                        <span class="bead-stamp-icon">🌸</span>
+                                    </div>
+                                    <span class="bead-label">Bằng Lăng</span>
+                                </div>
+                            </div>
+
+                            <!-- Brass Stamp Crest Motif Selector -->
+                            <div class="crest-selector-wrap" id="crest-selector-wrap">
+                                <span class="crest-selector-title">HOA VĂN KHẮC TRIỆN:</span>
+                                <div class="crest-options-row" role="radiogroup" aria-label="Chọn hoa văn khắc con dấu">
+                                    <button type="button" class="crest-opt-btn" data-crest="lotus" role="radio" aria-checked="false" title="Hoa Sen Tinh Khôi">
+                                        <span class="crest-opt-icon">🪷</span>
+                                        <span class="crest-opt-name">Hoa Sen</span>
+                                    </button>
+                                    <button type="button" class="crest-opt-btn" data-crest="daisy" role="radio" aria-checked="false" title="Cúc Họa Mi Dịu Dàng">
+                                        <span class="crest-opt-icon">🌼</span>
+                                        <span class="crest-opt-name">Cúc Họa Mi</span>
+                                    </button>
+                                    <button type="button" class="crest-opt-btn" data-crest="butterfly" role="radio" aria-checked="false" title="Cánh Bướm Mộng Du">
+                                        <span class="crest-opt-icon">🦋</span>
+                                        <span class="crest-opt-name">Cánh Bướm</span>
+                                    </button>
+                                    <button type="button" class="crest-opt-btn" data-crest="moon" role="radio" aria-checked="false" title="Vầng Trăng Khuyết & Tinh Tú">
+                                        <span class="crest-opt-icon">🌙</span>
+                                        <span class="crest-opt-name">Trăng Non</span>
+                                    </button>
+                                </div>
+                            </div>
                         </div>
                     </div>
 
-                    <!-- Action Button & Poetic Artisan Guide Tip -->
-                    <button id="start-btn" class="lyrical-btn portal-btn atelier-seal-btn" title="Hoàn tất con dấu và mở cổng vườn hoa">
-                        <span class="seal-icon">🪶</span>
-                        <span class="seal-text">Dập Con Dấu & Mở Cổng Vườn ✨</span>
-                    </button>
-                    <div class="wax-seal-guide-tip" id="wax-seal-guide-tip">
-                        <span>Hãy chọn màu sáp và hoa văn bạn yêu thích để bắt đầu nhé ✨</span>
+                    <!-- Cột Phải (Bếp Nến & Phong Thư) -->
+                    <div class="workbench-col-crafting">
+                        <!-- 3-Phase Poetic Ritual Breadcrumbs (Thanh Chuỗi Sơn Mài & Triện Sáp) -->
+                        <div class="ritual-step-bar" id="ritual-step-bar" aria-label="Các bước chế tác con dấu sáp">
+                            <div class="ritual-strand-track" aria-hidden="true">
+                                <div class="ritual-strand-progress" id="ritual-strand-progress"></div>
+                            </div>
+                            <span class="step-dot is-active" data-step="1" title="Bước 1: Chọn sắc sáp & hoa văn triện">
+                                <span class="step-dot-icon">🎨</span>
+                                <span class="step-dot-label"><i>1. Chọn sáp & triện</i></span>
+                                <span class="step-dot-sparkle">✦</span>
+                            </span>
+                            <span class="step-connector"></span>
+                            <span class="step-dot" data-step="2" title="Bước 2: Đun nóng & rót sáp lên phong thư">
+                                <span class="step-dot-icon">🔥</span>
+                                <span class="step-dot-label"><i>2. Đun & rót sáp</i></span>
+                                <span class="step-dot-sparkle">✦</span>
+                            </span>
+                            <span class="step-connector"></span>
+                            <span class="step-dot" data-step="3" title="Bước 3: Dập triện son & đánh thức vườn">
+                                <span class="step-dot-icon">💮</span>
+                                <span class="step-dot-label"><i>3. Dập triện mở cổng</i></span>
+                                <span class="step-dot-sparkle">✦</span>
+                            </span>
+                        </div>
+
+                        <!-- Wax Seal & Action Station (Phase 3: Artisan Multi-Sensory Ritual) -->
+                        <div class="wax-seal-station" id="wax-seal-station">
+                            <!-- Artisan Hearth & Crafting Bench (2 Columns: Hearth on Left, Envelope on Right) -->
+                            <div class="artisan-crafting-bench" id="artisan-crafting-bench">
+                                <!-- Left: Matchbox, Candle & Brass Spoon Hearth -->
+                                <div class="hearth-burner-unit" id="hearth-burner-unit">
+                                    <span class="hearth-column-title">BẾP NẤU SÁP</span>
+                                    <!-- Vintage Lotus Matchbox with Striker Strip -->
+                                    <div class="artisan-matchbox-wrap" id="artisan-matchbox-wrap" title="Bao diêm gỗ hoa sen cổ điển">
+                                        <div class="matchbox-drawer">
+                                            <div class="matchbox-label">
+                                                <span class="matchbox-lotus-icon">🪷</span>
+                                                <span class="matchbox-brand">DIÊM THƠ</span>
+                                            </div>
+                                            <div class="match-striker-strip" id="match-striker-strip" role="button" tabindex="0" title="Chạm để quẹt que diêm đánh lửa">
+                                                <span class="striker-grit"></span>
+                                                <span class="striker-hint">Quẹt diêm ⚡</span>
+                                            </div>
+                                        </div>
+                                        <!-- Interactive Wooden Matchstick -->
+                                        <div class="artisan-matchstick" id="artisan-matchstick" role="button" tabindex="0" title="Chạm hoặc kéo que diêm quẹt lửa">
+                                            <div class="match-head" id="match-head"></div>
+                                            <div class="match-stem"></div>
+                                            <div class="match-flame hidden" id="match-flame">
+                                                <div class="flame-core"></div>
+                                                <div class="flame-glow"></div>
+                                            </div>
+                                        </div>
+                                        <div class="match-sparks-wrap" id="match-sparks-wrap" aria-hidden="true"></div>
+                                    </div>
+
+                                    <!-- Aromatherapy Candle -->
+                                    <div class="artisan-candle" id="artisan-candle" role="button" tabindex="0" title="Chạm để thắp ngọn nến thơm">
+                                        <div class="candle-halo hidden" id="candle-halo"></div>
+                                        <div class="candle-flame hidden" id="candle-flame">
+                                            <div class="flame-core"></div>
+                                            <div class="flame-glow"></div>
+                                        </div>
+                                        <div class="candle-wick"></div>
+                                        <div class="candle-body"></div>
+                                        <div class="candle-holder"></div>
+                                        <span class="candle-badge" id="candle-badge">Chạm thắp nến 🕯️</span>
+                                    </div>
+
+                                    <!-- Polished Brass Melting Spoon & Heat Stand -->
+                                    <div class="brass-spoon-stand" id="brass-spoon-stand">
+                                        <div class="brass-spoon" id="brass-spoon" role="button" tabindex="0" title="Chạm để rót sáp lỏng sang phong thư">
+                                            <div class="spoon-handle">
+                                                <div class="spoon-wood-grip"></div>
+                                            </div>
+                                            <div class="spoon-neck"></div>
+                                            <div class="spoon-bowl" id="spoon-bowl">
+                                                <div class="spoon-heat-glow hidden" id="spoon-heat-glow"></div>
+                                                <!-- Dropped wax beads in spoon (Up to 3 beads) -->
+                                                <div class="spoon-beads-pool" id="spoon-beads-pool">
+                                                    <div class="spoon-bead spoon-ruby-bead hidden" id="spoon-ruby-bead"></div>
+                                                    <div class="spoon-bead spoon-gold-bead hidden" id="spoon-gold-bead"></div>
+                                                    <div class="spoon-bead spoon-third-bead hidden" id="spoon-third-bead"></div>
+                                                </div>
+                                                <!-- Molten wax pool with real-time interactive canvas swirl -->
+                                                <div class="spoon-molten-wax hidden" id="spoon-molten-wax">
+                                                    <canvas id="marbled-swirl-canvas" class="marbled-swirl-canvas" width="120" height="120"></canvas>
+                                                    <div class="molten-glimmer"></div>
+                                                    <div class="spoon-simmer-bubbles" id="spoon-simmer-bubbles"></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- Glass stirring rod with interactive pointer swirl -->
+                                        <div class="glass-stirring-rod hidden" id="glass-stirring-rod" role="button" tabindex="0" title="Chạm để khuấy vân cẩm thạch">
+                                            <div class="rod-stem"></div>
+                                            <div class="rod-tip"></div>
+                                            <span class="rod-tip-badge" id="rod-tip-badge">Khuấy vân 🪄</span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Right: Phong Thư, Wax Target Zone & 3D Stamp Workspace -->
+                                <div class="wax-seal-workspace" id="wax-seal-workspace">
+                                    <span class="workspace-column-title">PHONG THƯ & TRIỆN SON</span>
+                                    <!-- Target Pedestal for the Wax Pool -->
+                                    <div class="wax-target-zone" id="wax-target-zone" role="button" tabindex="0" title="Khu vực đóng triện sáp son (Chạm hoặc đặt con dấu vào đây)">
+                                        <span class="wax-target-ring"></span>
+                                        <span class="wax-target-hint">ĐẶT DẤU VÀO ĐÂY</span>
+
+                                        <!-- Molten Wax Pouring Stream from Tilted Spoon -->
+                                        <div class="wax-pour-stream hidden" id="wax-pour-stream">
+                                            <div class="stream-liquid-core" id="stream-liquid-core"></div>
+                                            <div class="stream-gold-glint"></div>
+                                        </div>
+
+                                        <!-- Hot Molten Wax Pool (Spreads organically with steam before stamping) -->
+                                        <div class="wax-hot-pool hidden" id="wax-hot-pool">
+                                            <div class="hot-wax-body" id="hot-wax-body"></div>
+                                            <div class="hot-wax-gloss" id="hot-wax-gloss"></div>
+                                            <!-- Sprinkled 24K Gold Flakes Layer -->
+                                            <div class="sprinkled-gold-flakes hidden" id="sprinkled-gold-flakes" aria-hidden="true"></div>
+                                            <div class="wax-steam-container">
+                                                <span class="steam-wisp wisp-1"></span>
+                                                <span class="steam-wisp wisp-2"></span>
+                                                <span class="steam-wisp wisp-3"></span>
+                                            </div>
+                                        </div>
+                                        
+                                        <!-- Molten Wax Pool Imprint (The Cured Wax Seal) -->
+                                        <div class="wax-seal-puddle hidden" id="wax-seal-puddle">
+                                            <div class="wax-outer-crease"></div>
+                                            <div class="wax-inner-core">
+                                                <!-- Dynamic SVG Crest Face -->
+                                                <div class="wax-crest-display" id="wax-crest-display">
+                                                </div>
+                                                <div class="wax-name-imprint" id="wax-name-imprint">TRIỆN SON</div>
+                                            </div>
+                                        </div>
+
+                                        <!-- Wax Solidification / Cooling Progress Indicator -->
+                                        <div class="wax-cooling-indicator hidden" id="wax-cooling-indicator">
+                                            <div class="cooling-ring-svg-wrap">
+                                                <svg class="cooling-progress-svg" viewBox="0 0 36 36">
+                                                    <path class="cooling-bg-ring" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"/>
+                                                    <path class="cooling-fill-ring" id="cooling-fill-ring" stroke-dasharray="0, 100" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"/>
+                                                </svg>
+                                                <span class="cooling-icon">❄️</span>
+                                            </div>
+                                            <span class="cooling-label">Sáp đang đông...</span>
+                                        </div>
+
+                                        <!-- Press & Hold Guidance Gauge -->
+                                        <div class="press-gauge-overlay hidden" id="press-gauge-overlay">
+                                            <div class="press-fill-bar" id="press-fill-bar"></div>
+                                            <span class="press-gauge-text">Giữ chắc con dấu...</span>
+                                        </div>
+
+                                        <!-- Artistic Dried Flower Flourish & Golden Radiance Halo -->
+                                        <div class="seal-botanical-flourish hidden" id="seal-botanical-flourish" aria-hidden="true">
+                                            <svg class="botanical-wreath-svg" viewBox="0 0 140 140" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                <path class="wreath-branch branch-left" d="M32 110 C 14 78, 20 40, 52 18 C 60 13, 68 10, 70 10" stroke="#C5A030" stroke-width="1.8" stroke-linecap="round"/>
+                                                <path class="wreath-branch branch-right" d="M108 110 C 126 78, 120 40, 88 18 C 80 13, 72 10, 70 10" stroke="#C5A030" stroke-width="1.8" stroke-linecap="round"/>
+                                                <path class="wreath-leaf" d="M22 84 C 12 79, 14 69, 24 73 C 28 77, 26 82, 22 84 Z" fill="#94A796" opacity="0.95"/>
+                                                <path class="wreath-leaf" d="M20 56 C 10 50, 16 40, 26 46 C 28 51, 24 55, 20 56 Z" fill="#889E8A" opacity="0.95"/>
+                                                <path class="wreath-leaf" d="M35 30 C 27 22, 37 14, 45 22 C 43 27, 38 29, 35 30 Z" fill="#94A796" opacity="0.95"/>
+                                                <circle class="wreath-bud" cx="28" cy="44" r="3" fill="#E8B4B8"/>
+                                                <circle class="wreath-bud" cx="44" cy="20" r="2.5" fill="#F5CE56"/>
+                                                <path class="wreath-leaf" d="M118 84 C 128 79, 126 69, 116 73 C 112 77, 114 82, 118 84 Z" fill="#94A796" opacity="0.95"/>
+                                                <path class="wreath-leaf" d="M120 56 C 130 50, 124 40, 114 46 C 112 51, 116 55, 120 56 Z" fill="#889E8A" opacity="0.95"/>
+                                                <path class="wreath-leaf" d="M105 30 C 113 22, 103 14, 95 22 C 97 27, 102 29, 105 30 Z" fill="#94A796" opacity="0.95"/>
+                                                <circle class="wreath-bud" cx="112" cy="44" r="3" fill="#E8B4B8"/>
+                                                <circle class="wreath-bud" cx="96" cy="20" r="2.5" fill="#F5CE56"/>
+                                            </svg>
+                                            <div class="seal-radiance-halo"></div>
+                                        </div>
+                                    </div>
+
+                                    <!-- 3D Interactive Handcrafted Wax Seal Stamp -->
+                                    <div class="wax-seal-stamp" id="wax-seal-stamp" role="button" tabindex="0" title="Chạm hoặc kéo con dấu để đóng triện son">
+                                        <div class="stamp-3d-wrap">
+                                            <div class="stamp-handle-top"></div>
+                                            <div class="stamp-handle-body"></div>
+                                            <div class="stamp-brass-collar"></div>
+                                            <div class="stamp-brass-head">
+                                                <div class="stamp-engraving-face" id="stamp-engraving-face">✦</div>
+                                            </div>
+                                        </div>
+                                        <div class="stamp-shadow"></div>
+                                        <div class="stamp-press-halo" id="stamp-press-halo"></div>
+                                    </div>
+
+                                    <!-- Artisan Gold Flakes Tool (Below Target Zone in Right Column) -->
+                                    <button type="button" class="artisan-sprinkle-vial hidden" id="artisan-sprinkle-vial" title="Chạm để rắc vụn vàng lá 24K điểm xuyết lên vũng sáp">
+                                        <span class="vial-icon">✨</span>
+                                        <span class="vial-text">Rắc vụn vàng 24K</span>
+                                    </button>
+                                </div>
+                            </div>
+
+                            <!-- Action Button & Poetic Artisan Guide Tip -->
+                            <button id="start-btn" class="lyrical-btn portal-btn atelier-seal-btn" title="Hoàn tất con dấu và mở cổng vườn hoa">
+                                <span class="seal-icon">🪶</span>
+                                <span class="seal-text">Dập Con Dấu & Mở Cổng Vườn ✨</span>
+                            </button>
+                            <div class="wax-seal-guide-tip" id="wax-seal-guide-tip">
+                                <span>Hãy chọn màu sáp và hoa văn bạn yêu thích để bắt đầu nhé ✨</span>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>

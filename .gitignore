@@ -1,4 +1,4 @@
-﻿# OS & IDE metadata
+# OS & IDE metadata
 .DS_Store
 Thumbs.db
 *.tmp
@@ -7,3 +7,6 @@ Thumbs.db
 # Reference files
 20-10.html
 *.rar
+
+# Scratch & temporary test scripts
+scratch/

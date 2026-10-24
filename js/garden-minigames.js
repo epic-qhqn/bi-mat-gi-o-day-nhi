@@ -98,6 +98,7 @@
                     simonInput = [];
                     const msg = document.getElementById('garden-message');
                     if (msg) msg.textContent = "Đang phát lại giai điệu mộc cầm...";
+                    if (typeof window.triggerHaptic === 'function') window.triggerHaptic('tap');
                     if (typeof window.playKeyTapSFX !== 'undefined') window.playKeyTapSFX();
                     await playSimonSequence(simonGenerationId);
                 };
@@ -105,12 +106,22 @@
             }
         }
 
-        const celestialArcSlots = [
-            { l: 20, t: 34 },
-            { l: 33, t: 48 },
-            { l: 67, t: 48 },
-            { l: 80, t: 34 }
-        ];
+        const isMobileLandscape = (typeof window !== 'undefined') &&
+            (window.innerWidth > window.innerHeight && window.innerHeight <= 540);
+
+        const celestialArcSlots = isMobileLandscape
+            ? [
+                { l: 18, t: 38 },
+                { l: 32, t: 50 },
+                { l: 68, t: 50 },
+                { l: 82, t: 38 }
+            ]
+            : [
+                { l: 20, t: 34 },
+                { l: 33, t: 48 },
+                { l: 67, t: 48 },
+                { l: 80, t: 34 }
+            ];
 
         const noteIcons = ['🌸', '🎵', '✨', '🎶'];
         const noteColors = ['#fbb6ce', '#90cdf4', '#fbd38d', '#bbf7d0'];
@@ -207,6 +218,7 @@
 
         if (simonInput[currentStep] !== simonSequence[currentStep]) {
             simonPlaying = true;
+            if (typeof window.triggerHaptic === 'function') window.triggerHaptic('medium');
             if (msg) msg.textContent = "Lạc mất một nhịp rồi, cùng nghe lại để tìm giai điệu nhé... 🎶";
             node.classList.add('wrong');
             setTimeout(() => node.classList.remove('wrong'), 500);
@@ -289,11 +301,17 @@
     // SUB-PHASE 5.1: DYNAMIC POISSON-DISK STAR FIELD GENERATOR
     // =========================================================================
     const generatePoissonStarField = (options = {}) => {
+        const isMobileLandscape = (typeof window !== 'undefined') &&
+            (window.innerWidth > window.innerHeight && window.innerHeight <= 540);
+        const defaultBounds = isMobileLandscape
+            ? { minL: 19, maxL: 81, minT: 14, maxT: 41 }
+            : { minL: 18, maxL: 82, minT: 13, maxT: 42 };
+
         const {
             starCount = 5,
             decoyCount = 2,
             minDistance = 90, // Minimum Euclidean distance in px on 1100x680 space
-            bounds = { minL: 18, maxL: 82, minT: 13, maxT: 42 }
+            bounds = defaultBounds
         } = options;
 
         const CANVAS_W = 1100;
@@ -752,7 +770,10 @@
         const centerX = rect.left + rect.width / 2;
         const centerY = rect.top + rect.height / 2;
         const curScale = window.currentWrapScale || 1;
-        const proximityRadius = Math.max(28, Math.min(72, 68 * curScale));
+        const isTouchOrLandscape = ('ontouchstart' in window) ||
+            (typeof window !== 'undefined' && window.innerWidth > window.innerHeight && window.innerHeight <= 540);
+        const baseRadius = isTouchOrLandscape ? 88 : 68;
+        const proximityRadius = Math.max(44, Math.min(84, baseRadius * curScale));
         const dist = Math.hypot(centerX - clientX, centerY - clientY);
 
         if (dist < proximityRadius) {
@@ -851,6 +872,7 @@
                 star.classList.add('wrong');
                 setTimeout(() => star.classList.remove('wrong'), 400);
             }
+            if (typeof window.triggerHaptic === 'function') window.triggerHaptic('medium');
             const msg = document.getElementById('garden-message');
             if (msg) msg.textContent = `Hãy nối theo thứ tự từ ngôi sao 1 đến ${starCoords.length} nhé!`;
         }

@@ -270,7 +270,14 @@
                 if (timeLockMsg && timeLockMsg.classList.contains('wrong')) timeLockMsg.textContent = '';
             });
             timeLockInput.addEventListener('keydown', triggerStartMusicAt20);
-            timeLockInput.addEventListener('focus', triggerStartMusicAt20);
+            timeLockInput.addEventListener('focus', () => {
+                triggerStartMusicAt20();
+                if (window.matchMedia && window.matchMedia('(orientation: landscape) and (max-height: 540px)').matches) {
+                    setTimeout(() => {
+                        timeLockInput.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                    }, 300);
+                }
+            });
         }
 
         const updateClock = () => {
@@ -1598,7 +1605,14 @@
             const triggerMusic = () => {
                 if (typeof window.startGateMusicLow === 'function') window.startGateMusicLow();
             };
-            nameInputEl.addEventListener('focus', triggerMusic);
+            nameInputEl.addEventListener('focus', () => {
+                triggerMusic();
+                if (window.matchMedia && window.matchMedia('(orientation: landscape) and (max-height: 540px)').matches) {
+                    setTimeout(() => {
+                        nameInputEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                    }, 300);
+                }
+            });
             nameInputEl.addEventListener('input', (e) => {
                 triggerMusic();
                 const val = e.target.value;

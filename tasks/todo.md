@@ -1,54 +1,51 @@
-# TODO LIST: ĐẠI NÂNG CẤP TRẢI NGHIỆM TINH TẾ & HỆ THỐNG CHỈ DẪN NGHỆ THUẬT
+# TODO: TỐI ƯU HÓA TOÀN DIỆN GIAO DIỆN MOBILE & TABLET (ƯU TIÊN MOBILE LANDSCAPE)
 
-> **Trạng thái**: Milestone 1 & 2 đã hoàn tất 100% và push lên nhánh chính. Đã xây dựng kế hoạch chi tiết cho **Milestone 3: Đại Nâng Cấp Trải Nghiệm Tinh Tế & Hệ Thống Chỉ Dẫn Nghệ Thuật (PC & Mobile)**. Đang chờ User phê duyệt kế hoạch trước khi bắt tay thực hiện!
-
----
-
-## MILESTONE 1: ĐẠI PHẪU THUẬT VĂN PHONG TIẾNG VIỆT (ĐÃ HOÀN TẤT & PUSHED)
-- [x] **Phase 1**: Mở rộng trắc nghiệm 12 câu giác quan & rẽ nhánh thích ứng trong `js/secret-letter.js`.
-- [x] **Phase 2**: Đại phẫu thuật văn phong Nghi thức mở vườn, Mascot & Stage HUD (`js/wax-seal-ceremony.js`, `js/mascot-companion.js`, `js/garden-stages.js`).
-- [-] **Phase 3**: [BỎ QUA THEO YÊU CẦU USER] Lời chúc được huy động các bạn nam trong CLB tự tay viết để tăng tính chân thật và ý nghĩa.
-- [x] **Phase 4**: Viết lại toàn bộ 27 hồ sơ hoa di sản & phân tích tương hợp tâm lý học trong `js/flowers-data.js`.
-- [x] **Phase 5**: Tinh chỉnh Bưu thiếp Story Canvas 1080x1920, HUD Real-Time Guide và kiểm định toàn diện.
+> **Mục tiêu**: Tập trung 100% fix lỗi và ổn định giao diện điện thoại & tablet (đặc biệt là chế độ xoay ngang), giữ nguyên vẹn 100% giao diện PC.
 
 ---
 
-## MILESTONE 2: ĐẠI NÂNG CẤP 54 LOÀI HOA DI SẢN & TRẮC NGHIỆM TÂM HỒN ĐA TẦNG (ĐÃ HOÀN TẤT & PUSHED)
-- [x] **Phase 6**: Bách Khoa Toàn Thư 54 Loài Hoa Di Sản (`js/flowers-data.js`).
-- [x] **Phase 7**: Kiến Tạo Hành Trình Trắc Nghiệm Đa Nhánh Sâu Sắc (16 Kịch Bản Giác Quan).
-- [x] **Phase 8**: Tối Ưu Giải Thuật Điểm Số Đa Chiều & Phá Thế Hòa Điểm Cho 54 Loài Hoa.
-- [x] **Phase 9**: Tích Hợp Đồng Bộ Giao Diện, Bưu Thiếp Canvas & Kiểm Thử Toàn Diện.
+### Phase 1: Nghệ Thuật Hướng Dẫn Xoay Ngang Màn Hình (Poetic Landscape Orientation Experience)
+- [x] 1.1: Tái thiết kế `#rotate-device-overlay` với thẩm mỹ Di Sản Thơ Ca (giấy Dó ngà, viền vàng kim `#D4AF37`, hoa sen sương mai, câu chúc tiếng Việt truyền cảm hứng).
+- [x] 1.2: Xây dựng animation điện thoại xoay ngang 90 độ mềm mại, có vệt sáng lụa và cánh sen bay.
+- [x] 1.3: Cân chỉnh media query CSS để overlay chỉ kích hoạt trên điện thoại cầm dọc (`max-width: 820px` & `portrait`), tự động biến mất khi xoay ngang, không ảnh hưởng tablet lớn hay PC.
 
 ---
 
-## MILESTONE 3: ĐẠI PHẪU THUẬT CON TRỎ HƯỚNG DẪN & BỘ NÂNG CẤP TRẢI NGHIỆM TINH TẾ (ĐANG THỰC HIỆN)
-
-### Phase 10: Tái Sinh Con Trỏ Hướng Dẫn Nghệ Thuật & Vòng Sương Mai Cảm Ứng (`js/realtime-guide.js`, `css/components.css`)
-- [x] 10.1: **Bút Lông Thư Họa / Cánh Sen Dát Vàng (Vector SVG)**: Xóa bỏ 100% emoji bàn tay thô (`👇👆👉👈`). Thay bằng biểu tượng cọ lông dát vàng thanh thoát hoặc cánh sen lấp lánh với góc nghiêng tự nhiên 45°, chuyển động thở êm ái (breathe animation).
-- [x] 10.2: **Vòng Tròn Sương Mai Cảm Ứng (Touch Aura / Morning Dewdrop Ripple) trên Mobile**: Tự động nhận diện thiết bị cảm ứng `(pointer: coarse)` để ẩn hình bàn tay/cọ (tránh che khuất ngón tay người dùng). Thay bằng vòng sóng nước sương mai ánh kim đồng tỏa nhẹ quanh nút cần chạm.
-- [x] 10.3: **Vệt Cử Chỉ Hướng Dẫn Trực Quan (Animated Drag / Swipe Gesture Trail)**: Với các thao tác quẹt que diêm, kéo mây mưa sương, kéo nắng ấm, kéo triện son: hiển thị một vệt lụa ánh kim mềm mại lướt nhẹ theo quỹ đạo cần kéo (Ghost Drag Curve) rồi tan biến, giúp hiểu ngay động tác mà không cần đọc chữ.
-- [x] 10.4: **Thanh Lọc Khung Ngắm Sci-Fi & Tạo Hào Quang Thủy Mặc**: Gỡ bỏ 4 góc ngắm cơ học bắn tỉa `.realtime-target-corners` và bóng neon rực chói. Thay bằng viền gân lụa dát vàng siêu mảnh kèm quầng sáng sương mờ (`backdrop-filter` nhẹ và hào quang vàng nhạt), đồng điệu 100% với giấy Dó.
+### Phase 2: Kiến Trúc Viewport & Safe Area Mobile Landscape (`#wrap`, Insets & Auto-Scale)
+- [x] 2.1: Tinh chỉnh động cơ co giãn tỷ lệ `resizeWrap` trong `js/main.js` tối ưu cho các tỉ lệ màn hình ngang dài (19.5:9, 20:9, 21:9) và chiều cao hạn chế ($320\text{px} - 420\text{px}$).
+- [x] 2.2: Tích hợp safe-area insets (`env(safe-area-inset-left/right)`) bảo vệ các nút điều khiển khỏi tai thỏ, Dynamic Island và thanh cử chỉ home.
+- [x] 2.3: Ổn định spatial layout chống rung giật khi thanh địa chỉ URL của trình duyệt di động (iOS Safari / Android Chrome) ẩn/hiện.
 
 ---
 
-### Phase 11: Bộ Nâng Cấp Xúc Giác Haptic & Vi Tương Tác Giác Quan (`js/audio-vfx.js`, `js/environment.js`)
-- [x] 11.1: **Tích hợp Phản Hồi Xúc Giác Haptic (Mobile Taptic Engine)**: Thêm các nhịp rung vi mô thông qua Web Vibration API: nhịp gảy 10ms khi chạm dây đàn harp, chuỗi lách tách `[8, 15, 12]ms` khi quẹt diêm lấy lửa, một nhịp nén đầm 30ms khi triện son ấn vào sáp ấm, nhịp rung nhẹ 15ms khi lật thiệp Polaroid, nhịp cỏ 4 lá may mắn `[12, 35, 18]ms`.
-- [x] 11.2: **Vệt Cánh Sen & Bụi Kim Tuyến Theo Chuột trên PC (Stardust & Blossom Trail)**: Canvas hạt vi mô siêu nhẹ (60fps, tự động tắt trên Mobile) tỏa ra những cánh hoa sen li ti và bụi kim tuyến lướt theo chuyển động chuột của người dùng trên PC, hover vào tương tác hé nở búp hoa / bụi sao vàng.
+### Phase 3: Tối Ưu Giao Diện Đóng Dấu Sáp & Nhập Tên (Stage 0: Time Lock & Wax Seal Atelier Desk in Landscape)
+- [x] 3.1: Tái cấu trúc `#time-lock-modal` thành bố cục ngang 2 cột thanh lịch, chiều cao $\le 90\text{vh}$, không bị cắt khuất nút bấm.
+- [x] 3.2: Tái thiết kế `#atelier-stationery-desk` thành Bố cục 2 Cột Chế Tác Ngang (Cột trái: Khuôn đồng khắc tên, khay hạt sáp, chọn triện son; Cột phải: Ánh nến, muỗng đun sáp, vùng dập triện).
+- [x] 3.3: Đảm bảo các tương tác quẹt diêm, khuấy vân sáp cẩm thạch, đóng dấu son mượt mà, không bị bàn phím ảo hay viền màn hình che khuất.
 
 ---
 
-### Phase 12: Chế Độ Chiêm Ngưỡng Tĩnh Lặng & Bức Ảnh Kỷ Niệm (`index.html`, `js/garden-stages.js`, `css/components.css`)
-- [x] 12.1: **Chế Độ Tĩnh Lặng (Zen Mode Toggle)**: Nút biểu tượng "Trăng Rằm / Tĩnh Lặng" thanh nhã ở góc trên màn hình. Khi bấm, toàn bộ HUD, nút bấm, hướng dẫn sẽ trôi mượt mà (smooth fade-out), chỉ để lại trọn vẹn cảnh cây hoa tình yêu đung đưa, tà áo dài thướt tha, cánh hoa rơi và tiếng đàn du dương. Chạm bất kỳ đâu để hiện lại.
-- [x] 12.2: **Chụp Khoảnh Khắc Vườn Kỷ Niệm (Instant Garden Polaroid Capture)**: Tự động chụp một bức ảnh kỷ niệm lưu lại khu vườn đang nở rộ của riêng người dùng (kèm tên người nhận đã khắc trên triện son) dưới dạng ảnh Polaroid cổ điển để tải về ngay.
+### Phase 4: Sắp Đặt Không Gian HUD & Triệt Tiêu Chồng Đè (In-Garden Spatial Harmony)
+- [x] 4.1: Phân bổ lại 4 góc màn hình HUD trên mobile landscape (Top-Left: Realtime Guide; Top-Right: Zen & Polaroid; Bottom-Left: Harp, Orrery & Thời tiết; Bottom-Right: Thư bí mật & Bưu thiếp).
+- [x] 4.2: Tối ưu vị trí Mascot Companion (`#garden-mascot-companion`) và Áo Dài Di Sản (`#ao-dai-viet-stage4`), đảm bảo bóng thoại mascot không đè lên bảng thơ.
 
 ---
 
-### Phase 13: Cá Nhân Hóa Quà Tặng Qua Liên Kết Bí Mật (`js/main.js`, `js/wax-seal-ceremony.js`)
-- [x] 13.1: **Hỗ Trợ Deep Link & URL Hash Gifting**: Đọc tham số URL dạng `#to=ThuHuong&crest=lotus` hoặc `?to=Thu+Huong`. Tên người nhận sẽ được tự động khắc sẵn lên khuôn triện son hoặc hiển thị lời chào trân trọng bất ngờ khi bạn nữ mở link. 100% client-side, bảo mật, không cần backend. Đã loại bỏ strict lock ngày 25/10 cho phép nhập pass trước 12h trưa, và tự động mở cổng không cần pass sau 12h trưa.
+### Phase 5: Thích Ứng Minigames & Tương Tác Cảm Giác (Simon Melody & Constellation Linker in Landscape)
+- [x] 5.1: Stage 2 (Simon Melody): Tính toán lại cung tròn 5 chuông hoa theo chiều ngang màn hình, nằm trọn vẹn trong tầm với của ngón cái 2 bên.
+- [x] 5.2: Stage 3 (Constellation Linker): Giới hạn thuật toán tọa độ sao trong vùng an toàn của canvas ngang, bán kính chạm $\ge 44\text{px}$.
 
 ---
 
-### Phase 14: Thẩm Định Đa Thiết Bị, Tối Ưu Mượt Mà & Đồng Bộ Git Safe
-- [x] 14.1: Thẩm định toàn diện trên PC (chuột, trackpad, màn hình lớn) và Mobile (iOS Safari, Android Chrome, xoay màn hình ngang/dọc). Tối ưu touch target 44px WCAG, viewport auto-scale mượt mà không tràn viền.
-- [x] 14.2: Đảm bảo cú pháp JS `node -c js/*.js` (19/19 files), cân bằng CSS tuyệt đối, 60fps mượt mà, dung hòa mọi nhánh và commit & push an toàn lên main theo chuẩn Team 3 Devs.
+### Phase 6: Hoàn Thiện Modal Thiệp, Bưu Thiếp & Thư Bí Mật (Polaroid, Postcard & Letter)
+- [x] 6.1: Modal Thư Bí Mật (`#secret-letter-modal`): Thẻ Polaroid 3D và thư giấy Dó co giãn vừa khít chiều cao ngang, phông chữ $14\text{px} - 16\text{px}$ sắc nét, dễ đọc.
+- [x] 6.2: Modal Bưu Thiếp Di Sản (`#boarding-pass-modal`): Chế độ xem thiệp ngang linh hoạt, các nút tải ảnh và đổi hoa xếp hàng tiện lợi.
+- [x] 6.3: Modal Khoảnh Khắc Vườn Kỷ Niệm (`#garden-polaroid-modal`): Khung ảnh Polaroid tự động vừa khít chiều cao màn hình, nút tải ảnh luôn hiển thị.
+
+---
+
+### Phase 7: Kiểm Thử Đa Thiết Bị Thực Tế & Đóng Gói Hoàn Hảo (Testing & Git Harmony)
+- [x] 7.1: Ma trận kiểm thử giả lập trên iPhone SE (568x320), iPhone 14 Pro (844x390), Samsung Galaxy (800x360), iPad Mini (1024x768).
+- [x] 7.2: Kiểm tra đối chứng màn hình PC (1920x1080) đảm bảo 100% không hồi quy (Zero PC Regression).
+- [x] 7.3: Kiểm tra cú pháp JS `node -c js/*.js`, kiểm tra cân bằng CSS `{}` và push an toàn lên nhánh `main`.
 
