@@ -79,24 +79,24 @@
         const profile = options.profile || (typeof window.getCurrentFlowerProfile === 'function' ? window.getCurrentFlowerProfile() : null) || {
             flowerName: "Lotus",
             vietnameseName: "Hoa Sen",
-            title: "Bạn là đóa Sen Lụa thanh tao.",
-            quote: "Gần bùn chẳng vướng bụi trần, thơm ngát dịu dàng.",
+            title: "Đóa Sen Lụa Tinh Tế & An Nhiên",
+            quote: "Giữ tâm trong lành giữa thế gian tất bật, lặng lẽ tỏa hương ấm áp.",
             emoji: "🪷",
-            traits: ["Thanh cao", "Dịu dàng", "Tâm hồn thuần khiết"],
+            traits: ["Tinh tế", "An nhiên", "Sâu sắc"],
             petalColor: "#D47A88",
             bgColor: "#FAF7F0",
             match: [
-                { icon: "🌼", name: "Cúc họa mi", desc: "Cùng mang nét đẹp bình dị, thanh tao." },
-                { icon: "🌷", name: "Tulip", desc: "Đồng điệu sự trang nhã và chiều sâu tâm hồn." }
+                { icon: "🌼", name: "Cúc Họa Mi", desc: "Đồng điệu nét tinh khôi, ngồi cạnh nhau là thấy bình yên." },
+                { icon: "🌷", name: "Tulip", desc: "Thấu hiểu sự sâu sắc và tôn trọng khoảng trời riêng của nhau." }
             ],
             clash: [
-                { icon: "🌪️", name: "Bão cát", desc: "Ồn ào náo nhiệt không hợp với nét tĩnh tại." },
-                { icon: "🌵", name: "Gai nhọn", desc: "Dễ làm tổn thương vẻ mềm mại, e ấp." }
+                { icon: "🌪️", name: "Xô Bồ & Thị Phi", desc: "Những cuộc khẩu chiến ồn ào dễ rút cạn năng lượng bình yên." },
+                { icon: "🎭", name: "Thao Túng & Giả Dối", desc: "Sự chân thật là nguyên tắc bất di bất dịch của Sen." }
             ],
             checklist: {
-                friend: "Chốn bình yên ai cũng muốn tìm về sau những mệt mỏi.",
-                love: "Thương bằng tình cảm sâu lắng, chung thủy và sắt son.",
-                pressure: "Tĩnh lặng nhìn nhận, giữ trọn cốt cách và nét an nhiên."
+                friend: "Là nơi chốn vỗ về dịu dàng nhất, luôn lắng nghe mà không phán xét bất kỳ điều gì.",
+                love: "Thương bằng tình cảm sâu sắc, chung thủy, chậm rãi nhưng vững bền như núi biếc.",
+                pressure: "Tĩnh lặng thở sâu, sắp xếp lại suy nghĩ và từng bước gỡ rối thay vì hoảng loạn."
             }
         };
 
@@ -224,7 +224,7 @@
         }
         ctx.restore();
 
-        // Postal Route Display: VƯỜN BÍ MẬT  🕊️ THƯ TÌNH ĐỒNG NỘI  NÀNG THƠ
+        // Postal Route Display: VƯỜN BÍ MẬT  🕊️ BỨC THƯ ĐỒNG NỘI  NGƯỜI THƯƠNG
         const routeY = cardY + 125;
         // Point: Vườn Bí Mật
         ctx.textAlign = "left";
@@ -248,7 +248,7 @@
 
         ctx.fillStyle = "#4A3728";
         ctx.font = "bold 13.5px 'Be Vietnam Pro', sans-serif";
-        ctx.fillText("🕊️ THƯ TÌNH ĐỒNG NỘI", midX, routeY - 7);
+        ctx.fillText("🕊️ BỨC THƯ ĐỒNG NỘI", midX, routeY - 7);
 
         // Connecting dotted line
         ctx.strokeStyle = "#D6CBC0";
@@ -262,14 +262,14 @@
         ctx.stroke();
         ctx.setLineDash([]); // Reset line dash
 
-        // Point: Nàng Thơ
+        // Point: Người Thương
         ctx.textAlign = "right";
         ctx.font = "900 32px 'Be Vietnam Pro', sans-serif";
         ctx.fillStyle = "#D47A88";
-        ctx.fillText("NÀNG THƠ", cardX + cardW - 60, routeY);
+        ctx.fillText("NGƯỜI THƯƠNG", cardX + cardW - 60, routeY);
         ctx.font = "600 17px 'Be Vietnam Pro', sans-serif";
         ctx.fillStyle = "#8C7A6B";
-        ctx.fillText("Trái Tim Nàng 💖", cardX + cardW - 60, routeY + 28);
+        ctx.fillText("Trọn Nét An Yên 💖", cardX + cardW - 60, routeY + 28);
 
         // Meta Info Grid (3 Parchment cards)
         const metaY = cardY + 185;
@@ -371,19 +371,19 @@
         const colLeftX = cardX + 44;
         const colLeftW = 530;
 
-        // Badge: HOA TÂM HỒN NÀNG THƠ · 20/10
+        // Badge: SẮC HOA TÂM HỒN BẠN · 20/10
         ctx.fillStyle = "#F5EBE6";
-        drawRoundRect(ctx, colLeftX, bodyY, 240, 32, 10);
+        drawRoundRect(ctx, colLeftX, bodyY, 250, 32, 10);
         ctx.fill();
         ctx.strokeStyle = "#E6DED5";
         ctx.lineWidth = 1;
-        drawRoundRect(ctx, colLeftX, bodyY, 240, 32, 10);
+        drawRoundRect(ctx, colLeftX, bodyY, 250, 32, 10);
         ctx.stroke();
 
         ctx.fillStyle = "#4A3728";
         ctx.font = "bold 12.5px 'Be Vietnam Pro', sans-serif";
         ctx.textAlign = "center";
-        ctx.fillText("HOA TÂM HỒN NÀNG THƠ · 20/10", colLeftX + 120, bodyY + 17);
+        ctx.fillText("SẮC HOA TÂM HỒN BẠN · 20/10", colLeftX + 125, bodyY + 17);
 
         // Flower Identity Title
         ctx.textAlign = "left";
@@ -811,7 +811,7 @@
         ctx.font = "bold 13px monospace";
         ctx.textAlign = "left";
         ctx.textBaseline = "top";
-        ctx.fillText("VN-2010 · THƯ TÌNH ĐỒNG NỘI · KỶ NIỆM", stampBoxX + 10, stampBoxY + stampH + 14);
+        ctx.fillText("VN-2010 · BỨC THƯ ĐỒNG NỘI · KỶ NIỆM", stampBoxX + 10, stampBoxY + stampH + 14);
 
         // Right: Traditional Mộc Triện Son Đỏ
         const sealCenterX = cardX + cardW - 140;

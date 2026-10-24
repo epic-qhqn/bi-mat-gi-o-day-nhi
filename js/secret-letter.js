@@ -424,12 +424,16 @@
     // Dữ liệu kết quả = window.flowerProfiles (js/flowers-data.js). Dự phòng nếu chưa tải.
     const FLOWER_QUIZ_FALLBACK_RESULT = {
         id: 'lotus', emoji: '🪷', petalColor: '#D47A88',
-        title: 'Bạn là đóa Sen Lụa thanh tao.',
-        quote: 'Gần bùn chẳng vướng bụi trần, thơm ngát dịu dàng.',
-        traits: ['Thanh cao', 'Dịu dàng', 'Tâm hồn thuần khiết'],
-        match: [{ icon: '🌼', name: 'Cúc họa mi', desc: 'Cùng mang nét đẹp bình dị, thanh tao.' }],
-        clash: [{ icon: '🌵', name: 'Gai nhọn', desc: 'Dễ làm tổn thương vẻ mềm mại, e ấp.' }],
-        checklist: { friend: '...', love: '...', pressure: '...' }
+        title: 'Đóa Sen Lụa Tinh Tế & An Nhiên',
+        quote: 'Giữ tâm trong lành giữa thế gian tất bật, lặng lẽ tỏa hương ấm áp.',
+        traits: ['Tinh tế', 'An nhiên', 'Sâu sắc'],
+        match: [{ icon: '🌼', name: 'Cúc Họa Mi', desc: 'Đồng điệu nét tinh khôi, ngồi cạnh nhau là thấy bình yên.' }],
+        clash: [{ icon: '🌪️', name: 'Xô Bồ & Thị Phi', desc: 'Những cuộc khẩu chiến ồn ào dễ rút cạn năng lượng bình yên.' }],
+        checklist: {
+            friend: 'Là nơi chốn vỗ về dịu dàng nhất, luôn lắng nghe mà không phán xét bất kỳ điều gì.',
+            love: 'Thương bằng tình cảm sâu sắc, chung thủy, chậm rãi nhưng vững bền như núi biếc.',
+            pressure: 'Tĩnh lặng thở sâu, sắp xếp lại suy nghĩ và từng bước gỡ rối thay vì hoảng loạn.'
+        }
     };
     const getFlowerResults = () => (Array.isArray(window.flowerProfiles) && window.flowerProfiles.length)
         ? window.flowerProfiles

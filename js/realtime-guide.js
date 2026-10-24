@@ -64,7 +64,7 @@
                     icon: '✍️',
                     targetSelector: '#name-input',
                     pointerDirection: 'bottom',
-                    pointerText: 'Gõ tên nàng vào đây'
+                    pointerText: 'Gõ tên bạn vào đây'
                 };
             }
 
@@ -361,7 +361,7 @@
                 return {
                     key: 'stage-4-letter',
                     stepTag: 'THƯ BÍ MẬT',
-                    message: 'Mở bức Thư Polaroid Bí Mật ở góc phải để đọc lời chúc yêu thương 💌',
+                    message: 'Mở bức Thư Polaroid Bí Mật để khám phá những điều bất ngờ và trắc nghiệm hoa 💌',
                     icon: '💌',
                     targetSelector: '#secret-letter-trigger-btn',
                     pointerDirection: 'top',
@@ -386,12 +386,12 @@
             if (!userInteractions.interactedAoDai && aoDai && !aoDai.classList.contains('hidden') && aoDai.offsetParent) {
                 return {
                     key: 'stage-4-aodai',
-                    stepTag: 'NÀNG THƠ ÁO DÀI',
-                    message: 'Chạm vào cô gái Áo Dài bên hoa sen để thưởng thức bài thơ 20/10 ngọt ngào 🪷',
+                    stepTag: 'THIẾU NỮ ÁO DÀI',
+                    message: 'Chạm vào thiếu nữ Áo Dài bên đóa sen hồng để đọc những vần thơ thanh nhã 🪷',
                     icon: '🪷',
                     targetSelector: '#ao-dai-viet-stage4',
                     pointerDirection: 'top',
-                    pointerText: 'Chạm nàng thơ Áo Dài'
+                    pointerText: 'Chạm thiếu nữ Áo Dài'
                 };
             }
 
@@ -412,7 +412,7 @@
             return {
                 key: 'stage-4-ambient',
                 stepTag: 'VƯỜN HOA HOÀN MỸ',
-                message: 'Khu vườn 20/10 đã nở hoa trọn vẹn! Chúc các bóng hồng luôn xinh đẹp và hạnh phúc 🌸✨',
+                message: 'Khu vườn 20/10 đã nở hoa trọn vẹn! Chúc bạn luôn rạng rỡ, bình an và yêu thương chính mình trọn vẹn 🌸✨',
                 icon: '🌸',
                 targetSelector: null,
                 pointerDirection: 'none',

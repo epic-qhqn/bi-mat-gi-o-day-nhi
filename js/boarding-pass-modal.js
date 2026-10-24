@@ -210,7 +210,7 @@
                 if (typeof window.playCameraClickSFX === 'function') {
                     window.playCameraClickSFX();
                 }
-                showTicketToast('Đã gắn ảnh selfie vào nhụy hoa thành công! 🌸✨');
+                showTicketToast('Đã gắn ảnh của bạn vào nhụy hoa thành công! 🌸✨');
             };
             reader.readAsDataURL(file);
         });
@@ -415,7 +415,7 @@
                     document.body.appendChild(s);
                     setTimeout(() => s.remove(), 850);
                 }
-                showTicketToast('Mộc triện son: Chúc nàng thơ luôn an yên, dịu dàng và hạnh phúc! 🪷❤️');
+                showTicketToast('Mộc triện son: Chúc bạn luôn an yên, rạng rỡ và hạnh phúc! 🪷❤️');
             });
         }
 
