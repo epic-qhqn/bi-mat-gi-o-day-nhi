@@ -24,9 +24,9 @@
 ---
 
 ### Phase 7: Kiến Tạo Hành Trình Trắc Nghiệm Đa Nhánh Sâu Sắc (16 Kịch Bản Giác Quan)
-- [ ] 7.1: Thiết kế 16 kịch bản trắc nghiệm sâu sắc, chia làm 5 chặng hành trình tâm hồn tự nhiên, không gượng ép.
-- [ ] 7.2: Mở rộng nhánh rẽ thích ứng đa tầng (Chặng 2: 4 góc không gian độc bản Góc Mộc, Góc Thơ, Góc Nắng, Góc Gió; Chặng 4: Nhánh ngày nghỉ tự do).
-- [ ] 7.3: Tinh chỉnh câu từ các phương án lựa chọn: giàu hình ảnh, nhịp điệu êm ái, chạm vào cảm xúc người đọc.
+- [x] 7.1: Thiết kế 16 kịch bản trắc nghiệm sâu sắc, chia làm 5 chặng hành trình tâm hồn tự nhiên, không gượng ép.
+- [x] 7.2: Mở rộng nhánh rẽ thích ứng đa tầng (Chặng 2: 4 góc không gian độc bản Góc Mộc, Góc Thơ, Góc Nắng, Góc Gió; Chặng 4: Nhánh ngày nghỉ tự do).
+- [x] 7.3: Tinh chỉnh câu từ các phương án lựa chọn: giàu hình ảnh, nhịp điệu êm ái, chạm vào cảm xúc người đọc.
 
 ---
 

@@ -212,196 +212,267 @@
     // points: { <flowerId>: điểm } — flowerId khớp window.flowerProfiles[].id (js/content.js).
     // Thêm câu hỏi mới chỉ cần push thêm 1 object vào mảng này.
     const FLOWER_QUIZ_QUESTIONS = [
-        // Câu 1: Khởi động ngày mới
+        // =====================================================================
+        // CHẶNG 1: THỨC GIÁC SỚM MAI (SENSORY AWAKENING)
+        // =====================================================================
+        // Câu 1: Thanh âm đầu ngày
         {
             category: 'Sớm mai thức giấc',
-            art: { emoji: '🌅☕', tone: 'sun' },
-            text: 'Mở mắt đón ngày mới, điều gì giúp bạn khởi động một ngày nhẹ nhõm và vui vẻ nhất?',
+            art: { emoji: '🌅🍃', tone: 'sun' },
+            text: 'Mở mắt đón sớm mai, thanh âm hoặc nhịp điệu nào làm bạn cảm nhận ngày mới thực sự bắt đầu một cách êm ái nhất?',
             options: [
-                { text: 'Ngủ nướng thêm một chút, rồi thong thả pha ly nước ấm cho tỉnh táo.', points: { lotus: 3, jasmine: 2, lavender: 2, water_lily: 1 } },
-                { text: 'Bật ngay playlist bài hát yêu thích, vừa chuẩn bị vừa lắc lư theo nhạc.', points: { sunflower: 3, gerbera: 3, poppy: 2, allium: 2 } },
-                { text: 'Thấy tin nhắn hỏi han ấm áp: "Dậy chưa, nhớ ăn sáng đầy đủ nha!".', points: { carnation: 3, daisy: 2, baby_breath: 2, peach_blossom: 2 } },
-                { text: 'Mặc một bộ đồ ưng ý, xịt chút hương thơm dịu rồi tự tin bước ra cửa.', points: { peony: 3, rose: 3, orchid: 2, tulip: 2, magnolia: 1 } }
+                { text: 'Tiếng chim lích chích ngoài vòm lá hòa cùng làn gió ban mai mát lành thổi qua khung cửa.', points: { lotus: 3, jasmine: 3, daisy: 2, osmanthus: 2, sim_flower: 2, tana_daisy: 2 } },
+                { text: 'Một bản nhạc acoustic mộc mạc hoặc giai điệu êm dịu quen thuộc từ chiếc loa đầu giường.', points: { rose: 3, tulip: 2, lisianthus: 3, lily_of_the_valley: 2, spiraea: 2, wisteria: 2 } },
+                { text: 'Tiếng còi xe rộn rã đầu ngõ cùng lời chào rôm rả báo hiệu nhịp sống sôi động đã bừng tỉnh.', points: { sunflower: 3, gerbera: 3, peach_blossom: 2, oncidium: 2, anthurium: 2, bombax: 2 } },
+                { text: 'Chuông báo thức vừa tắt, nhường lại 15 phút thảnh thơi nằm ngắm mây trời phiêu lãng trước khi dậy.', points: { dandelion: 3, hydrangea: 2, statice: 2, wax_flower: 2, crape_myrtle: 3, hibiscus: 2 } }
             ]
         },
-        // Câu 2: Tụ tập bạn bè
+        // Câu 2: Hương vị sớm mai
         {
-            category: 'Hẹn hò tụ tập',
-            art: { emoji: '✨🥂', tone: 'blush' },
-            text: 'Trong một buổi cà phê hay tụ tập đông đủ bạn bè, bạn thường là người...',
+            category: 'Hương vị sớm mai',
+            art: { emoji: '☕🍵', tone: 'blush' },
+            text: 'Trước khi bước ra đối diện với thế giới tất bật, thức uống nào mang lại cho bạn cảm giác được "ôm ấp" nhất?',
             options: [
-                { text: 'Ném ra mấy câu đùa hài hước, khuấy động không khí cho cả bàn rôm rả.', points: { sunflower: 2, poppy: 3, gerbera: 3, allium: 3 } },
-                { text: 'Ngồi bên đứa bạn thân, vừa ăn vặt vừa tỉ tê mấy chuyện nhỏ xíu trên trời dưới biển.', points: { daisy: 3, forget_me_not: 3, baby_breath: 2, camellia: 1 } },
-                { text: 'Nói chuyện chừng mực, điềm đạm nhưng chia sẻ câu nào là thấm câu đó.', points: { orchid: 3, magnolia: 3, tulip: 2, lily: 2 } },
-                { text: 'Để ý chỗ ngồi, gọi món cho mọi người và lo việc chia tiền sòng phẳng.', points: { carnation: 2, marigold: 3, hydrangea: 2, peony: 1 } }
+                { text: 'Ly nước ấm mật ong chanh thơm dịu hoặc tách trà hoa cúc thanh lọc tâm trí.', points: { water_lily: 3, camellia: 3, plumeria: 2, white_champaca: 3, melastoma: 2, periwinkle: 2 } },
+                { text: 'Tách cà phê phin đậm đà thơm nức, đánh thức trọn vẹn sự tỉnh táo và tập trung.', points: { orchid: 3, queen_of_the_night: 3, iris: 2, magnolia: 3, tuberose: 2, narcissus: 2 } },
+                { text: 'Ly sinh tố trái cây nhiệt đới tươi mát, ngập tràn sắc màu và vitamin tự nhiên.', points: { poppy: 3, allium: 2, bird_of_paradise: 3, dahlia: 3, rangoon_creeper: 2, apricot_blossom: 2 } },
+                { text: 'Một ly sữa hạt ấm béo ngậy mộc mạc, ngọt dịu như bữa sáng mẹ chuẩn bị ở nhà.', points: { carnation: 3, marigold: 3, globe_amaranth: 3, geranium: 3, aster: 2, baby_breath: 2 } }
             ]
         },
-        // Câu 3: Ngã rẽ không gian (Nhánh 1)
+
+        // =====================================================================
+        // CHẶNG 2: 4 NHÁNH KHÔNG GIAN ĐỘC BẢN (ADAPTIVE 4-WAY SANCTUARY)
+        // =====================================================================
+        // Câu 3: Góc trú ẩn tâm hồn
         {
-            category: 'Góc trốn cuối tuần',
+            category: 'Góc trú ẩn tâm hồn',
             art: { emoji: '🧭🌿', tone: 'sage' },
-            text: 'Một buổi chiều rảnh rỗi muốn trốn khỏi sự ồn ào của phố xá, bạn sẽ chọn ghé vào đâu?',
+            text: 'Một buổi chiều thu rảnh rỗi muốn tìm về một khoảng lặng riêng cho mình, bạn sẽ muốn ghé chân vào đâu?',
             options: [
-                { text: '[Góc Mộc] Quán nhỏ yên tĩnh nhiều cây xanh, bàn gỗ mộc bên khung cửa sổ ngắm mưa bay.', points: { lotus: 3, jasmine: 3, water_lily: 2, plumeria: 2, daisy: 1 } },
-                { text: '[Góc Hoa] Tiệm trà hoa phong cách thanh lịch, thơm nức mùi tinh dầu và bánh nướng.', points: { rose: 3, peony: 3, tulip: 2, orchid: 2, magnolia: 1 } },
-                { text: '[Góc Nắng] Quán cà phê sân thượng ngập nắng gió, view nhìn ra toàn cảnh thành phố.', points: { sunflower: 3, apricot_blossom: 3, gerbera: 2, poppy: 2, cherry_blossom: 1 } },
-                { text: '[Góc Mơ] Tiệm sách ấm cúng tone pastel dịu mát, bật nhạc lo-fi nhẹ tênh êm dịu.', points: { hydrangea: 3, lavender: 3, forget_me_not: 2, statice: 2, lily: 1 } }
+                { text: '[Góc Mộc] Quán nhỏ hiên đầy lá, bàn gỗ thô mộc bên khóm hoa dại, nghe mùi đất ẩm sau cơn mưa.', points: { lotus: 3, jasmine: 3, daisy: 2, osmanthus: 3, sim_flower: 2, tana_daisy: 2, water_lily: 2 } },
+                { text: '[Góc Thơ] Tiệm trà cổ điển thơm hương quế hồi, giá sách gỗ chạm trần và tiếng nhạc vĩ cầm êm ái.', points: { rose: 3, peony: 3, orchid: 2, tulip: 2, magnolia: 2, queen_of_the_night: 3, white_champaca: 2 } },
+                { text: '[Góc Nắng] Quán cà phê sân thượng lộng gió, đón trọn ánh hoàng hôn vàng rực và tiếng cười rộn rã.', points: { sunflower: 3, gerbera: 3, apricot_blossom: 2, peach_blossom: 2, bird_of_paradise: 3, oncidium: 2, anthurium: 2 } },
+                { text: '[Góc Gió] Chiếc ghế đá ven hồ thoáng đãng ngắm từng đợt sóng lăn tăn, để gió cuốn đi mọi muộn phiền.', points: { dandelion: 3, hydrangea: 3, lavender: 2, statice: 3, wax_flower: 2, crape_myrtle: 2, forget_me_not: 2 } }
             ]
         },
-        // Câu 4: (Thích ứng theo không gian bạn chọn ở Câu 3)
+        // Câu 4: (Mặc định / Fallback — thực tế được thay thế linh hoạt bởi ADAPTIVE_BRANCH_QUESTIONS)
         {
             category: 'Bất ngờ nho nhỏ',
             art: { emoji: '🕊️🎁', tone: 'blue' },
-            text: 'Tại góc không gian bạn vừa chọn, bạn để ý thấy một điều thú vị...',
+            text: 'Tại góc không gian bạn vừa chọn, khoảnh khắc nào làm bạn thấy lòng mình dịu lại nhất?',
             options: [
-                { text: 'Một chậu cây nhỏ xinh xắn đang đâm chồi, bạn khẽ mỉm cười và chụp lại một tấm ảnh.', points: { baby_breath: 3, daisy: 2, plumeria: 3, jasmine: 2 } },
-                { text: 'Cuốn sổ tay bìa da cổ điển ai đó để quên, bên trong vẽ những phác thảo rất có gu.', points: { orchid: 2, allium: 3, poppy: 2, cherry_blossom: 2 } },
-                { text: 'Chiếc gương xinh xắn có ánh đèn vàng ấm, soi vào thấy visual hôm nay thật có nét.', points: { peony: 2, rose: 2, magnolia: 3, apricot_blossom: 2 } },
-                { text: 'Một bài nhạc xưa bỗng cất lên, gợi lại kỷ niệm êm đềm với một người bạn cũ.', points: { hydrangea: 2, forget_me_not: 2, lavender: 2, statice: 3 } }
+                { text: 'Ngắm một mầm cây non vừa hé nhú trên chậu gốm nhỏ, thấy cuộc sống thật kỳ diệu.', points: { baby_breath: 3, daisy: 2, plumeria: 3, tana_daisy: 2, sim_flower: 2 } },
+                { text: 'Mở một trang sách cũ ra đọc, bắt gặp một câu văn như viết riêng cho nỗi lòng của mình.', points: { iris: 3, lisianthus: 2, tuberose: 3, orchid: 2, wisteria: 2 } },
+                { text: 'Ánh chiều tà chiếu qua khung cửa sổ, tạo nên một vệt sáng lung linh rất đẹp trên mặt bàn.', points: { dahlia: 3, poppy: 2, cherry_blossom: 2, rangoon_creeper: 2 } },
+                { text: 'Giai điệu của một bài hát xưa bỗng cất lên, gợi lại kỷ niệm êm đềm với người bạn thời niên thiếu.', points: { forget_me_not: 3, aster: 3, hyacinth: 3, globe_amaranth: 2 } }
             ]
         },
-        // Câu 5: Khi deadline dí tới chân
+
+        // =====================================================================
+        // CHẶNG 3: PHẢN XẠ NỘI TÂM & BẢN LĨNH TRƯỚC THỬ THÁCH (RESILIENCE & RECOVERY)
+        // =====================================================================
+        // Câu 5: Đối diện thử thách
         {
-            category: 'Đối diện áp lực',
-            art: { emoji: '⏰🌧️', tone: 'slate' },
-            text: 'Khi mọi thứ dồn dập đổ ập tới cùng lúc khiến bạn hơi ngợp, phản xạ thật nhất của bạn là...',
+            category: 'Đối diện thử thách',
+            art: { emoji: '⚓🌧️', tone: 'slate' },
+            text: 'Khi một kế hoạch bạn dày công chuẩn bị bất ngờ gặp trục trặc ngoài ý muốn, phản xạ đầu tiên của bạn là...',
             options: [
-                { text: 'Hít sâu một hơi, pha ly trà hoặc rửa mặt cho mát rồi làm từng việc một.', points: { lotus: 3, apricot_blossom: 2, water_lily: 3, plumeria: 2 } },
-                { text: 'Bật chế độ "chiến", tập trung cao độ dọn sạch từng task một cách dứt khoát.', points: { peony: 2, rose: 3, magnolia: 2, tulip: 2 } },
-                { text: 'Thở dài một cái rồi tìm cách làm nhanh gọn, thông minh hơn thay vì cắm đầu làm mò.', points: { allium: 3, poppy: 2, gerbera: 2, hibiscus: 3 } },
-                { text: 'Tự nhủ: "Xong quả này là tự thưởng một bữa lẩu/ly trà sữa full topping!".', points: { carnation: 3, marigold: 2, hydrangea: 2, daisy: 1 } }
+                { text: 'Dừng lại hít một hơi sâu, không vội hoảng sợ, bình tĩnh phân tích xem khâu nào có thể gỡ trước.', points: { lotus: 3, water_lily: 3, camellia: 2, white_champaca: 2, periwinkle: 2 } },
+                { text: 'Lập tức vào chế độ "tác chiến", hành động dứt khoát và tìm kiếm phương án B thay thế ngay.', points: { rose: 3, peony: 2, iris: 3, magnolia: 3, bird_of_paradise: 2 } },
+                { text: 'Nhìn nhận sự việc với tinh thần lạc quan: "Mọi chuyện xảy ra đều có lý do, có khi lại mở ra cơ hội mới".', points: { sunflower: 3, gerbera: 3, allium: 2, rangoon_creeper: 3, bombax: 2 } },
+                { text: 'Cho phép bản thân thở một nhịp, xin lời khuyên từ người có kinh nghiệm rồi từng bước giải quyết.', points: { carnation: 2, daisy: 2, hydrangea: 3, aster: 2, lisianthus: 2 } }
             ]
         },
-        // Câu 6: Khi bạn thân buồn
+        // Câu 6: Giữ vững tâm thế
         {
-            category: 'Khi bạn thân khóc',
+            category: 'Giữ vững tâm thế',
+            art: { emoji: '🛡️✨', tone: 'amber' },
+            text: 'Trước một lời nhận xét thiếu thiện chí hoặc phán xét phiến diện từ người xa lạ, tâm thế bạn chọn là...',
+            options: [
+                { text: 'Im lặng mỉm cười bước tiếp, vì giá trị của mình không phụ thuộc vào lời nói của người không hiểu mình.', points: { lotus: 3, queen_of_the_night: 3, plumeria: 3, jasmine: 2, osmanthus: 3 } },
+                { text: 'Điềm đạm bảo vệ quan điểm với lý lẽ rõ ràng, văn minh nhưng dứt khoát đặt ra ranh giới tôn trọng.', points: { orchid: 3, tulip: 3, iris: 2, dahlia: 2, narcissus: 3 } },
+                { text: 'Không để bụng quá 3 giây, năng lượng của mình quý giá nên chỉ dành cho những điều xứng đáng.', points: { poppy: 3, allium: 3, bird_of_paradise: 2, oncidium: 2, anthurium: 2 } },
+                { text: 'Tự soi chiếu lại mình xem có điều gì cần hoàn thiện không, nếu không thì nhẹ nhàng buông bỏ ngoài tai.', points: { lily: 3, wax_flower: 3, statice: 2, globe_amaranth: 2, wisteria: 2 } }
+            ]
+        },
+        // Câu 7: Trạm sạc tâm hồn
+        {
+            category: 'Trạm sạc tâm hồn',
+            art: { emoji: '🌿🔋', tone: 'sage' },
+            text: 'Khi cảm thấy cạn kiệt năng lượng giữa guồng quay bộn bề, "trạm sạc" phục hồi hiệu nghiệm nhất của bạn là...',
+            options: [
+                { text: 'Tắt hết chuông thông báo, ngủ một giấc thật sâu trong chăn ấm không mộng mị.', points: { lavender: 3, water_lily: 3, jasmine: 2, sim_flower: 2, lily_of_the_valley: 2 } },
+                { text: 'Tự tay cắm một bình hoa tươi thật xinh xắn, dọn dẹp lại căn phòng cho thơm tho và tinh tươm.', points: { cherry_blossom: 3, baby_breath: 3, lisianthus: 2, spiraea: 3, daisy: 2 } },
+                { text: 'Xách giày ra ngoài đi dạo dưới bóng cây xanh mát, hít thở khí trời và ngắm nhìn cỏ hoa ven đường.', points: { dandelion: 3, melastoma: 3, periwinkle: 2, tana_daisy: 3, crape_myrtle: 2 } },
+                { text: 'Ngồi ăn một bữa cơm ấm nóng cùng người thân yêu, tỉ tê những câu chuyện giản dị đời thường.', points: { carnation: 3, marigold: 3, geranium: 3, peach_blossom: 2, bombax: 2 } }
+            ]
+        },
+
+        // =====================================================================
+        // CHẶNG 4: NGÔN NGỮ YÊU THƯƠNG & SỰ THẤU CẢM (EMOTIONAL INTIMACY)
+        // =====================================================================
+        // Câu 8: Khi bạn thân buồn
+        {
+            category: 'Khi bạn thân buồn',
             art: { emoji: '🫂🍵', tone: 'warm' },
-            text: 'Đứa bạn thân nhắn tin: "Tao buồn quá mày ơi...". Phản ứng tức thì của bạn là...',
+            text: 'Khi đứa bạn thân nhất gặp chuyện buồn và nhắn tin tâm sự, cách bạn ở bên cạnh bạn ấy là...',
             options: [
-                { text: 'Mua ngay đồ ăn hoặc ly trà sữa ghé qua nhà nó, ngồi im lắng nghe nó xả hết ấm ức.', points: { carnation: 2, daisy: 3, baby_breath: 3, plumeria: 2 } },
-                { text: 'Bênh bạn trước đã: "Đứa nào làm mày buồn, nói nghe coi tao xử cho!".', points: { rose: 2, peony: 3, magnolia: 2, marigold: 2 } },
-                { text: 'Không phán xét, chỉ ôm một cái rồi bảo: "Buồn thì cứ khóc cho đã đi, có tao ở đây rồi".', points: { hydrangea: 3, forget_me_not: 2, lavender: 2, lily: 2 } },
-                { text: 'Lôi nó dậy đi dạo mát, hít thở khí trời ăn uống linh tinh cho nhẹ đầu.', points: { sunflower: 2, gerbera: 3, poppy: 2, peach_blossom: 2 } }
+                { text: 'Không vội tra hỏi hay khuyên răn, chỉ ngồi cạnh, khẽ nắm tay để bạn biết luôn có mình chở che.', points: { daisy: 3, baby_breath: 3, plumeria: 2, geranium: 3, sim_flower: 2 } },
+                { text: 'Lập tức mang đồ ăn hoặc thức uống bạn thích ghé qua, lắng nghe bạn xả hết ấm ức trong lòng.', points: { carnation: 3, rose: 2, marigold: 2, bombax: 3, hydrangea: 2 } },
+                { text: 'Kéo bạn ra ngoài đi dạo hít thở khí trời, rủ đi ăn món ngon để tâm trạng dần tươi sáng hơn.', points: { sunflower: 3, gerbera: 3, poppy: 2, peach_blossom: 2, oncidium: 2 } },
+                { text: 'Viết cho bạn một tin nhắn thật chân thành, nhắc bạn nhớ rằng bạn kiên cường và đáng trân trọng dường nào.', points: { forget_me_not: 3, statice: 3, hyacinth: 3, aster: 2, wisteria: 2 } }
             ]
         },
-        // Câu 7: Tự thưởng bản thân
+        // Câu 9: Khoảnh khắc vỗ về
         {
-            category: 'Nuông chiều chính mình',
-            art: { emoji: '🛍️🍰', tone: 'rose' },
-            text: 'Sau một tuần làm việc chăm chỉ, cách bạn tự thưởng cho bản thân để thấy vui cả ngày là...',
+            category: 'Khoảnh khắc vỗ về',
+            art: { emoji: '💌🕊️', tone: 'rose' },
+            text: 'Hành động nhỏ xíu nào của đối phương khiến bạn cảm nhận trái tim mình thực sự được vỗ về và thấu hiểu?',
             options: [
-                { text: 'Mua một món đồ xinh xắn mình thích từ lâu mà bữa giờ cứ đắn đo.', points: { rose: 3, peony: 2, tulip: 2, orchid: 2 } },
-                { text: 'Đi ăn một món thật ngon cùng người thương hoặc người thân trong gia đình.', points: { carnation: 3, marigold: 2, peach_blossom: 3, daisy: 1 } },
-                { text: 'Mua một bó hoa tươi cắm vào lọ đặt ở bàn làm việc cho thơm và xinh.', points: { cherry_blossom: 3, baby_breath: 2, camellia: 2, lotus: 2 } },
-                { text: 'Tắt hết chuông thông báo, ngủ một giấc thật sâu không mộng mị.', points: { lavender: 3, water_lily: 3, jasmine: 2, plumeria: 2 } }
+                { text: 'Nhớ những thói quen vụn vặt: biết mình thích uống gì, dị ứng món gì mà không cần phải nhắc.', points: { carnation: 3, daisy: 2, hydrangea: 3, lisianthus: 2, tana_daisy: 2 } },
+                { text: 'Luôn đi bên ngoài để che chở khi sang đường, lặng lẽ nhường chiếc áo ấm khi trời trở gió.', points: { rose: 3, peony: 2, magnolia: 3, bombax: 2, anthurium: 2 } },
+                { text: 'Dù bận rộn tới đâu cũng dành vài giây nhắn một tin hỏi han: "Hôm nay của bạn có điều gì vui không?".', points: { forget_me_not: 3, statice: 3, camellia: 2, lily_of_the_valley: 3, aster: 2 } },
+                { text: 'Tôn trọng thế giới riêng và ước mơ của mình, luôn lắng nghe với ánh mắt cổ vũ chân thành.', points: { orchid: 3, lily: 2, iris: 3, queen_of_the_night: 2, narcissus: 2 } }
             ]
         },
-        // Câu 8: Ngã rẽ nạp năng lượng (Nhánh 2)
+        // Câu 10: Nhánh ngày nghỉ tự do
         {
             category: 'Tự do 24 giờ',
             art: { emoji: '🎈🏝️', tone: 'violet' },
-            text: 'Nếu được tặng trọn vẹn một ngày không vướng bận việc gì, bạn sẽ dành 24 giờ đó để...',
+            text: 'Nếu được tặng trọn vẹn 24 giờ tự do không vướng bận việc gì, bạn sẽ dành ngày đó để...',
             options: [
-                { text: 'Nằm dài ở nhà, cày phim, đọc sách, ăn món mình tự nấu mà không cần nhìn đồng hồ.', points: { lotus: 2, jasmine: 2, lavender: 3, water_lily: 2 } },
-                { text: 'Lên đồ thật đẹp, đi dạo những góc phố quen và ghé vào những cửa hàng thú vị.', points: { tulip: 3, orchid: 2, rose: 2, magnolia: 2 } },
-                { text: 'Gặp gỡ những người mình yêu quý, cười nói rôm rả từ sáng tới tối mịt.', points: { sunflower: 3, gerbera: 3, allium: 2, peach_blossom: 2 } },
-                { text: 'Xách balo đi đến một nơi xa lạ, hít thở không khí mới toanh để refresh bản thân.', points: { poppy: 3, cherry_blossom: 2, apricot_blossom: 2, hibiscus: 3 } }
+                { text: 'Ở nhà cuộn tròn đọc sách, cày bộ phim hay và nấu một món ăn thơm phức mình thích.', points: { lotus: 2, jasmine: 3, lavender: 3, water_lily: 2, osmanthus: 3 } },
+                { text: 'Lên đồ thật đẹp, đi dạo những góc phố quen, ghé tiệm gốm hoặc triển lãm tranh có gu.', points: { tulip: 3, orchid: 2, peony: 3, spiraea: 3, white_champaca: 2 } },
+                { text: 'Tụ họp cùng những người bạn yêu quý, cùng nhau ăn uống cười đùa rôm rả cả ngày.', points: { sunflower: 3, gerbera: 3, peach_blossom: 2, oncidium: 2, rangoon_creeper: 2 } },
+                { text: 'Xách balo đi đến một nơi xa lạ, hít thở làn gió mới toanh để làm mới lại chính mình.', points: { poppy: 3, dandelion: 3, cherry_blossom: 2, bird_of_paradise: 3, dahlia: 2 } }
             ]
         },
-        // Câu 9: Phong cách cá nhân
+        // Câu 11: Món quà tinh thần
         {
-            category: 'Gu của bạn',
-            art: { emoji: '👗👒', tone: 'amber' },
-            text: 'Phong cách hoặc thói quen nào khiến người xung quanh hay nhớ đến bạn nhất?',
+            category: 'Món quà tinh thần',
+            art: { emoji: '🎁✨', tone: 'gold' },
+            text: 'Trong những món quà tinh thần bạn từng trao đi hoặc nhận lại, điều gì có sức nặng ấm áp nhất?',
             options: [
-                { text: 'Giản dị, thoải mái nhưng lúc nào cũng gọn gàng, thơm tho và dễ mến.', points: { daisy: 3, baby_breath: 3, jasmine: 2, plumeria: 2 } },
-                { text: 'Có gu riêng rõ rệt, chỉn chu từ trang phục đến phụ kiện nhỏ xíu.', points: { orchid: 3, peony: 3, rose: 2, tulip: 2 } },
-                { text: 'Nụ cười tươi tắn và năng lượng ấm áp, hễ thấy mặt là thấy vui.', points: { sunflower: 3, gerbera: 3, peach_blossom: 2, carnation: 1 } },
-                { text: 'Đôi mắt biết lắng nghe, nói chuyện điềm đạm và tinh tế trong từng cử chỉ.', points: { lily: 3, lotus: 2, camellia: 3, statice: 2 } }
+                { text: 'Một bức thư tay mộc mạc giãi bày những lời cảm ơn và trân quý chân thành từ tận đáy lòng.', points: { hydrangea: 3, forget_me_not: 3, statice: 2, lily_of_the_valley: 2, hyacinth: 2 } },
+                { text: 'Sự kiên định đồng hành của ai đó bên cạnh mình qua những giai đoạn bấp bênh nhất.', points: { camellia: 3, wax_flower: 3, wisteria: 3, globe_amaranth: 3, periwinkle: 2 } },
+                { text: 'Một lời khích lệ đúng lúc: "Bạn làm tốt lắm, hãy luôn tự tin vào con đường của mình!".', points: { magnolia: 3, iris: 3, apricot_blossom: 2, dahlia: 2, bird_of_paradise: 2 } },
+                { text: 'Một cái ôm siết chặt và ánh nhìn thấu cảm, không cần phải nói thêm bất kỳ lời nào.', points: { baby_breath: 3, carnation: 2, daisy: 2, geranium: 3, plumeria: 2 } }
             ]
         },
-        // Câu 10: Ngôn ngữ tình cảm
+
+        // =====================================================================
+        // CHẶNG 5: ĐÊM THU LẮNG ĐỌNG & NGUYỆN ƯỚC SÂU KÍN (SOUL SYNTHESIS)
+        // =====================================================================
+        // Câu 12: Đêm thu sao sáng
         {
-            category: 'Cách bạn yêu',
-            art: { emoji: '💌🕊️', tone: 'rose' },
-            text: 'Hành động nhỏ xíu nào của đối phương làm bạn cảm thấy "tan chảy" và được yêu thương nhất?',
+            category: 'Đêm thu sao sáng',
+            art: { emoji: '🌌✨', tone: 'blue' },
+            text: 'Đứng dưới vòm trời đêm thu lấp lánh ngàn vì sao tĩnh mịch, ý nghĩ thường đến nhất trong tâm trí bạn là...',
             options: [
-                { text: 'Nhớ những chi tiết vụn vặt: biết mình thích uống gì, ghét ăn gì mà không cần nhắc.', points: { carnation: 3, daisy: 2, hydrangea: 2, marigold: 2 } },
-                { text: 'Luôn bảo vệ mình, đi ngoài đường thì kéo mình đi vào phía trong lề an toàn.', points: { rose: 3, peony: 2, magnolia: 2, tulip: 2 } },
-                { text: 'Dù bận rộn tới đâu cũng dành thời gian nhắn một tin: "Hôm nay của em thế nào?".', points: { forget_me_not: 3, statice: 3, baby_breath: 2, camellia: 2 } },
-                { text: 'Tôn trọng ước mơ và không gian riêng của mình, luôn cổ vũ mình làm điều mình thích.', points: { lily: 2, orchid: 3, allium: 2, water_lily: 2 } }
+                { text: '"Vũ trụ bao la đến thế, những phiền muộn nhỏ nhặt hôm nay rồi cũng sẽ nhẹ nhàng trôi qua thôi."', points: { lotus: 3, water_lily: 3, lavender: 2, dandelion: 3, sim_flower: 2 } },
+                { text: '"Mong những người mình thương quý ở khắp mọi nơi đều được bình an, mạnh khỏe và hạnh phúc."', points: { carnation: 3, marigold: 3, globe_amaranth: 2, peach_blossom: 2, geranium: 2 } },
+                { text: '"Cuộc sống thật diệu kỳ, mình muốn sống rực rỡ và khám phá thêm thật nhiều chân trời mới."', points: { sunflower: 2, poppy: 3, bird_of_paradise: 3, dahlia: 3, oncidium: 2 } },
+                { text: '"Biết ơn vì bản thân đã đi qua bao chặng đường mà vẫn giữ được sự chân thành nguyên vẹn."', points: { white_champaca: 3, osmanthus: 3, statice: 3, queen_of_the_night: 2, wax_flower: 2 } }
             ]
         },
-        // Câu 11: Nét "khó chiều" đáng yêu
+        // Câu 13: Phẩm chất trân quý
         {
-            category: 'Điểm đáng yêu ngầm',
-            art: { emoji: '🐱🎀', tone: 'slate' },
-            text: 'Một "tật xấu" nho nhỏ nhưng lại làm bạn bè thấy bạn dễ thương và đáng trân trọng:',
+            category: 'Phẩm chất trân quý',
+            art: { emoji: '💎🌿', tone: 'amber' },
+            text: 'Phẩm chất nào ở chính mình mà bạn luôn âm thầm trân quý và cố gắng gìn giữ qua năm tháng?',
             options: [
-                { text: 'Hay lo xa và chu đáo quá mức, lúc nào cũng dặn dò người khác như mẹ trẻ.', points: { carnation: 3, marigold: 3, hydrangea: 2, peony: 1 } },
-                { text: 'Lúc bình thường rất hiền, nhưng đụng tới nguyên tắc hay người mình thương là xù lông.', points: { rose: 2, magnolia: 3, apricot_blossom: 3, poppy: 2 } },
-                { text: 'Miệng thì bảo "sao cũng được", nhưng trong đầu đã có sẵn một danh sách tiêu chuẩn riêng.', points: { tulip: 3, orchid: 2, allium: 3, lily: 2 } },
-                { text: 'Dễ mềm lòng, thấy ai khổ là thương, nhiều khi tự nhận phần thiệt về mình.', points: { lotus: 2, daisy: 2, baby_breath: 3, plumeria: 2 } }
+                { text: 'Sự thấu cảm sâu sắc, luôn biết lắng nghe và đặt mình vào vị trí của người khác.', points: { daisy: 3, baby_breath: 3, hydrangea: 2, lily: 2, aster: 2 } },
+                { text: 'Bản lĩnh độc lập, kiên định với những giá trị đúng đắn và lý tưởng mà mình theo đuổi.', points: { orchid: 3, magnolia: 3, iris: 3, tulip: 2, narcissus: 3 } },
+                { text: 'Nụ cười tươi tắn và năng lượng ấm áp, luôn mang lại niềm vui cho những người xung quanh.', points: { gerbera: 3, sunflower: 2, apricot_blossom: 3, tana_daisy: 3, anthurium: 2 } },
+                { text: 'Sự chân thật và khiêm nhường trong tâm hồn, không tính toán thiệt hơn hay giả tạo.', points: { jasmine: 3, plumeria: 3, osmanthus: 2, melastoma: 3, periwinkle: 2 } }
             ]
         },
-        // Câu 12: Lời nhắn gửi 20/10
+        // Câu 14: Lời thì thầm quá khứ
         {
-            category: 'Nhắn nhủ bản thân',
+            category: 'Lời thì thầm quá khứ',
+            art: { emoji: '⏳🌱', tone: 'warm' },
+            text: 'Nếu được gửi một lời thì thầm nhắn nhủ đến chính mình của 5 năm trước, bạn sẽ nói điều gì?',
+            options: [
+                { text: '"Đừng quá âu lo nhé, mọi chuyện rồi sẽ ổn thỏa theo cách đẹp đẽ nhất mà bạn không ngờ tới."', points: { lisianthus: 3, lily_of_the_valley: 3, water_lily: 2, crape_myrtle: 3, forget_me_not: 2 } },
+                { text: '"Hãy dũng cảm tin vào năng lực của mình, bạn tài giỏi và kiên cường hơn bạn tưởng nhiều."', points: { rose: 3, peony: 2, magnolia: 2, dahlia: 3, bombax: 2 } },
+                { text: '"Hãy cứ cười thật tươi và tận hưởng trọn vẹn từng khoảnh khắc thanh xuân rực rỡ ấy nhé!"', points: { cherry_blossom: 3, peach_blossom: 2, gerbera: 2, allium: 2, rangoon_creeper: 2 } },
+                { text: '"Cảm ơn bạn vì ngày ấy đã không bỏ cuộc, để hôm nay có một phiên bản vững vàng như bây giờ."', points: { apricot_blossom: 3, camellia: 3, wax_flower: 3, statice: 2, wisteria: 2 } }
+            ]
+        },
+        // Câu 15: Giai điệu tâm tưởng
+        {
+            category: 'Giai điệu tâm tưởng',
+            art: { emoji: '🎵🍃', tone: 'rose' },
+            text: 'Khi một bản nhạc không lời du dương cất lên trong chiều thu, hình ảnh đầu tiên hiện lên trong bạn là...',
+            options: [
+                { text: 'Một cánh đồng hoa ngập tràn ánh nắng chiều vàng ấm áp, gió thổi đu đưa từng cánh mỏng.', points: { daisy: 2, sunflower: 2, tana_daisy: 3, poppy: 2, sim_flower: 2 } },
+                { text: 'Một góc ban công quen thuộc rợp bóng cây xanh, nơi bạn ngồi ngắm mưa rơi bên tách trà thơm.', points: { lotus: 3, jasmine: 2, white_champaca: 2, osmanthus: 2, spiraea: 2 } },
+                { text: 'Khung cửa sổ sáng đèn ấm cúng nơi có những người thân thương đang quây quần bên bữa cơm chiều.', points: { carnation: 3, marigold: 3, peach_blossom: 2, geranium: 2, bombax: 2 } },
+                { text: 'Mặt hồ phẳng lặng phản chiếu ánh trăng bạc, tĩnh mịch và sâu lắng khôn cùng.', points: { queen_of_the_night: 3, tuberose: 3, iris: 2, hyacinth: 2, wisteria: 2 } }
+            ]
+        },
+        // Câu 16: Lời tự tình 20/10
+        {
+            category: 'Lời tự tình 20/10',
             art: { emoji: '💐✨', tone: 'gold' },
-            text: 'Nhân ngày Phụ nữ Việt Nam 20/10, lời tự tình dễ thương nhất bạn muốn nhắn gửi đến chính mình:',
+            text: 'Nhân ngày Phụ nữ Việt Nam 20/10, lời chúc nào chạm đến nơi sâu lắng và ấm áp nhất trong bạn?',
             options: [
-                { text: '"Hãy luôn tự tin và yêu thương bản thân, bạn xứng đáng với những điều ngọt ngào nhất!"', points: { rose: 3, peony: 3, orchid: 2, tulip: 2 } },
-                { text: '"Cứ cười thật tươi và sống hết mình nhé, mỗi ngày trôi qua đều là một ngày xinh đẹp!"', points: { sunflower: 2, gerbera: 3, daisy: 2, peach_blossom: 2 } },
-                { text: '"Bình an và thảnh thơi là điều quý giá nhất, không cần phải vội vã, cứ an yên mà sống."', points: { lotus: 3, water_lily: 2, plumeria: 3, jasmine: 2 } },
-                { text: '"Cảm ơn vì đã luôn kiên cường, dịu dàng và không bao giờ ngừng cố gắng!"', points: { apricot_blossom: 3, magnolia: 2, camellia: 2, carnation: 2, statice: 2 } }
+                { text: '"Chúc bạn luôn giữ được sự an yên trong tâm hồn, mỗi sớm mai thức dậy đều thấy lòng nhẹ nhõm."', points: { lotus: 3, water_lily: 2, plumeria: 2, jasmine: 2, lily_of_the_valley: 2 } },
+                { text: '"Chúc bạn luôn kiêu hãnh tỏa sáng trên con đường riêng, tự do sống trọn vẹn cuộc đời bạn ước mơ."', points: { rose: 3, peony: 3, orchid: 2, tulip: 2, bird_of_paradise: 2, narcissus: 2 } },
+                { text: '"Chúc nụ cười rạng rỡ luôn nở trên môi bạn, mọi điều ngọt ngào và may mắn sẽ luôn tìm đến bạn."', points: { sunflower: 2, gerbera: 3, lisianthus: 3, apricot_blossom: 2, anthurium: 2 } },
+                { text: '"Chúc bạn luôn được trân trọng, được thấu hiểu và được yêu thương bằng một tình cảm chân thành nhất."', points: { carnation: 2, hydrangea: 2, forget_me_not: 2, statice: 2, camellia: 2, wisteria: 2 } }
             ]
         }
     ];
 
     // Nhánh kịch bản thích ứng tự nhiên cho Câu 4 dựa trên lựa chọn Câu 3
     const ADAPTIVE_BRANCH_QUESTIONS = [
+        // Nhánh 0: Góc Mộc
         {
             category: 'Bất ngờ · Góc Mộc',
-            art: { emoji: '🌱☕', tone: 'sage' },
-            text: 'Ngồi trong quán mộc ngắm giàn cây xanh mát, bạn thấy người chủ tiệm khẽ đặt lên bàn một chậu sen đá con con. Bạn sẽ...',
+            art: { emoji: '🌱🪵', tone: 'sage' },
+            text: 'Ngồi bên hiên mộc ngắm vòm lá biếc, bác chủ quán mang ra một chậu cây nhỏ xinh xắn tặng bạn. Bạn sẽ...',
             options: [
-                { text: 'Mỉm cười cảm ơn rối rít, ngắm nghía chồi non bé xíu thấy lòng nhẹ nhõm hẳn.', points: { lotus: 3, jasmine: 3, baby_breath: 2, daisy: 2 } },
-                { text: 'Hỏi han cách chăm sóc để mang về bàn làm việc nuôi cho nó lớn khỏe.', points: { orchid: 2, camellia: 3, tulip: 2, plumeria: 2 } },
-                { text: 'Chụp một tấm hình góc quán xinh xắn này gửi cho đứa bạn thân rủ lần sau ghé.', points: { carnation: 2, marigold: 2, hydrangea: 2, peach_blossom: 2 } },
-                { text: 'Tận hưởng khoảnh khắc bình yên, để điện thoại sang một bên và đọc tiếp cuốn sách.', points: { water_lily: 3, lavender: 2, lily: 2, statice: 2 } }
+                { text: 'Mỉm cười cảm ơn rối rít, nâng niu chồi non bé xíu thấy lòng nhẹ nhõm và ấm áp hẳn.', points: { lotus: 3, jasmine: 3, baby_breath: 2, daisy: 2, tana_daisy: 2 } },
+                { text: 'Hỏi han tỉ mỉ cách tưới nước, đón nắng để mang về bàn làm việc chăm sóc cho cây lớn khỏe.', points: { camellia: 3, plumeria: 2, osmanthus: 3, periwinkle: 3, melastoma: 2 } },
+                { text: 'Chụp một tấm hình góc hiên mộc gửi cho hội bạn thân rủ lần sau ghé cùng cho vui.', points: { carnation: 2, marigold: 2, geranium: 3, bombax: 2 } },
+                { text: 'Đặt chậu cây bên cạnh, hít sâu hương đất ẩm và tiếp tục đắm chìm vào trang sách đang đọc.', points: { water_lily: 3, lavender: 2, sim_flower: 3, statice: 2 } }
             ]
         },
+        // Nhánh 1: Góc Thơ
         {
-            category: 'Bất ngờ · Góc Hoa',
-            art: { emoji: '🌹✨', tone: 'rose' },
-            text: 'Bước vào tiệm hoa thơm nức mùi thơm hoa hồng ngoại, bạn thấy một góc cắm hoa nghệ thuật rất đẹp. Bạn sẽ...',
+            category: 'Bất ngờ · Góc Thơ',
+            art: { emoji: '📜🍵', tone: 'rose' },
+            text: 'Trong tiệm trà cổ điển ấm cúng, bạn bắt gặp một cuốn sổ tay ai đó ghi lại những vần thơ chép tay nắn nót. Bạn sẽ...',
             options: [
-                { text: 'Tự chọn vài cành hoa có tone màu mình ưng nhất để tự tay gói mang về.', points: { peony: 3, rose: 3, magnolia: 2, tulip: 2 } },
-                { text: 'Tò mò hỏi chủ tiệm tên của các loài hoa lạ và ý nghĩa đặc biệt của chúng.', points: { orchid: 3, lily: 2, allium: 2, magnolia: 2 } },
-                { text: 'Mua thêm một bó nhỏ nhắn gửi tặng mẹ hoặc cô bạn thân để làm họ bất ngờ.', points: { carnation: 3, gerbera: 2, marigold: 2, daisy: 2 } },
-                { text: 'Lặng ngắm sự hài hòa của màu sắc, cảm nhận gu thẩm mỹ tinh tế của không gian.', points: { camellia: 3, lotus: 2, statice: 2, lavender: 2 } }
+                { text: 'Đọc từng vần thơ mộc mạc, xúc động trước tình cảm chân thành giấu kín trong nét mực xưa.', points: { rose: 3, peony: 2, lisianthus: 3, white_champaca: 2, wisteria: 3 } },
+                { text: 'Tò mò về tác giả và hoàn cảnh ra đời của những câu chữ sâu sắc, đầy tính triết lý ấy.', points: { orchid: 3, iris: 3, queen_of_the_night: 3, tulip: 2, narcissus: 2 } },
+                { text: 'Rút cây bút mang theo, nắn nót viết tiếp vài dòng cảm nghĩ ấm áp vào trang lưu bút của quán.', points: { lily: 3, magnolia: 3, tuberose: 3, spiraea: 2 } },
+                { text: 'Nhấp ngụm trà sen ấm, ngắm nhìn ánh nến lung linh và lắng nghe tiếng dương cầm dìu dặt.', points: { camellia: 2, lotus: 2, lily_of_the_valley: 3, lavender: 2 } }
             ]
         },
+        // Nhánh 2: Góc Nắng
         {
             category: 'Bất ngờ · Góc Nắng',
             art: { emoji: '🌻🌤️', tone: 'sun' },
-            text: 'Trên quán sân thượng gió mát lộng ngập nắng, một bản nhạc acoustics êm dịu bỗng vang lên. Bạn sẽ...',
+            text: 'Trên quán sân thượng lộng gió ngập tràn ánh nắng vàng rực rỡ, bài hát bạn yêu thích bỗng vang lên. Bạn sẽ...',
             options: [
-                { text: 'Ngả lưng ra ghế, khẽ hát nhẩm theo lời bài hát và cảm nhận gió thổi qua tóc.', points: { sunflower: 3, gerbera: 3, poppy: 2, peach_blossom: 2 } },
-                { text: 'Cầm máy ảnh bắt trọn khoảnh khắc hoàng hôn nhuộm vàng bầu trời rực rỡ.', points: { cherry_blossom: 3, apricot_blossom: 2, allium: 2, tulip: 2 } },
-                { text: 'Nhắn cho người mình thương: "Chỗ này chiều nay gió mát và đẹp lắm nè!".', points: { carnation: 2, daisy: 2, baby_breath: 2, rose: 2 } },
-                { text: 'Hít căng lồng ngực không khí trong lành, tự nhiên thấy bao nhiêu mỏi mệt tan biến.', points: { lotus: 2, plumeria: 3, water_lily: 2, jasmine: 2 } }
+                { text: 'Ngả lưng ra ghế, khẽ nhẩm hát theo lời bài hát và cảm nhận gió luồn qua từng lọn tóc.', points: { sunflower: 3, gerbera: 3, poppy: 2, peach_blossom: 2, oncidium: 3 } },
+                { text: 'Cầm máy ảnh bắt trọn khoảnh khắc hoàng hôn nhuộm hồng cả đường chân trời thành phố.', points: { cherry_blossom: 3, apricot_blossom: 3, dahlia: 2, allium: 2 } },
+                { text: 'Gọi video khoe ngay với người thân hoặc bạn thương: "Chỗ này chiều nay gió mát và hoàng hôn đẹp lắm!".', points: { anthurium: 3, bombax: 2, rangoon_creeper: 3, carnation: 2 } },
+                { text: 'Hít căng lồng ngực bầu không khí khoáng đạt, thấy năng lượng tích cực bừng sáng khắp người.', points: { bird_of_paradise: 3, plumeria: 2, jasmine: 2, dahlia: 2 } }
             ]
         },
+        // Nhánh 3: Góc Gió
         {
-            category: 'Bất ngờ · Góc Mơ',
-            art: { emoji: '📖🎧', tone: 'blue' },
-            text: 'Ngồi trong tiệm sách ấm cúng tone pastel, bạn vô tình rút ra một cuốn sách có kẹp tấm bưu thiếp viết tay cũ. Bạn sẽ...',
+            category: 'Bất ngờ · Góc Gió',
+            art: { emoji: '🍃🌊', tone: 'blue' },
+            text: 'Đứng đón gió bên hồ nước mênh mang, bạn nhìn thấy từng đàn chim sải cánh bay về phía ráng chiều. Bạn sẽ...',
             options: [
-                { text: 'Đọc những dòng nhắn nhủ mộc mạc ấy, cảm nhận được hơi ấm và sự chân thành của người xưa.', points: { hydrangea: 3, lavender: 3, water_lily: 2, forget_me_not: 3 } },
-                { text: 'Kẹp lại cẩn thận vào trang sách cũ, trân trọng một mảnh kỷ niệm đẹp của ai đó.', points: { lotus: 3, jasmine: 2, statice: 3, plumeria: 2 } },
-                { text: 'Tự dưng muốn rút bút viết một tấm thiệp nhỏ gửi cho người quan trọng với mình.', points: { carnation: 2, lily: 3, baby_breath: 2, marigold: 2 } },
-                { text: 'Mỉm cười một mình, cảm thấy thế giới này đôi khi có những sự trùng hợp dễ thương ghê.', points: { orchid: 2, allium: 3, magnolia: 2, poppy: 1 } }
+                { text: 'Cảm nhận một niềm tự do khôn tả, bao nhiêu vướng bận lo toan bỗng nhẹ tênh như làn khói.', points: { dandelion: 3, hydrangea: 3, wax_flower: 3, crape_myrtle: 2 } },
+                { text: 'Nhớ về một kỷ niệm thời thơ ấu, thấy lòng ngập tràn hoài niệm êm đềm và sự biết ơn.', points: { forget_me_not: 3, aster: 3, hyacinth: 2, globe_amaranth: 2 } },
+                { text: 'Lấy điện thoại bật một bản nhạc không lời da diết, thả lỏng đôi vai và thong thả rảo bước.', points: { statice: 3, lily_of_the_valley: 2, lavender: 3, hibiscus: 2 } },
+                { text: 'Tự mỉm cười với chính mình: "Sau cơn dông bão thì trời lại xanh, mình đã đi qua rất kiên cường".', points: { apricot_blossom: 2, magnolia: 2, periwinkle: 3, melastoma: 3 } }
             ]
         }
     ];
@@ -467,16 +538,17 @@
         return scores;
     };
 
-    // Điểm cao nhất thắng; ưu tiên tương thích nhánh rẽ Câu 3 khi hòa điểm
+    // Điểm cao nhất thắng; ưu tiên tương thích nhánh rẽ Câu 3 khi hòa điểm (100% tất định - deterministic)
     const pickWinningResult = (scores, results, state) => {
         let best = results[0];
         let bestScore = -1;
 
+        // Phân bổ 54 loài hoa vào 4 nhánh không gian độc bản
         const branchFamilies = [
-            ['lotus', 'jasmine', 'water_lily', 'plumeria', 'camellia', 'daisy', 'baby_breath'],
-            ['rose', 'peony', 'orchid', 'tulip', 'magnolia', 'carnation'],
-            ['sunflower', 'gerbera', 'poppy', 'allium', 'apricot_blossom', 'peach_blossom', 'cherry_blossom'],
-            ['hydrangea', 'lavender', 'forget_me_not', 'statice', 'marigold', 'lily', 'hibiscus']
+            ['lotus', 'jasmine', 'water_lily', 'plumeria', 'camellia', 'daisy', 'baby_breath', 'osmanthus', 'sim_flower', 'melastoma', 'periwinkle', 'lavender', 'tana_daisy', 'geranium'],
+            ['rose', 'peony', 'orchid', 'tulip', 'magnolia', 'lily', 'lisianthus', 'queen_of_the_night', 'white_champaca', 'iris', 'tuberose', 'spiraea', 'wisteria', 'narcissus'],
+            ['sunflower', 'gerbera', 'poppy', 'allium', 'apricot_blossom', 'peach_blossom', 'cherry_blossom', 'bird_of_paradise', 'dahlia', 'bombax', 'anthurium', 'oncidium', 'rangoon_creeper'],
+            ['hydrangea', 'forget_me_not', 'statice', 'marigold', 'hibiscus', 'lily_of_the_valley', 'dandelion', 'wax_flower', 'aster', 'globe_amaranth', 'hyacinth', 'crape_myrtle', 'carnation']
         ];
         const branchIdx = (state && state.answers && state.answers[2] !== undefined) ? state.answers[2] : null;
         const favoredFamily = (branchIdx !== null && branchFamilies[branchIdx]) ? branchFamilies[branchIdx] : [];
