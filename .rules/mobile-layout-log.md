@@ -184,4 +184,40 @@
   - Bộ kiểm thử tự động `scratch/test_phase4.js`: 11/11 tiêu chí Passed (100%).
   - Chạy lại toàn bộ ma trận kiểm thử hồi quy Phase 1, 2, 3: Đạt 100% Passed.
 
+---
+
+### Phase 5: Thích Ứng Minigames & Tương Tác Cảm Giác (Simon Melody & Constellation Linker in Landscape) - [HOÀN THÀNH 100%]
+- **Vấn đề gặp phải**:
+  - **Màn hình ngang dài bỏ sót media query**: Quy tắc phóng to nút chuông `.simon-node` (104px) và ngôi sao `.star-node` (90px) trước đây chỉ được đặt trong `@media (max-width: 768px)`. Khi người dùng xoay ngang điện thoại hiện đại (iPhone 12/13/14/15 Pro có chiều rộng $844\text{px} - 932\text{px} > 768\text{px}$), trình duyệt áp dụng quy tắc desktop ($68\text{px}$ và $58\text{px}$). Khi co theo scale $\sim 0.5$, kích thước thực tế chỉ còn $34\text{px} - 37\text{px}$ vật lý, nhỏ hơn tiêu chuẩn $44\text{px}-48\text{px}$ của WCAG/Apple HIG và rất khó bấm trúng bằng ngón cái.
+  - **Khoảng cách kết nối ngón tay khi vuốt sao chòm sao**: `proximityRadius` dùng công thức cố định `Math.max(28, Math.min(72, 68 * curScale))` khiến bán kính bắt sao khi scale $0.5$ chỉ là $34\text{px}$, người dùng vuốt nhanh dễ bị trượt khỏi ngôi sao đích.
+  - **Vùng chạm ngón cái 2 bên (Bilateral Thumb Zone)**: Cung chuông hoa trên màn hình ngang cần dạt nhẹ sang 2 bên để ngón cái 2 bàn tay vươn tới tự nhiên mà không che lấp mầm cây đang lớn ở tâm.
+  - **Thiếu phản hồi xúc giác (Haptic Feedback) khi thao tác sai hoặc nghe lại**: Khi bấm sai nốt nhạc hoặc chạm nhầm sao, người dùng chỉ thấy hiệu ứng rung lắc `.wrong` mà không có xúc giác cảnh báo vi mô. Nút nghe lại `#simon-replay-btn` cũng thiếu phản hồi xúc giác.
+- **Giải pháp xử lý**:
+  - **Bổ Sung Media Query Chuyên Biệt Cho Mobile Landscape**:
+    - Trong `@media (max-height: 540px) and (orientation: landscape)`:
+      - `.simon-node`: Tăng lên $96\text{px}$ kèm `::after` mở rộng vùng chạm $-16\text{px}$ bốn phía. Kích thước chạm thực tế sau scale luôn đạt $61\text{px} - 73\text{px}$ vật lý ($\ge 48\text{px}$).
+      - `.simon-replay-btn`: Đặt `min-height: 38px`, padding $6\text{px} \times 16\text{px}$, font $12\text{px}$, kèm pseudo-element `::before` mở rộng vùng chạm $-6\text{px}$ bao quanh.
+      - `.star-node`: Đặt $82\text{px}$ kèm `::after` mở rộng vùng chạm $-16\text{px}$ bốn phía. Kích thước chạm sau scale đạt $59\text{px}$ vật lý.
+      - `.star-node.decoy-star`: Đặt $74\text{px}$ kèm hiệu ứng khói tím sương mai tan biến.
+      - `#constellation-name-badge`: Neo tại `top: calc(8px + var(--sat, 4px))`, padding $4\text{px} \times 16\text{px}$, `max-width: min(80vw, 340px)`, chữ la tinh $12\text{px}$ và phụ đề $10\text{px}$ không che khuất bầu trời.
+  - **Tối Ưu Cung Chuông Hoa Công Thái Học (Ergonomic Thumb Arc)**:
+    - Trong `js/garden-minigames.js`, phát hiện môi trường mobile landscape để kích hoạt tọa độ cung cánh cung công thái học:
+      - Cụm ngón cái trái: Nốt 0 ở `18%, 38%`; Nốt 1 ở `32%, 50%`.
+      - Cụm ngón cái phải: Nốt 2 ở `68%, 50%`; Nốt 3 ở `82%, 38%`.
+      - Khoảng thở trung tâm rộng $36\%$ màn hình hoàn toàn dành cho mầm cây xanh nở hoa và bảng thông điệp.
+    - Trên Desktop: Giữ nguyên 100% tọa độ gốc (`{20, 34}, {33, 48}, {67, 48}, {80, 34}`), bảo tồn trọn vẹn thẩm mỹ.
+  - **Nâng Cấp Thuật Toán Bán Kính Kết Nối Cảm Ứng**:
+    - Nhận diện thiết bị cảm ứng hoặc landscape: nâng bán kính cơ sở `baseRadius` từ 68 lên 88 và sàn tối thiểu `proximityRadius = Math.max(44, Math.min(84, baseRadius * curScale))`.
+    - Khi người dùng vuốt ngón tay đến gần ngôi sao trong phạm vi $\ge 44\text{px}$ vật lý, dây ánh sao tự động bắt dính chính xác.
+  - **Hệ Thống Xúc Giác Đa Tầng (Multi-tiered Tactile Haptics)**:
+    - Chạm nốt Simon / Bắt sao / Nghe lại: Rung nhẹ `triggerHaptic('tap')`.
+    - Nhấn sai nốt nhạc / Chạm nhầm sao khác thứ tự / Bấm sao ảo (decoy): Rung cảnh báo `triggerHaptic('medium')`.
+    - Hoàn thành bản nhạc / Nối trọn vẹn chòm sao: Rung ăn mừng `triggerHaptic('success')`.
+- **Kiểm định chất lượng**:
+  - Cú pháp 19 file JavaScript: Đạt 100% sạch lỗi (`node -c`).
+  - Cân bằng ngoặc nhọn CSS (`base.css`: 36, `layout.css`: 313, `components.css`: 1673): Đạt 100%.
+  - Bộ kiểm thử tự động `scratch/test_phase5.js`: 10/10 tiêu chí Passed (100%).
+  - Ma trận hồi quy Phase 1, 2, 3, 4: Toàn bộ 40/40 bài kiểm thử vượt qua với kết quả 100% Passed.
+
+
 

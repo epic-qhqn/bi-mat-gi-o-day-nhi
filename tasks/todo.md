@@ -32,8 +32,8 @@
 ---
 
 ### Phase 5: Thích Ứng Minigames & Tương Tác Cảm Giác (Simon Melody & Constellation Linker in Landscape)
-- [ ] 5.1: Stage 2 (Simon Melody): Tính toán lại cung tròn 5 chuông hoa theo chiều ngang màn hình, nằm trọn vẹn trong tầm với của ngón cái 2 bên.
-- [ ] 5.2: Stage 3 (Constellation Linker): Giới hạn thuật toán tọa độ sao trong vùng an toàn của canvas ngang, bán kính chạm $\ge 44\text{px}$.
+- [x] 5.1: Stage 2 (Simon Melody): Tính toán lại cung tròn 5 chuông hoa theo chiều ngang màn hình, nằm trọn vẹn trong tầm với của ngón cái 2 bên.
+- [x] 5.2: Stage 3 (Constellation Linker): Giới hạn thuật toán tọa độ sao trong vùng an toàn của canvas ngang, bán kính chạm $\ge 44\text{px}$.
 
 ---
 

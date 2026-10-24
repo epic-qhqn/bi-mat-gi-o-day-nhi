@@ -10034,6 +10034,74 @@ body.zen-mode-active .garden-stage-selector {
   .realtime-dewdrop-ripple {
     display: block !important;
   }
+
+  /* Phase 5: Minigames Adaptation in Landscape */
+  /* Stage 2: Simon Melody Nodes & Replay Button */
+  .simon-node {
+    width: 96px !important;
+    height: 96px !important;
+    font-size: 38px !important;
+  }
+  .simon-node::after {
+    top: -16px !important;
+    left: -16px !important;
+    right: -16px !important;
+    bottom: -16px !important;
+  }
+  .simon-replay-btn {
+    min-height: 38px !important;
+    padding: 6px 16px !important;
+    font-size: 12px !important;
+    border-radius: 999px !important;
+    gap: 6px !important;
+    position: relative;
+  }
+  .simon-replay-btn::before {
+    content: "";
+    position: absolute;
+    inset: -6px;
+    border-radius: 999px;
+  }
+
+  /* Stage 3: Constellation Linker Star Nodes & Decoys */
+  .star-node {
+    width: 82px !important;
+    height: 82px !important;
+    font-size: 26px !important;
+  }
+  .star-node::before {
+    width: 18px !important;
+    height: 18px !important;
+  }
+  .star-node::after {
+    top: -16px !important;
+    left: -16px !important;
+    right: -16px !important;
+    bottom: -16px !important;
+  }
+  .star-node.decoy-star {
+    width: 74px !important;
+    height: 74px !important;
+    font-size: 22px !important;
+  }
+  .star-node.decoy-star span {
+    font-size: 22px !important;
+  }
+
+  /* Constellation Atelier Name Badge */
+  .constellation-name-badge {
+    top: calc(8px + var(--sat, 4px)) !important;
+    padding: 4px 16px !important;
+    max-width: min(80vw, 340px) !important;
+    border-radius: 999px !important;
+    gap: 2px !important;
+  }
+  .constellation-latin-name {
+    font-size: 12px !important;
+  }
+  .constellation-subtitle {
+    font-size: 10px !important;
+  }
 }
 
 /* ==========================================================================
