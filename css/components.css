@@ -4695,9 +4695,11 @@ body.sky-night .terrarium-gesture-hint {
    ========================================================================== */
 .plant-harp-strings-wrap {
   position: absolute;
-  left: 1060px;
-  top: 385px;
-  transform: translate(-50%, -50%);
+  right: 32px;
+  bottom: 24px;
+  left: auto;
+  top: auto;
+  transform: none;
   width: 180px;
   height: 205px;
   display: flex;
@@ -4801,10 +4803,10 @@ body.sky-night .harp-header-badge {
 
 @media (max-width: 768px) {
   .plant-harp-strings-wrap {
-    position: fixed;
+    position: absolute;
     left: auto;
-    right: 12px;
-    bottom: calc(125px + var(--sab, 12px));
+    right: 18px;
+    bottom: calc(18px + var(--sab, 8px));
     top: auto;
     transform: none;
     width: 155px;
@@ -4818,7 +4820,7 @@ body.sky-night .harp-header-badge {
 
 @media (max-height: 540px) and (orientation: landscape) {
   .plant-harp-strings-wrap {
-    position: fixed;
+    position: absolute;
     left: auto;
     right: 8px;
     bottom: 8px;
