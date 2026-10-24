@@ -5,10 +5,10 @@
 ---
 
 ## Phase 1: Mở rộng Trắc nghiệm & Xây dựng Nhánh Rẽ Tâm Hồn Sâu Sắc
-- [ ] 1.1: Brainstorm và soạn thảo 14 - 16 câu hỏi trắc nghiệm giác quan, đậm chất tự sự và tâm lý phụ nữ.
-- [ ] 1.2: Thiết kế cấu trúc 4 nhánh rẽ thích ứng đa tầng (Thanh tịnh mộc mạc, Kiêu sa vương giả, Rạng rỡ nắng ấm, Thấu cảm hoài niệm).
-- [ ] 1.3: Cân chỉnh ma trận điểm số và thuật toán phá thế hòa điểm thông minh cho 27 loài hoa trong `js/secret-letter.js`.
-- [ ] 1.4: Thử nghiệm thực tế toàn bộ các nhánh rẽ và kiểm tra tính tự nhiên của câu từ.
+- [x] 1.1: Brainstorm 10 lần và hoàn thành 12 kịch bản trắc nghiệm giác quan tươi trẻ, tự nhiên, mượt mà, không sến.
+- [x] 1.2: Thiết kế cấu trúc nhánh rẽ thích ứng đa tầng (Góc Mộc, Góc Hoa, Góc Nắng, Góc Mơ ở Câu 3 & Câu 4; ngày nghỉ tự do ở Câu 8).
+- [x] 1.3: Cân chỉnh ma trận điểm số và thuật toán phá thế hòa điểm thông minh cho 27 loài hoa trong `js/secret-letter.js`.
+- [x] 1.4: Thử nghiệm thực tế toàn bộ các nhánh rẽ và kiểm tra tính tự nhiên, dễ thương của câu từ.
 
 ---
 
