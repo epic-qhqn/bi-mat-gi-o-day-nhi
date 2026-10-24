@@ -179,17 +179,134 @@
 
 ---
 
-## IV. BẢNG TIÊU CHÍ SO SÁNH VĂN PHONG (TRƯỚC & SAU KHI NÂNG CẤP)
+## V. LỘ TRÌNH MILESTONE 3: ĐẠI PHẪU THUẬT CON TRỎ HƯỚNG DẪN & BỘ NÂNG CẤP TRẢI NGHIỆM TINH TẾ (PC & MOBILE)
 
-| Hạng mục | Văn phong Cũ (Gượng gạo / Sáo rỗng) | Văn phong Mới (Mềm mại, Tinh tế, Chân thật) |
-| :--- | :--- | :--- |
-| **Thư ngỏ 20/10** | *"Chúc các bóng hồng công tác tốt, học giỏi, luôn hạnh phúc với những gì mình có..."* | *"Cảm ơn vì góc phòng làm việc mỗi ngày đều sáng lên nhờ nụ cười của bạn. Chúc bạn luôn đủ kiên cường trước sóng gió, và đủ dịu dàng để yêu thương chính mình trọn vẹn..."* |
-| **Lời chúc nam đồng nghiệp** | *"Chúc visual đỉnh chóp, bug tự biến mất, ví tiền rủng rỉnh nha!"* | *"Có bạn trong team là một điều may mắn. Cảm ơn sự cẩn trọng và năng lượng ấm áp bạn luôn mang vào từng cuộc họp. Chúc bạn một ngày 20/10 thật thảnh thơi, không âu lo..."* |
-| **Mascot hướng dẫn** | *"Hãy nhanh tay nhấp vào bình tưới để cây lớn nhanh nào!"* | *"Kìa, mầm cây đang khát sương mai đó. Bạn khẽ tưới cho bạn ấy một ngụm nước trong lành nhé..."* |
-| **Hồ sơ hoa** | *"Bạn 'hay là...', bạn ấy cần kế hoạch. Ý lạ gặp checklist dễ cãi nhau."* | *"Một người bay bổng giữa những ý tưởng ngẫu hứng, một người tìm kiếm sự an toàn trong lịch trình. Cần chút kiên nhẫn để cùng nhìn về một hướng..."* |
-| **Câu hỏi trắc nghiệm** | *"Deadline dí sát nút rối tung bạn sẽ làm gì?"* | *"Một buổi chiều khi mọi dự định bỗng chao đảo như con thuyền gặp giông, điểm tựa đầu tiên trong tâm trí bạn là..."* |
+```
+┌────────────────────────────────────────────────────────────────────────┐
+│ PHASE 10: Tái Sinh Con Trỏ Hướng Dẫn Nghệ Thuật & Vòng Sương Mai Cảm Ứng│
+│ (Xóa emoji thô, cọ thư họa SVG, Dewdrop Ripple Mobile, Drag Trail lụa) │
+└──────────────────────────────────┬─────────────────────────────────────┘
+                                   │
+┌──────────────────────────────────▼─────────────────────────────────────┐
+│ PHASE 11: Bộ Nâng Cấp Xúc Giác Haptic & Vi Tương Tác Giác Quan         │
+│ (Web Vibration API: gảy đàn, dập sáp, quẹt diêm; Vệt bụi hoa PC 60fps) │
+└──────────────────────────────────┬─────────────────────────────────────┘
+                                   │
+┌──────────────────────────────────▼─────────────────────────────────────┐
+│ PHASE 12: Chế Độ Chiêm Ngưỡng Tĩnh Lặng (Zen Mode) & Ảnh Kỷ Niệm Nhanh  │
+│ (Ẩn toàn bộ UI để ngắm trọn vẹn Cây hoa Áo Dài; Instant Polar-shot)    │
+└──────────────────────────────────┬─────────────────────────────────────┘
+                                   │
+┌──────────────────────────────────▼─────────────────────────────────────┐
+│ PHASE 13: Cá Nhân Hóa Quà Tặng Qua Deep Link & URL Hash Gifting        │
+│ (Tự động khắc tên người nhận trên triện son qua #to=Ten & ?from=NguoiGui)
+└──────────────────────────────────┬─────────────────────────────────────┘
+                                   │
+┌──────────────────────────────────▼─────────────────────────────────────┐
+│ PHASE 14: Thẩm Định Đa Thiết Bị, Tối Ưu Mượt Mà & Đồng Bộ Git Safe     │
+│ (Kiểm thử PC & Mobile Landscape/Portrait, Node -c, Balanced CSS)       │
+└────────────────────────────────────────────────────────────────────────┘
+```
 
 ---
 
-## V. YÊU CẦU DUYỆT TỪ NGƯỜI DÙNG
-Kế hoạch nâng cấp Đại quy mô Milestone 2 đã được chuẩn bị tỉ mỉ và khoa học. Khi bạn xem xét và phê duyệt kế hoạch này, tôi sẽ bắt đầu triển khai **Phase 6: Bách Khoa Toàn Thư 54 Loài Hoa Di Sản** trước tiên!
+### 1. BỐI CẢNH & PHÂN TÍCH HIỆN TRẠNG CON TRỎ CHỈ DẪN
+- **Vấn đề cốt lõi của Con trỏ Chỉ dẫn hiện tại (`js/realtime-guide.js`, `css/components.css`)**:
+  1. **Sử dụng Emoji hệ điều hành thô kệch**: Đang dùng emoji hệ thống `👇`, `👆`, `👉`, `👈` (`.pointer-hand-glyph`). Trên Windows/Android/iOS, emoji này hiển thị màu vàng hoạt hình, viền đen dày cộp, lạc quẻ hoàn toàn với phong cách Thư họa & Giấy Dó Trầm Tĩnh của website.
+  2. **Khung ngắm cơ học kiểu Game Bắn Súng (Sci-Fi Crosshair)**: Ô vuông chỉ dẫn có 4 góc ngoặc cơ khí `.c-tl, .c-tr, .c-bl, .c-br` và bóng neon rực sáng như màn hình ngắm bắn quân sự (HUD shooter), gây xung đột thị giác nghiêm trọng với tinh thần Á Đông truyền thống.
+  3. **Che khuất điểm chạm trên Mobile (Touch Obstruction)**: Ngón tay người dùng trên điện thoại vốn đã to, con trỏ bàn tay to bản trỏ đè lên vật thể khiến người dùng bị che mất tầm nhìn, khó bấm chính xác.
+  4. **Chuyển động nhấp nháy giật cục (Constant Bouncing Fatigue)**: Animation nảy liên tục 1.2s không ngừng nghỉ dễ tạo cảm giác hối thúc, sốt ruột thay vì thư thái dạo vườn.
+
+---
+
+### 2. CHI TIẾT TỪNG PHASE & SUB-PHASE NÂNG CẤP
+
+#### PHASE 10: TÁI SINH CON TRỎ HƯỚNG DẪN NGHỆ THUẬT & VÒNG SƯƠNG MAI CẢM ỨNG
+*File trọng tâm: `js/realtime-guide.js`, `css/components.css`*
+
+- **Sub-phase 10.1: Tuyệt tác Cọ Thư Pháp Dát Vàng / Cánh Sen Ánh Kim (Vector SVG)**
+  - Thay thế 100% emoji bàn tay bằng Vector SVG nội suy thuần:
+    - Trên PC: Biểu tượng ngọn Cọ Lông Thư Họa dát vàng (Gold Calligraphy Brush) nghiêng góc 45° thanh thoát, đầu ngọn cọ chấm nhẹ vào vật thể với vệt bụi vàng kim tuyến rơi li ti.
+    - Chuyển động thở êm ái (Gentle Breathing Glow & Float) với chu kỳ 2.4s mềm mại (cubic-bezier 0.4, 0, 0.2, 1) thay vì nảy giật cục.
+- **Sub-phase 10.2: Chế độ Vòng Tròn Sương Mai Cảm Ứng (Touch Aura / Dewdrop Ripple) trên Mobile**
+  - Sử dụng Media Query `(pointer: coarse)` hoặc Touch Sniffing để tự động ẩn ngọn cọ trên điện thoại/máy tính bảng.
+  - Thay bằng **Vòng Sương Mai Thở Nhẹ (Dewdrop Ripple)**: Vòng tròn ánh kim đồng mỏng manh tỏa ra nhẹ nhàng xung quanh nút cần chạm (tương tự giọt sương mai khẽ rơi trên mặt hồ tĩnh lặng). Tuyệt đối không che khuất ngón tay và tầm nhìn.
+- **Sub-phase 10.3: Vệt Cử Chỉ Hướng Dẫn Trực Quan (Animated Drag / Swipe Gesture Trail)**
+  - Với các thao tác cần kéo thả (Quẹt diêm qua bao diêm, Kéo đám mây sương, Kéo vệt nắng ban mai, Rót sáp lỏng, Dập triện son):
+    - Vẽ một vệt lụa ánh kim mềm mại lướt nhẹ theo quỹ đạo cần kéo (Ghost Drag Curve) rồi tan biến dịu dàng.
+    - Giúp người dùng cả PC lẫn Mobile hiểu ngay cử chỉ cần thực hiện mà không cần phải đọc từng dòng chữ hướng dẫn dài dòng.
+- **Sub-phase 10.4: Thanh Lọc Khung Ngắm Sci-Fi, Thay Bằng Hào Quang Thủy Mặc**
+  - Xóa bỏ 4 góc ngoặc cơ học `.realtime-target-corners` và bóng đổ neon thô.
+  - Thay bằng viền gân lụa dát vàng siêu mảnh (`1px solid rgba(212, 175, 55, 0.45)`) kèm lớp quầng sáng sương mờ dịu mắt (`backdrop-filter: blur(1px)` và `box-shadow` màu hổ phách ấm), hài hòa tuyệt đối với nền Giấy Dó.
+
+---
+
+#### PHASE 11: BỘ NÂNG CẤP XÚC GIÁC HAPTIC & VI TƯƠNG TÁC GIÁC QUAN
+*File trọng tâm: `js/audio-vfx.js`, `js/environment.js`*
+
+- **Sub-phase 11.1: Tích Hợp Phản Hồi Xúc Giác Haptic (Mobile Taptic Engine)**
+  - Tận dụng `navigator.vibrate` trên thiết bị di động (kiểm tra an toàn `if ('vibrate' in navigator)`):
+    - Chạm gảy dây đàn Botanical Harp: nhịp rung vi mô 10ms mô phỏng cảm giác bật dây đàn thật.
+    - Quẹt que diêm: chuỗi rung lách tách `[8, 15, 12]ms` mô phỏng ma sát đầu diêm bốc lửa.
+    - Dập triện son vào sáp: nhịp nén đầm 30ms mô phỏng độ nặng của con dấu đồng ép vào sáp ấm.
+    - Lật thẻ Polaroid 3D & Chạm Cỏ 4 Lá: nhịp rung nhẹ 15ms.
+    - Tạo cảm giác "chạm vào vật lý thật" vô cùng sang trọng và đắt giá trên smartphone.
+- **Sub-phase 11.2: Vệt Cánh Sen & Bụi Kim Tuyến Theo Chuột trên PC (Stardust & Blossom PC Trail)**
+  - Trên PC: Khi di chuột trên khung trời khu vườn, một vệt cánh hoa sen li ti và bụi kim tuyến lướt theo chuyển động chuột (Canvas Particle Trail siêu nhẹ, tối ưu 60fps) và tan dần trong gió thu.
+  - Chuột hover vào các vật thể tương tác: con trỏ chuyển thành búp sen khẽ hé nở.
+  - Tự động tắt 100% trên thiết bị cảm ứng để bảo vệ pin và hiệu năng.
+
+---
+
+#### PHASE 12: CHẾ ĐỘ CHIÊM NGƯỠNG TĨNH LẶNG (ZEN MODE) & BỨC ẢNH KỶ NIỆM
+*File trọng tâm: `index.html`, `js/garden-stages.js`, `css/components.css`*
+
+- **Sub-phase 12.1: Nút "Chế Độ Tĩnh Lặng" (Zen Mode Toggle)**
+  - Bổ sung một nút biểu tượng "Trăng Rằm / Tĩnh Lặng" thanh nhã ở góc trên màn hình.
+  - Khi kích hoạt: Tự động trôi mượt mà (smooth fade-out) toàn bộ HUD, nút bấm, bảng chữ, chỉ giữ lại khung cảnh khu vườn: Cây tình yêu nở hoa rực rỡ, cánh hoa bay theo gió, tà áo dài thướt tha, và tiếng đàn du dương.
+  - Người dùng có thể đắm chìm vào không gian thư thái không chút vướng bận. Chạm nhẹ bất kỳ đâu vào màn hình để gọi lại giao diện.
+- **Sub-phase 12.2: Chụp Khoảnh Khắc Vườn Kỷ Niệm (Instant Garden Polaroid Capture)**
+  - Nút chụp nhanh lưu lại khung cảnh khu vườn hiện tại của người dùng (kèm tên người nhận đã khắc trên triện son) dưới dạng ảnh Polaroid cổ điển để tải về máy hoặc chia sẻ Story ngay.
+
+---
+
+#### PHASE 13: CÁ NHÂN HÓA QUÀ TẶNG QUA LIÊN KẾT BÍ MẬT (DEEP LINK GISTING)
+*File trọng tâm: `js/main.js`, `js/wax-seal-ceremony.js`*
+
+- **Sub-phase 13.1: Hỗ Trợ URL Hash & Query Parameters**
+  - Hỗ trợ tham số URL dạng `#to=ThuHuong&crest=lotus` hoặc `?to=Thu+Huong`.
+  - Khi mở link: Tên "Thu Hường" đã được tự động điền sẵn lên khuôn đồng, hoặc tự động chuẩn bị hoa văn sen.
+  - Giúp bạn nam trong CLB khi gửi link cho bạn nữ, bạn nữ mở ra là thấy ngay sự chuẩn bị riêng cho mình, cảm xúc bất ngờ và xúc động tăng lên gấp bội.
+  - 100% Client-Side, không cần server/database, an toàn và tải nhanh tức thì.
+
+---
+
+#### PHASE 14: THẨM ĐỊNH ĐA THIẾT BỊ, TỐI ƯU MƯỢT MÀ & ĐỒNG BỘ GIT SAFE
+- **Sub-phase 14.1: Kiểm định toàn diện trên các kích thước màn hình**
+  - Màn hình Desktop/Laptop (Chuột, Trackpad, màn hình 2K/4K).
+  - Điện thoại thông minh (iPhone notch/Dynamic Island, Android tai thỏ, chế độ xoay ngang Orientation Guard).
+- **Sub-phase 14.2: Kiểm tra tiêu chuẩn chất lượng nghiêm ngặt**
+  - Syntax check toàn bộ `node -c js/*.js` (18/18 file).
+  - CSS brace check cân bằng tuyệt đối.
+  - Hiệu năng 60fps mượt mà, không giật lag.
+  - Git fetch, rebase, commit và push sạch sẽ theo tiêu chuẩn Team 3 Devs.
+
+---
+
+## VI. BẢNG TIÊU CHÍ NÂNG CẤP CON TRỎ & TRẢI NGHIỆM
+
+| Hạng mục | Hiện Trạng (Cũ) | Nâng Cấp Tinh Tế (Mới) | Lợi Ích Cảm Xúc |
+| :--- | :--- | :--- | :--- |
+| **Biểu tượng con trỏ** | Emoji hệ thống `👇 👆 👉 👈` màu vàng hoạt hình viền đen dày | Ngọn cọ thư họa dát vàng SVG (PC) / Cánh sen ánh kim | Tinh tế, đậm chất di sản Việt, không bị thô kệch |
+| **Trải nghiệm Mobile** | Con trỏ to che khuất ngón tay và vật thể bấm | Vòng sương mai cảm ứng (Dewdrop Ripple) tỏa nhẹ | Thoáng đãng, chạm chính xác, không vướng víu |
+| **Chỉ dẫn kéo/vuốt** | Dòng chữ dài + emoji nảy liên tục | Vệt lụa ánh kim uốn lượn (Ghost Drag Curve) | Hiểu ngay cử chỉ trong 0.5s mà không cần đọc chữ |
+| **Khung viền spotlight** | 4 góc ngắm bắn cơ học sci-fi + neon chói | Viền gân lụa dát vàng mảnh + quầng sáng sương mờ | Sang trọng, hài hòa với chất liệu giấy Dó |
+| **Cảm giác xúc giác** | Chỉ có âm thanh click loa ngoài | Haptic vibration (Taptic Engine) chân thật | Cảm nhận lực nén triện son, dây đàn rung dưới tay |
+| **Không gian ngắm cảnh** | Nút bấm và HUD luôn phủ kín màn hình | Nút "Chế độ Tĩnh Lặng" (Zen Mode) 1 chạm ẩn UI | Thảnh thơi ngắm cây hoa tình yêu và tà áo dài |
+| **Cá nhân hóa quà tặng** | Phải tự nhập tên thủ công từ đầu | Deep link `#to=TenNguoiNhan` khắc sẵn tên | Bất ngờ, chu đáo, cá nhân hóa cho từng bạn nữ |
+
+---
+
+## VII. YÊU CẦU DUYỆT TỪ NGƯỜI DÙNG
+Kế hoạch nâng cấp Milestone 3 đã được thiết kế tỉ mỉ, tập trung vào những nét chấm phá siêu tinh tế mà không làm xáo trộn kiến trúc sẵn có. Xin vui lòng xem xét và duyệt kế hoạch này để tôi bắt tay vào thực hiện từng Phase!
+
