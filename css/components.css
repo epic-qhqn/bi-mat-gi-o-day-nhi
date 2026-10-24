@@ -4906,15 +4906,16 @@ body.sky-night .harp-header-badge {
 
 @media (max-height: 540px) and (orientation: landscape) {
   .plant-harp-strings-wrap {
-    position: absolute;
-    left: auto;
-    right: 8px;
-    bottom: 8px;
-    top: auto;
-    transform: none;
-    width: 135px;
-    height: 115px;
-    z-index: 1200;
+    position: fixed !important;
+    left: calc(max(14px, calc(12px + var(--sal, 0px))) + 120px) !important;
+    bottom: max(8px, calc(8px + var(--sab, 0px))) !important;
+    right: auto !important;
+    top: auto !important;
+    transform: scale(0.78) !important;
+    transform-origin: bottom left !important;
+    width: 135px !important;
+    height: 115px !important;
+    z-index: 1004 !important;
   }
 }
 
@@ -5396,10 +5397,26 @@ body.sky-night .found-letter-slot.filled {
 }
 
 @media (max-height: 540px) and (orientation: landscape) {
-  .mascot-companion-wrap.relocated-for-letter {
-    left: calc(10px + var(--sal, 0px)) !important;
+  .mascot-companion-wrap {
+    bottom: calc(44px + var(--sab, 0px)) !important;
+    left: max(14px, calc(12px + var(--sal, 0px))) !important;
     right: auto !important;
-    bottom: calc(8px + var(--sab, 0px)) !important;
+    width: clamp(56px, 9vw, 76px) !important;
+  }
+
+  .mascot-companion-wrap.relocated-for-letter {
+    left: max(14px, calc(12px + var(--sal, 0px))) !important;
+    right: auto !important;
+    bottom: calc(44px + var(--sab, 0px)) !important;
+  }
+
+  /* When reading poetic text panel in Stage 4, relocate mascot to right of text panel */
+  body:has(.text-panel.show) .mascot-companion-wrap,
+  body.stage-4-active:has(.text-panel.show) .mascot-companion-wrap {
+    left: calc(min(42vw, 360px) + 20px) !important;
+    right: auto !important;
+    bottom: max(8px, calc(8px + var(--sab, 0px))) !important;
+    width: clamp(52px, 8vw, 68px) !important;
   }
 }
 
@@ -5825,9 +5842,21 @@ body.sky-night .found-letter-slot.filled {
 @media (max-height: 540px) and (orientation: landscape) {
   .mascot-speech-bubble {
     font-size: 0.72rem;
-    padding: 6px 10px;
-    max-width: min(200px, 40vw);
+    padding: 5px 9px;
+    max-width: min(190px, 35vw);
     bottom: calc(100% + 6px);
+    left: 0;
+    right: auto;
+  }
+
+  body:has(.text-panel.show) .mascot-speech-bubble,
+  body.stage-4-active:has(.text-panel.show) .mascot-speech-bubble {
+    left: 0 !important;
+    right: auto !important;
+    bottom: calc(100% + 4px) !important;
+    max-width: min(180px, 28vw) !important;
+    font-size: 0.68rem !important;
+    padding: 4px 8px !important;
   }
 }
 
@@ -7722,15 +7751,71 @@ body.sky-night .found-letter-slot.filled {
     padding: 2px 4px !important;
   }
 
-  /* Celestial Orrery position in landscape */
-  .celestial-weather-orrery {
-    top: calc(8px + var(--sat, 4px)) !important;
-    right: 12px !important;
+  /* Celestial Orrery in Mobile Landscape: Bottom-Left Staircase Cluster & Centered Modal */
+  .celestial-weather-orrery.orrery-minimized {
+    position: fixed !important;
+    left: max(16px, calc(14px + var(--sal, 0px))) !important;
+    bottom: calc(max(8px, calc(8px + var(--sab, 0px))) + 125px) !important;
+    right: auto !important;
+    top: auto !important;
+    transform: none !important;
+    width: 36px !important;
+    height: 36px !important;
+    z-index: 1005 !important;
+  }
+
+  .celestial-weather-orrery:not(.orrery-minimized) {
+    position: fixed !important;
+    top: 50% !important;
+    left: 50% !important;
+    transform: translate(-50%, -50%) !important;
+    right: auto !important;
+    bottom: auto !important;
+    z-index: 100010 !important;
   }
 
   .celestial-weather-orrery:not(.orrery-minimized) .orrery-expanded-wrap {
-    transform: scale(0.85);
-    transform-origin: top right;
+    transform: scale(0.88) !important;
+    transform-origin: center center !important;
+    background: rgba(20, 27, 56, 0.96) !important;
+    border: 2px solid #D4AF37 !important;
+    border-radius: 26px !important;
+    padding: 14px !important;
+    box-shadow: 0 16px 50px rgba(0, 0, 0, 0.75), 0 0 24px rgba(212, 175, 55, 0.4) !important;
+  }
+
+  /* Living Atmosphere HUD in Mobile Landscape (Top Center, Zero Corner Collision) */
+  .living-atmosphere-hud {
+    top: calc(8px + var(--sat, 4px)) !important;
+    left: 50% !important;
+    transform: translateX(-50%) !important;
+    width: min(340px, 48vw) !important;
+    justify-content: space-between !important;
+    z-index: 1005 !important;
+  }
+
+  .atmosphere-shifter-token.cloud-shifter {
+    margin-left: 0 !important;
+  }
+
+  .atmosphere-shifter-token.sun-shifter {
+    margin-right: 0 !important;
+  }
+
+  .cloud-svg {
+    width: 44px !important;
+    height: auto !important;
+  }
+
+  .sun-svg {
+    width: 40px !important;
+    height: auto !important;
+  }
+
+  .shifter-pill-label {
+    font-size: 9.5px !important;
+    padding: 2px 7px !important;
+    margin-top: 2px !important;
   }
 }
 

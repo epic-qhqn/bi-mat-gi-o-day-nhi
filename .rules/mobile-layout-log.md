@@ -157,3 +157,31 @@
   - Bộ kiểm thử tự động `scratch/test_phase3.js`: 12/12 tiêu chí Passed (100%).
   - Kiểm thử hồi quy Phase 1 (`test_phase1.js`) và Phase 2 (`test_phase2.js`): 100% Passed.
 
+---
+
+### Phase 4: Sắp Đặt Không Gian HUD & Triệt Tiêu Chồng Đè (In-Garden Spatial Harmony) - [HOÀN THÀNH 100%]
+- **Vấn đề gặp phải**:
+  - **Va chạm góc dưới bên phải**: `.plant-harp-strings-wrap` (Đàn Harp sinh thái) trước đây được đặt ở `right: 8px; bottom: 8px;` trên landscape, đè trực tiếp lên `.bottom-right-action-dock` (nút Bưu Thiếp & Thư Bí Mật).
+  - **Va chạm góc trên bên phải**: `.celestial-weather-orrery` (La Bàn Thiên Văn) trước đây được neo ở `top: 8px; right: 12px;` trên landscape, đè lên `.top-experiential-dock` (nút Zen Mode & Chụp ảnh Polaroid).
+  - **Va chạm giữa màn hình (Stage 1)**: `.living-atmosphere-hud` (Mây mưa và Nắng ấm) bị gán `top: 162px` do quy tắc `max-width: 768px`, rơi vào đúng trung tâm màn hình ngang làm che mầm cây và bảng thơ.
+  - **Va chạm bảng thơ (Stage 4)**: Khi `.text-panel.show` mở ở cạnh trái màn hình ngang, bóng thoại mascot `.mascot-speech-bubble` và thân mascot có thể chồng đè lên góc dưới của bảng thơ.
+- **Giải pháp xử lý**:
+  - **Quy Hoạch 4 Góc Độc Lập Triệt Tiêu 100% Va Chạm**:
+    - **Góc Trên Bên Trái (Top-Left)**: Dành riêng cho `#realtime-guide-hud` với kích thước gọn gàng (`max-width: min(340px, 46vw)`), có cơ chế thu nhỏ thành icon viên ngọc (`is-minimized`).
+    - **Góc Trên Bên Phải (Top-Right)**: Dành riêng cho `#top-experiential-dock` gồm 2 nút bấm vuông icon tinh tế $38 \times 38\text{px}$ (Chế độ Tĩnh Lặng 🌕 & Chụp Polaroid 📸).
+    - **Góc Trên Ở Giữa (Top-Center)**: Đưa `.living-atmosphere-hud` lên `top: calc(8px + var(--sat, 4px)); left: 50%; transform: translateX(-50%);` với đám mây $44\text{px}$ bên trái và vệt nắng $40\text{px}$ bên phải, cách biệt hoàn toàn khỏi 2 góc dock trên.
+    - **Góc Dưới Bên Trái (Bottom-Left - Cụm Bậc Thang Sinh Thái)**:
+      - Bậc đáy: `#bottom-system-dock` (Bảng điều khiển nhạc & thanh trượt âm lượng) tại `bottom: max(8px); left: max(14px)`.
+      - Bậc kế tiếp: `#plant-harp-strings-wrap` (Đàn Harp sinh thái) chuyển sang `left: calc(max(14px) + 120px); bottom: max(8px);` với tỷ lệ scale $0.78$, hoàn toàn thoát khỏi góc dưới bên phải.
+      - Bậc trên cao: `#celestial-weather-orrery.orrery-minimized` (Ngôi sao Lodestar) neo tại `left: max(16px); bottom: calc(max(8px) + 125px);`. Khi người dùng chạm mở, la bàn thiên văn phóng to căn giữa màn hình thành modal trải nghiệm 360 độ hoàn mỹ.
+    - **Góc Dưới Bên Phải (Bottom-Right)**: Dành riêng cho `.bottom-right-action-dock` chứa nút Thư Bí Mật 💌 và Bưu Thiếp 🌸 xếp hàng ngang tiện lợi.
+  - **Hài Hòa Khu Vực Giữa Màn Hình & Nhân Vật Di Sản**:
+    - Khi bảng thơ `.text-panel.show` hiển thị ở cạnh trái, Mascot Companion tự động dịch chuyển sang `left: calc(min(42vw, 360px) + 20px)` đứng cạnh chân cây, bóng thoại thu nhỏ `max-width: min(180px, 28vw)` hướng lên trên, tuyệt đối không che khuất chữ thơ.
+    - Áo Dài Di Sản `#ao-dai-viet-stage4` đứng cân đối tại `left: 630px; bottom: 12px;` bên cạnh gốc cây hoa tim nở rộ, tooltip thơ `.ao-dai-poem-badge` thu gọn thanh thoát vừa vặn tầm mắt.
+- **Kiểm định chất lượng**:
+  - Cú pháp 19 file JavaScript: Đạt 100% sạch lỗi (`node -c`).
+  - Cân bằng ngoặc nhọn CSS (`base.css`: 36, `layout.css`: 313, `components.css`: 1588): Đạt 100%.
+  - Bộ kiểm thử tự động `scratch/test_phase4.js`: 11/11 tiêu chí Passed (100%).
+  - Chạy lại toàn bộ ma trận kiểm thử hồi quy Phase 1, 2, 3: Đạt 100% Passed.
+
+

@@ -26,8 +26,8 @@
 ---
 
 ### Phase 4: Sắp Đặt Không Gian HUD & Triệt Tiêu Chồng Đè (In-Garden Spatial Harmony)
-- [ ] 4.1: Phân bổ lại 4 góc màn hình HUD trên mobile landscape (Top-Left: Realtime Guide; Top-Right: Zen & Polaroid; Bottom-Left: Harp, Orrery & Thời tiết; Bottom-Right: Thư bí mật & Bưu thiếp).
-- [ ] 4.2: Tối ưu vị trí Mascot Companion (`#garden-mascot-companion`) và Áo Dài Di Sản (`#ao-dai-viet-stage4`), đảm bảo bóng thoại mascot không đè lên bảng thơ.
+- [x] 4.1: Phân bổ lại 4 góc màn hình HUD trên mobile landscape (Top-Left: Realtime Guide; Top-Right: Zen & Polaroid; Bottom-Left: Harp, Orrery & Thời tiết; Bottom-Right: Thư bí mật & Bưu thiếp).
+- [x] 4.2: Tối ưu vị trí Mascot Companion (`#garden-mascot-companion`) và Áo Dài Di Sản (`#ao-dai-viet-stage4`), đảm bảo bóng thoại mascot không đè lên bảng thơ.
 
 ---
 

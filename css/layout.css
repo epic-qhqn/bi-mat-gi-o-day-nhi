@@ -1305,6 +1305,20 @@ body.readable-font .polaroid-back .letter-content {
     right: auto !important;
     gap: 6px !important;
   }
+
+  /* Stage 4 Áo Dài Maiden & Poem Badge in Landscape */
+  .ao-dai-viet-stage4 {
+    left: 630px !important;
+    bottom: 12px !important;
+    height: 235px !important;
+  }
+
+  .ao-dai-poem-badge {
+    bottom: calc(100% + 8px) !important;
+    font-size: 0.75rem !important;
+    padding: 6px 12px !important;
+    max-width: min(260px, 45vw) !important;
+  }
 }
 
 .space {
