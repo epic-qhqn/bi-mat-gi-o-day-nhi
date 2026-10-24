@@ -1,18 +1,19 @@
-# QUY TẮC HOẠT ĐỘNG: TEAM SYNC & TOKEN TỐI ƯU
+# QUY TẮC BẮT BUỘC: ĐIỀU PHỐI TEAM (3 DEVS) & TỐI ƯU HÓA TOKEN
 
-## 1. Trước khi bắt đầu bất kỳ yêu cầu nào (Pre-Task)
-- Luôn kiểm tra remote repository: `git fetch --all --prune`
-- Kiểm tra `git status` và các nhánh (`git branch -a`) xem có commit/nhánh mới nào từ team không.
-- Nếu có cập nhật từ nhánh khác hoặc upstream:
-  - Dung hoà, merge hoặc rebase sạch sẽ, giải quyết triệt để mọi xung đột nếu có.
-  - Nếu cần thiết để tránh trùng lặp/xung đột với đồng đội đang làm việc song song, tạo hoặc chuyển sang nhánh làm việc phù hợp.
-  - Đảm bảo dự án không có lỗi cú pháp hay conflict markers trước khi bắt đầu code.
+Dự án có 3 lập trình viên làm việc song song, liên tục đẩy commit và cập nhật trên các nhánh (`main`, nhánh tính năng `feat/*`, v.v.). Mọi phiên làm việc phải tuân thủ nghiêm ngặt quy trình dưới đây:
+
+## 1. Trước khi thực hiện bất kỳ yêu cầu nào (Pre-Task)
+1. **Kiểm tra remote toàn diện**: Chạy `git fetch --all --prune` và rà soát tất cả các nhánh (`git branch -a`, `git log --all --oneline -n 10`).
+2. **Dung hòa nhánh & commit mới từ đồng đội**:
+   - Nếu có commit mới từ nhánh chính hoặc các nhánh phụ của dev khác, tiến hành merge/rebase sạch sẽ, giải quyết triệt để 100% xung đột nếu phát sinh.
+   - Nếu dev khác đang làm việc song song trên cùng khu vực hoặc để tránh đè code, tạo nhánh làm việc mới phù hợp trước khi triển khai.
+3. **Bảo đảm tính toàn vẹn**: Dự án tuyệt đối không được có syntax errors, broken layout hoặc conflict markers trước khi bắt đầu code.
 
 ## 2. Sau khi hoàn thành bất kỳ yêu cầu nào (Post-Task)
-- Kiểm tra lại remote (`git fetch origin`) để bắt kịp các commit mới phát sinh trong lúc làm.
-- Dung hoà hoàn hảo mọi thay đổi.
-- Đảm bảo toàn bộ dự án hoạt động trơn tru, không lỗi phát sinh.
+1. **Bắt kịp commit phát sinh**: Chạy lại `git fetch origin` để kiểm tra các commit mới do dev khác vừa đẩy lên trong lúc đang làm.
+2. **Dung hòa tuyệt đối**: Hòa hợp hoàn hảo các thay đổi mới nhất mà không làm mất tính năng của bất kỳ ai trong team.
+3. **Kiểm tra trạng thái dự án**: Đảm bảo toàn bộ dự án hoạt động trơn tru, không có lỗi tiềm ẩn.
 
 ## 3. Phong cách phản hồi
-- **Âm thầm thực hiện toàn bộ quy trình Git & Sync**: Không báo cáo chi tiết các câu lệnh git, không giải thích dài dòng.
-- **Tiết kiệm tokens tối đa**: Chỉ trả lời ngắn gọn kết quả chính của yêu cầu.
+- **Âm thầm thực hiện toàn bộ quy trình Git & Sync**: Tuyệt đối không báo cáo chi tiết các lệnh git hay giải thích dài dòng.
+- **Tiết kiệm token tối đa**: Chỉ trả lời cực kỳ ngắn gọn, đi thẳng vào kết quả của yêu cầu.
