@@ -7,3 +7,6 @@ Thumbs.db
 # Reference files
 20-10.html
 *.rar
+
+# Scratch & temporary test scripts
+scratch/

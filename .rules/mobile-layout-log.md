@@ -129,3 +129,31 @@
   - Cú pháp 19 file JavaScript: Đạt 100% sạch lỗi (`node -c`).
   - Cân bằng ngoặc nhọn CSS (`base.css`: 36, `layout.css`: 311, `components.css`: 1515): Đạt 100%.
   - Bộ kiểm thử tự động `test_phase2.js`: Mô phỏng thành công trên ma trận độ phân giải (Desktop 1080p, iPhone 14 Pro 844x390, iPhone SE 667x320, Xperia 21:9 960x384) với 100% Passed.
+
+---
+
+### Phase 3: Tối Ưu Giao Diện Đóng Dấu Sáp & Nhập Tên (Stage 0: Time Lock & Wax Seal Atelier Desk in Landscape) - [HOÀN THÀNH 100%]
+- **Vấn đề gặp phải**:
+  - Chiều cao điện thoại xoay ngang chỉ từ $320\text{px}$ đến $390\text{px}$. Trước đây cả `#time-lock-modal` và `#name-modal` được dàn trang theo một cột dọc duy nhất (single vertical stack) khiến nút bấm "Mở Khóa Ngay" và "Dập Con Dấu & Mở Cổng Vườn" bị tràn khỏi đáy màn hình, người dùng buộc phải cuộn dọc nhiều lần mới thấy nút.
+  - Khi bàn phím ảo (virtual keyboard) xuất hiện trên mobile landscape, nó chiếm hơn 50% diện tích màn hình khiến ô nhập tên hoặc mật mã bị khuất hoàn toàn.
+  - Cành hoa sen trang trí kích thước lớn (`.pressed-botanical-branch`) chiếm mất ~40px quý giá trên chiều cao eo hẹp của màn hình ngang.
+  - Nguy cơ hồi quy Desktop: nếu thay đổi cấu trúc flexbox trực tiếp vào container cha mà không bọc cách ly, giao diện PC sẽ bị xáo trộn.
+- **Giải pháp xử lý**:
+  - **Bọc Cách Ly Layout Không Gây Hồi Quy PC**: Thiết lập mặc định `display: contents;` cho các thẻ bao bọc mới (`.time-lock-split-wrap`, `.time-lock-col-left`, `.time-lock-col-right`, `.atelier-workbench-grid`, `.workbench-col-materials`, `.workbench-col-crafting`). Khi trên Desktop/Tablet dọc, các wrapper này hoàn toàn "vô hình" trong layout box tree, đảm bảo 100% giao diện gốc giữ nguyên.
+  - **Tái Cấu Trúc `#time-lock-modal` (2 Cột Ngang Cân Xứng)**:
+    - Cột Trái: Biểu tượng ổ khóa cổ, huy hiệu cổng thời gian, tiêu đề và lời nhắn mở tự do sau 12:00.
+    - Cột Phải: Ô nhập mật mã mở sớm, nút mở khóa và đồng hồ client time. Chiều cao toàn bộ modal luôn $\le 90\text{vh}$, nút bấm luôn nằm trọn trong tầm mắt.
+  - **Bàn Chế Tác Con Dấu Sáp 2 Cột (Artisan Split Workbench - `#name-modal`)**:
+    - Cột Trái (Vật Liệu & Khuôn Chữ): Khuôn đồng dập nổi tên bạn (`#letterpress-brass-plate`) + Nút chia sẻ link quà tặng cá nhân hóa + Khay 5 loại hạt sáp di sản (`#wax-beads-tray`) + 4 hoa văn khắc triện son (`#crest-selector-wrap`).
+    - Cột Phải (Nghi Thức & Dập Triện): Thanh chuỗi 3 bước nghi thức (`#ritual-step-bar`) + Bếp nấu sáp & Bàn niêm phong phong thư (`#artisan-crafting-bench`) + Nút dập con dấu mở vườn (`#start-btn`) + Lời chỉ dẫn thi vị.
+  - **Tối Ưu Không Gian Chiều Dọc Thấp**:
+    - Ẩn cành hoa SVG lớn `.pressed-botanical-branch` khi màn hình xoay ngang thấp, giữ dải lụa mềm mại.
+    - Tinh chỉnh kích thước hạt sáp ($30\text{px}$), thân nến ($40\text{px}$), muỗng đồng ($32\text{px}$) và con dấu ($44 \times 54\text{px}$) giúp mọi thao tác vừa vặn hoàn hảo.
+  - **Tự Động Cuộn Định Tâm Khi Bàn Phím Ảo Xuất Hiện**:
+    - Thêm sự kiện `focus` trên `#name-input` và `#time-lock-input` gọi `scrollIntoView({ behavior: 'smooth', block: 'center' })` khi phát hiện mobile landscape, đảm bảo ô nhập liệu không bị che khuất.
+- **Kiểm định chất lượng**:
+  - Cú pháp 19 file JavaScript: Đạt 100% sạch lỗi (`node -c`).
+  - Cân bằng ngoặc nhọn CSS (`base.css`: 36, `layout.css`: 311, `components.css`: 1578): Đạt 100%.
+  - Bộ kiểm thử tự động `scratch/test_phase3.js`: 12/12 tiêu chí Passed (100%).
+  - Kiểm thử hồi quy Phase 1 (`test_phase1.js`) và Phase 2 (`test_phase2.js`): 100% Passed.
+

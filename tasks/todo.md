@@ -19,9 +19,9 @@
 ---
 
 ### Phase 3: Tối Ưu Giao Diện Đóng Dấu Sáp & Nhập Tên (Stage 0: Time Lock & Wax Seal Atelier Desk in Landscape)
-- [ ] 3.1: Tái cấu trúc `#time-lock-modal` thành bố cục ngang 2 cột thanh lịch, chiều cao $\le 90\text{vh}$, không bị cắt khuất nút bấm.
-- [ ] 3.2: Tái thiết kế `#atelier-stationery-desk` thành Bố cục 2 Cột Chế Tác Ngang (Cột trái: Khuôn đồng khắc tên, khay hạt sáp, chọn triện son; Cột phải: Ánh nến, muỗng đun sáp, vùng dập triện).
-- [ ] 3.3: Đảm bảo các tương tác quẹt diêm, khuấy vân sáp cẩm thạch, đóng dấu son mượt mà, không bị bàn phím ảo hay viền màn hình che khuất.
+- [x] 3.1: Tái cấu trúc `#time-lock-modal` thành bố cục ngang 2 cột thanh lịch, chiều cao $\le 90\text{vh}$, không bị cắt khuất nút bấm.
+- [x] 3.2: Tái thiết kế `#atelier-stationery-desk` thành Bố cục 2 Cột Chế Tác Ngang (Cột trái: Khuôn đồng khắc tên, khay hạt sáp, chọn triện son; Cột phải: Ánh nến, muỗng đun sáp, vùng dập triện).
+- [x] 3.3: Đảm bảo các tương tác quẹt diêm, khuấy vân sáp cẩm thạch, đóng dấu son mượt mà, không bị bàn phím ảo hay viền màn hình che khuất.
 
 ---
 
