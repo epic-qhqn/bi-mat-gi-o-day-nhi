@@ -204,22 +204,23 @@ body.sky-night .stars {
 
 @media (max-width: 768px) {
   .garden-ui {
-    top: calc(52px + var(--sat, 6px));
-    padding: 6px 14px;
-    border-radius: 16px;
-    max-width: min(92vw, 340px);
+    top: calc(52px + var(--sat, 6px)) !important;
+    padding: 8px 14px !important;
+    border-radius: 16px !important;
+    max-width: min(92vw, 360px) !important;
+    box-shadow: 0 4px 18px rgba(74, 55, 40, 0.08) !important;
   }
   .garden-ui .instruction {
-    font-size: 11px;
-    line-height: 1.35;
-    margin-bottom: 3px;
+    font-size: 11.5px !important;
+    line-height: 1.35 !important;
+    margin-bottom: 4px !important;
   }
   .garden-ui .growth-progress {
-    margin: 4px 0;
+    margin: 4px 0 !important;
   }
   .garden-ui .garden-message {
-    font-size: 11px;
-    line-height: 1.35;
+    font-size: 11px !important;
+    line-height: 1.4 !important;
   }
 }
 
@@ -1073,20 +1074,20 @@ a:hover {
 /* On mobile portrait (iPhone 14, etc.), elevate #wrap so blooming tree is in upper center */
 @media (max-width: 768px) and (orientation: portrait) {
   #wrap {
-    top: 42%;
+    top: 44%;
     transition: top 0.9s cubic-bezier(0.16, 1, 0.3, 1), transform 0.2s cubic-bezier(0.4, 0, 0.2, 1);
   }
   body.stage-4-active #wrap,
   body.has-letter-open #wrap,
   body:has(.text-panel.show) #wrap {
-    top: 27%;
+    top: 25%;
   }
 }
 
 /* On mobile landscape, center #wrap vertically with safe margins */
 @media (max-height: 540px) and (orientation: landscape) {
   #wrap {
-    top: 44%;
+    top: 46%;
   }
 }
 
@@ -1229,11 +1230,11 @@ body.readable-font .polaroid-back .letter-content {
   .text-panel {
     left: 50% !important;
     top: auto !important;
-    bottom: calc(72px + var(--sab, 10px)) !important;
+    bottom: calc(64px + var(--sab, 8px)) !important;
     transform: translateX(-50%) translateY(20px) !important;
     width: min(94vw, 420px) !important;
-    max-height: 44vh !important;
-    padding: 20px 18px !important;
+    max-height: 40vh !important;
+    padding: 18px 16px !important;
     border-radius: var(--radius-panel) !important;
     z-index: 1500 !important;
     -webkit-overflow-scrolling: touch;
@@ -1245,13 +1246,34 @@ body.readable-font .polaroid-back .letter-content {
   }
 
   #code {
-    font-size: 14.5px !important;
+    font-size: 14px !important;
     line-height: 1.65 !important;
   }
 
   .say {
-    font-size: 21px !important;
+    font-size: 20px !important;
     line-height: 1.45 !important;
+  }
+
+  .bottom-system-dock {
+    bottom: calc(12px + var(--sab, 6px)) !important;
+    left: calc(12px + var(--sal, 0px)) !important;
+    gap: 6px !important;
+    z-index: 2500 !important;
+  }
+
+  .music-panel {
+    padding: 5px 12px !important;
+    gap: 8px !important;
+    min-height: 38px !important;
+  }
+
+  #volume-slider {
+    width: 42px !important;
+  }
+
+  #co-hoa {
+    height: clamp(100px, 16vh, 140px) !important;
   }
 }
 

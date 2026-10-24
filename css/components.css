@@ -18,6 +18,7 @@
 /* Time Lock Gateway (Khóa thời gian đến 12h trưa 25/10/2026) - Phong cách 5th Season */
 .time-lock-panel {
   width: min(450px, 92vw);
+  max-height: min(88vh, 580px);
   background: #FFFFFF;
   border: 1.5px solid var(--border-card);
   box-shadow: var(--shadow-card);
@@ -26,7 +27,8 @@
   text-align: center;
   color: var(--text-navy);
   position: relative;
-  overflow: hidden;
+  overflow-y: auto;
+  overflow-x: hidden;
   box-sizing: border-box;
   animation: zoom-in-lock 0.35s cubic-bezier(0.16, 1, 0.3, 1);
 }
@@ -178,6 +180,7 @@
 /* Name Prompt Modal (Luminous Crystal Portal -> Floral Editorial Card) */
 .name-panel {
   width: min(450px, 92vw);
+  max-height: min(88vh, 580px);
   background: #FFFFFF;
   border: 1.5px solid var(--border-card);
   box-shadow: var(--shadow-card);
@@ -185,6 +188,8 @@
   padding: 38px 28px 28px 28px;
   text-align: center;
   color: var(--text-navy);
+  overflow-y: auto;
+  overflow-x: hidden;
   box-sizing: border-box;
   animation: zoom-in-lock 0.35s cubic-bezier(0.16, 1, 0.3, 1);
 }
@@ -807,10 +812,15 @@ body.aurora-active .aurora {
 
 @media (max-width: 768px) {
   .bottom-right-action-dock {
-    bottom: calc(12px + var(--sab, 6px));
-    right: calc(12px + var(--sar, 0px));
-    gap: 6px;
-    z-index: 2500;
+    bottom: calc(12px + var(--sab, 6px)) !important;
+    right: calc(12px + var(--sar, 0px)) !important;
+    gap: 6px !important;
+    z-index: 2500 !important;
+  }
+  .secret-letter-trigger-pill {
+    padding: 8px 14px !important;
+    font-size: 12px !important;
+    min-height: 38px !important;
   }
 }
 
@@ -967,10 +977,10 @@ body.aurora-active .aurora {
     padding: 12px 12px 32px 12px;
   }
   .close-letter-btn {
-    top: -12px;
-    right: -8px;
-    width: 38px;
-    height: 38px;
+    top: -8px;
+    right: 0px;
+    width: 36px;
+    height: 36px;
   }
 }
 
@@ -4085,18 +4095,18 @@ body.sky-night .wax-seal-guide-tip {
 /* Mobile responsive layout */
 @media (max-width: 768px) {
   .celestial-weather-orrery {
-    top: calc(56px + var(--sat, 8px));
-    right: 12px;
+    top: calc(52px + var(--sat, 6px));
+    right: calc(10px + var(--sar, 0px));
   }
   .celestial-weather-orrery.orrery-minimized {
-    top: calc(10px + var(--sat, 6px));
-    right: 12px;
-    width: 38px;
-    height: 38px;
+    top: calc(8px + var(--sat, 4px)) !important;
+    right: calc(10px + var(--sar, 0px)) !important;
+    width: 36px !important;
+    height: 36px !important;
   }
   .orrery-lodestar-btn {
-    width: 38px;
-    height: 38px;
+    width: 36px !important;
+    height: 36px !important;
   }
   .lodestar-compass-star {
     width: 24px;
@@ -4488,12 +4498,12 @@ body.sky-night .shifter-pill-label {
 
 @media (max-width: 768px) {
   .living-atmosphere-hud {
-    top: calc(126px + var(--sat, 8px));
-    width: min(94vw, 380px);
-    left: 50%;
-    transform: translateX(-50%);
-    justify-content: space-between;
-    z-index: 1005;
+    top: calc(134px + var(--sat, 8px)) !important;
+    width: min(92vw, 350px) !important;
+    left: 50% !important;
+    transform: translateX(-50%) !important;
+    justify-content: space-around !important;
+    z-index: 1005 !important;
   }
   .atmosphere-shifter-token.cloud-shifter {
     margin-left: 2px;
@@ -4502,13 +4512,15 @@ body.sky-night .shifter-pill-label {
     margin-right: 2px;
   }
   .cloud-svg {
-    width: 62px;
+    width: 58px;
+    height: auto;
   }
   .sun-svg {
-    width: 56px;
+    width: 54px;
+    height: auto;
   }
   .shifter-pill-label {
-    font-size: 10px;
+    font-size: 10.5px;
     padding: 3px 8px;
     white-space: nowrap;
   }
@@ -5239,7 +5251,7 @@ body.sky-night .found-letter-slot.filled {
     bottom: calc(56px + var(--sab, 8px));
     left: calc(12px + var(--sal, 0px));
     right: auto;
-    width: clamp(80px, 18vw, 110px);
+    width: clamp(72px, 18vw, 86px);
   }
 }
 
@@ -5283,20 +5295,20 @@ body.sky-night .found-letter-slot.filled {
 @media (max-width: 768px) and (orientation: portrait) {
   .mascot-companion-wrap.relocated-for-letter,
   body.stage-4-active .mascot-companion-wrap {
-    left: calc(10px + var(--sal, 0px)) !important;
+    left: calc(12px + var(--sal, 0px)) !important;
     right: auto !important;
-    top: calc(23% + var(--sat, 6px)) !important;
-    bottom: auto !important;
-    width: 66px !important;
-    z-index: 1400 !important;
+    top: auto !important;
+    bottom: calc(44vh + 12px) !important;
+    width: 62px !important;
+    z-index: 1600 !important;
   }
   .mascot-companion-wrap.relocated-for-letter .mascot-speech-bubble,
   body.stage-4-active .mascot-companion-wrap .mascot-speech-bubble {
     left: 0 !important;
     right: auto !important;
-    top: calc(100% + 6px) !important;
-    bottom: auto !important;
-    max-width: min(200px, 60vw) !important;
+    top: auto !important;
+    bottom: calc(100% + 8px) !important;
+    max-width: min(220px, 64vw) !important;
     font-size: 11px !important;
   }
 }
@@ -7866,16 +7878,28 @@ body.sky-night .hint-bubble-text {
 /* Mobile Responsive */
 @media (max-width: 600px) {
   .guide-button-container {
-    top: calc(12px + var(--sat, 8px));
-    left: calc(12px + var(--sal, 8px));
+    top: calc(8px + var(--sat, 4px)) !important;
+    left: calc(10px + var(--sal, 0px)) !important;
   }
   .guide-toggle-btn {
-    padding: 6px 14px 6px 11px;
-    font-size: 12px;
-    gap: 6px;
+    width: 36px !important;
+    height: 36px !important;
+    min-width: 36px !important;
+    padding: 0 !important;
+    justify-content: center !important;
+    border-radius: 50% !important;
+  }
+  .guide-btn-text,
+  .guide-btn-sparkle {
+    display: none !important;
   }
   .guide-btn-icon {
-    font-size: 14px;
+    font-size: 16px !important;
+    margin: 0 !important;
+  }
+  .guide-close-btn {
+    top: 10px !important;
+    right: 10px !important;
   }
   .guide-dialog {
     width: 96vw;
@@ -8242,27 +8266,27 @@ body.sky-night .pointer-action-badge {
 /* Mobile Adjustments for Real-time HUD & Minigame Touch Targets */
 @media (max-width: 768px) {
   .realtime-guide-hud {
-    top: calc(10px + var(--sat, 4px)) !important;
+    top: calc(8px + var(--sat, 4px)) !important;
     left: 50% !important;
     transform: translateX(-50%) !important;
-    max-width: calc(100vw - 124px) !important;
+    max-width: calc(100vw - 108px) !important;
     z-index: 10001 !important;
   }
   .realtime-guide-pill {
-    padding: 4px 8px 4px 10px !important;
+    padding: 4px 8px 4px 8px !important;
     gap: 6px !important;
-    min-height: 32px !important;
+    min-height: 36px !important;
   }
   .realtime-guide-msg {
-    font-size: 10.5px !important;
-    max-width: calc(100vw - 200px) !important;
+    font-size: 11px !important;
+    max-width: calc(100vw - 180px) !important;
     white-space: nowrap !important;
     overflow: hidden !important;
     text-overflow: ellipsis !important;
   }
   .realtime-guide-step-tag {
-    font-size: 8.5px !important;
-    padding: 2px 5px !important;
+    font-size: 9px !important;
+    padding: 2px 6px !important;
   }
   .pointer-hand-glyph {
     font-size: 20px;
