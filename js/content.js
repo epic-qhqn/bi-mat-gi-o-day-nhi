@@ -22,11 +22,15 @@ const randomClubLetters = [
     { author: "PCN 2", content: "Bánh xèo, bánh xe, bánh khọt, bánh đúc, bánh mì,...cớ sao tui lại phải lòng bánh bèo EPIC. Chúc các bèo luôn hạnh phục, dễ thương, kute, kawai, moi moi kyu." },
     { author: "Khiết Đan", content: "Chúc các chị em trong CLB 20/10 vui vẻ, nhan sắc thăng hạng, tiền tài rủng rỉnh, deadline tự né, làm gì cũng thuận lợi, đi đâu cũng được quý, mãi keo mãi slay và luôn giữ vững phong độ nữ hoàng nhaaa!" },
     { author: "Chauzzz bell", content: "Chúc mấy bạn, mấy chị trong CLB STEM 20/10 có tất cả trừ vất vả, mọi thứ đến với mình đều suôn sẻ, không gặp khó khăn trong học tập cũng như cuộc sống. Chúc mấy bèo của tập thể mình lun xinh đẹp, mạnh khoẻ. Queen never cry!" },
+    { author: "khviss=))", content: "Chúc các cô gái EPIC - STEM luôn rực rỡ, xinh đẹp và tỏa sáng theo cách riêng! Deadline tự né, niềm vui tràn trề nha" },
     { author: "ACN", content: "Hông biết cậu là ai, nhưng mà tớ chúc cậu sẽ là hoa, là gió, là mây. Được toả sáng, được bay bổng, được tự do thật toả sáng theo cách cậu muốn, thật xinh đẹp, được làm mọi điều cậu thích và điều gì cũng như ý nhoa (❁´◡`❁)" },
+    { author: "Brian Palmer (NHQB)", content: "Chúc các nàng của CLB EPIC 20/10 luôn vui vẻ, hạnh phúc, xinh đẹp, học giỏi và đạt được nhiều thành công trong tương lai nha. Mãi iu!!!" },
     { author: "Tuấn", content: "Chúc các bạn nữ trong CLB STEM luôn xinh đẹp, vui vẻ, học tập tốt và luôn giữ được niềm đam mê sáng tạo. Chúc các bạn luôn tự tin, tỏa sáng và cùng CLB tạo nên thật nhiều dự án thú vị nhé!" },
     { author: "TP", content: "Chúc các bạn nữ EPIC 20/10 ngày càng xinh hơn, tiền vào như nước, deadline tự biến mất, được làm nữ chính còn hội bạn xách đồ." },
     { author: "LMN", content: "Chúc các cô gái của EPIC - STEM luôn là những bông hoa tươi sắc, sức khoẻ dồi dào, không bao giờ ốm đau bệnh tật hay làm việc quá sức. Chúc các bạn 20/10 vui vẻ" },
-    { author: "NHP", content: "Tuy là hơi trễ rùi nhma chúc các bông hoa của STEM 20/10 luôn giữ đc năng lượng vui tươi, hạnh phúc, nhan sắc ngày càng thăng hạng nhaaa!! 🌸✨" }
+    { author: "NHP", content: "Tuy là hơi trễ rùi nhma chúc các bông hoa của STEM 20/10 luôn giữ đc năng lượng vui tươi, hạnh phúc, nhan sắc ngày càng thăng hạng nhaaa!! 🌸✨" },
+    { author: "1m82,lạnh lùng,ít nói", content: "Khoa học có thể giải thích mọi quy luật của vũ trụ, nhưng chẳng có công thức nào định đoạt được nét duyên và sự tỏa sáng của các nàng. Các nàng chính là điều đẹp đẽ nhất mà tạo hóa ban tặng cho nơi này. Mong ngày hôm nay và mọi ngày sau này, đều tràn đầy nụ cười, bình yên và những điều kỳ diệu nhất đến với các nàng. 💖🚀" },
+    { author: "hú hú khẹc khẹc (NMT)", content: "chúc các công chúa hoàng hậu của EPIC - STEM 1 bủi lễ 20/10 ngày càng xik xắn, giỏi giang, chăm sóc và yêu thương bản thân hơn, gặt hái nhìu thành công trong học tập lẫn tình yêu nhennnn!! Tự tin và bản lĩnh nhé các chị emmmmm!!!!!!" }
 ];
 
 // Cơ chế Non-Repeating Random Deck (Fisher-Yates Shuffled Pool)
