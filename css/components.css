@@ -10035,3 +10035,243 @@ body.zen-mode-active .garden-stage-selector {
     display: block !important;
   }
 }
+
+/* ==========================================================================
+   UI POLISH v2 — Bếp Sáp / Phong Thư & Thư Polaroid (lớn hơn, dễ đọc, canh giữa)
+   Append-only override; đặt cuối file để thắng specificity bằng thứ tự.
+   ========================================================================== */
+
+/* ---------- 1. WAX STATION ---------- */
+.artisan-crafting-bench {
+  gap: 20px;
+  padding: 20px;
+  border-radius: 24px;
+}
+
+.hearth-burner-unit,
+.wax-seal-workspace {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 18px;
+  min-height: 380px;
+  padding: 22px 16px;
+  border-radius: 18px;
+}
+
+.hearth-column-title,
+.workspace-column-title {
+  font-size: 14px;
+  font-weight: 900;
+  letter-spacing: 1.2px;
+  margin-bottom: 4px;
+}
+
+/* Hộp diêm: căn giữa, chữ lớn */
+.artisan-matchbox-wrap {
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 10px;
+  padding: 8px 12px;
+  border-radius: 8px;
+}
+.matchbox-drawer { gap: 8px; }
+.matchbox-label { gap: 5px; }
+.matchbox-lotus-icon { font-size: 17px; }
+.matchbox-brand { font-size: 13px; letter-spacing: 0.8px; }
+.match-striker-strip { padding: 4px 9px; gap: 5px; border-radius: 5px; }
+.striker-grit { width: 4px; height: 14px; }
+.striker-hint { font-size: 12px; }
+.match-stem { width: 26px; height: 4px; }
+
+/* Nến: to hơn, badge không bị cắt */
+.artisan-candle {
+  width: 56px;
+  height: 66px;
+  margin: 6px auto 34px auto;
+}
+.candle-holder { width: 52px; height: 9px; }
+.candle-body { width: 34px; height: 36px; }
+.candle-wick { height: 8px; }
+.candle-flame { top: 2px; width: 16px; height: 26px; }
+.candle-halo { top: -10px; width: 68px; height: 68px; }
+.candle-badge {
+  bottom: -28px;
+  font-size: 12px;
+  font-weight: 800;
+  padding: 3px 11px;
+}
+
+/* Thìa đồng: căn giữa trục dọc */
+.brass-spoon-stand {
+  justify-content: center;
+  margin-top: 6px;
+}
+.spoon-handle { width: 42px; height: 8px; }
+.spoon-wood-grip { width: 20px; }
+.spoon-neck { width: 10px; height: 5px; }
+.spoon-bowl { width: 60px; height: 60px; }
+@media (min-width: 521px) {
+  /* Đưa lòng thìa (phần thân) về đúng trục giữa, cán nhô sang trái */
+  .brass-spoon-stand { padding-right: 52px; box-sizing: border-box; }
+}
+
+/* Vùng đóng triện: vòng đích + con dấu cùng trục giữa */
+.wax-target-zone {
+  width: 128px;
+  height: 128px;
+  margin: 0 auto;
+  flex-shrink: 0;
+}
+.wax-target-hint {
+  font-size: 12.5px;
+  letter-spacing: 1.2px;
+  padding: 0 8px;
+  opacity: 0.9;
+}
+.wax-seal-stamp {
+  margin: 14px auto 10px auto;
+  scale: 1.25; /* thuộc tính scale độc lập, không đè transform của JS kéo thả */
+  transform-origin: 50% 50%;
+}
+
+/* Nút chính + ghi chú */
+.wax-seal-station { gap: 16px; }
+.atelier-seal-btn,
+.portal-btn {
+  max-width: 460px;
+  min-height: 60px;
+  padding: 18px 36px !important;
+  font-size: 18px !important;
+  font-weight: 800 !important;
+  border-radius: 18px !important;
+  gap: 10px;
+}
+.wax-seal-guide-tip {
+  font-size: 15.5px;
+  line-height: 1.5;
+  margin-top: 8px;
+  min-height: 24px;
+}
+
+@media (max-width: 520px) {
+  .artisan-crafting-bench { gap: 12px; padding: 12px; }
+  .hearth-burner-unit,
+  .wax-seal-workspace { min-height: 320px; padding: 16px 8px; gap: 14px; }
+  .hearth-column-title,
+  .workspace-column-title { font-size: 12px; letter-spacing: 0.8px; }
+  .matchbox-brand { font-size: 11.5px; }
+  .striker-hint { font-size: 10.5px; }
+  .candle-badge { font-size: 10.5px; padding: 2px 8px; }
+  .wax-target-zone { width: 104px; height: 104px; }
+  .wax-target-hint { font-size: 11px; letter-spacing: 0.6px; }
+  .atelier-seal-btn,
+  .portal-btn { min-height: 54px; padding: 15px 22px !important; font-size: 16px !important; }
+  .wax-seal-guide-tip { font-size: 14px; }
+}
+
+/* ---------- 2. LETTER / POLAROID MODAL ---------- */
+.secret-letter-dialog:not(.secret-letter-dialog--quiz) {
+  width: min(92vw, 560px);
+  max-width: min(92vw, 560px);
+}
+.secret-letter-dialog:not(.secret-letter-dialog--quiz) .polaroid {
+  width: 100%;
+  height: clamp(440px, 74dvh, 620px);
+  padding: 22px 22px 48px 22px;
+}
+
+.close-letter-btn {
+  top: -20px;
+  right: -20px;
+  width: 48px;
+  height: 48px;
+  font-size: 19px;
+}
+
+.polaroid-hint-badge {
+  font-size: 14px;
+  padding: 9px 20px;
+  margin-bottom: 18px;
+}
+
+.polaroid-back {
+  padding: 36px 34px;
+}
+.polaroid-font-toggle {
+  top: 14px;
+  right: 14px;
+  width: 38px;
+  height: 38px;
+  font-size: 14px;
+}
+
+.polaroid-back__letter {
+  gap: 0;
+}
+.polaroid-stamp-header {
+  font-size: 13px;
+  letter-spacing: 2.5px;
+  margin-bottom: 24px;
+  padding-bottom: 10px;
+  width: 88%;
+}
+.polaroid-back .letter-content {
+  font-size: 1.25rem;
+  line-height: 1.75;
+  max-width: 92%;
+}
+.polaroid-back .letter-author {
+  margin-top: 22px;
+  font-size: 16px;
+  letter-spacing: 0.8px;
+}
+.polaroid-footer-heritage {
+  margin-top: 22px;
+  padding-top: 14px;
+  gap: 8px;
+  font-size: 1rem;
+  width: 92%;
+}
+.polaroid-shuffle-btn {
+  margin-top: 14px;
+  min-height: 44px;
+  padding: 10px 24px;
+  font-size: 14.5px;
+}
+.polaroid-shuffle-btn + .polaroid-shuffle-btn { margin-top: 10px; }
+
+/* Chế độ chữ "Dễ đọc" cũng được tăng cỡ (thắng rule !important ở layout.css nhờ đứng sau) */
+body.readable-font .polaroid-back .letter-content {
+  font-size: 1.12rem !important;
+  line-height: 1.7 !important;
+}
+
+@media (max-width: 600px) {
+  .close-letter-btn { top: -12px; right: -2px; width: 44px; height: 44px; }
+  .secret-letter-dialog:not(.secret-letter-dialog--quiz) .polaroid {
+    height: clamp(420px, 72dvh, 560px);
+    padding: 16px 16px 40px 16px;
+  }
+  .polaroid-back { padding: 30px 20px; }
+  .polaroid-back .letter-content { font-size: 1.15rem; line-height: 1.7; }
+  .polaroid-stamp-header { font-size: 11.5px; letter-spacing: 1.8px; margin-bottom: 18px; }
+  .polaroid-back .letter-author { font-size: 14.5px; margin-top: 16px; }
+  .polaroid-footer-heritage { font-size: 0.9rem; margin-top: 16px; }
+  .polaroid-hint-badge { font-size: 13px; padding: 8px 16px; margin-bottom: 14px; }
+  body.readable-font .polaroid-back .letter-content { font-size: 1rem !important; }
+}
+
+/* Màn hình thấp (landscape điện thoại): giữ thẻ trong khung nhìn */
+@media (max-height: 560px) {
+  .secret-letter-dialog:not(.secret-letter-dialog--quiz) .polaroid {
+    height: calc(100dvh - 90px);
+    min-height: 0;
+  }
+  .polaroid-back { padding: 18px 20px; }
+  .polaroid-stamp-header { margin-bottom: 10px; }
+  .polaroid-back .letter-content { font-size: 1.05rem; line-height: 1.55; }
+  .polaroid-back .letter-author,
+  .polaroid-footer-heritage { margin-top: 10px; }
+}
