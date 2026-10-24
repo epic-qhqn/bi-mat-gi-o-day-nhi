@@ -31,9 +31,9 @@
 ---
 
 ### Phase 8: Tối Ưu Giải Thuật Điểm Số Đa Chiều & Phá Thế Hòa Điểm Cho 54 Loài Hoa
-- [ ] 8.1: Xây dựng ma trận ánh xạ điểm số đa chiều (8 trục tính cách: Serene, Radiant, Resilient, Gentle, Free, Poetic, Noble, Authentic).
-- [ ] 8.2: Lập trình thuật toán phá thế hòa điểm thông minh (Vector Affinity Tie-Breaker) dựa trên độ tương đồng vector đặc trưng tâm hồn.
-- [ ] 8.3: Kiểm tra tính phân bổ xác suất, đảm bảo cả 54 loài hoa đều có kịch bản lựa chọn để xuất hiện.
+- [x] 8.1: Xây dựng ma trận ánh xạ điểm số đa chiều (8 trục tính cách: Serene, Radiant, Resilient, Gentle, Free, Poetic, Noble, Authentic).
+- [x] 8.2: Lập trình thuật toán phá thế hòa điểm thông minh (Vector Affinity Tie-Breaker) dựa trên độ tương đồng vector đặc trưng tâm hồn.
+- [x] 8.3: Kiểm tra tính phân bổ xác suất, đảm bảo cả 54 loài hoa đều có kịch bản lựa chọn để xuất hiện (Đạt 54/54 - 100% Reachability, 100% Deterministic).
 
 ---
 

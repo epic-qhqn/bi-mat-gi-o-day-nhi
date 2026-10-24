@@ -418,7 +418,7 @@
             text: 'Nhân ngày Phụ nữ Việt Nam 20/10, lời chúc nào chạm đến nơi sâu lắng và ấm áp nhất trong bạn?',
             options: [
                 { text: '"Chúc bạn luôn giữ được sự an yên trong tâm hồn, mỗi sớm mai thức dậy đều thấy lòng nhẹ nhõm."', points: { lotus: 3, water_lily: 2, plumeria: 2, jasmine: 2, lily_of_the_valley: 2 } },
-                { text: '"Chúc bạn luôn kiêu hãnh tỏa sáng trên con đường riêng, tự do sống trọn vẹn cuộc đời bạn ước mơ."', points: { rose: 3, peony: 3, orchid: 2, tulip: 2, bird_of_paradise: 2, narcissus: 2 } },
+                { text: '"Chúc bạn luôn kiêu hãnh tỏa sáng trên con đường riêng, tự do sống trọn vẹn cuộc đời bạn ước mơ."', points: { rose: 3, peony: 3, orchid: 2, tulip: 2, bird_of_paradise: 2, narcissus: 3 } },
                 { text: '"Chúc nụ cười rạng rỡ luôn nở trên môi bạn, mọi điều ngọt ngào và may mắn sẽ luôn tìm đến bạn."', points: { sunflower: 2, gerbera: 3, lisianthus: 3, apricot_blossom: 2, anthurium: 2 } },
                 { text: '"Chúc bạn luôn được trân trọng, được thấu hiểu và được yêu thương bằng một tình cảm chân thành nhất."', points: { carnation: 2, hydrangea: 2, forget_me_not: 2, statice: 2, camellia: 2, wisteria: 2 } }
             ]
@@ -446,7 +446,7 @@
             text: 'Trong tiệm trà cổ điển ấm cúng, bạn bắt gặp một cuốn sổ tay ai đó ghi lại những vần thơ chép tay nắn nót. Bạn sẽ...',
             options: [
                 { text: 'Đọc từng vần thơ mộc mạc, xúc động trước tình cảm chân thành giấu kín trong nét mực xưa.', points: { rose: 3, peony: 2, lisianthus: 3, white_champaca: 2, wisteria: 3 } },
-                { text: 'Tò mò về tác giả và hoàn cảnh ra đời của những câu chữ sâu sắc, đầy tính triết lý ấy.', points: { orchid: 3, iris: 3, queen_of_the_night: 3, tulip: 2, narcissus: 2 } },
+                { text: 'Tò mò về tác giả và hoàn cảnh ra đời của những câu chữ sâu sắc, đầy tính triết lý ấy.', points: { orchid: 3, iris: 3, queen_of_the_night: 3, tulip: 2, narcissus: 3 } },
                 { text: 'Rút cây bút mang theo, nắn nót viết tiếp vài dòng cảm nghĩ ấm áp vào trang lưu bút của quán.', points: { lily: 3, magnolia: 3, tuberose: 3, spiraea: 2 } },
                 { text: 'Nhấp ngụm trà sen ấm, ngắm nhìn ánh nến lung linh và lắng nghe tiếng dương cầm dìu dặt.', points: { camellia: 2, lotus: 2, lily_of_the_valley: 3, lavender: 2 } }
             ]
@@ -538,31 +538,175 @@
         return scores;
     };
 
-    // Điểm cao nhất thắng; ưu tiên tương thích nhánh rẽ Câu 3 khi hòa điểm (100% tất định - deterministic)
-    const pickWinningResult = (scores, results, state) => {
-        let best = results[0];
-        let bestScore = -1;
+    // =========================================================================
+    // 4b-1. MA TRẬN TÍNH CÁCH 8 TRỤC & VECTOR ĐẶC TRƯNG TÂM HỒN (54 LOÀI HOA)
+    // =========================================================================
+    const TRAIT_AXES = ['serene', 'radiant', 'resilient', 'gentle', 'free', 'poetic', 'noble', 'authentic'];
 
-        // Phân bổ 54 loài hoa vào 4 nhánh không gian độc bản
-        const branchFamilies = [
-            ['lotus', 'jasmine', 'water_lily', 'plumeria', 'camellia', 'daisy', 'baby_breath', 'osmanthus', 'sim_flower', 'melastoma', 'periwinkle', 'lavender', 'tana_daisy', 'geranium'],
-            ['rose', 'peony', 'orchid', 'tulip', 'magnolia', 'lily', 'lisianthus', 'queen_of_the_night', 'white_champaca', 'iris', 'tuberose', 'spiraea', 'wisteria', 'narcissus'],
-            ['sunflower', 'gerbera', 'poppy', 'allium', 'apricot_blossom', 'peach_blossom', 'cherry_blossom', 'bird_of_paradise', 'dahlia', 'bombax', 'anthurium', 'oncidium', 'rangoon_creeper'],
-            ['hydrangea', 'forget_me_not', 'statice', 'marigold', 'hibiscus', 'lily_of_the_valley', 'dandelion', 'wax_flower', 'aster', 'globe_amaranth', 'hyacinth', 'crape_myrtle', 'carnation']
-        ];
-        const branchIdx = (state && state.answers && state.answers[2] !== undefined) ? state.answers[2] : null;
-        const favoredFamily = (branchIdx !== null && branchFamilies[branchIdx]) ? branchFamilies[branchIdx] : [];
+    const FLOWER_PERSONALITY_VECTORS = {
+        lotus:              { serene: 0.95, radiant: 0.20, resilient: 0.60, gentle: 0.85, free: 0.30, poetic: 0.80, noble: 0.70, authentic: 0.90 },
+        apricot_blossom:    { serene: 0.40, radiant: 0.80, resilient: 0.90, gentle: 0.30, free: 0.60, poetic: 0.50, noble: 0.85, authentic: 0.75 },
+        peach_blossom:      { serene: 0.30, radiant: 0.90, resilient: 0.50, gentle: 0.70, free: 0.60, poetic: 0.70, noble: 0.50, authentic: 0.80 },
+        jasmine:            { serene: 0.90, radiant: 0.30, resilient: 0.40, gentle: 0.90, free: 0.40, poetic: 0.75, noble: 0.60, authentic: 0.95 },
+        rose:               { serene: 0.20, radiant: 0.75, resilient: 0.80, gentle: 0.50, free: 0.50, poetic: 0.85, noble: 0.90, authentic: 0.60 },
+        peony:              { serene: 0.40, radiant: 0.70, resilient: 0.70, gentle: 0.60, free: 0.40, poetic: 0.70, noble: 0.95, authentic: 0.65 },
+        orchid:             { serene: 0.70, radiant: 0.40, resilient: 0.75, gentle: 0.40, free: 0.30, poetic: 0.80, noble: 0.95, authentic: 0.60 },
+        tulip:              { serene: 0.50, radiant: 0.60, resilient: 0.60, gentle: 0.50, free: 0.50, poetic: 0.65, noble: 0.90, authentic: 0.65 },
+        sunflower:          { serene: 0.10, radiant: 0.98, resilient: 0.80, gentle: 0.50, free: 0.70, poetic: 0.30, noble: 0.40, authentic: 0.85 },
+        gerbera:            { serene: 0.10, radiant: 0.95, resilient: 0.50, gentle: 0.60, free: 0.70, poetic: 0.20, noble: 0.30, authentic: 0.90 },
+        poppy:              { serene: 0.20, radiant: 0.60, resilient: 0.60, gentle: 0.30, free: 0.90, poetic: 0.90, noble: 0.70, authentic: 0.50 },
+        allium:             { serene: 0.50, radiant: 0.50, resilient: 0.85, gentle: 0.30, free: 0.85, poetic: 0.50, noble: 0.75, authentic: 0.70 },
+        daisy:              { serene: 0.85, radiant: 0.50, resilient: 0.60, gentle: 0.90, free: 0.60, poetic: 0.75, noble: 0.30, authentic: 0.95 },
+        baby_breath:        { serene: 0.85, radiant: 0.40, resilient: 0.40, gentle: 0.95, free: 0.50, poetic: 0.85, noble: 0.40, authentic: 0.90 },
+        lavender:           { serene: 0.98, radiant: 0.20, resilient: 0.50, gentle: 0.85, free: 0.50, poetic: 0.90, noble: 0.60, authentic: 0.80 },
+        hydrangea:          { serene: 0.70, radiant: 0.40, resilient: 0.50, gentle: 0.85, free: 0.60, poetic: 0.90, noble: 0.50, authentic: 0.80 },
+        lily:               { serene: 0.75, radiant: 0.40, resilient: 0.60, gentle: 0.70, free: 0.30, poetic: 0.80, noble: 0.90, authentic: 0.75 },
+        magnolia:           { serene: 0.60, radiant: 0.40, resilient: 0.90, gentle: 0.50, free: 0.40, poetic: 0.75, noble: 0.92, authentic: 0.70 },
+        camellia:           { serene: 0.90, radiant: 0.30, resilient: 0.85, gentle: 0.70, free: 0.30, poetic: 0.80, noble: 0.80, authentic: 0.85 },
+        carnation:          { serene: 0.60, radiant: 0.50, resilient: 0.70, gentle: 0.95, free: 0.30, poetic: 0.60, noble: 0.50, authentic: 0.92 },
+        plumeria:           { serene: 0.92, radiant: 0.40, resilient: 0.60, gentle: 0.85, free: 0.50, poetic: 0.70, noble: 0.50, authentic: 0.95 },
+        water_lily:         { serene: 0.98, radiant: 0.20, resilient: 0.80, gentle: 0.80, free: 0.40, poetic: 0.85, noble: 0.60, authentic: 0.90 },
+        forget_me_not:      { serene: 0.80, radiant: 0.30, resilient: 0.50, gentle: 0.85, free: 0.40, poetic: 0.98, noble: 0.40, authentic: 0.90 },
+        statice:            { serene: 0.75, radiant: 0.30, resilient: 0.95, gentle: 0.70, free: 0.40, poetic: 0.75, noble: 0.40, authentic: 0.90 },
+        marigold:           { serene: 0.50, radiant: 0.70, resilient: 0.85, gentle: 0.85, free: 0.30, poetic: 0.50, noble: 0.40, authentic: 0.95 },
+        cherry_blossom:     { serene: 0.60, radiant: 0.70, resilient: 0.40, gentle: 0.70, free: 0.80, poetic: 0.95, noble: 0.70, authentic: 0.75 },
+        hibiscus:           { serene: 0.60, radiant: 0.60, resilient: 0.50, gentle: 0.60, free: 0.85, poetic: 0.90, noble: 0.60, authentic: 0.70 },
+        lisianthus:         { serene: 0.70, radiant: 0.60, resilient: 0.80, gentle: 0.80, free: 0.50, poetic: 0.80, noble: 0.75, authentic: 0.80 },
+        lily_of_the_valley: { serene: 0.85, radiant: 0.50, resilient: 0.50, gentle: 0.90, free: 0.60, poetic: 0.92, noble: 0.70, authentic: 0.90 },
+        queen_of_the_night: { serene: 0.90, radiant: 0.20, resilient: 0.65, gentle: 0.50, free: 0.60, poetic: 0.98, noble: 0.95, authentic: 0.70 },
+        white_champaca:     { serene: 0.90, radiant: 0.30, resilient: 0.60, gentle: 0.85, free: 0.40, poetic: 0.90, noble: 0.85, authentic: 0.90 },
+        bird_of_paradise:   { serene: 0.20, radiant: 0.85, resilient: 0.85, gentle: 0.30, free: 0.95, poetic: 0.60, noble: 0.85, authentic: 0.70 },
+        osmanthus:          { serene: 0.92, radiant: 0.30, resilient: 0.80, gentle: 0.80, free: 0.40, poetic: 0.85, noble: 0.65, authentic: 0.98 },
+        dandelion:          { serene: 0.60, radiant: 0.60, resilient: 0.70, gentle: 0.60, free: 0.98, poetic: 0.85, noble: 0.30, authentic: 0.90 },
+        wax_flower:         { serene: 0.75, radiant: 0.40, resilient: 0.95, gentle: 0.60, free: 0.50, poetic: 0.70, noble: 0.80, authentic: 0.85 },
+        iris:               { serene: 0.50, radiant: 0.60, resilient: 0.85, gentle: 0.40, free: 0.70, poetic: 0.80, noble: 0.92, authentic: 0.65 },
+        dahlia:             { serene: 0.30, radiant: 0.85, resilient: 0.80, gentle: 0.40, free: 0.70, poetic: 0.70, noble: 0.88, authentic: 0.65 },
+        wisteria:           { serene: 0.70, radiant: 0.40, resilient: 0.85, gentle: 0.85, free: 0.50, poetic: 0.95, noble: 0.75, authentic: 0.75 },
+        aster:              { serene: 0.80, radiant: 0.40, resilient: 0.65, gentle: 0.85, free: 0.50, poetic: 0.95, noble: 0.40, authentic: 0.90 },
+        narcissus:          { serene: 0.60, radiant: 0.65, resilient: 0.70, gentle: 0.40, free: 0.50, poetic: 0.75, noble: 0.95, authentic: 0.60 },
+        sim_flower:         { serene: 0.85, radiant: 0.40, resilient: 0.85, gentle: 0.80, free: 0.70, poetic: 0.80, noble: 0.30, authentic: 0.98 },
+        bombax:             { serene: 0.40, radiant: 0.75, resilient: 0.95, gentle: 0.80, free: 0.50, poetic: 0.65, noble: 0.60, authentic: 0.95 },
+        globe_amaranth:     { serene: 0.65, radiant: 0.50, resilient: 0.98, gentle: 0.75, free: 0.40, poetic: 0.70, noble: 0.40, authentic: 0.95 },
+        tana_daisy:         { serene: 0.70, radiant: 0.90, resilient: 0.60, gentle: 0.80, free: 0.75, poetic: 0.60, noble: 0.30, authentic: 0.95 },
+        rangoon_creeper:    { serene: 0.40, radiant: 0.80, resilient: 0.95, gentle: 0.50, free: 0.80, poetic: 0.65, noble: 0.60, authentic: 0.85 },
+        hyacinth:           { serene: 0.80, radiant: 0.30, resilient: 0.50, gentle: 0.75, free: 0.40, poetic: 0.95, noble: 0.70, authentic: 0.70 },
+        tuberose:           { serene: 0.90, radiant: 0.20, resilient: 0.70, gentle: 0.75, free: 0.30, poetic: 0.92, noble: 0.90, authentic: 0.80 },
+        geranium:           { serene: 0.60, radiant: 0.65, resilient: 0.75, gentle: 0.95, free: 0.40, poetic: 0.60, noble: 0.40, authentic: 0.95 },
+        melastoma:          { serene: 0.80, radiant: 0.40, resilient: 0.92, gentle: 0.75, free: 0.75, poetic: 0.75, noble: 0.30, authentic: 0.98 },
+        periwinkle:         { serene: 0.75, radiant: 0.50, resilient: 0.98, gentle: 0.70, free: 0.60, poetic: 0.60, noble: 0.40, authentic: 0.95 },
+        spiraea:            { serene: 0.80, radiant: 0.50, resilient: 0.60, gentle: 0.80, free: 0.60, poetic: 0.90, noble: 0.85, authentic: 0.80 },
+        anthurium:          { serene: 0.20, radiant: 0.90, resilient: 0.80, gentle: 0.70, free: 0.60, poetic: 0.50, noble: 0.75, authentic: 0.80 },
+        oncidium:           { serene: 0.30, radiant: 0.92, resilient: 0.60, gentle: 0.50, free: 0.92, poetic: 0.70, noble: 0.80, authentic: 0.65 },
+        crape_myrtle:       { serene: 0.80, radiant: 0.40, resilient: 0.60, gentle: 0.85, free: 0.60, poetic: 0.98, noble: 0.50, authentic: 0.85 }
+    };
+
+    // Phân bổ 54 loài hoa vào 4 nhánh không gian độc bản
+    const branchFamilies = [
+        ['lotus', 'jasmine', 'water_lily', 'plumeria', 'camellia', 'daisy', 'baby_breath', 'osmanthus', 'sim_flower', 'melastoma', 'periwinkle', 'lavender', 'tana_daisy', 'geranium'],
+        ['rose', 'peony', 'orchid', 'tulip', 'magnolia', 'lily', 'lisianthus', 'queen_of_the_night', 'white_champaca', 'iris', 'tuberose', 'spiraea', 'wisteria', 'narcissus'],
+        ['sunflower', 'gerbera', 'poppy', 'allium', 'apricot_blossom', 'peach_blossom', 'cherry_blossom', 'bird_of_paradise', 'dahlia', 'bombax', 'anthurium', 'oncidium', 'rangoon_creeper'],
+        ['hydrangea', 'forget_me_not', 'statice', 'marigold', 'hibiscus', 'lily_of_the_valley', 'dandelion', 'wax_flower', 'aster', 'globe_amaranth', 'hyacinth', 'crape_myrtle', 'carnation']
+    ];
+
+    // Các hàm tính toán đại số vector (Vector Algebra Helpers)
+    const dotProduct = (v1, v2) => {
+        let sum = 0;
+        TRAIT_AXES.forEach((axis) => { sum += (v1[axis] || 0) * (v2[axis] || 0); });
+        return sum;
+    };
+    const vectorMagnitude = (v) => {
+        let sum = 0;
+        TRAIT_AXES.forEach((axis) => { const val = v[axis] || 0; sum += val * val; });
+        return Math.sqrt(sum) || 1;
+    };
+    const cosineSimilarity = (v1, v2) => {
+        const mag1 = vectorMagnitude(v1);
+        const mag2 = vectorMagnitude(v2);
+        if (mag1 === 0 || mag2 === 0) return 0;
+        return dotProduct(v1, v2) / (mag1 * mag2);
+    };
+
+    // Tính tổng điểm tối đa có thể đạt được của mỗi loài hoa ứng với nhánh rẽ đã chọn (Opportunity Normalization)
+    const computeFlowerMaxPoints = (branchIdx) => {
+        const maxPoints = {};
+        for (let qIdx = 0; qIdx < FLOWER_QUIZ_QUESTIONS.length; qIdx++) {
+            const q = (qIdx === 3)
+                ? (ADAPTIVE_BRANCH_QUESTIONS[branchIdx] || FLOWER_QUIZ_QUESTIONS[3])
+                : FLOWER_QUIZ_QUESTIONS[qIdx];
+            if (!q || !q.options) continue;
+            const questionMaxForFlower = {};
+            q.options.forEach((opt) => {
+                const pts = opt.points || {};
+                Object.keys(pts).forEach((fid) => {
+                    const val = pts[fid] || 0;
+                    if (!questionMaxForFlower[fid] || val > questionMaxForFlower[fid]) {
+                        questionMaxForFlower[fid] = val;
+                    }
+                });
+            });
+            Object.keys(questionMaxForFlower).forEach((fid) => {
+                maxPoints[fid] = (maxPoints[fid] || 0) + questionMaxForFlower[fid];
+            });
+        }
+        return maxPoints;
+    };
+
+    // Thuật toán phá thế hòa điểm đa chiều (Vector Affinity Tie-Breaker) kết hợp chuẩn hóa cơ hội
+    // Bảo đảm 100% tất định (deterministic), không dùng Math.random(), tính toán dựa trên vector tâm lý học
+    const pickWinningResult = (scores, results, state) => {
+        const branchIdx = (state && state.answers && state.answers[2] !== undefined) ? state.answers[2] : 0;
+        const maxPointsMap = computeFlowerMaxPoints(branchIdx);
+        const favoredFamily = branchFamilies[branchIdx] || [];
+
+        // 1. Tổng hợp Vector tâm lý 8 chiều của người dùng (User Personality Vector)
+        const userVector = { serene: 0, radiant: 0, resilient: 0, gentle: 0, free: 0, poetic: 0, noble: 0, authentic: 0 };
+        let totalWeight = 0;
+
+        state.answers.forEach((optionIndex, questionIndex) => {
+            const q = getActiveQuestion(state, questionIndex);
+            if (!q || !q.options || !q.options[optionIndex]) return;
+            const points = q.options[optionIndex].points || {};
+            Object.keys(points).forEach((fid) => {
+                const fVec = FLOWER_PERSONALITY_VECTORS[fid];
+                const weight = points[fid] || 1;
+                if (fVec) {
+                    TRAIT_AXES.forEach((axis) => {
+                        userVector[axis] += (fVec[axis] || 0) * weight;
+                    });
+                    totalWeight += weight;
+                }
+            });
+        });
+
+        if (totalWeight > 0) {
+            TRAIT_AXES.forEach((axis) => { userVector[axis] /= totalWeight; });
+        }
+
+        // 2. Tính điểm tổng hợp (Composite Score) đa chiều:
+        // - ratio: Tỷ lệ điểm tích lũy / điểm tối đa có thể đạt được của loài hoa đó (0.0 - 1.0) -> trọng số 15.0
+        // - raw: Điểm tích lũy tuyệt đối (giúp loài hoa được chọn nhiều lần duy trì ưu thế) -> trọng số 0.4
+        // - affinity: Độ tương đồng Cosine (Cosine Similarity) giữa vector người dùng và vector loài hoa -> trọng số 8.0
+        // - branchBonus: Ưu thế tương thích với nhánh không gian độc bản ở Câu 3 -> cộng 2.0 điểm
+        let best = results[0];
+        let bestCompositeScore = -Infinity;
 
         results.forEach((r) => {
-            let sc = scores[r.id] || 0;
-            if (favoredFamily.includes(r.id)) {
-                sc += 0.05; // Ưu tiên nhẹ nhàng để phá vỡ thế hòa điểm theo đúng hướng rẽ tâm hồn
-            }
-            if (sc > bestScore) {
+            const raw = scores[r.id] || 0;
+            if (raw === 0) return; // Loài hoa chưa từng được chọn sẽ không xét thắng
+            const max = maxPointsMap[r.id] || 1;
+            const ratio = raw / max;
+            const fVec = FLOWER_PERSONALITY_VECTORS[r.id];
+            const affinity = fVec ? cosineSimilarity(userVector, fVec) : 0;
+            const branchBonus = favoredFamily.includes(r.id) ? 2.0 : 0;
+
+            const composite = (ratio * 15.0) + (raw * 0.4) + (affinity * 8.0) + branchBonus;
+
+            if (composite > bestCompositeScore) {
                 best = r;
-                bestScore = sc;
+                bestCompositeScore = composite;
             }
         });
+
         return best;
     };
 
