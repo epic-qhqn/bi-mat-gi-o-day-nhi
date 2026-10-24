@@ -344,7 +344,7 @@
                 { text: 'Ở nhà cuộn tròn đọc sách, cày bộ phim hay và nấu một món ăn thơm phức mình thích.', points: { lotus: 2, jasmine: 3, lavender: 3, water_lily: 2, osmanthus: 3 } },
                 { text: 'Lên đồ thật đẹp, đi dạo những góc phố quen, ghé tiệm gốm hoặc triển lãm tranh có gu.', points: { tulip: 3, orchid: 2, peony: 3, spiraea: 3, white_champaca: 2 } },
                 { text: 'Tụ họp cùng những người bạn yêu quý, cùng nhau ăn uống cười đùa rôm rả cả ngày.', points: { sunflower: 3, gerbera: 3, peach_blossom: 2, oncidium: 2, rangoon_creeper: 2 } },
-                { text: 'Xách balo đi đến một nơi xa lạ, hít thở làn gió mới toanh để làm mới lại chính mình.', points: { poppy: 3, dandelion: 3, cherry_blossom: 2, bird_of_paradise: 3, dahlia: 2 } }
+                { text: 'Xách balo đi đến một nơi xa lạ, hít thở làn gió mới toanh để làm mới lại chính mình.', points: { poppy: 3, dandelion: 3, cherry_blossom: 2, bird_of_paradise: 3, dahlia: 2, hibiscus: 2 } }
             ]
         },
         // Câu 11: Món quà tinh thần
@@ -393,7 +393,7 @@
             art: { emoji: '⏳🌱', tone: 'warm' },
             text: 'Nếu được gửi một lời thì thầm nhắn nhủ đến chính mình của 5 năm trước, bạn sẽ nói điều gì?',
             options: [
-                { text: '"Đừng quá âu lo nhé, mọi chuyện rồi sẽ ổn thỏa theo cách đẹp đẽ nhất mà bạn không ngờ tới."', points: { lisianthus: 3, lily_of_the_valley: 3, water_lily: 2, crape_myrtle: 3, forget_me_not: 2 } },
+                { text: '"Đừng quá âu lo nhé, mọi chuyện rồi sẽ ổn thỏa theo cách đẹp đẽ nhất mà bạn không ngờ tới."', points: { lisianthus: 3, lily_of_the_valley: 3, water_lily: 2, crape_myrtle: 3, forget_me_not: 2, hyacinth: 2 } },
                 { text: '"Hãy dũng cảm tin vào năng lực của mình, bạn tài giỏi và kiên cường hơn bạn tưởng nhiều."', points: { rose: 3, peony: 2, magnolia: 2, dahlia: 3, bombax: 2 } },
                 { text: '"Hãy cứ cười thật tươi và tận hưởng trọn vẹn từng khoảnh khắc thanh xuân rực rỡ ấy nhé!"', points: { cherry_blossom: 3, peach_blossom: 2, gerbera: 2, allium: 2, rangoon_creeper: 2 } },
                 { text: '"Cảm ơn bạn vì ngày ấy đã không bỏ cuộc, để hôm nay có một phiên bản vững vàng như bây giờ."', points: { apricot_blossom: 3, camellia: 3, wax_flower: 3, statice: 2, wisteria: 2 } }
@@ -772,6 +772,8 @@
 
     const restartQuiz = () => {
         quizState = createQuizState(FLOWER_QUIZ_QUESTIONS);
+        const frontMotif = document.querySelector('.polaroid-flower-motif');
+        if (frontMotif) frontMotif.textContent = '🌸';
         transitionTo(buildCurrentStage);
     };
 
@@ -855,6 +857,10 @@
     const buildResultStage = () => {
         const result = pickWinningResult(computeQuizScores(quizState), getFlowerResults(), quizState);
         const stage = el('div');
+
+        // Đồng bộ biểu tượng hoa lên mặt trước ảnh Polaroid
+        const frontMotif = document.querySelector('.polaroid-flower-motif');
+        if (frontMotif && result.emoji) frontMotif.textContent = result.emoji;
 
         const medallion = el('div', 'flower-quiz__medallion', result.emoji || '🌸');
         if (result.petalColor) medallion.style.setProperty('--fq-medal', result.petalColor);

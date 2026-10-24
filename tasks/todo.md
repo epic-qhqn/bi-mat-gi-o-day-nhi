@@ -38,7 +38,7 @@
 ---
 
 ### Phase 9: Tích Hợp Đồng Bộ Giao Diện, Bưu Thiếp Canvas & Kiểm Thử Toàn Diện
-- [ ] 9.1: Đồng bộ hóa hiển thị 54 loài hoa trong thẻ bưu phẩm Polaroid 3D (`js/secret-letter.js`).
-- [ ] 9.2: Đồng bộ hóa bộ chọn hoa và chức năng xuất ảnh Canvas 1080x1920 Story trong `js/boarding-pass-modal.js` và `js/boarding-pass-canvas.js`.
-- [ ] 9.3: Thực hiện kiểm định chất lượng: cú pháp JS (`node -c js/*.js`), cân bằng CSS và kiểm thử giao diện responsive trên mọi thiết bị.
-- [ ] 9.4: Báo cáo kết quả và đồng bộ Git sạch sẽ theo tiêu chuẩn Team 3 Devs.
+- [x] 9.1: Đồng bộ hóa hiển thị 54 loài hoa trong thẻ bưu phẩm Polaroid 3D (`js/secret-letter.js`). Đồng bộ biểu tượng hoa lên mặt trước Polaroid.
+- [x] 9.2: Đồng bộ hóa bộ chọn hoa và chức năng xuất ảnh Canvas 1080x1920 Story trong `js/boarding-pass-modal.js` và `js/boarding-pass-canvas.js` (54/54 hoa xuất sắc không lỗi text).
+- [x] 9.3: Thực hiện kiểm định chất lượng: cú pháp JS (`node -c js/*.js` 18/18 file PASS), cân bằng CSS (base 36/36, layout 311/311, components 1382/1382) và kiểm thử giao diện responsive trên mọi thiết bị.
+- [x] 9.4: Báo cáo kết quả và đồng bộ Git sạch sẽ theo tiêu chuẩn Team 3 Devs.
