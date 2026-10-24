@@ -45,6 +45,7 @@
 ---
 
 ### Phase 7: Kiểm Thử Đa Thiết Bị Thực Tế & Đóng Gói Hoàn Hảo (Testing & Git Harmony)
-- [ ] 7.1: Ma trận kiểm thử giả lập trên iPhone SE (568x320), iPhone 14 Pro (844x390), Samsung Galaxy (800x360), iPad Mini (1024x768).
-- [ ] 7.2: Kiểm tra đối chứng màn hình PC (1920x1080) đảm bảo 100% không hồi quy (Zero PC Regression).
-- [ ] 7.3: Kiểm tra cú pháp JS `node -c js/*.js`, kiểm tra cân bằng CSS `{}` và push an toàn lên nhánh `main`.
+- [x] 7.1: Ma trận kiểm thử giả lập trên iPhone SE (568x320), iPhone 14 Pro (844x390), Samsung Galaxy (800x360), iPad Mini (1024x768).
+- [x] 7.2: Kiểm tra đối chứng màn hình PC (1920x1080) đảm bảo 100% không hồi quy (Zero PC Regression).
+- [x] 7.3: Kiểm tra cú pháp JS `node -c js/*.js`, kiểm tra cân bằng CSS `{}` và push an toàn lên nhánh `main`.
+

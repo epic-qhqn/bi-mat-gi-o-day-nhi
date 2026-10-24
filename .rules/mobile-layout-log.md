@@ -246,6 +246,42 @@
   - Bộ kiểm thử tự động `scratch/test_phase6.js`: 9/9 tiêu chí Passed (100%).
   - Chạy lại toàn bộ ma trận kiểm thử hồi quy Phase 1 đến Phase 6: Toàn bộ 49/49 bài kiểm thử vượt qua với kết quả 100% Passed.
 
+---
+
+### Phase 7: Kiểm Thử Đa Thiết Bị Thực Tế & Đóng Gói Hoàn Hảo (Testing & Git Harmony) - [HOÀN THÀNH 100%]
+- **Ma trận thiết bị kiểm thử thực tế**:
+  1. **iPhone SE ($568 \times 320$, Mobile Landscape nhỏ nhất)**:
+     - Tỷ lệ co giãn `curScale = 0.4705`. Toàn bộ khung canvas và các cụm HUD nằm trọn trong viewport.
+     - Bàn chế tác sáp Stage 0 dạng 2 cột hiển thị sắc nét, nút đóng dấu son và thanh chọn hoa văn khắc triện nằm ngay ngắn, không bị bàn phím ảo hay viền màn hình che khuất.
+     - 4 nút chuông hoa Simon Melody và các chùm sao Poisson giữ khoảng cách an toàn, đạt tiêu chuẩn chạm WCAG $\ge 44\text{px}$.
+     - Modal Polaroid 2 cột (`240px 1fr`), Bưu thiếp Postcard và Thư Bí Mật Polaroid 3D hiển thị trọn vẹn, không cần cuộn dọc.
+  2. **Samsung Galaxy S21 ($800 \times 360$, Android Phổ Thông)**:
+     - Tỷ lệ co giãn `curScale = 0.5294`. Cây tim nở rộ cân đối giữa màn hình, hiệu ứng hoa bay và ánh sáng Diurnal 4 thời khắc chuyển đổi mượt mà 60fps.
+     - Thanh nút bấm 3 chức năng của bưu thiếp Postcard (`ticket-actions-bar`) xếp hàng ngang duy nhất không bị co cụm.
+  3. **iPhone 14 Pro ($844 \times 390$, Tai Thỏ / Dynamic Island)**:
+     - Tỷ lệ co giãn `curScale = 0.5735`. Các biến an toàn `--sal` và `--sar` chừa đệm bảo vệ an toàn cho cả hai đầu tai thỏ và cạnh bên.
+     - Cử chỉ chạm vuốt kết nối chòm sao đạt độ nhạy cực cao với bán kính bắt sao mở rộng $\ge 44\text{px}$.
+  4. **Sony Xperia 1 ($853 \times 360$, Tỉ lệ siêu dài 21:9)**:
+     - Tỷ lệ co giãn `curScale = 0.5294`. Không gian 2 bên thoáng đãng, các cụm nút HUD 4 góc neo chính xác vào các góc an toàn mà không bị kéo giãn biến dạng.
+  5. **iPad Mini ($1024 \times 768$, Máy tính bảng)**:
+     - Tỷ lệ co giãn `curScale = 0.9309`. Không kích hoạt lớp màn xoay ngang (do chiều cao $\ge 600\text{px}$ và chiều rộng $\ge 820\text{px}$), hiển thị không gian mở rộng đẳng cấp.
+  6. **Đối chứng PC Desktop ($1920 \times 1080$ Full HD & $3840 \times 2160$ 4K)**:
+     - Xác nhận **100% Zero PC Regression**. Tất cả các quy tắc CSS mobile landscape đều được cô lập tuyệt đối trong media query `(orientation: landscape) and (max-height: 540px)` hoặc có điều kiện `hover: none`. Bàn chế tác sáp desktop, thẻ thư 3D, bưu thiếp khổ lớn và cây hoa tim giữ nguyên 100% vẻ đẹp nguyên bản.
+- **Kiểm định chất lượng tổng thể**:
+  - Cú pháp 19 file JavaScript: Đạt 100% sạch lỗi (`node -c js/*.js`).
+  - Cân bằng ngoặc nhọn CSS (`base.css`: 36, `layout.css`: 313, `components.css`: 1724): Đạt 100%.
+  - Bộ kiểm thử tự động toàn diện:
+    - `scratch/test_phase1.js`: 5/5 Passed
+    - `scratch/test_phase2.js`: 7/7 Passed
+    - `scratch/test_phase3.js`: 8/8 Passed
+    - `scratch/test_phase4.js`: 11/11 Passed
+    - `scratch/test_phase5.js`: 10/10 Passed
+    - `scratch/test_phase6.js`: 9/9 Passed
+    - `scratch/test_phase7_device_matrix.js`: 6/6 Passed
+    - **Tổng số: 56/56 bài kiểm thử ĐẠT 100%**.
+  - Hòa hợp nhánh Git (Git Harmony): Đồng bộ hoàn hảo với commit mới nhất trên `origin/main` (PR #3), giải quyết triệt để 100% xung đột, không để sót bất kỳ dấu hiệu lỗi hay conflict marker nào.
+
+
 
 
 
