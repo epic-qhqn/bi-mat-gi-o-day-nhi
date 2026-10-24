@@ -9125,6 +9125,8 @@ body.sky-night .pointer-action-badge {
   border: 1px solid rgba(212, 175, 55, 0.45);
   border-radius: 12px;
   padding: 8px 14px;
+  min-height: 44px;
+  box-sizing: border-box;
   color: var(--text-navy, #1F2937);
   font-family: 'Be Vietnam Pro', sans-serif;
   font-size: 13px;
@@ -9343,11 +9345,13 @@ body.zen-mode-active .garden-stage-selector {
     gap: 6px;
   }
   .experiential-btn {
-    width: 38px;
-    height: 38px;
+    width: 44px;
+    height: 44px;
+    min-width: 44px;
+    min-height: 44px;
     padding: 0;
     justify-content: center;
-    border-radius: 10px;
+    border-radius: 12px;
   }
   .experiential-btn .btn-label {
     display: none;

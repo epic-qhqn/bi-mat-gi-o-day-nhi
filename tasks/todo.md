@@ -49,6 +49,6 @@
 ---
 
 ### Phase 14: Thẩm Định Đa Thiết Bị, Tối Ưu Mượt Mà & Đồng Bộ Git Safe
-- [ ] 14.1: Thẩm định toàn diện trên PC (chuột, trackpad, màn hình lớn) và Mobile (iOS Safari, Android Chrome, xoay màn hình ngang/dọc).
-- [ ] 14.2: Đảm bảo cú pháp JS `node -c js/*.js`, cân bằng CSS tuyệt đối, 60fps mượt mà, commit & push an toàn theo chuẩn Team 3 Devs.
+- [x] 14.1: Thẩm định toàn diện trên PC (chuột, trackpad, màn hình lớn) và Mobile (iOS Safari, Android Chrome, xoay màn hình ngang/dọc). Tối ưu touch target 44px WCAG, viewport auto-scale mượt mà không tràn viền.
+- [x] 14.2: Đảm bảo cú pháp JS `node -c js/*.js` (19/19 files), cân bằng CSS tuyệt đối, 60fps mượt mà, dung hòa mọi nhánh và commit & push an toàn lên main theo chuẩn Team 3 Devs.
 
