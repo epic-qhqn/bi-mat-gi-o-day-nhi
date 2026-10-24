@@ -34,7 +34,7 @@
 ---
 
 ## Phase 5: Tinh Chỉnh Bưu Thiếp Story, Realtime Guide & Thẩm Định Toàn Diện
-- [ ] 5.1: Chuẩn hóa ngôn từ trên bưu thiếp Di sản xuất ảnh Canvas 1080x1920 trong `js/boarding-pass-modal.js` và `js/boarding-pass-canvas.js`.
-- [ ] 5.2: Tinh chỉnh câu chữ trong HUD hướng dẫn thời gian thực (`js/realtime-guide.js`, `js/experience-guide.js`).
-- [ ] 5.3: Thực hiện kiểm định cú pháp JS (`node -c js/*.js`), cân bằng CSS và kiểm thử giao diện responsive trên mọi thiết bị.
-- [ ] 5.4: Báo cáo kết quả và đồng bộ Git sạch sẽ.
+- [x] 5.1: Chuẩn hóa ngôn từ trên bưu thiếp Di sản xuất ảnh Canvas 1080x1920 trong `js/boarding-pass-modal.js` và `js/boarding-pass-canvas.js` (loại bỏ sạch sến/nàng thơ, tôn vinh nét duyên tươi trẻ).
+- [x] 5.2: Tinh chỉnh câu chữ trong HUD hướng dẫn thời gian thực (`js/realtime-guide.js`, `js/experience-guide.js`).
+- [x] 5.3: Thực hiện kiểm định cú pháp JS (`node -c js/*.js`), cân bằng CSS và kiểm thử giao diện responsive trên mọi thiết bị.
+- [x] 5.4: Báo cáo kết quả và đồng bộ Git sạch sẽ.

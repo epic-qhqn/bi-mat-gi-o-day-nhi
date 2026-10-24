@@ -108,7 +108,7 @@
 
     // Stage Contextual Hints Table
     const stageHints = {
-        0: 'Nhập tên nàng lên khuôn đồng, chọn 3 viên sáp và quẹt diêm để đúc triện son mở cổng ✨',
+        0: 'Nhập tên của bạn lên khuôn đồng, chọn 3 viên sáp và quẹt diêm để đúc triện son mở cổng ✨',
         1: 'Chạm đám mây gọi mưa sương hoặc kéo vệt nắng ấm để tưới tắm chồi non và chạm cỏ 4 lá 🍀',
         2: 'Lắng nghe chuông hoa và gõ lại đúng giai điệu Đồng Dao để giúp cây vươn cành mạnh mẽ 🎵',
         3: 'Nối các vì sao sáng rực rỡ để vẽ nên chòm sao Trái Tim Ngân Hà lung linh ✨',
