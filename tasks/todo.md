@@ -23,9 +23,9 @@
 ---
 
 ### Phase 3: Giải Quyết Triệt Để Chồng Đè HUD & Hộp Tiến Độ (Spatial Harmony in Landscape)
-- [ ] 3.1: Tinh chỉnh `.realtime-guide-hud` trên mobile landscape: thu gọn thành biểu tượng ngọc chỉ dẫn nhỏ gọn ($40\text{px} \times 40\text{px}$) neo sát mép trái safe area (`left: max(12px, env(safe-area-inset-left))`), chạm vào bung bong bóng thoại 4s rồi tự ẩn.
-- [ ] 3.2: Tái định vị hộp tiến độ làm vườn (`#garden-ui`): giới hạn chiều rộng $\le 300\text{px}$, căn giữa an toàn, triệt tiêu hoàn toàn sự giao thoa ~100px với Realtime Guide.
-- [ ] 3.3: Ẩn triệt để dòng chữ hướng dẫn phụ (`.instruction`) và gợi ý cử chỉ (`#terrarium-gesture-hint`) trong suốt thời gian diễn ra Stage 2 và Stage 3 để giải phóng không gian bầu trời.
+- [x] 3.1: Tinh chỉnh `.realtime-guide-hud` trên mobile landscape: thu gọn thành biểu tượng ngọc chỉ dẫn nhỏ gọn ($40\text{px} \times 40\text{px}$) neo sát mép trái safe area (`left: max(14px, calc(10px + var(--sal, 0px)))`), chạm vào bung bong bóng thoại 4s rồi tự ẩn.
+- [x] 3.2: Tái định vị hộp tiến độ làm vườn (`#garden-ui`): giới hạn chiều rộng $\le 300\text{px}$, căn giữa an toàn, triệt tiêu hoàn toàn sự giao thoa ~100px với Realtime Guide.
+- [x] 3.3: Ẩn triệt để dòng chữ hướng dẫn phụ (`.instruction`) và gợi ý cử chỉ (`#terrarium-gesture-hint`) trong suốt thời gian diễn ra Stage 2 và Stage 3 để giải phóng không gian bầu trời.
 
 ---
 

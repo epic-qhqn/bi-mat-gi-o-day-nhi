@@ -230,19 +230,30 @@ body.sky-night .stars {
 
 @media (max-height: 540px) and (orientation: landscape) {
   .garden-ui {
-    top: calc(8px + var(--sat, 4px));
-    padding: 4px 12px;
-    border-radius: 14px;
-    max-width: min(78vw, 360px);
+    top: max(8px, calc(4px + var(--sat, 0px))) !important;
+    left: 50% !important;
+    transform: translateX(-50%) !important;
+    padding: 4px 14px !important;
+    border-radius: 14px !important;
+    max-width: min(290px, 46vw) !important;
+    width: auto !important;
+    box-shadow: 0 4px 16px rgba(19, 28, 78, 0.12), 0 1px 4px rgba(212, 175, 55, 0.2) !important;
   }
   .garden-ui .instruction {
-    font-size: 10px;
+    font-size: 10px !important;
+    line-height: 1.25 !important;
+    margin-bottom: 2px !important;
   }
   .garden-ui .growth-progress {
-    margin: 2px 0;
+    margin: 2px 0 !important;
   }
   .garden-ui .garden-message {
-    font-size: 10.5px;
+    font-size: 10px !important;
+    line-height: 1.25 !important;
+  }
+  #terrarium-gesture-hint,
+  .terrarium-gesture-hint {
+    display: none !important;
   }
 }
 
@@ -280,14 +291,17 @@ body.has-stage-selector .garden-ui {
 /* Streamline garden-ui during interactive minigames to prevent sky clutter */
 body.stage-2-active .garden-ui .instruction,
 body.stage-2-active .garden-ui .terrarium-gesture-hint,
+body.stage-2-active #terrarium-gesture-hint,
 body.stage-3-active .garden-ui .instruction,
-body.stage-3-active .garden-ui .terrarium-gesture-hint {
+body.stage-3-active .garden-ui .terrarium-gesture-hint,
+body.stage-3-active #terrarium-gesture-hint {
   display: none !important;
 }
 
 body.stage-2-active .garden-ui,
 body.stage-3-active .garden-ui {
-  padding: 6px 14px;
+  padding: 4px 12px !important;
+  max-width: min(270px, 44vw) !important;
 }
 
 .garden-stage-selector {

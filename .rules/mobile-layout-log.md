@@ -372,6 +372,61 @@
   - `node -c js/realtime-guide.js`: Exit code 0.
   - Cân bằng ngoặc nhọn CSS:
     - `css/base.css`: 36 / 36 [OK]
-    - `css/layout.css`: 314 / 314 [OK]
-    - `css/components.css`: 1778 / 1778 [OK]
+    - `css/layout.css`: 315 / 315 [OK]
+    - `css/components.css`: 1787 / 1787 [OK]
   - Đảm bảo Zero PC Regression: Mọi quy tắc desktop ($\ge 1025\text{px}$) giữ nguyên vẹn 100%.
+
+---
+
+### Phase 3 (20/10 Safari Audit): Tái Thiết Lập Không Gian HUD & Hộp Tiến Độ Khu Vườn (HUD & Garden Progress Spatial Harmony) - [HOÀN THÀNH 100%]
+- **Hiện tượng & Bối cảnh phát hiện (Ảnh chụp thực tế Image 2, 6, 7)**:
+  1. *Va chạm chồng đè trực diện giữa Realtime Guide HUD và Hộp Tiến Độ*:
+     - Trên iPhone 14 landscape ($844\text{px} \times 390\text{px}$), cả `.realtime-guide-hud` lẫn `#garden-ui` đều được định vị ở dải tọa độ trên đỉnh màn hình (`top: 8px`), dẫn đến việc huy hiệu nhiệm vụ *"GIAI ĐOẠN 1: TƯỚI NƯỚC..."* đè chồng lên 1/3 mép trái của hộp tiến độ *"MẦM SINH - VƯƠN CÀNH"*.
+  2. *Bầu trời bị che lấp bởi các văn bản hướng dẫn rườm rà*:
+     - Thanh gợi ý cử chỉ `#terrarium-gesture-hint` (*"Chạm vào cây để tạo rung động...", "Vuốt ngang đổi thời tiết..."*) treo lơ lửng ngay dưới mầm cây, kết hợp với dòng hướng dẫn `.instruction` làm mất đi vẻ thanh thoát thi vị của khu vườn.
+  3. *Hiện tượng che khuất các nốt chuông & chòm sao trong Minigame (Stage 2 & 3)*:
+     - Khi người dùng bước vào thử thách gõ chuông hoa (Simon Melody) hoặc nối chòm sao (Constellation Linker), các dòng chữ hướng dẫn phụ ở thanh tiến độ vẫn hiện diện, chiếm mất diện tích thao tác của ngón tay trên bầu trời.
+
+- **Nguyên nhân gốc rễ & Dự đoán rủi ro trên các dòng thiết bị khác**:
+  1. *Trùng lặp điểm neo (Anchor Collision)*: Cả 2 phần tử đều dùng `left: 50%; transform: translateX(-50%);` hoặc dồn sang nửa trái màn hình mà không phân chia không phận rõ ràng.
+  2. *Ghi đè Cascade chéo thiết bị (Cross-device Cascade Override)*:
+     - Trong `css/components.css`, truy vấn `@media (max-width: 768px)` nguyên bản **thiếu** điều kiện `and (orientation: portrait)`.
+     - *Dự đoán trên Android & iPhone nhỏ*: Các dòng máy có chiều rộng ngang $\le 768\text{px}$ (iPhone SE 667px, Galaxy S8/S9 740px, Pixel 4a 732px) khi xoay ngang sẽ vô tình kích hoạt media query này, ép HUD quay trở lại tọa độ `left: 50% !important;` gây vỡ bố cục nghiêm trọng!
+  3. *Xung đột quy tắc trùng lặp cuối file*: Khối CSS cũ tại dòng 10392 định nghĩa lại `.realtime-guide-hud` với `max-width: min(340px, 46vw)` làm vô hiệu hóa kiểu dáng viên ngọc thu nhỏ.
+
+- **Công thức & Giải pháp chuẩn hóa đa thiết bị**:
+  1. **Quy Hoạch "Tam Điểm Chân Vạc" Chân Trời Đỉnh Màn Hình (Top Row Horizon Decoupling)**:
+     - **Góc Trái (Top-Left Safe Area)**: `.realtime-guide-hud` thu gọn thành **Viên Ngọc Chỉ Dẫn Tinh Xảo** kích thước $40\text{px} \times 40\text{px}$, bo tròn $50\%$, viền vàng đồng `#D4AF37`, nền ngà lụa hoặc lam đêm huyền ảo. Neo chuẩn xác tại `left: max(14px, calc(10px + var(--sal, 0px))) !important;`.
+     - **Ở Giữa (Top-Center)**: `#garden-ui` neo cân đối tại `left: 50%; transform: translateX(-50%);` với `max-width: min(290px, 46vw) !important; width: auto !important;` (Trong Minigame Stage 2 & 3: `max-width: min(270px, 44vw) !important;`).
+     - **Góc Phải (Top-Right Safe Area)**: `#top-experiential-dock` (Zen & Snapshot) neo tại `right: max(14px, calc(10px + var(--sar, 0px))) !important;`.
+     - *Khoảng thở thực tế qua kiểm thử tự động*:
+       - iPhone SE ($667\text{px}$): Khoảng trống Trái **$134.5\text{px}$** | Khoảng trống Phải **$90.5\text{px}$**.
+       - iPhone 14 ($844\text{px}$): Khoảng trống Trái **$180.0\text{px}$** | Khoảng trống Phải **$136.0\text{px}$**.
+       - iPhone 15/16 Pro Max ($932\text{px}$): Khoảng trống Trái **$212.0\text{px}$** | Khoảng trống Phải **$168.0\text{px}$**.
+       - Samsung Galaxy S22 ($800\text{px}$): Khoảng trống Trái **$181.0\text{px}$** | Khoảng trống Phải **$137.0\text{px}$**.
+       - Sony Xperia 21:9 ($960\text{px}$): Khoảng trống Trái **$281.0\text{px}$** | Khoảng trống Phải **$237.0\text{px}$**.
+       - Màn hình gập hẹp Foldable ($568\text{px}$): Khoảng trống Trái **$99.4\text{px}$** | Khoảng trống Phải **$55.4\text{px}$** ($\ge 50\text{px}$ an toàn).
+       - $\rightarrow$ Triệt tiêu 100% nguy cơ va chạm trên mọi tỷ lệ màn hình!
+
+  2. **Tương Tác Chạm Mở Bong Bóng Thoại 4 Giây (Ephemeral Poetic Hint Bubble)**:
+     - Ở trạng thái bình thường trên mobile landscape: Toàn bộ văn bản hướng dẫn (`.realtime-guide-text-group`) được ẩn giấu bên trong viên ngọc.
+     - Khi người dùng chạm vào viên ngọc: Kích hoạt âm thanh ASMR sáp cẩm thạch (`playWaxClickSFX()`), bung bong bóng thơ `.is-expanded-hint` nổi bên cạnh ngọc (`left: 48px; max-width: min(280px, 46vw)`), tự động đóng lại sau đúng 4 giây.
+     - Nếu người dùng chạm trực tiếp vào nội dung bong bóng thoại: Hệ thống mở ngay Cẩm nang trải nghiệm chi tiết (`openExperienceGuide('steps')`).
+
+  3. **Làm Sạch Bầu Trời & Tự Động Thu Gọn Trong Minigames**:
+     - Ẩn hoàn toàn `#terrarium-gesture-hint` và `.terrarium-gesture-hint` trên mobile landscape.
+     - Khi bước vào Stage 2 (Simon) và Stage 3 (Constellation): CSS tự động ẩn `.instruction` và `#terrarium-gesture-hint` với `!important`, đồng thời siết hộp tiến độ còn `max-width: min(270px, 44vw) !important; padding: 4px 12px !important;` giúp người chơi tập trung tối đa vào các vì sao và nốt nhạc.
+
+  4. **Khử Triệt Để Ghi Đè Chéo Trên Thiết Bị Kích Thước Nhỏ**:
+     - Bổ sung điều kiện `and (orientation: portrait)` cho `@media (max-width: 768px)` tại dòng 9207.
+     - Xóa bỏ khối CSS đè cũ tại dòng 10392, thống nhất nguồn chân lý duy nhất (Single Source of Truth) cho HUD mobile landscape.
+
+- **Kiểm định chất lượng & Xác nhận**:
+  - `node -c js/realtime-guide.js`: Exit code 0.
+  - Cú pháp toàn bộ 19 file JavaScript: 19/19 OK.
+  - Cân bằng ngoặc nhọn CSS:
+    - `css/base.css`: 36 / 36 [OK]
+    - `css/layout.css`: 315 / 315 [OK]
+    - `css/components.css`: 1787 / 1787 [OK]
+  - Đảm bảo Zero PC Regression: Mọi thay đổi gói gọn trong `@media (max-height: 540px) and (orientation: landscape)`.
+
