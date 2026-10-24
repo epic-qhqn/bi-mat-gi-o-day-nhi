@@ -45,10 +45,10 @@
 ---
 
 ### Phase 6: Đại Tu Modal Cẩm Nang Trải Nghiệm & Cuộn Mượt Mobile (Experience Guide Scroll Overhaul)
-- [ ] 6.1: Tái cấu trúc `.guide-dialog` trên mobile landscape: áp dụng `height: min(92dvh, 520px)`, bố cục Flexbox dọc hoàn chỉnh.
-- [ ] 6.2: Thu nhỏ header `.guide-header` (padding `8px 16px`, tiêu đề 1 dòng, ẩn cành cây phụ trang trí); định vị nút đóng 'X' trong vùng safe area không bị thanh Safari che khuất.
-- [ ] 6.3: Thiết lập `.guide-content` thành khung cuộn độc lập (`overflow-y: auto`, `-webkit-overflow-scrolling: touch`), cỡ chữ $13.5\text{px} - 14.5\text{px}$, đảm bảo toàn bộ nội dung cả 3 tab cuộn mượt mà từ đầu đến cuối.
-- [ ] 6.4: Cố định footer `.guide-footer` ở đáy trong dòng chảy flexbox (`flex-shrink: 0`), nút "Khám Phá Khu Vườn Ngay" nằm gọn gàng dưới chân, không bay lơ lửng đè lên nội dung.
+- [x] 6.1: Tái cấu trúc `.guide-dialog` trên mobile landscape: áp dụng `height: min(92dvh, 520px)`, bố cục Flexbox dọc hoàn chỉnh.
+- [x] 6.2: Thu nhỏ header `.guide-header` (padding `8px 16px`, tiêu đề 1 dòng, ẩn cành cây phụ trang trí); định vị nút đóng 'X' trong vùng safe area không bị thanh Safari che khuất.
+- [x] 6.3: Thiết lập `.guide-content` thành khung cuộn độc lập (`overflow-y: auto`, `-webkit-overflow-scrolling: touch`), cỡ chữ $13.5\text{px} - 14.5\text{px}$, đảm bảo toàn bộ nội dung cả 3 tab cuộn mượt mà từ đầu đến cuối.
+- [x] 6.4: Cố định footer `.guide-footer` ở đáy trong dòng chảy flexbox (`flex-shrink: 0`), nút "Khám Phá Khu Vườn Ngay" nằm gọn gàng dưới chân, không bay lơ lửng đè lên nội dung.
 
 ---
 

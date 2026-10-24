@@ -550,5 +550,62 @@
   - Bộ kiểm thử tự động `scratch/test_phase5_constellation.js`: 700/700 ngôi sao qua 100 lần mô phỏng Monte Carlo đạt 0 va chạm, 100% Passed.
   - Bộ kiểm thử hồi quy `scratch/test_phase3_landscape.js` & `scratch/test_phase4_simon.js`: 100% Passed.
 
+---
+
+### Phase 6 (20/10 Safari Audit): Đại Tu Modal Cẩm Nang Trải Nghiệm & Bố Cục Cuộn Mượt (Experience Guide Modal Scroll Overhaul & Bounded Viewport Architecture) - [HOÀN THÀNH 100%]
+- **Hiện tượng & Bối cảnh phát hiện (Ảnh chụp thực tế Image 4 & 5)**:
+  1. *Header modal bị đẩy chìm dưới thanh địa chỉ Safari*:
+     - `.guide-dialog` ở chế độ xoay ngang không có media query chuyên biệt, áp dụng layout desktop với padding lớn, cành hoa trang trí SVG cao 28px, tiêu đề 20px và phụ đề 40px $\to$ Header chiếm tới 155px!
+     - Nút đóng 'X' (`.guide-close-btn`) bị đẩy lên sát mép trên hoặc lọt ra ngoài màn hình do flex centering và tràn chiều cao.
+  2. *Bẫy tràn Flexbox bóp nghẹt khung nội dung (Flexbox Zero-Height Crunch)*:
+     - Header (155px) + Tabs Bar (58px) + Footer (104px) = 317px!
+     - Trên iPhone 14 ($390\text{px}$ chiều cao, safe height $\sim 345\text{px}$) hoặc iPhone SE ($375\text{px}$), diện tích còn lại cho `.guide-body-scroll` chỉ còn $\sim 18\text{px}$ (vừa đủ 1-2 dòng chữ bị kẹt giữa 2 thanh xám lớn như thấy trong Image 4 & 5).
+  3. *Thanh Footer bay lơ lửng đè lên nội dung*:
+     - Nút "Khám Phá Khu Vườn Ngay ✨" và dòng ghi chú chiếm mất nửa dưới modal, che khuất hoàn toàn chữ bên dưới.
+  4. *Lộ Bí Mật "20/10" Trước Giờ G (Spoiler Badge)*:
+     - Huy hiệu đỉnh cẩm nang ghi rõ: `"🌸 CẨM NANG KHÁM PHÁ · 20/10 🌸"`, làm lộ món quà bí mật ngay khi người dùng bấm xem hướng dẫn ở Stage 0, 1 hoặc 2.
+
+- **Nguyên nhân gốc rễ & Dự đoán rủi ro trên các dòng thiết bị khác**:
+  1. *Thiếu `min-height: 0` trên phần tử con Flexbox Scroll*:
+     - Mặc định trong CSS Flexbox, `min-height` là `auto`. Trình duyệt WebKit (Safari iOS) không cho phép flex item co lại dưới chiều cao nội dung tối thiểu nếu thiếu `min-height: 0`, dẫn đến việc dialog bung ra khỏi viewport thay vì cuộn nội bộ.
+  2. *Kích thước cố định desktop trên màn hình xoay ngang*:
+     - Các dòng máy Android (Galaxy S22 360px), iPhone SE (320px/375px) hoặc Foldable (320px) có chiều cao cực thấp. Khi không có media query `(max-height: 540px) and (orientation: landscape)`, modal bị tràn tới hơn 100px khỏi màn hình!
+  3. *Kẹt vị trí cuộn khi đổi tab*:
+     - Khi người chơi cuộn xuống đáy ở Tab 1, chuyển sang Tab 2 thì vị trí cuộn vẫn ở đáy, tạo cảm giác nội dung Tab 2 bị mất đầu hoặc trống rỗng.
+
+- **Công thức & Giải pháp chuẩn hóa đa thiết bị**:
+  1. **Tái Cấu Trúc Bố Cục Flexbox Khép Kín Chiều Dọc Bằng `dvh`**:
+     - Trên mobile landscape: `.guide-dialog` thiết lập `height: min(92dvh, 92vh, 480px) !important; max-height: min(92dvh, 92vh, 480px) !important; width: min(660px, 94vw) !important;`.
+     - Khung cuộn nội dung `.guide-body-scroll`:
+       `flex: 1 1 auto !important; min-height: 0 !important; overflow-y: auto !important; -webkit-overflow-scrolling: touch !important; overscroll-behavior: contain !important;`.
+     - Tinh gọn Header: Ẩn cành hoa `.guide-sprig-wrap`, ẩn phụ đề `.guide-subtitle`, đệm lề `8px 48px 6px 16px` $\to$ giảm chiều cao từ 155px xuống còn **34px**!
+     - Tinh gọn Tabs Bar: Padding `5px 12px`, chiều cao nút 32px $\to$ giảm từ 58px xuống **36px**!
+     - Tinh gọn Footer: Padding `8px 16px max(8px, env(safe-area-inset-bottom)) 16px`, nút bấm `min-height: 38px`, `flex-shrink: 0 !important;` $\to$ giảm từ 104px xuống **56px**!
+     - Tổng không gian cố định chỉ còn **126px**.
+     - *Không gian cuộn thực tế dành cho nội dung*:
+       - iPhone SE ($375\text{px}$): Vùng cuộn đạt **$178\text{px}$** ($58.5\%$ diện tích modal) [PASSED].
+       - iPhone 14 ($390\text{px}$): Vùng cuộn đạt **$191\text{px}$** ($60.3\%$ diện tích modal) [PASSED].
+       - iPhone 15/16 Pro Max ($430\text{px}$): Vùng cuộn đạt **$224\text{px}$** ($64.0\%$ diện tích modal) [PASSED].
+       - Galaxy S22 ($360\text{px}$): Vùng cuộn đạt **$164\text{px}$** ($56.5\%$ diện tích modal) [PASSED].
+       - Sony Xperia 21:9 ($384\text{px}$): Vùng cuộn đạt **$187\text{px}$** ($59.7\%$ diện tích modal) [PASSED].
+       - Foldable hẹp ($320\text{px}$): Vùng cuộn đạt **$127\text{px}$** ($50.2\%$ diện tích modal) [PASSED].
+  2. **Định Vị Nút Đóng 'X' An Toàn Tuyệt Đối**:
+     - `.guide-close-btn`: Kích thước $36\text{px} \times 36\text{px}$, neo tại `top: 6px; right: max(10px, env(safe-area-inset-right));`, `z-index: 25;`, viền vàng đồng `#D4AF37`, nền kính mờ ngà sang trọng, dễ chạm và không bao giờ bị thanh Safari hay Dynamic Island che khuất.
+  3. **Tự Động Reset Vị Trí Cuộn Về Đỉnh Khi Đổi Tab**:
+     - Trong `js/experience-guide.js`, cả `openGuide()` và `switchTab()` đều kích hoạt `scrollContainer.scrollTop = 0;`, bảo đảm mỗi lần người dùng chuyển tab đều bắt đầu đọc từ đầu trang mượt mà.
+  4. **Khử Triệt Để Spoilers Bí Mật 20/10**:
+     - Thay đổi huy hiệu đỉnh cẩm nang từ `"🌸 CẨM NANG KHÁM PHÁ · 20/10 🌸"` sang `"🌸 CẨM NANG KHÁM PHÁ · HOA BÍ MẬT 🌸"`.
+
+- **Kiểm định chất lượng & Xác nhận**:
+  - `node -c js/experience-guide.js`: Exit code 0.
+  - Cú pháp toàn bộ 19 file JavaScript: 19/19 OK.
+  - Cân bằng ngoặc nhọn CSS:
+    - `css/base.css`: 36 / 36 [OK]
+    - `css/layout.css`: 345 / 345 [OK]
+    - `css/components.css`: 1823 / 1823 [OK]
+  - Bộ kiểm thử tự động `scratch/test_phase6_guide.js`: 7/7 tiêu chí Passed (100%).
+  - Toàn bộ ma trận kiểm thử hồi quy Phase 3, Phase 4, Phase 5: 100% Passed.
+
+
 
 

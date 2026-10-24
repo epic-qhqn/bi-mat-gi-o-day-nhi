@@ -42,6 +42,9 @@
 
         if (targetTab) {
             switchTab(targetTab);
+        } else {
+            const scrollContainer = guideModal.querySelector('.guide-body-scroll');
+            if (scrollContainer) scrollContainer.scrollTop = 0;
         }
     };
 
@@ -68,6 +71,11 @@
             pane.classList.toggle('active', isTarget);
             pane.classList.toggle('hidden', !isTarget);
         });
+
+        const scrollContainer = document.querySelector('.guide-body-scroll');
+        if (scrollContainer) {
+            scrollContainer.scrollTop = 0;
+        }
     };
 
     // Quick Hint Toast Manager
