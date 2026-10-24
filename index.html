@@ -997,6 +997,10 @@
                 </div>
                 <div class="polaroid-back">
                     <button class="polaroid-font-toggle" id="polaroid-font-btn" title="Chuyển đổi kiểu chữ (Viết tay / Dễ đọc)">Aa</button>
+                    <!-- Mặt sau 1: Trắc nghiệm "Bạn là bông hoa nào?" (render bởi js/secret-letter.js) -->
+                    <section class="flower-quiz" id="flower-quiz" aria-live="polite" aria-label="Trắc nghiệm bạn là bông hoa nào"></section>
+                    <!-- Mặt sau 2: Lời chúc ngẫu nhiên (giữ nguyên tính năng cũ) -->
+                    <div class="polaroid-back__letter" id="polaroid-letter-pane" hidden>
                     <div class="polaroid-stamp-header">EPIC ATELIER · SPECIAL MEMORY</div>
                     <div class="letter-content" id="random-letter-content">Chúc bạn 20/10 thật hạnh phúc!</div>
                     <div class="letter-author" id="random-letter-author">- Nam Sinh -</div>
@@ -1006,6 +1010,8 @@
                         <span class="footer-clover-leaf">🪷</span>
                     </div>
                     <button class="polaroid-shuffle-btn" id="polaroid-shuffle-btn" title="Đọc một lời chúc khác từ các bạn nam">Đổi lời chúc khác 🎲</button>
+                    <button class="polaroid-shuffle-btn" id="polaroid-quiz-return-btn" type="button">🌸 Làm trắc nghiệm bông hoa</button>
+                    </div>
                 </div>
             </div>
         </div>
