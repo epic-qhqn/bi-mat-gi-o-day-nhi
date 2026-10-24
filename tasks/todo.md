@@ -20,16 +20,16 @@
 ---
 
 ## Phase 3: Viết Lại Thư Chúc 20/10 & 23 Lời Chúc Nam Đồng Nghiệp
-- [ ] 3.1: Soạn lại bức thư ngỏ chính trong `js/content.js` (`letterContent`) bằng ngôn từ chân thành, tri ân sâu sắc, duyên dáng và không sáo rỗng.
-- [ ] 3.2: Viết lại toàn bộ 23 lời chúc cá nhân của các bạn nam trong `js/content.js` (`randomClubLetters`), tạo dựng cá tính riêng biệt, ấm áp và đời thường.
-- [ ] 3.3: Kiểm tra hiển thị typewriter và định dạng bưu phẩm Polaroid 3D trong `js/secret-letter.js`.
+- [-] 3.1: [BỎ QUA THEO YÊU CẦU USER] Lời chúc được huy động các bạn nam trong CLB tự tay viết để tăng tính chân thật và ý nghĩa.
+- [-] 3.2: [BỎ QUA THEO YÊU CẦU USER] Giữ nguyên cấu trúc tính năng website, không can thiệp nội dung thư thủ công.
+- [-] 3.3: [BỎ QUA THEO YÊU CẦU USER] Bỏ qua biên tập thư ngỏ.
 
 ---
 
 ## Phase 4: Nâng Tầm Ngôn Từ 27 Hồ Sơ Hoa Di Sản & Phân Tích Tương Hợp
-- [ ] 4.1: Soạn lại 27 câu quote và tiêu đề tôn vinh cho 27 loài hoa trong `js/flowers-data.js`.
-- [ ] 4.2: Trau chuốt lại bộ ba phân tích tính cách (`checklist: friend, love, pressure`) sắc sảo, tâm lý, chạm đến cảm xúc thật của phái nữ.
-- [ ] 4.3: Viết lại lời bình giải thích Tương Hợp (`match`) và Tương Khắc (`clash`) thông minh, hài hước, nhân văn.
+- [x] 4.1: Soạn lại 27 câu quote và tiêu đề tôn vinh cho 27 loài hoa trong `js/flowers-data.js` (không sến, tôn vinh khí chất).
+- [x] 4.2: Trau chuốt lại bộ ba phân tích tính cách (`checklist: friend, love, pressure`) sắc sảo, tâm lý, chạm đến cảm xúc thật của phái nữ.
+- [x] 4.3: Viết lại lời bình giải thích Tương Hợp (`match`) và Tương Khắc (`clash`) thông minh, dí dỏm, phản ánh ma sát hành vi thực tế.
 
 ---
 
