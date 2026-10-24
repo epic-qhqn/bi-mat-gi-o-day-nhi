@@ -7897,11 +7897,18 @@ body.sky-night .hint-bubble-text {
   text-align: center;
 }
 
+/* Guide button hidden by request */
+.guide-button-container {
+  display: none !important;
+  visibility: hidden !important;
+  pointer-events: none !important;
+  opacity: 0 !important;
+}
+
 /* Mobile Responsive */
 @media (max-width: 600px) {
   .guide-button-container {
-    top: calc(8px + var(--sat, 4px)) !important;
-    left: calc(10px + var(--sal, 0px)) !important;
+    display: none !important;
   }
   .guide-toggle-btn {
     width: 36px !important;
