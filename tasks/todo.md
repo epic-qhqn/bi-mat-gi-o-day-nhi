@@ -1,40 +1,44 @@
-# TODO LIST: MỞ RỘNG TRẮC NGHIỆM HOA & ĐẠI PHẪU THUẬT VĂN PHONG TIẾNG VIỆT
+# TODO LIST: ĐẠI NÂNG CẤP 54 LOÀI HOA DI SẢN & HÀNH TRÌNH TRẮC NGHIỆM ĐA TẦNG
 
-> **Trạng thái**: Đã lập kế hoạch chi tiết, đang chờ User duyệt kế hoạch trước khi bắt tay thực hiện từng Phase.
-
----
-
-## Phase 1: Mở rộng Trắc nghiệm & Xây dựng Nhánh Rẽ Tâm Hồn Sâu Sắc
-- [x] 1.1: Brainstorm 10 lần và hoàn thành 12 kịch bản trắc nghiệm giác quan tươi trẻ, tự nhiên, mượt mà, không sến.
-- [x] 1.2: Thiết kế cấu trúc nhánh rẽ thích ứng đa tầng (Góc Mộc, Góc Hoa, Góc Nắng, Góc Mơ ở Câu 3 & Câu 4; ngày nghỉ tự do ở Câu 8).
-- [x] 1.3: Cân chỉnh ma trận điểm số và thuật toán phá thế hòa điểm thông minh cho 27 loài hoa trong `js/secret-letter.js`.
-- [x] 1.4: Thử nghiệm thực tế toàn bộ các nhánh rẽ và kiểm tra tính tự nhiên, dễ thương của câu từ.
+> **Trạng thái**: Đã nghiên cứu Google Floriography kỹ lưỡng, đã lập kế hoạch chi tiết cho Milestone 2, đang chờ User duyệt kế hoạch trước khi bắt tay thực hiện từng Phase.
 
 ---
 
-## Phase 2: Đại Phẫu Thuật Văn Phong Nghi Thức Mở Vườn, Mascot & Stage HUD
-- [x] 2.1: Viết lại lời dẫn nghi thức nung sáp, đóng dấu đồng trong `js/wax-seal-ceremony.js` và `index.html` (trang nhã, tôn vinh người nhận).
-- [x] 2.2: Làm mới toàn bộ hệ thống thoại của Mascot trong `js/mascot-companion.js` (hóm hỉnh, mộc mạc, ấm áp, xóa sạch giọng máy móc).
-- [x] 2.3: Viết lại chỉ dẫn tương tác và lời thơ của Stage 1 (Mầm non), Stage 2 (Giai điệu Simon), Stage 3 (Nối sao), Stage 4 (Cây tim & Áo dài).
+## MILESTONE 1: ĐẠI PHẪU THUẬT VĂN PHONG TIẾNG VIỆT (ĐÃ HOÀN TẤT & PUSHED)
+- [x] **Phase 1**: Mở rộng trắc nghiệm 12 câu giác quan & rẽ nhánh thích ứng trong `js/secret-letter.js`.
+- [x] **Phase 2**: Đại phẫu thuật văn phong Nghi thức mở vườn, Mascot & Stage HUD (`js/wax-seal-ceremony.js`, `js/mascot-companion.js`, `js/garden-stages.js`).
+- [-] **Phase 3**: [BỎ QUA THEO YÊU CẦU USER] Lời chúc được huy động các bạn nam trong CLB tự tay viết để tăng tính chân thật và ý nghĩa.
+- [x] **Phase 4**: Viết lại toàn bộ 27 hồ sơ hoa di sản & phân tích tương hợp tâm lý học trong `js/flowers-data.js`.
+- [x] **Phase 5**: Tinh chỉnh Bưu thiếp Story Canvas 1080x1920, HUD Real-Time Guide và kiểm định toàn diện.
 
 ---
 
-## Phase 3: Viết Lại Thư Chúc 20/10 & 23 Lời Chúc Nam Đồng Nghiệp
-- [-] 3.1: [BỎ QUA THEO YÊU CẦU USER] Lời chúc được huy động các bạn nam trong CLB tự tay viết để tăng tính chân thật và ý nghĩa.
-- [-] 3.2: [BỎ QUA THEO YÊU CẦU USER] Giữ nguyên cấu trúc tính năng website, không can thiệp nội dung thư thủ công.
-- [-] 3.3: [BỎ QUA THEO YÊU CẦU USER] Bỏ qua biên tập thư ngỏ.
+## MILESTONE 2: ĐẠI NÂNG CẤP 54 LOÀI HOA DI SẢN & TRẮC NGHIỆM TÂM HỒN ĐA TẦNG
+
+### Phase 6: Bách Khoa Toàn Thư 54 Loài Hoa Di Sản (`js/flowers-data.js`)
+- [ ] 6.1: Bảo tồn và chuẩn hóa 27 loài hoa hiện tại, giữ tính tương thích 100% với các tính năng đang chạy.
+- [ ] 6.2: Nghiên cứu và soạn thảo 27 loài hoa di sản bổ sung (Cát Tường, Linh Lan, Quỳnh, Ngọc Lan, Thiên Điểu, Mộc Hương, Bồ Công Anh, Thanh Liễu, Diên Vĩ, Thược Dược, Tử Đằng, Cúc Thạch Thảo, Thủy Tiên, Sim Rừng, Mộc Miên, Bách Nhật, Cúc Tana, Sử Quân Tử, Dạ Lan Hương, Huệ Ta, Phong Lữ, Hoa Mua, Dừa Cạn, Tuyết Mai, Hồng Môn, Lan Vũ Nữ, Bằng Lăng).
+- [ ] 6.3: Thiết kế đầy đủ bộ nhận diện cho 27 loài hoa mới (`title`, `quote`, `traits`, `match`, `clash`, `checklist: friend, love, pressure`).
+- [ ] 6.4: Kiểm tra tính cân bằng cảm xúc và tâm lý học giữa các loài hoa, đảm bảo không có loài nào bị lép vế hay thiếu chiều sâu.
 
 ---
 
-## Phase 4: Nâng Tầm Ngôn Từ 27 Hồ Sơ Hoa Di Sản & Phân Tích Tương Hợp
-- [x] 4.1: Soạn lại 27 câu quote và tiêu đề tôn vinh cho 27 loài hoa trong `js/flowers-data.js` (không sến, tôn vinh khí chất).
-- [x] 4.2: Trau chuốt lại bộ ba phân tích tính cách (`checklist: friend, love, pressure`) sắc sảo, tâm lý, chạm đến cảm xúc thật của phái nữ.
-- [x] 4.3: Viết lại lời bình giải thích Tương Hợp (`match`) và Tương Khắc (`clash`) thông minh, dí dỏm, phản ánh ma sát hành vi thực tế.
+### Phase 7: Kiến Tạo Hành Trình Trắc Nghiệm Đa Nhánh Sâu Sắc (16 Kịch Bản Giác Quan)
+- [ ] 7.1: Thiết kế 16 kịch bản trắc nghiệm sâu sắc, chia làm 5 chặng hành trình tâm hồn tự nhiên, không gượng ép.
+- [ ] 7.2: Mở rộng nhánh rẽ thích ứng đa tầng (Chặng 2: 4 góc không gian độc bản Góc Mộc, Góc Thơ, Góc Nắng, Góc Gió; Chặng 4: Nhánh ngày nghỉ tự do).
+- [ ] 7.3: Tinh chỉnh câu từ các phương án lựa chọn: giàu hình ảnh, nhịp điệu êm ái, chạm vào cảm xúc người đọc.
 
 ---
 
-## Phase 5: Tinh Chỉnh Bưu Thiếp Story, Realtime Guide & Thẩm Định Toàn Diện
-- [x] 5.1: Chuẩn hóa ngôn từ trên bưu thiếp Di sản xuất ảnh Canvas 1080x1920 trong `js/boarding-pass-modal.js` và `js/boarding-pass-canvas.js` (loại bỏ sạch sến/nàng thơ, tôn vinh nét duyên tươi trẻ).
-- [x] 5.2: Tinh chỉnh câu chữ trong HUD hướng dẫn thời gian thực (`js/realtime-guide.js`, `js/experience-guide.js`).
-- [x] 5.3: Thực hiện kiểm định cú pháp JS (`node -c js/*.js`), cân bằng CSS và kiểm thử giao diện responsive trên mọi thiết bị.
-- [x] 5.4: Báo cáo kết quả và đồng bộ Git sạch sẽ.
+### Phase 8: Tối Ưu Giải Thuật Điểm Số Đa Chiều & Phá Thế Hòa Điểm Cho 54 Loài Hoa
+- [ ] 8.1: Xây dựng ma trận ánh xạ điểm số đa chiều (8 trục tính cách: Serene, Radiant, Resilient, Gentle, Free, Poetic, Noble, Authentic).
+- [ ] 8.2: Lập trình thuật toán phá thế hòa điểm thông minh (Vector Affinity Tie-Breaker) dựa trên độ tương đồng vector đặc trưng tâm hồn.
+- [ ] 8.3: Kiểm tra tính phân bổ xác suất, đảm bảo cả 54 loài hoa đều có kịch bản lựa chọn để xuất hiện.
+
+---
+
+### Phase 9: Tích Hợp Đồng Bộ Giao Diện, Bưu Thiếp Canvas & Kiểm Thử Toàn Diện
+- [ ] 9.1: Đồng bộ hóa hiển thị 54 loài hoa trong thẻ bưu phẩm Polaroid 3D (`js/secret-letter.js`).
+- [ ] 9.2: Đồng bộ hóa bộ chọn hoa và chức năng xuất ảnh Canvas 1080x1920 Story trong `js/boarding-pass-modal.js` và `js/boarding-pass-canvas.js`.
+- [ ] 9.3: Thực hiện kiểm định chất lượng: cú pháp JS (`node -c js/*.js`), cân bằng CSS và kiểm thử giao diện responsive trên mọi thiết bị.
+- [ ] 9.4: Báo cáo kết quả và đồng bộ Git sạch sẽ theo tiêu chuẩn Team 3 Devs.
