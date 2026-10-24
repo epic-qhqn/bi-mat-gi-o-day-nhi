@@ -256,21 +256,7 @@ body.stage-3-active .garden-ui {
 }
 
 .garden-stage-selector {
-  position: fixed;
-  bottom: calc(18px + var(--sab, 0px));
-  left: calc(18px + var(--sal, 0px));
-  z-index: 2800;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  pointer-events: auto;
-  transition: opacity 0.4s cubic-bezier(0.16, 1, 0.3, 1), transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-.garden-stage-selector.hidden {
-  opacity: 0;
-  pointer-events: none;
-  transform: translateY(14px);
+  display: none !important;
 }
 
 /* Nút ngọc thu gọn góc dưới màn hình */
