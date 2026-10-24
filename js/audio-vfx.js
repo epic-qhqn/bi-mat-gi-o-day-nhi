@@ -2,6 +2,53 @@
 window.AudioContext = window.AudioContext || window.webkitAudioContext;
 window.audioCtx = null;
 
+// =========================================================================
+// VIETNAMESE HERITAGE HAPTIC ENGINE (MOBILE TAPTIC FEEDBACK)
+// =========================================================================
+(function() {
+    'use strict';
+
+    const HAPTIC_PRESETS = {
+        harp: 10,                 // 10ms: Botanical harp string pluck
+        pluck: 10,
+        tap: 10,                  // 10ms: Button / quiz option / bead selection
+        light: 8,                 // 8ms: Subtle interface touch
+        medium: 15,               // 15ms: Card touch / UI change
+        flip: 15,                 // 15ms: 3D Polaroid flip card rotation
+        unmold: 18,               // 18ms: Wax seal unmold separation pop
+        pop: 18,
+        match: [8, 15, 12],       // Strike match friction flutter
+        strike: [8, 15, 12],
+        candle: [15, 25],         // Candle ignition warmth
+        pour: [6, 12, 6, 18],     // Molten wax bead pour cadence
+        seal: [35, 20, 25],       // Heavy brass seal pressing into warm wax
+        stamp: [35, 20, 25],
+        success: [12, 35, 18],    // Quiz completed / tree bloom / stage progress
+        blossom: [12, 35, 18],
+        clover: [12, 35, 18]
+    };
+
+    let lastHapticTime = 0;
+
+    window.triggerHaptic = function(patternOrPreset) {
+        if (typeof navigator === 'undefined' || typeof navigator.vibrate !== 'function') return false;
+
+        const now = Date.now();
+        if (now - lastHapticTime < 30 && typeof patternOrPreset === 'string') return false;
+        lastHapticTime = now;
+
+        try {
+            let pattern = patternOrPreset;
+            if (typeof patternOrPreset === 'string') {
+                pattern = HAPTIC_PRESETS[patternOrPreset] || 10;
+            }
+            return navigator.vibrate(pattern);
+        } catch (_) {
+            return false;
+        }
+    };
+})();
+
 window.initAudio = () => {
     if (!window.audioCtx) window.audioCtx = new window.AudioContext();
     if (window.audioCtx.state === 'suspended') window.audioCtx.resume();

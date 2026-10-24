@@ -384,6 +384,7 @@
       if (toolType === 'water' && !state.isWatered && (state.currentStage === 0 || state.currentStage === 1)) {
         state.isWatered = true;
         if (gardenMsg) gardenMsg.textContent = "Đã tưới nước thành công!";
+        if (typeof window.triggerHaptic === 'function') window.triggerHaptic('success');
         if (typeof window.createWaterVFX === 'function') window.createWaterVFX(targetX, targetY);
         if (typeof window.triggerMascotWatering === 'function') window.triggerMascotWatering();
         el.dataset.used = 'true';
@@ -394,6 +395,7 @@
       } else if (toolType === 'fertilize' && !state.isFertilized && (state.currentStage === 0 || state.currentStage === 2)) {
         state.isFertilized = true;
         if (gardenMsg) gardenMsg.textContent = "Đã bón phân thành công!";
+        if (typeof window.triggerHaptic === 'function') window.triggerHaptic('success');
         if (typeof window.createFertilizerVFX === 'function') window.createFertilizerVFX(targetX, targetY);
         if (typeof window.triggerMascotFertilizing === 'function') window.triggerMascotFertilizing();
         el.dataset.used = 'true';

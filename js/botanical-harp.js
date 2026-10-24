@@ -83,6 +83,10 @@
 
         spawnHarpNoteParticle(px, py);
 
+        if (typeof window.triggerHaptic === 'function') {
+            window.triggerHaptic('harp');
+        }
+
         if (typeof window.playMelodicHarpChime === 'function') {
             window.playMelodicHarpChime(index);
         }

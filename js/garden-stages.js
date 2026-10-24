@@ -622,6 +622,7 @@
                 e.stopPropagation();
                 cloverEl.classList.add('active');
                 setTimeout(() => cloverEl.classList.remove('active'), 2500);
+                if (typeof window.triggerHaptic === 'function') window.triggerHaptic('clover');
                 if (typeof window.triggerMascotCloverCheer === 'function') {
                     window.triggerMascotCloverCheer();
                 } else if (typeof window.playChimeSFX === 'function') {

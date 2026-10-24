@@ -728,7 +728,10 @@
         return node;
     };
     const pad2 = (n) => String(n).padStart(2, '0');
-    const tapSfx = () => { if (typeof window.playKeyTapSFX !== 'undefined') window.playKeyTapSFX(); };
+    const tapSfx = () => {
+        if (typeof window.playKeyTapSFX !== 'undefined') window.playKeyTapSFX();
+        if (typeof window.triggerHaptic === 'function') window.triggerHaptic('tap');
+    };
 
     // Phóng to thẻ khi mặt sau đang là trắc nghiệm
     const syncQuizDialogMode = () => {
@@ -904,6 +907,10 @@
             buildLinkButton('💌 Xem thiệp & lời chúc', () => { tapSfx(); setBackView('letter'); })
         );
 
+        if (typeof window.triggerHaptic === 'function') {
+            window.triggerHaptic('success');
+        }
+
         stage.append(
             el('p', 'flower-quiz__eyebrow', 'YOUR FLOWER ID · 20/10 EDITION'),
             el('h3', 'flower-quiz__result-title', result.title),
@@ -980,6 +987,7 @@
                 polaroid.classList.toggle('flipped');
                 syncQuizDialogMode();
                 updatePolaroidBadge();
+                if (typeof window.triggerHaptic === 'function') window.triggerHaptic('flip');
                 if (typeof window.playKeyTapSFX !== 'undefined') window.playKeyTapSFX();
             });
         }

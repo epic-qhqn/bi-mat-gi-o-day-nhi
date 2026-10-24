@@ -499,7 +499,7 @@
         isMatchLit = true;
         if (typeof window.initAudio === 'function') window.initAudio();
         if (typeof window.playMatchStrikeSFX === 'function') window.playMatchStrikeSFX();
-        if (navigator.vibrate) navigator.vibrate(15);
+        if (typeof window.triggerHaptic === 'function') window.triggerHaptic('match');
 
         if (e && e.clientX && e.clientY) {
             spawnSparkParticles(e.clientX, e.clientY);
@@ -522,7 +522,7 @@
         isCandleLit = true;
         if (typeof window.initAudio === 'function') window.initAudio();
         if (typeof window.playCandleLightSFX === 'function') window.playCandleLightSFX();
-        if (navigator.vibrate) navigator.vibrate([15, 25]);
+        if (typeof window.triggerHaptic === 'function') window.triggerHaptic('candle');
 
         if (candleFlameEl) candleFlameEl.classList.remove('hidden');
         if (candleHaloEl) candleHaloEl.classList.remove('hidden');
@@ -583,7 +583,7 @@
         if (typeof window.playBeadChimeSFX === 'function') {
             window.playBeadChimeSFX(conf.pitch);
         }
-        if (navigator.vibrate) navigator.vibrate(10);
+        if (typeof window.triggerHaptic === 'function') window.triggerHaptic('tap');
 
         updateBeadDisplayInSpoon();
 
@@ -672,7 +672,7 @@
             }
             setTimeout(() => crestSelectorWrap.classList.remove('needs-attention'), 2600);
         }
-        if (navigator.vibrate) navigator.vibrate(20);
+        if (typeof window.triggerHaptic === 'function') window.triggerHaptic('medium');
         if (typeof window.refreshRealtimeGuide === 'function') window.refreshRealtimeGuide();
     };
 
@@ -728,7 +728,7 @@
         isWaxStirred = true;
         if (typeof window.initAudio === 'function') window.initAudio();
         if (typeof window.playWaxStirSFX === 'function') window.playWaxStirSFX();
-        if (navigator.vibrate) navigator.vibrate([10, 15]);
+        if (typeof window.triggerHaptic === 'function') window.triggerHaptic('pour');
 
         if (glassStirringRodEl) glassStirringRodEl.classList.add('stirring-anim');
 
@@ -768,7 +768,7 @@
         setTimeout(() => {
             if (waxPourStreamEl) waxPourStreamEl.classList.remove('hidden');
             if (typeof window.playWaxPourSFX === 'function') window.playWaxPourSFX();
-            if (navigator.vibrate) navigator.vibrate(20);
+            if (typeof window.triggerHaptic === 'function') window.triggerHaptic('pour');
         }, 150);
 
         setTimeout(() => {
@@ -795,7 +795,7 @@
         isFlakesSprinkled = true;
         if (typeof window.initAudio === 'function') window.initAudio();
         if (typeof window.playSprinkleFlakesSFX === 'function') window.playSprinkleFlakesSFX();
-        if (navigator.vibrate) navigator.vibrate([10, 20]);
+        if (typeof window.triggerHaptic === 'function') window.triggerHaptic('light');
 
         if (artisanSprinkleVial) {
             artisanSprinkleVial.animate([
@@ -849,7 +849,7 @@
             if (waxSealGuideTip) {
                 waxSealGuideTip.innerHTML = `<span>✨ Hãy ghi tên của bạn lên khuôn đồng trước nhé!</span>`;
             }
-            if (navigator.vibrate) navigator.vibrate(20);
+            if (typeof window.triggerHaptic === 'function') window.triggerHaptic('medium');
             return { ready: false, step: 0 };
         }
 
@@ -931,7 +931,7 @@
                 } else if (typeof window.playWaxStampSFX === 'function') {
                     window.playWaxStampSFX();
                 }
-                if (navigator.vibrate) navigator.vibrate([25, 45]);
+                if (typeof window.triggerHaptic === 'function') window.triggerHaptic('seal');
 
                 if (waxHotPoolEl) waxHotPoolEl.classList.add('squished');
                 if (waxTargetZoneEl) waxTargetZoneEl.classList.add('stamped');
@@ -954,7 +954,7 @@
                     if (typeof window.playWaxUnmoldPopASMR === 'function') {
                         window.playWaxUnmoldPopASMR();
                     }
-                    if (navigator.vibrate) navigator.vibrate(20);
+                    if (typeof window.triggerHaptic === 'function') window.triggerHaptic('unmold');
 
                     if (waxCoolingIndicator) waxCoolingIndicator.classList.add('hidden');
                     if (waxHotPoolEl) waxHotPoolEl.classList.add('hidden');
@@ -1302,7 +1302,7 @@
                     if (waxSealGuideTip) {
                         waxSealGuideTip.innerHTML = `<span>✨ Hãy nhập tên của bạn lên khuôn đồng trước nhé!</span>`;
                     }
-                    if (navigator.vibrate) navigator.vibrate(20);
+                    if (typeof window.triggerHaptic === 'function') window.triggerHaptic('medium');
                     return;
                 }
 

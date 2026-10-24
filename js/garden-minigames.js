@@ -197,6 +197,7 @@
         if (simonPlaying || (state.currentStage !== undefined && state.currentStage !== 1)) return;
 
         node.classList.add('highlight');
+        if (typeof window.triggerHaptic === 'function') window.triggerHaptic('tap');
         if (typeof window.playSimonSFX !== 'undefined') window.playSimonSFX(index);
         setTimeout(() => node.classList.remove('highlight'), 220);
 
@@ -217,6 +218,7 @@
             await playSimonSequence(currentGen);
         } else if (simonInput.length === simonSequence.length) {
             simonPlaying = true;
+            if (typeof window.triggerHaptic === 'function') window.triggerHaptic('success');
             if (typeof window.duckBgmForMinigame === 'function') {
                 window.duckBgmForMinigame(false, 2000);
             }
@@ -595,6 +597,9 @@
         decoyEl.dataset.dissolved = 'true';
 
         const silent = options.silent === true;
+        if (!silent && typeof window.triggerHaptic === 'function') {
+            window.triggerHaptic('medium');
+        }
         if (!silent && typeof window.playDecoyMistSFX === 'function') {
             window.playDecoyMistSFX({ volume: 1.0 });
         } else if (silent && typeof window.playDecoyMistSFX === 'function') {
@@ -761,6 +766,7 @@
 
         constellationInput.push(index);
         activeStarIndex = index;
+        if (typeof window.triggerHaptic === 'function') window.triggerHaptic('tap');
         const star = starCoords[index];
         if (star && star.el) {
             star.el.classList.add('active');
@@ -802,6 +808,7 @@
             const constName = activeConstellationName ? activeConstellationName.latinName : 'Định Mệnh';
             const constSub = activeConstellationName ? ` (${activeConstellationName.subtitle})` : '';
             const msg = document.getElementById('garden-message');
+            if (typeof window.triggerHaptic === 'function') window.triggerHaptic('success');
             if (msg) msg.textContent = `Bầu trời rực sáng! Chòm sao ${constName}${constSub} đã nối liền ước nguyện 🌟✨`;
             if (typeof window.playChimeSFX !== 'undefined') window.playChimeSFX();
 

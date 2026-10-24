@@ -32,8 +32,8 @@
 ---
 
 ### Phase 11: Bộ Nâng Cấp Xúc Giác Haptic & Vi Tương Tác Giác Quan (`js/audio-vfx.js`, `js/environment.js`)
-- [ ] 11.1: **Tích hợp Phản Hồi Xúc Giác Haptic (Mobile Taptic Engine)**: Thêm các nhịp rung vi mô thông qua Web Vibration API: nhịp gảy 10ms khi chạm dây đàn harp, chuỗi lách tách `[8, 15, 12]ms` khi quẹt diêm lấy lửa, một nhịp nén đầm 30ms khi triện son ấn vào sáp ấm, nhịp rung nhẹ 15ms khi lật thiệp Polaroid.
-- [ ] 11.2: **Vệt Cánh Sen & Bụi Kim Tuyến Theo Chuột trên PC (Stardust & Blossom Trail)**: Canvas hạt vi mô siêu nhẹ (60fps, tự động tắt trên Mobile) tỏa ra những cánh hoa sen li ti và bụi kim tuyến lướt theo chuyển động chuột của người dùng trên PC, hover vào tương tác hé nở búp hoa.
+- [x] 11.1: **Tích hợp Phản Hồi Xúc Giác Haptic (Mobile Taptic Engine)**: Thêm các nhịp rung vi mô thông qua Web Vibration API: nhịp gảy 10ms khi chạm dây đàn harp, chuỗi lách tách `[8, 15, 12]ms` khi quẹt diêm lấy lửa, một nhịp nén đầm 30ms khi triện son ấn vào sáp ấm, nhịp rung nhẹ 15ms khi lật thiệp Polaroid, nhịp cỏ 4 lá may mắn `[12, 35, 18]ms`.
+- [x] 11.2: **Vệt Cánh Sen & Bụi Kim Tuyến Theo Chuột trên PC (Stardust & Blossom Trail)**: Canvas hạt vi mô siêu nhẹ (60fps, tự động tắt trên Mobile) tỏa ra những cánh hoa sen li ti và bụi kim tuyến lướt theo chuyển động chuột của người dùng trên PC, hover vào tương tác hé nở búp hoa / bụi sao vàng.
 
 ---
 

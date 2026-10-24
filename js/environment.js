@@ -740,6 +740,200 @@ window.startEnvironmentCycle = () => {
     window.WeatherFX = { rain, sunlight, breeze };
 })();
 
+/* ==========================================================================
+   PHASE 11: BLOSSOM & STARDUST PC CURSOR TRAIL ENGINE (#blossom-cursor-canvas)
+   Micro-particle canvas trail (lotus petal shards & golden stardust diamonds).
+   - Exclusively active on PC/fine-pointer devices.
+   - Throttled particle budget (capped at 24 on desktop, 12 on low-end).
+   - Auto-sleeping RAF loop: 0% CPU consumption when mouse is stationary.
+   - Tactile bloom sparkle burst when hovering interactive elements.
+   ========================================================================== */
+(function() {
+    'use strict';
+
+    let canvas = null;
+    let ctx = null;
+    let particles = [];
+    let isLoopRunning = false;
+    let animId = null;
+    let lastX = -100;
+    let lastY = -100;
+    let lastSpawnTime = 0;
+    let dpr = 1;
+
+    const PETAL_COLORS = [
+        '#E28490', // Lotus pink
+        '#D47A88', // Vintage deep lotus
+        '#F7C5CC', // Pale petal rose
+        '#E89EA8'  // Silk blush
+    ];
+
+    const STARDUST_COLORS = [
+        '#D4AF37', // Heritage gold
+        '#F5D061', // Soft luminous amber
+        '#FFF1C5', // Starlight ivory
+        '#E6C265'  // Spun brass
+    ];
+
+    function resizeCanvas() {
+        if (!canvas) return;
+        dpr = Math.min(window.devicePixelRatio || 1, 2);
+        canvas.width = Math.round(window.innerWidth * dpr);
+        canvas.height = Math.round(window.innerHeight * dpr);
+        if (ctx) {
+            ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+        }
+    }
+
+    function spawnParticle(x, y, type = 'auto', extraVx = 0, extraVy = 0) {
+        const maxBudget = window.isLowEndDevice ? 12 : 24;
+        if (particles.length >= maxBudget) {
+            particles.shift();
+        }
+
+        const isPetal = type === 'petal' || (type === 'auto' && Math.random() < 0.45);
+        const p = {
+            x: x + (Math.random() - 0.5) * 6,
+            y: y + (Math.random() - 0.5) * 6,
+            type: isPetal ? 'petal' : 'stardust',
+            size: isPetal ? (2.4 + Math.random() * 2.2) : (1.6 + Math.random() * 2.0),
+            color: isPetal
+                ? PETAL_COLORS[Math.floor(Math.random() * PETAL_COLORS.length)]
+                : STARDUST_COLORS[Math.floor(Math.random() * STARDUST_COLORS.length)],
+            alpha: 0.85 + Math.random() * 0.15,
+            decay: isPetal ? (0.016 + Math.random() * 0.012) : (0.022 + Math.random() * 0.016),
+            vx: (Math.random() - 0.5) * 0.8 + extraVx,
+            vy: (isPetal ? (0.35 + Math.random() * 0.55) : (-0.2 + (Math.random() - 0.5) * 0.6)) + extraVy,
+            rot: Math.random() * Math.PI * 2,
+            vRot: (Math.random() - 0.5) * (isPetal ? 0.06 : 0.03),
+            flip: Math.random() * Math.PI
+        };
+
+        particles.push(p);
+
+        if (!isLoopRunning) {
+            isLoopRunning = true;
+            animId = requestAnimationFrame(renderLoop);
+        }
+    }
+
+    function renderLoop() {
+        if (!ctx || !canvas) {
+            isLoopRunning = false;
+            return;
+        }
+
+        ctx.clearRect(0, 0, window.innerWidth, window.innerHeight);
+
+        const alive = [];
+
+        for (let i = 0; i < particles.length; i++) {
+            const p = particles[i];
+            p.x += p.vx;
+            p.y += p.vy;
+            p.rot += p.vRot;
+            p.flip += 0.04;
+            p.alpha -= p.decay;
+            p.size *= 0.988;
+
+            if (p.alpha <= 0.01 || p.size <= 0.3) continue;
+
+            alive.push(p);
+
+            ctx.save();
+            ctx.translate(p.x, p.y);
+            ctx.rotate(p.rot);
+            ctx.globalAlpha = Math.max(0, Math.min(1, p.alpha));
+
+            if (p.type === 'petal') {
+                const flipScale = 0.35 + 0.65 * Math.abs(Math.cos(p.flip));
+                ctx.scale(p.size * flipScale, p.size);
+                ctx.fillStyle = p.color;
+                ctx.beginPath();
+                ctx.moveTo(0, -6);
+                ctx.quadraticCurveTo(4, -1, 0, 6);
+                ctx.quadraticCurveTo(-4, -1, 0, -6);
+                ctx.fill();
+            } else {
+                ctx.fillStyle = p.color;
+                ctx.shadowColor = 'rgba(212, 175, 55, 0.55)';
+                ctx.shadowBlur = 4;
+                const s = p.size;
+                ctx.beginPath();
+                ctx.moveTo(0, -s * 1.8);
+                ctx.quadraticCurveTo(0, 0, s * 1.8, 0);
+                ctx.quadraticCurveTo(0, 0, 0, s * 1.8);
+                ctx.quadraticCurveTo(0, 0, -s * 1.8, 0);
+                ctx.quadraticCurveTo(0, 0, 0, -s * 1.8);
+                ctx.fill();
+            }
+
+            ctx.restore();
+        }
+
+        particles = alive;
+
+        if (particles.length > 0) {
+            animId = requestAnimationFrame(renderLoop);
+        } else {
+            isLoopRunning = false;
+            ctx.clearRect(0, 0, window.innerWidth, window.innerHeight);
+        }
+    }
+
+    window.initBlossomCursorTrail = function() {
+        const hasFinePointer = window.matchMedia && window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+        if (!hasFinePointer) return;
+
+        const isTouchScreen = ('ontouchstart' in window) && (navigator.maxTouchPoints > 1) && window.innerWidth <= 1024;
+        if (isTouchScreen) return;
+
+        canvas = document.getElementById('blossom-cursor-canvas');
+        if (!canvas) return;
+        ctx = canvas.getContext('2d');
+        if (!ctx) return;
+
+        resizeCanvas();
+        window.addEventListener('resize', resizeCanvas, { passive: true });
+
+        let lastMoveEventTime = 0;
+
+        window.addEventListener('pointermove', (e) => {
+            if (e.pointerType && e.pointerType !== 'mouse') return;
+            const now = Date.now();
+            if (now - lastMoveEventTime < 24) return;
+            lastMoveEventTime = now;
+
+            const x = e.clientX;
+            const y = e.clientY;
+            const dist = Math.hypot(x - lastX, y - lastY);
+
+            if (dist > 8 || now - lastSpawnTime > 45) {
+                lastSpawnTime = now;
+                lastX = x;
+                lastY = y;
+                spawnParticle(x, y, 'auto');
+
+                const target = e.target;
+                if (target && target.closest && target.closest('button, a, .wax-bead-item, .harp-string-wire, .simon-node, .star, .polaroid-card, .sprout-lucky-clover, .crest-opt-btn, .celestial-orrery-disc, .zen-mode-toggle')) {
+                    const angle1 = Math.random() * Math.PI * 2;
+                    const angle2 = angle1 + Math.PI * 0.8;
+                    spawnParticle(x, y, 'stardust', Math.cos(angle1) * 0.9, Math.sin(angle1) * 0.9);
+                    spawnParticle(x, y, 'stardust', Math.cos(angle2) * 0.9, Math.sin(angle2) * 0.9);
+                }
+            }
+        }, { passive: true });
+
+        document.addEventListener('visibilitychange', () => {
+            if (document.hidden) {
+                particles = [];
+                if (ctx) ctx.clearRect(0, 0, window.innerWidth, window.innerHeight);
+                isLoopRunning = false;
+            }
+        });
+    };
+})();
+
 // Tự động kích hoạt phong cảnh đồng quê khi trang web sẵn sàng
 function bootCountrysideEnvironment() {
     if (typeof window.initCountrysideWildflowers === 'function') {
@@ -747,6 +941,9 @@ function bootCountrysideEnvironment() {
     }
     if (typeof window.initFallingLeavesCanvas === 'function') {
         window.initFallingLeavesCanvas();
+    }
+    if (typeof window.initBlossomCursorTrail === 'function') {
+        window.initBlossomCursorTrail();
     }
 }
 
