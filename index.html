@@ -37,6 +37,27 @@
         </div>
     </div>
 
+    <!-- Phase 12: Top Experiential Dock (Zen Mode Toggle & Instant Garden Polaroid Capture) -->
+    <div id="top-experiential-dock" class="top-experiential-dock" aria-label="Thao tác trải nghiệm khu vườn">
+        <button type="button" id="zen-mode-toggle-btn" class="experiential-btn zen-btn" title="Chế Độ Tĩnh Lặng (Ẩn toàn bộ giao diện để ngắm cảnh)" aria-label="Chế độ tĩnh lặng">
+            <span class="btn-halo" aria-hidden="true"></span>
+            <span class="btn-icon">🌕</span>
+            <span class="btn-label">Tĩnh Lặng</span>
+        </button>
+        <button type="button" id="instant-garden-capture-btn" class="experiential-btn capture-btn" title="Chụp ảnh Polaroid kỷ niệm khu vườn" aria-label="Chụp ảnh kỷ niệm">
+            <span class="btn-halo" aria-hidden="true"></span>
+            <span class="btn-icon">📸</span>
+            <span class="btn-label">Lưu Khoảnh Khắc</span>
+        </button>
+    </div>
+
+    <!-- Zen Mode Floating Return Hint -->
+    <div id="zen-mode-return-hint" class="zen-mode-return-hint hidden" aria-hidden="true">
+        <span class="zen-hint-dot">✦</span>
+        <span>Chạm bất kỳ đâu để trở lại khu vườn 🍃</span>
+        <span class="zen-hint-dot">✦</span>
+    </div>
+
     <!-- Real-Time Interactive Guidance HUD & Dynamic Mission Bar -->
     <div id="realtime-guide-hud" class="realtime-guide-hud" role="status" aria-live="polite">
         <div class="realtime-guide-pill">
@@ -1105,11 +1126,42 @@
         </div>
     </div>
 
+    <!-- Chớp sáng máy ảnh toàn màn hình khi chụp/tải ảnh (Dùng chung cho Bưu Thiếp & Polaroid Vườn) -->
+    <div id="camera-flash-overlay" class="camera-flash-overlay"></div>
+
+    <!-- Modal: Lưu Khoảnh Khắc Vườn Kỷ Niệm (Phase 12 Instant Garden Polaroid Capture) -->
+    <div id="garden-polaroid-modal" class="modal-overlay hidden" style="z-index: 100005;">
+        <div class="garden-polaroid-dialog lyrical-panel">
+            <button type="button" id="close-garden-polaroid-btn" class="close-polaroid-btn" aria-label="Đóng ảnh kỷ niệm">✕</button>
+            
+            <div class="polaroid-dialog-header">
+                <span class="dialog-badge">🌸 KHOẢNH KHẮC VƯỜN KỶ NIỆM · 20/10 🌸</span>
+                <h3 class="dialog-title">Bức Ảnh Polaroid Dành Tặng Riêng Bạn</h3>
+                <p class="dialog-subtitle">Lưu giữ khoảnh khắc khu vườn nở rộ và nét an yên ngày đặc biệt</p>
+            </div>
+
+            <div class="garden-polaroid-preview-wrap">
+                <div class="garden-polaroid-frame" id="garden-polaroid-frame">
+                    <canvas id="garden-polaroid-canvas" width="1080" height="1320" class="garden-polaroid-canvas"></canvas>
+                </div>
+            </div>
+
+            <div class="garden-polaroid-actions">
+                <button type="button" id="download-garden-polaroid-btn" class="ticket-action-btn primary-gold">
+                    <span>📥</span>
+                    <span>Tải Ảnh Về Máy (HD)</span>
+                </button>
+                <button type="button" id="share-garden-polaroid-btn" class="ticket-action-btn primary-navy">
+                    <span>🕊️</span>
+                    <span>Chia Sẻ Khoảnh Khắc</span>
+                </button>
+            </div>
+            <div id="polaroid-action-toast" class="ticket-toast hidden"></div>
+        </div>
+    </div>
+
     <!-- Modal Bưu Thiếp Kỷ Niệm 20/10 · Hương Đồng Cỏ Nội (Phase 3 Heritage Keepsake) -->
     <div id="boarding-pass-modal" class="modal-overlay hidden" style="z-index: 100001;">
-        <!-- Chớp sáng máy ảnh toàn màn hình khi chụp/tải ảnh -->
-        <div id="camera-flash-overlay" class="camera-flash-overlay"></div>
-
         <div class="boarding-pass-dialog">
             <button id="close-boarding-pass-btn" class="close-pass-btn" aria-label="Đóng bưu thiếp">✕</button>
             

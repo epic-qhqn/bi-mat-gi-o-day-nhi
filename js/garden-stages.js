@@ -662,9 +662,431 @@
         }
     };
 
+    // =========================================================================
+    // PHASE 12: CHẾ ĐỘ CHIÊM NGƯỠNG TĨNH LẶNG (ZEN MODE TOGGLE)
+    // =========================================================================
+    let zenHintTimeout = null;
+
+    const toggleZenMode = (forceState) => {
+        const isZen = typeof forceState === 'boolean'
+            ? forceState
+            : !document.body.classList.contains('zen-mode-active');
+
+        const zenBtn = document.getElementById('zen-mode-toggle-btn');
+        const zenHint = document.getElementById('zen-mode-return-hint');
+
+        if (isZen) {
+            document.body.classList.add('zen-mode-active');
+            if (zenBtn) zenBtn.setAttribute('aria-pressed', 'true');
+            if (typeof window.triggerHaptic === 'function') window.triggerHaptic('medium');
+            if (typeof window.playChimeSFX === 'function') window.playChimeSFX();
+
+            if (zenHint) {
+                zenHint.classList.remove('hidden');
+                zenHint.style.opacity = '1';
+                if (zenHintTimeout) clearTimeout(zenHintTimeout);
+                zenHintTimeout = setTimeout(() => {
+                    zenHint.style.opacity = '0';
+                    setTimeout(() => {
+                        if (document.body.classList.contains('zen-mode-active')) {
+                            zenHint.classList.add('hidden');
+                            zenHint.style.opacity = '';
+                        }
+                    }, 600);
+                }, 3600);
+            }
+        } else {
+            document.body.classList.remove('zen-mode-active');
+            if (zenBtn) zenBtn.setAttribute('aria-pressed', 'false');
+            if (zenHint) {
+                zenHint.classList.add('hidden');
+                zenHint.style.opacity = '';
+            }
+            if (zenHintTimeout) clearTimeout(zenHintTimeout);
+            if (typeof window.triggerHaptic === 'function') window.triggerHaptic('light');
+        }
+    };
+
+    const initZenMode = () => {
+        const zenBtn = document.getElementById('zen-mode-toggle-btn');
+        if (zenBtn) {
+            zenBtn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                toggleZenMode();
+            });
+        }
+
+        document.addEventListener('click', (e) => {
+            if (document.body.classList.contains('zen-mode-active')) {
+                if (e.target && e.target.closest('#zen-mode-toggle-btn')) return;
+                toggleZenMode(false);
+            }
+        });
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && document.body.classList.contains('zen-mode-active')) {
+                toggleZenMode(false);
+            }
+        });
+    };
+    window.toggleZenMode = toggleZenMode;
+
+    // =========================================================================
+    // PHASE 12: CHỤP KHOẢNH KHẮC VƯỜN KỶ NIỆM (INSTANT GARDEN POLAROID CAPTURE)
+    // =========================================================================
+    const renderGardenPolaroidToCanvas = (targetCanvas) => {
+        if (!targetCanvas) return;
+        const w = 1080;
+        const h = 1320;
+        targetCanvas.width = w;
+        targetCanvas.height = h;
+        const ctx = targetCanvas.getContext('2d');
+        if (!ctx) return;
+
+        // 1. Dó Paper Ivory Background
+        ctx.fillStyle = '#FAF7F0';
+        ctx.fillRect(0, 0, w, h);
+
+        // Subtle decorative paper texture & borders
+        ctx.strokeStyle = 'rgba(212, 175, 55, 0.45)';
+        ctx.lineWidth = 2;
+        ctx.strokeRect(18, 18, w - 36, h - 36);
+
+        // 2. Photo Viewport (960 x 960 at x: 60, y: 70)
+        const px = 60;
+        const py = 70;
+        const pw = 960;
+        const ph = 960;
+
+        ctx.save();
+        ctx.beginPath();
+        ctx.rect(px, py, pw, ph);
+        ctx.clip();
+
+        // Sky background gradient according to current diurnal cycle
+        const skyGrad = ctx.createLinearGradient(px, py, px, py + ph);
+        if (document.body.classList.contains('sky-dawn')) {
+            skyGrad.addColorStop(0, '#FF9E80');
+            skyGrad.addColorStop(0.5, '#FFD3B6');
+            skyGrad.addColorStop(1, '#FAF7F0');
+        } else if (document.body.classList.contains('sky-dusk')) {
+            skyGrad.addColorStop(0, '#E76F51');
+            skyGrad.addColorStop(0.5, '#F4A261');
+            skyGrad.addColorStop(1, '#FFE8D6');
+        } else if (document.body.classList.contains('sky-night')) {
+            skyGrad.addColorStop(0, '#0B132B');
+            skyGrad.addColorStop(0.6, '#1C2541');
+            skyGrad.addColorStop(1, '#3A506B');
+        } else {
+            // Default Day
+            skyGrad.addColorStop(0, '#74B9FF');
+            skyGrad.addColorStop(0.6, '#A1C4FD');
+            skyGrad.addColorStop(1, '#FAF7F0');
+        }
+        ctx.fillStyle = skyGrad;
+        ctx.fillRect(px, py, pw, ph);
+
+        // Night stars or Sun
+        if (document.body.classList.contains('sky-night')) {
+            ctx.fillStyle = '#FFFFFF';
+            for (let i = 0; i < 45; i++) {
+                const sx = px + (Math.sin(i * 12.3) * 0.5 + 0.5) * pw;
+                const sy = py + (Math.cos(i * 8.7) * 0.5 + 0.5) * (ph * 0.7);
+                const sr = (i % 3 === 0) ? 2.5 : 1.2;
+                ctx.globalAlpha = 0.4 + (i % 5) * 0.12;
+                ctx.beginPath();
+                ctx.arc(sx, sy, sr, 0, Math.PI * 2);
+                ctx.fill();
+            }
+            // Crescent moon
+            ctx.globalAlpha = 0.9;
+            ctx.fillStyle = '#FFF9DB';
+            ctx.beginPath();
+            ctx.arc(px + 780, py + 180, 48, 0, Math.PI * 2);
+            ctx.fill();
+            ctx.fillStyle = '#0B132B';
+            ctx.beginPath();
+            ctx.arc(px + 798, py + 172, 44, 0, Math.PI * 2);
+            ctx.fill();
+        } else {
+            // Sun with radiant aura
+            const sunHalo = ctx.createRadialGradient(px + 780, py + 180, 10, px + 780, py + 180, 120);
+            sunHalo.addColorStop(0, 'rgba(255, 238, 140, 0.9)');
+            sunHalo.addColorStop(0.5, 'rgba(245, 206, 86, 0.4)');
+            sunHalo.addColorStop(1, 'rgba(245, 206, 86, 0)');
+            ctx.fillStyle = sunHalo;
+            ctx.beginPath();
+            ctx.arc(px + 780, py + 180, 120, 0, Math.PI * 2);
+            ctx.fill();
+
+            ctx.fillStyle = '#F5CE56';
+            ctx.beginPath();
+            ctx.arc(px + 780, py + 180, 36, 0, Math.PI * 2);
+            ctx.fill();
+        }
+        ctx.globalAlpha = 1.0;
+
+        // Ground hillock base
+        const groundGrad = ctx.createLinearGradient(px, py + ph - 160, px, py + ph);
+        groundGrad.addColorStop(0, 'rgba(106, 141, 115, 0.25)');
+        groundGrad.addColorStop(1, '#5C7A63');
+        ctx.fillStyle = groundGrad;
+        ctx.beginPath();
+        ctx.moveTo(px, py + ph);
+        ctx.quadraticCurveTo(px + pw * 0.5, py + ph - 140, px + pw, py + ph);
+        ctx.fill();
+
+        // 3. Heart Tree snapshot from live canvas
+        const treeCanvas = document.getElementById('canvas');
+        if (treeCanvas && treeCanvas.width > 0) {
+            ctx.drawImage(treeCanvas, 0, 0, treeCanvas.width, treeCanvas.height, px - 20, py + 120, pw + 40, 780);
+        }
+
+        // 4. Áo Dài Maiden figure (if stage >= 3 and asset available)
+        if (window.gardenState && window.gardenState.currentStage >= 3 && window.aoDaiVietImg && window.aoDaiVietImg.complete && window.aoDaiVietImg.naturalWidth > 0) {
+            ctx.save();
+            ctx.shadowColor = 'rgba(74, 55, 40, 0.25)';
+            ctx.shadowBlur = 16;
+            ctx.drawImage(window.aoDaiVietImg, px + 80, py + ph - 380, 240, 360);
+            ctx.restore();
+        }
+
+        // 5. Falling Lotus Petals in Photo
+        const petalColors = ['#E28490', '#D47A88', '#F7C5CC'];
+        for (let i = 0; i < 16; i++) {
+            const petX = px + (Math.sin(i * 37.1) * 0.5 + 0.5) * pw;
+            const petY = py + (Math.cos(i * 19.3) * 0.5 + 0.5) * ph;
+            const petRot = (i * 45) * Math.PI / 180;
+            ctx.save();
+            ctx.translate(petX, petY);
+            ctx.rotate(petRot);
+            ctx.fillStyle = petalColors[i % petalColors.length];
+            ctx.globalAlpha = 0.75;
+            ctx.beginPath();
+            ctx.moveTo(0, -9);
+            ctx.quadraticCurveTo(6, -2, 0, 9);
+            ctx.quadraticCurveTo(-6, -2, 0, -9);
+            ctx.fill();
+            ctx.restore();
+        }
+        ctx.globalAlpha = 1.0;
+
+        ctx.restore(); // End photo clip
+
+        // Inset border around photo window
+        ctx.strokeStyle = 'rgba(74, 55, 40, 0.15)';
+        ctx.lineWidth = 2;
+        ctx.strokeRect(px, py, pw, ph);
+
+        // 6. Bottom Margin Typography & Keepsake Dedication
+        // Poetic Title
+        ctx.font = 'italic 34px "Dancing Script", cursive, serif';
+        ctx.fillStyle = '#4A3728';
+        ctx.fillText('Khu vườn bí mật · Nơi ước nguyện nở hoa ♡', px + 10, 1105);
+
+        // Recipient Dedication
+        const recipientName = window.currentUserName && window.currentUserName.trim()
+            ? window.currentUserName.trim().toUpperCase()
+            : 'NGƯỜI THƯƠNG';
+        ctx.font = 'bold 22px "Be Vietnam Pro", sans-serif';
+        ctx.fillStyle = '#8C2D39';
+        ctx.fillText('DÀNH TẶNG: ' + recipientName, px + 10, 1152);
+
+        // Poetic Blessing
+        ctx.font = '15px "Be Vietnam Pro", sans-serif';
+        ctx.fillStyle = '#6B5E55';
+        ctx.fillText('Chúc bạn một ngày 20/10 vạn sự an yên, dịu dàng và rực rỡ như hoa.', px + 10, 1190);
+
+        // Postal Mark bottom left
+        ctx.font = '600 13px "Be Vietnam Pro", sans-serif';
+        ctx.fillStyle = 'rgba(126, 88, 53, 0.75)';
+        ctx.fillText('20.10.2026 · VIETNAMESE HERITAGE EDITION', px + 10, 1250);
+
+        // Cinnabar Red Seal Stamp (Bottom-Right corner)
+        const scx = w - 150;
+        const scy = 1175;
+        const sr = 48;
+
+        ctx.save();
+        ctx.translate(scx, scy);
+        ctx.rotate(-0.06);
+
+        ctx.strokeStyle = '#C0392B';
+        ctx.lineWidth = 3;
+        ctx.beginPath();
+        ctx.arc(0, 0, sr, 0, Math.PI * 2);
+        ctx.stroke();
+
+        ctx.lineWidth = 1.2;
+        ctx.beginPath();
+        ctx.arc(0, 0, sr - 5, 0, Math.PI * 2);
+        ctx.stroke();
+
+        ctx.fillStyle = '#C0392B';
+        ctx.font = 'bold 10px "Be Vietnam Pro", sans-serif';
+        ctx.textAlign = 'center';
+        ctx.fillText('★ 20/10/2026 ★', 0, -22);
+
+        ctx.font = 'bold 15px "Be Vietnam Pro", sans-serif';
+        ctx.fillText('NÉT AN YÊN', 0, 2);
+
+        ctx.font = 'bold 10.5px "Be Vietnam Pro", sans-serif';
+        ctx.fillText('VIỆT NAM', 0, 24);
+
+        ctx.restore();
+    };
+
+    const captureGardenPolaroid = () => {
+        if (typeof window.playCameraClickSFX === 'function') {
+            window.playCameraClickSFX();
+        } else if (typeof window.playKeyTapSFX === 'function') {
+            window.playKeyTapSFX();
+        }
+
+        if (typeof window.triggerHaptic === 'function') {
+            window.triggerHaptic([25, 40, 20]);
+        }
+
+        const flash = document.getElementById('camera-flash-overlay');
+        if (flash) {
+            flash.classList.add('active');
+            setTimeout(() => flash.classList.remove('active'), 320);
+        }
+
+        const polaroidCanvas = document.getElementById('garden-polaroid-canvas');
+        if (polaroidCanvas) {
+            renderGardenPolaroidToCanvas(polaroidCanvas);
+        }
+
+        const modal = document.getElementById('garden-polaroid-modal');
+        if (modal) {
+            modal.classList.remove('hidden');
+        }
+    };
+    window.captureGardenPolaroid = captureGardenPolaroid;
+
+    const initGardenPolaroidCapture = () => {
+        const captureBtn = document.getElementById('instant-garden-capture-btn');
+        if (captureBtn) {
+            captureBtn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                captureGardenPolaroid();
+            });
+        }
+
+        const closeBtn = document.getElementById('close-garden-polaroid-btn');
+        const modal = document.getElementById('garden-polaroid-modal');
+        if (closeBtn && modal) {
+            closeBtn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                modal.classList.add('hidden');
+                if (typeof window.triggerHaptic === 'function') window.triggerHaptic('light');
+            });
+
+            modal.addEventListener('click', (e) => {
+                if (e.target === modal) {
+                    modal.classList.add('hidden');
+                }
+            });
+
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape' && !modal.classList.contains('hidden')) {
+                    modal.classList.add('hidden');
+                }
+            });
+        }
+
+        const downloadBtn = document.getElementById('download-garden-polaroid-btn');
+        if (downloadBtn) {
+            downloadBtn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                const canvas = document.getElementById('garden-polaroid-canvas');
+                if (!canvas) return;
+
+                if (typeof window.playChimeSFX === 'function') window.playChimeSFX();
+                if (typeof window.triggerHaptic === 'function') window.triggerHaptic('success');
+
+                const nameSlug = (window.currentUserName && window.currentUserName.trim())
+                    ? window.currentUserName.trim().toLowerCase().replace(/[^a-z0-9]/g, '-')
+                    : 'nguoi-thuong';
+                const filename = `khu-vuon-ky-niem-${nameSlug}-20-10.png`;
+
+                try {
+                    const dataUrl = canvas.toDataURL('image/png');
+                    const link = document.createElement('a');
+                    link.download = filename;
+                    link.href = dataUrl;
+                    document.body.appendChild(link);
+                    link.click();
+                    setTimeout(() => link.remove(), 100);
+
+                    const toast = document.getElementById('polaroid-action-toast');
+                    if (toast) {
+                        toast.textContent = 'Đã tải ảnh Polaroid kỷ niệm HD về máy! 📸✨';
+                        toast.classList.remove('hidden');
+                        setTimeout(() => toast.classList.add('hidden'), 3000);
+                    }
+                } catch (err) {
+                    console.error('Download error:', err);
+                }
+            });
+        }
+
+        const shareBtn = document.getElementById('share-garden-polaroid-btn');
+        if (shareBtn) {
+            shareBtn.addEventListener('click', async (e) => {
+                e.stopPropagation();
+                if (typeof window.triggerHaptic === 'function') window.triggerHaptic('medium');
+
+                const toast = document.getElementById('polaroid-action-toast');
+                const name = window.currentUserName ? window.currentUserName.trim() : 'bạn';
+                const shareText = `Khoảnh khắc vườn hoa bí mật 20/10 dành tặng riêng cho ${name}! Chúc một ngày 20/10 vạn sự an yên 🌸✨`;
+
+                if (navigator.share) {
+                    try {
+                        const canvas = document.getElementById('garden-polaroid-canvas');
+                        if (canvas && canvas.toBlob) {
+                            canvas.toBlob(async (blob) => {
+                                const file = new File([blob], 'vuon-ky-niem-20-10.png', { type: 'image/png' });
+                                try {
+                                    await navigator.share({
+                                        title: 'Khu Vườn Kỷ Niệm 20/10',
+                                        text: shareText,
+                                        files: [file]
+                                    });
+                                } catch (_) {
+                                    await navigator.share({ title: 'Khu Vườn Kỷ Niệm 20/10', text: shareText, url: window.location.href });
+                                }
+                            });
+                            return;
+                        }
+                    } catch (_) {}
+                }
+
+                // Fallback: Copy to clipboard
+                try {
+                    await navigator.clipboard.writeText(shareText + ' ' + window.location.href);
+                    if (toast) {
+                        toast.textContent = 'Đã sao chép lời chúc kèm liên kết vườn hoa! 💌';
+                        toast.classList.remove('hidden');
+                        setTimeout(() => toast.classList.add('hidden'), 3000);
+                    }
+                } catch (_) {
+                    if (toast) {
+                        toast.textContent = shareText;
+                        toast.classList.remove('hidden');
+                        setTimeout(() => toast.classList.add('hidden'), 3500);
+                    }
+                }
+            });
+        }
+    };
+
     const setupAll = () => {
         initGardenStageSelector();
         initHeritageStageInteractions();
+        initZenMode();
+        initGardenPolaroidCapture();
     };
 
     if (document.readyState === 'loading') {

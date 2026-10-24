@@ -38,8 +38,8 @@
 ---
 
 ### Phase 12: Chế Độ Chiêm Ngưỡng Tĩnh Lặng & Bức Ảnh Kỷ Niệm (`index.html`, `js/garden-stages.js`, `css/components.css`)
-- [ ] 12.1: **Chế Độ Tĩnh Lặng (Zen Mode Toggle)**: Nút biểu tượng "Trăng Rằm / Tĩnh Lặng" thanh nhã ở góc trên màn hình. Khi bấm, toàn bộ HUD, nút bấm, hướng dẫn sẽ trôi mượt mà (smooth fade-out), chỉ để lại trọn vẹn cảnh cây hoa tình yêu đung đưa, tà áo dài thướt tha, cánh hoa rơi và tiếng đàn du dương. Chạm bất kỳ đâu để hiện lại.
-- [ ] 12.2: **Chụp Khoảnh Khắc Vườn Kỷ Niệm (Instant Garden Polaroid Capture)**: Tự động chụp một bức ảnh kỷ niệm lưu lại khu vườn đang nở rộ của riêng người dùng (kèm tên người nhận đã khắc trên triện son) dưới dạng ảnh Polaroid cổ điển để tải về ngay.
+- [x] 12.1: **Chế Độ Tĩnh Lặng (Zen Mode Toggle)**: Nút biểu tượng "Trăng Rằm / Tĩnh Lặng" thanh nhã ở góc trên màn hình. Khi bấm, toàn bộ HUD, nút bấm, hướng dẫn sẽ trôi mượt mà (smooth fade-out), chỉ để lại trọn vẹn cảnh cây hoa tình yêu đung đưa, tà áo dài thướt tha, cánh hoa rơi và tiếng đàn du dương. Chạm bất kỳ đâu để hiện lại.
+- [x] 12.2: **Chụp Khoảnh Khắc Vườn Kỷ Niệm (Instant Garden Polaroid Capture)**: Tự động chụp một bức ảnh kỷ niệm lưu lại khu vườn đang nở rộ của riêng người dùng (kèm tên người nhận đã khắc trên triện son) dưới dạng ảnh Polaroid cổ điển để tải về ngay.
 
 ---
 
