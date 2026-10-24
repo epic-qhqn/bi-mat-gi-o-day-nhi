@@ -38,9 +38,9 @@
 ---
 
 ### Phase 6: Hoàn Thiện Modal Thiệp, Bưu Thiếp & Thư Bí Mật (Polaroid, Postcard & Letter)
-- [ ] 6.1: Modal Thư Bí Mật (`#letter-overlay-modal`): Thẻ Polaroid 3D và thư giấy Dó co giãn vừa khít chiều cao ngang, phông chữ $14\text{px} - 16\text{px}$ sắc nét, dễ đọc.
-- [ ] 6.2: Modal Bưu Thiếp Di Sản (`#boarding-pass-modal`): Chế độ xem thiệp ngang linh hoạt, các nút tải ảnh và đổi hoa xếp hàng tiện lợi.
-- [ ] 6.3: Modal Khoảnh Khắc Vườn Kỷ Niệm (`#garden-polaroid-modal`): Khung ảnh Polaroid tự động vừa khít chiều cao màn hình, nút tải ảnh luôn hiển thị.
+- [x] 6.1: Modal Thư Bí Mật (`#secret-letter-modal`): Thẻ Polaroid 3D và thư giấy Dó co giãn vừa khít chiều cao ngang, phông chữ $14\text{px} - 16\text{px}$ sắc nét, dễ đọc.
+- [x] 6.2: Modal Bưu Thiếp Di Sản (`#boarding-pass-modal`): Chế độ xem thiệp ngang linh hoạt, các nút tải ảnh và đổi hoa xếp hàng tiện lợi.
+- [x] 6.3: Modal Khoảnh Khắc Vườn Kỷ Niệm (`#garden-polaroid-modal`): Khung ảnh Polaroid tự động vừa khít chiều cao màn hình, nút tải ảnh luôn hiển thị.
 
 ---
 

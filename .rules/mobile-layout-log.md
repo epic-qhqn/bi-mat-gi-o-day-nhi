@@ -219,5 +219,33 @@
   - Bộ kiểm thử tự động `scratch/test_phase5.js`: 10/10 tiêu chí Passed (100%).
   - Ma trận hồi quy Phase 1, 2, 3, 4: Toàn bộ 40/40 bài kiểm thử vượt qua với kết quả 100% Passed.
 
+---
+
+### Phase 6: Hoàn Thiện Modal Thiệp, Bưu Thiếp & Thư Bí Mật (Polaroid, Postcard & Letter in Landscape) - [HOÀN THÀNH 100%]
+- **Vấn đề gặp phải**:
+  - **Modal Ảnh Kỷ Niệm Polaroid (`#garden-polaroid-modal`) bị tràn dọc quá khổ**: Canvas tỷ lệ $1080 \times 1320$ khổ dọc khi hiển thị chiều rộng $360\text{px}$ có chiều cao lên tới $440\text{px}$. Trên màn hình điện thoại xoay ngang ($320\text{px} - 390\text{px}$), bố cục dọc cũ đẩy tiêu đề và đặc biệt là nút bấm "Tải Ảnh Về Máy (HD)" văng khỏi đáy màn hình, người dùng buộc phải cuộn dọc mò mẫm.
+  - **Modal Bưu Thiếp Di Sản (`#boarding-pass-modal`) bị kẹt thanh nút bấm (Actions Bar)**: Trên mobile trước đây, `.ticket-action-btn` được gán `flex: 1 1 100%` xếp chồng 3 hàng dọc, chiếm mất $> 140\text{px}$ chiều cao, bóp nghẹt vùng hiển thị bưu thiếp. Khung cuộn thiếu giới hạn `calc(100dvh - 80px)`.
+  - **Thẻ Polaroid 3D (`#secret-letter-modal`) và Trắc Nghiệm Bông Hoa**: Chiều cao thẻ nếu dùng tỷ lệ cố định của desktop ($410\text{px}$) sẽ bị cụt mép trên và dưới; nút đóng "✕" và nút đổi font chữ "Aa" dễ bị lọt ra ngoài mép màn hình. Chế độ trắc nghiệm hoa `.secret-letter-dialog--quiz` bị trừ cố định `- 150px` trên landscape khiến khung trắc nghiệm chỉ còn ~200px, quá chật hẹp.
+- **Giải pháp xử lý**:
+  - **Bố Cục 2 Cột Đột Phá Cho Modal Ảnh Kỷ Niệm Polaroid (`#garden-polaroid-modal`)**:
+    - Chuyển `.garden-polaroid-dialog` sang lưới `grid-template-columns: 240px 1fr !important;` trên landscape:
+      - **Cột Trái (Preview Trực Quan)**: Khung canvas ảnh Polaroid được giới hạn chiều cao tối đa `max-height: calc(90dvh - 16px)`, `object-fit: contain`, hiển thị sắc nét toàn bộ ảnh kỷ niệm mà không cần cuộn trang.
+      - **Cột Phải (Thông Điệp & Thao Tác)**: Tiêu đề kỷ niệm 20/10 căn lề trái thanh lịch, nút bấm "📥 Tải Ảnh Về Máy (HD)" màu vàng kim và "🕊️ Chia Sẻ Khoảnh Khắc" nằm ngay ngắn bên cạnh, luôn hiện hữu 100% trên màn hình.
+  - **Bưu Thiếp Di Sản Postcard (#boarding-pass-modal) Tối Ưu Chiều Ngang**:
+    - `.ticket-actions-bar` chuyển sang bố cục hàng ngang duy nhất (`flex-direction: row !important; flex-wrap: nowrap !important;`), 3 nút bấm xếp thẳng hàng tinh tế dưới chân bưu thiếp với `min-height: 38px`, padding $6\text{px} \times 12\text{px}$, font $11.5\text{px}$.
+    - Khung cuộn bưu thiếp `.ticket-scroll-container` có `max-height: calc(100dvh - 80px)` với thanh cuộn mượt mà `-webkit-overflow-scrolling: touch`. Dải photobooth 4 khung ảnh tự động xếp hàng 4 cột (`repeat(4, 1fr)`).
+  - **Hộp Thư Bí Mật Polaroid 3D & Trắc Nghiệm Hoa Vừa Khít Tầm Mắt**:
+    - Thẻ Polaroid 3D co giãn thông minh: `height: clamp(260px, 84dvh, 335px) !important;`.
+    - Cỡ chữ bức thư giấy Dó `.letter-content` đạt $1.05\text{rem}$ ($16.8\text{px}$), dòng cao $1.5$, độ tương phản cao, nét chữ thơ uyển chuyển nhưng cực kỳ dễ đọc.
+    - Chế độ trắc nghiệm hoa `.secret-letter-dialog--quiz` mở rộng `max-width: min(94vw, 580px)` với `height: clamp(280px, 86dvh, 340px)`, danh sách câu hỏi và đáp án cuộn êm ái.
+  - **Xúc Giác Đầy Đủ Cho Mọi Cửa Sổ Modal**:
+    - Nút lật thiệp Polaroid, nút đổi font chữ "Aa", nút đổi lời chúc khác 🎲, nút sao chép lời chúc 📋, nút đổi loài hoa 🌸 và mộc triện son đều được tích hợp nhịp rung xúc giác `triggerHaptic('tap')`.
+- **Kiểm định chất lượng**:
+  - Cú pháp 19 file JavaScript: Đạt 100% sạch lỗi (`node -c`).
+  - Cân bằng ngoặc nhọn CSS (`base.css`: 36, `layout.css`: 313, `components.css`: 1724): Đạt 100%.
+  - Bộ kiểm thử tự động `scratch/test_phase6.js`: 9/9 tiêu chí Passed (100%).
+  - Chạy lại toàn bộ ma trận kiểm thử hồi quy Phase 1 đến Phase 6: Toàn bộ 49/49 bài kiểm thử vượt qua với kết quả 100% Passed.
+
+
 
 

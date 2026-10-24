@@ -195,6 +195,7 @@
                 const isCurrentlyReadable = document.body.classList.contains('readable-font');
                 const nextState = !isCurrentlyReadable;
                 updateFontUI(nextState);
+                if (typeof window.triggerHaptic === 'function') window.triggerHaptic('tap');
                 try {
                     localStorage.setItem('user_font_mode', nextState ? 'readable' : 'handwriting');
                 } catch (_) {}
@@ -1010,6 +1011,7 @@
                 } else {
                     updatePolaroidLetterContent();
                 }
+                if (typeof window.triggerHaptic === 'function') window.triggerHaptic('tap');
                 if (typeof window.playChimeSFX !== 'undefined') window.playChimeSFX();
             });
         }
