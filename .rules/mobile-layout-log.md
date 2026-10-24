@@ -110,3 +110,22 @@
   - Cú pháp 19 file JavaScript: Đạt 100% không lỗi (`node -c`).
   - Cân bằng ngoặc nhọn CSS (`base.css`, `layout.css`, `components.css`): Đạt 100% (1505/1505 đóng mở).
   - Test suite tự động (`test_phase1.js`): Vượt qua 100% các tiêu chí DOM, media query, và accessibility.
+
+---
+
+### Phase 2: Kiến Trúc Viewport & Safe Area Mobile Landscape - [HOÀN THÀNH 100%]
+- **Vấn đề gặp phải**:
+  - `resizeWrap` dùng `window.innerWidth`/`window.innerHeight` thuần túy, không nhận biết được việc thanh URL bar của Safari iOS / Chrome Android co giãn làm giật khung hình.
+  - Tỉ lệ màn hình ngang siêu dài (19.5:9, 20:9, 21:9) hoặc tai thỏ/Dynamic Island làm cây hoa và các nút dock bị tràn sát mép hoặc bị camera khuyết đè lên.
+  - Kéo vuốt trên iOS gây hiệu ứng nảy trang cao su (rubber-band jitter).
+- **Giải pháp xử lý**:
+  - Tích hợp `window.visualViewport` vào động cơ `resizeWrap` trong `js/main.js`, gắn sự kiện lắng nghe trực tiếp `visualViewport.addEventListener('resize')`.
+  - Hàm `getSafeAreaInsets()` đọc chính xác biến `--sal`, `--sar`, `--sat`, `--sab` từ `:root`.
+  - Trừ đi safe margin của tai thỏ: `safeWidth = Math.max(320, vWidth - insets.sal - insets.sar)`.
+  - Dành khoảng thở dọc an toàn $64\text{px}-76\text{px}$ cho thanh dock trên và dưới khi chiều cao $\le 540\text{px}$.
+  - Thêm `overscroll-behavior: none;` cho `html, body` triệt tiêu rung giật cuộn trang.
+  - Neo giữ các dock 4 góc theo chuẩn Safe Area (`max(16px, calc(16px + var(--sar/sal)))`).
+- **Kiểm định chất lượng**:
+  - Cú pháp 19 file JavaScript: Đạt 100% sạch lỗi (`node -c`).
+  - Cân bằng ngoặc nhọn CSS (`base.css`: 36, `layout.css`: 311, `components.css`: 1515): Đạt 100%.
+  - Bộ kiểm thử tự động `test_phase2.js`: Mô phỏng thành công trên ma trận độ phân giải (Desktop 1080p, iPhone 14 Pro 844x390, iPhone SE 667x320, Xperia 21:9 960x384) với 100% Passed.

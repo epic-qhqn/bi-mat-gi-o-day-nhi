@@ -431,25 +431,53 @@
   );
   window.isLowEndDevice = isLowEndDevice;
 
+  const getSafeAreaInsets = () => {
+    try {
+      const style = window.getComputedStyle(document.documentElement);
+      const sal = parseFloat(style.getPropertyValue('--sal')) || 0;
+      const sar = parseFloat(style.getPropertyValue('--sar')) || 0;
+      const sat = parseFloat(style.getPropertyValue('--sat')) || 0;
+      const sab = parseFloat(style.getPropertyValue('--sab')) || 0;
+      return { sal, sar, sat, sab };
+    } catch (_) {
+      return { sal: 0, sar: 0, sat: 0, sab: 0 };
+    }
+  };
+
   const resizeWrap = () => {
     const wrap = document.getElementById('wrap');
     if (!wrap) return;
 
     const baseWidth = 1100;
     const baseHeight = 680;
-    const vWidth = window.innerWidth;
-    const vHeight = window.innerHeight;
+
+    // Use visualViewport if available to track actual visible area smoothly against collapsible browser chrome
+    const vv = window.visualViewport;
+    const vWidth = vv ? vv.width : window.innerWidth;
+    const vHeight = vv ? vv.height : window.innerHeight;
     const isPortrait = vHeight > vWidth;
 
     let scale;
     if (isPortrait) {
       scale = (vWidth * 0.96) / baseWidth;
     } else {
-      // In landscape on short viewports (mobile landscape <= 540px), ensure safe breathing space
-      const maxAvailableHeight = vHeight <= 540 ? Math.max(180, vHeight - 76) : vHeight;
-      const scaleX = (vWidth * 0.94) / baseWidth;
-      const scaleY = maxAvailableHeight / baseHeight;
-      scale = Math.min(scaleX, scaleY);
+      // In landscape on short viewports (mobile/tablet landscape <= 540px), ensure safe breathing space & notch insets
+      if (vHeight <= 540) {
+        const insets = getSafeAreaInsets();
+        // Usable width avoiding left/right notches and Dynamic Island
+        const safeWidth = Math.max(320, vWidth - insets.sal - insets.sar);
+        // Reserve vertical room for top HUD and bottom system dock
+        const verticalReserve = vHeight <= 420 ? 64 : 76;
+        const maxAvailableHeight = Math.max(180, vHeight - verticalReserve);
+        const scaleX = (safeWidth * 0.94) / baseWidth;
+        const scaleY = maxAvailableHeight / baseHeight;
+        scale = Math.min(scaleX, scaleY);
+      } else {
+        // Desktop / Laptop / Large Tablet: Pure native autoscale
+        const scaleX = (vWidth * 0.94) / baseWidth;
+        const scaleY = vHeight / baseHeight;
+        scale = Math.min(scaleX, scaleY);
+      }
     }
 
     wrap.style.transform = `scale(${scale})`;
@@ -460,14 +488,17 @@
   const debouncedResize = () => {
     resizeWrap();
     if (resizeTimer) clearTimeout(resizeTimer);
-    resizeTimer = setTimeout(resizeWrap, 120);
+    resizeTimer = setTimeout(resizeWrap, 80);
   };
 
   window.addEventListener('resize', debouncedResize);
+  if (window.visualViewport) {
+    window.visualViewport.addEventListener('resize', debouncedResize);
+  }
   window.addEventListener('orientationchange', () => {
     resizeWrap();
-    setTimeout(resizeWrap, 150);
-    setTimeout(resizeWrap, 350);
+    setTimeout(resizeWrap, 100);
+    setTimeout(resizeWrap, 300);
   });
 
   document.addEventListener('visibilitychange', () => {

@@ -1081,7 +1081,8 @@ a:hover {
 /* On mobile landscape, center #wrap vertically with safe margins */
 @media (max-height: 540px) and (orientation: landscape) {
   #wrap {
-    top: 46%;
+    top: 48%;
+    transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
   }
 }
 
@@ -1285,13 +1286,13 @@ body.readable-font .polaroid-back .letter-content {
 /* Mobile landscape reading layout for .text-panel */
 @media (max-height: 540px) and (orientation: landscape) {
   .text-panel {
-    left: max(16px, calc(50vw - 420px)) !important;
+    left: max(16px, calc(16px + var(--sal, 0px))) !important;
     top: 50% !important;
     bottom: auto !important;
     transform: translateY(-50%) !important;
-    width: min(44vw, 360px) !important;
-    max-height: 84vh !important;
-    padding: 16px 20px !important;
+    width: min(42vw, 360px) !important;
+    max-height: min(84vh, 320px) !important;
+    padding: 14px 18px !important;
   }
 
   .text-panel.show {
@@ -1299,8 +1300,8 @@ body.readable-font .polaroid-back .letter-content {
   }
 
   .bottom-system-dock {
-    bottom: calc(8px + var(--sab, 0px)) !important;
-    left: calc(12px + var(--sal, 0px)) !important;
+    bottom: max(8px, calc(8px + var(--sab, 0px))) !important;
+    left: max(14px, calc(12px + var(--sal, 0px))) !important;
     right: auto !important;
     gap: 6px !important;
   }

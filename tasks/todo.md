@@ -12,9 +12,9 @@
 ---
 
 ### Phase 2: Kiến Trúc Viewport & Safe Area Mobile Landscape (`#wrap`, Insets & Auto-Scale)
-- [ ] 2.1: Tinh chỉnh động cơ co giãn tỷ lệ `resizeWrap` trong `js/main.js` tối ưu cho các tỉ lệ màn hình ngang dài (19.5:9, 20:9, 21:9) và chiều cao hạn chế ($320\text{px} - 420\text{px}$).
-- [ ] 2.2: Tích hợp safe-area insets (`env(safe-area-inset-left/right)`) bảo vệ các nút điều khiển khỏi tai thỏ, Dynamic Island và thanh cử chỉ home.
-- [ ] 2.3: Ổn định spatial layout chống rung giật khi thanh địa chỉ URL của trình duyệt di động (iOS Safari / Android Chrome) ẩn/hiện.
+- [x] 2.1: Tinh chỉnh động cơ co giãn tỷ lệ `resizeWrap` trong `js/main.js` tối ưu cho các tỉ lệ màn hình ngang dài (19.5:9, 20:9, 21:9) và chiều cao hạn chế ($320\text{px} - 420\text{px}$).
+- [x] 2.2: Tích hợp safe-area insets (`env(safe-area-inset-left/right)`) bảo vệ các nút điều khiển khỏi tai thỏ, Dynamic Island và thanh cử chỉ home.
+- [x] 2.3: Ổn định spatial layout chống rung giật khi thanh địa chỉ URL của trình duyệt di động (iOS Safari / Android Chrome) ẩn/hiện.
 
 ---
 
