@@ -146,15 +146,42 @@
     </div>
 
     <!-- Force-Landscape Overlay (mobile portrait only; shown/hidden purely by CSS media queries) -->
-    <div id="rotate-device-overlay" class="rotate-device-overlay" role="alertdialog" aria-modal="true" aria-live="assertive" aria-label="Please rotate your phone">
-        <div class="rotate-device-stage" aria-hidden="true">
-            <div class="rotate-phone">
-                <span class="rotate-phone-speaker"></span>
-                <span class="rotate-phone-screen"></span>
-                <span class="rotate-phone-home"></span>
+    <div id="rotate-device-overlay" class="rotate-device-overlay" role="alertdialog" aria-modal="true" aria-live="assertive" aria-label="Vui lòng xoay ngang màn hình">
+        <div class="rotate-ambient-mist" aria-hidden="true">
+            <span class="rotate-petal p1"></span>
+            <span class="rotate-petal p2"></span>
+            <span class="rotate-petal p3"></span>
+            <span class="rotate-petal p4"></span>
+        </div>
+        <div class="rotate-device-card">
+            <div class="rotate-silk-ribbon" aria-hidden="true">
+                <span class="silk-ribbon-gem">✦</span>
+                <span class="silk-ribbon-text">Khu Vườn Di Sản 20/10</span>
+                <span class="silk-ribbon-gem">✦</span>
+            </div>
+            <div class="rotate-device-stage" aria-hidden="true">
+                <svg class="rotate-motion-arc" viewBox="0 0 160 160" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path class="arc-track" d="M 125,48 A 56,56 0 0 1 48,125" stroke="rgba(212, 175, 55, 0.45)" stroke-width="2" stroke-dasharray="4 4"/>
+                    <path class="arc-arrow" d="M 42,114 L 48,125 L 60,123" stroke="#D4AF37" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+                <div class="rotate-phone rotate-artisan-phone">
+                    <span class="rotate-phone-speaker artisan-phone-notch"></span>
+                    <div class="rotate-phone-screen artisan-phone-screen">
+                        <div class="screen-lotus-core">
+                            <span class="lotus-glow-pulse"></span>
+                            <span class="lotus-icon">🪷</span>
+                        </div>
+                    </div>
+                    <span class="rotate-phone-home artisan-phone-chin"></span>
+                </div>
+            </div>
+            <h2 class="rotate-poetic-title">Góc Nhìn Trọn Vẹn</h2>
+            <p class="rotate-device-text">Để cảm nhận trọn vẹn khu vườn hoa di sản 20/10, bạn vui lòng xoay ngang màn hình nhé ✨</p>
+            <div class="rotate-hint-sub">
+                <span class="hint-dot"></span>
+                <span>Khung trời hoa lá &amp; giai điệu bình yên đang chờ đón</span>
             </div>
         </div>
-        <p class="rotate-device-text">Please rotate your phone</p>
     </div>
 
     <!-- Time Lock Gateway Modal (Khóa thời gian đến 12h trưa 25/10/2026) -->

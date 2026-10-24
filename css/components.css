@@ -8904,15 +8904,17 @@ body.sky-night .pointer-action-badge {
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    gap: 36px;
-    background: #0d1020;
-    color: #ffffff;
-    padding: env(safe-area-inset-top, 0) env(safe-area-inset-right, 0) env(safe-area-inset-bottom, 0) env(safe-area-inset-left, 0);
+    background: radial-gradient(ellipse at 50% 35%, rgba(35, 22, 28, 0.98) 0%, rgba(18, 12, 16, 0.99) 70%, #0d090d 100%);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    color: #FAF7F0;
+    padding: max(20px, env(safe-area-inset-top, 20px)) max(18px, env(safe-area-inset-right, 18px)) max(20px, env(safe-area-inset-bottom, 20px)) max(18px, env(safe-area-inset-left, 18px));
     touch-action: none;            /* swallow scroll / pinch gestures */
     overscroll-behavior: contain;
     user-select: none;
     -webkit-user-select: none;
     pointer-events: auto;          /* blocks every tap reaching the app below */
+    overflow: hidden;
   }
   html.is-portrait-blocked,
   html.is-portrait-blocked body {
@@ -8920,73 +8922,248 @@ body.sky-night .pointer-action-badge {
   }
 }
 
+/* Atmospheric floating mist & subtle drifting petals */
+.rotate-ambient-mist {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.rotate-petal {
+  position: absolute;
+  width: 12px;
+  height: 18px;
+  background: radial-gradient(circle at 40% 30%, rgba(245, 178, 190, 0.65), rgba(212, 122, 136, 0.25));
+  border-radius: 60% 40% 60% 40% / 60% 40% 60% 40%;
+  filter: blur(0.5px);
+  animation: rotate-petal-drift 7s ease-in-out infinite;
+}
+
+.rotate-petal.p1 { top: 12%; left: 16%; animation-delay: 0s; transform: rotate(25deg) scale(0.9); }
+.rotate-petal.p2 { top: 22%; right: 18%; animation-delay: 2.2s; transform: rotate(-35deg) scale(1.1); }
+.rotate-petal.p3 { bottom: 25%; left: 20%; animation-delay: 4.1s; transform: rotate(50deg) scale(0.8); }
+.rotate-petal.p4 { bottom: 15%; right: 22%; animation-delay: 1.5s; transform: rotate(-15deg) scale(1); }
+
+@keyframes rotate-petal-drift {
+  0%, 100% {
+    transform: translateY(0) rotate(0deg);
+    opacity: 0.35;
+  }
+  50% {
+    transform: translateY(-16px) translateX(8px) rotate(18deg);
+    opacity: 0.8;
+  }
+}
+
+/* Poetic Heritage Artisan Card */
+.rotate-device-card {
+  position: relative;
+  z-index: 2;
+  width: min(340px, 88vw);
+  background: linear-gradient(165deg, rgba(250, 247, 240, 0.08) 0%, rgba(250, 247, 240, 0.03) 100%);
+  border: 1px solid rgba(212, 175, 55, 0.38);
+  border-radius: 16px;
+  padding: 30px 22px 26px;
+  box-shadow: 0 24px 60px -12px rgba(0, 0, 0, 0.75), 0 0 28px rgba(212, 122, 136, 0.16);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  box-sizing: border-box;
+}
+
+/* Silk Ribbon Crest at top */
+.rotate-silk-ribbon {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 4px 14px;
+  background: rgba(212, 122, 136, 0.18);
+  border: 1px solid rgba(212, 122, 136, 0.45);
+  border-radius: 999px;
+  margin-bottom: 22px;
+}
+
+.silk-ribbon-gem {
+  color: #D4AF37;
+  font-size: 11px;
+}
+
+.silk-ribbon-text {
+  font-family: 'Be Vietnam Pro', 'Outfit', sans-serif;
+  font-size: 11.5px;
+  font-weight: 600;
+  letter-spacing: 0.8px;
+  text-transform: uppercase;
+  color: #F8D7DA;
+}
+
+/* Rotation Visual Stage */
 .rotate-device-stage {
+  position: relative;
   width: 140px;
   height: 140px;
   display: flex;
   align-items: center;
   justify-content: center;
+  margin-bottom: 12px;
 }
 
-/* Minimalist white phone: portrait -> landscape -> portrait, looping */
+/* Circular Arc Trajectory */
+.rotate-motion-arc {
+  position: absolute;
+  width: 136px;
+  height: 136px;
+  pointer-events: none;
+}
+
+.rotate-motion-arc .arc-track {
+  animation: arc-track-shimmer 3.2s ease-in-out infinite;
+}
+
+@keyframes arc-track-shimmer {
+  0%, 100% { opacity: 0.35; stroke-dashoffset: 0; }
+  50% { opacity: 0.85; stroke-dashoffset: 8; }
+}
+
+/* Artisan Phone Silhouette */
 .rotate-phone {
   position: relative;
-  width: 58px;
-  height: 100px;
-  border: 4px solid #ffffff;
+  width: 52px;
+  height: 92px;
+  background: linear-gradient(180deg, #241A1E 0%, #151013 100%);
+  border: 2.5px solid #D4AF37;
   border-radius: 12px;
   box-sizing: border-box;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.45), 0 0 16px rgba(212, 175, 55, 0.3);
   transform-origin: 50% 50%;
   animation: rotate-phone-cycle 3.2s cubic-bezier(0.65, 0, 0.35, 1) infinite;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  padding: 6px 4px;
 }
 
-.rotate-phone-speaker {
-  position: absolute;
-  top: 6px;
-  left: 50%;
+.rotate-phone-speaker,
+.artisan-phone-notch {
+  position: relative;
+  top: auto;
+  left: auto;
+  transform: none;
   width: 14px;
   height: 3px;
+  background: #D4AF37;
   border-radius: 3px;
-  background: #ffffff;
-  transform: translateX(-50%);
+  opacity: 0.85;
 }
 
-.rotate-phone-home {
+.rotate-phone-screen,
+.artisan-phone-screen {
+  position: relative;
+  inset: auto;
+  flex: 1;
+  width: 100%;
+  margin: 4px 0;
+  background: radial-gradient(circle at 50% 50%, rgba(212, 122, 136, 0.28) 0%, rgba(20, 14, 18, 0.85) 100%);
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.screen-lotus-core {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.lotus-glow-pulse {
   position: absolute;
-  bottom: 5px;
-  left: 50%;
-  width: 6px;
-  height: 6px;
+  width: 22px;
+  height: 22px;
+  background: rgba(212, 122, 136, 0.5);
   border-radius: 50%;
-  background: #ffffff;
-  transform: translateX(-50%);
+  filter: blur(6px);
+  animation: lotus-pulse 2s ease-in-out infinite alternate;
 }
 
-.rotate-phone-screen {
-  position: absolute;
-  inset: 14px 5px 16px 5px;
-  border-radius: 3px;
-  background: rgba(255, 255, 255, 0.14);
+.lotus-icon {
+  position: relative;
+  font-size: 14px;
+  line-height: 1;
+  filter: drop-shadow(0 0 4px rgba(212, 175, 55, 0.6));
+}
+
+.rotate-phone-home,
+.artisan-phone-chin {
+  position: relative;
+  bottom: auto;
+  left: auto;
+  transform: none;
+  width: 8px;
+  height: 2px;
+  background: rgba(212, 175, 55, 0.6);
+  border-radius: 2px;
+}
+
+@keyframes lotus-pulse {
+  from { transform: scale(0.85); opacity: 0.4; }
+  to { transform: scale(1.25); opacity: 0.9; }
 }
 
 @keyframes rotate-phone-cycle {
-  0%, 12%   { transform: rotate(0deg); }
-  42%, 70%  { transform: rotate(-90deg); }
+  0%, 15%   { transform: rotate(0deg); }
+  45%, 72%  { transform: rotate(-90deg); }
   100%      { transform: rotate(0deg); }
 }
 
+/* Poetic Typography */
+.rotate-poetic-title {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: 19px;
+  font-weight: 600;
+  margin: 0 0 10px 0;
+  color: #FAF7F0;
+  letter-spacing: 0.3px;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
+}
+
 .rotate-device-text {
-  margin: 0;
+  margin: 0 0 14px 0;
   font-family: 'Be Vietnam Pro', 'Outfit', system-ui, sans-serif;
-  font-size: 18px;
-  font-weight: 500;
-  letter-spacing: 0.4px;
-  text-align: center;
-  color: #ffffff;
+  font-size: 14px;
+  line-height: 1.6;
+  font-weight: 400;
+  color: rgba(250, 247, 240, 0.92);
+  letter-spacing: 0.2px;
+}
+
+.rotate-hint-sub {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: 'Be Vietnam Pro', 'Outfit', system-ui, sans-serif;
+  font-size: 11.5px;
+  color: #D4AF37;
+  opacity: 0.88;
+}
+
+.rotate-hint-sub .hint-dot {
+  width: 4px;
+  height: 4px;
+  background: #D4AF37;
+  border-radius: 50%;
+  box-shadow: 0 0 6px #D4AF37;
 }
 
 @media (prefers-reduced-motion: reduce) {
   .rotate-phone { animation-duration: 6s; }
+  .rotate-petal { animation: none; }
+  .rotate-motion-arc .arc-track { animation: none; }
 }
 
 /* =========================================================================
