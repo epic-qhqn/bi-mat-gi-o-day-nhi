@@ -286,9 +286,9 @@
                 setTimeout(() => cloverEl.classList.add('visible'), 150);
             }
 
-            if (gardenMsg) gardenMsg.textContent = "Giai đoạn 1: Hãy gom mây gọi mưa sương hoặc kéo vệt nắng ấm sưởi mầm non! 🌧️☀️";
+            if (gardenMsg) gardenMsg.textContent = "Mầm non vừa nhú! Hãy gom mây gọi mưa sương hoặc kéo vệt nắng ấm để vỗ về hạt giống 🌧️☀️";
             if (typeof window.showMascotSpeech === 'function') {
-                window.showMascotSpeech("Cùng sưởi ấm mầm non và tìm nhánh cỏ bốn lá may mắn nào! 🌾🍀", 4000);
+                window.showMascotSpeech("Bạn khẽ tưới chút sương hoặc sưởi ấm mầm non nhé, hình như có nhánh cỏ bốn lá ẩn gần đây đó! 🌾🍀", 4000);
             }
             if (typeof window.playMelodicHarpChime === 'function') {
                 window.playMelodicHarpChime(0);
@@ -321,9 +321,9 @@
                 steps[2].classList.remove('active');
             }
 
-            if (gardenMsg) gardenMsg.textContent = "Giai đoạn 2: Hãy lắng nghe và lặp lại khúc hòa âm Simon! 🎵✨";
+            if (gardenMsg) gardenMsg.textContent = "Cây non lắng nghe gió trời... Hãy gảy lại giai điệu mộc cầm vừa ngân vang nhé! 🎵✨";
             if (typeof window.showMascotSpeech === 'function') {
-                window.showMascotSpeech("Khúc hòa âm bắt đầu ngân vang rồi nè! 🤖🎶", 4000);
+                window.showMascotSpeech("Giai điệu du dương bắt đầu rồi, bạn lắng nghe thật kỹ nha! 🎶✨", 4000);
             }
             if (typeof window.playMelodicHarpChime === 'function') {
                 window.playMelodicHarpChime(2);
@@ -359,9 +359,9 @@
                 steps[2].classList.add('active');
             }
 
-            if (gardenMsg) gardenMsg.textContent = "Giai đoạn 3: Hãy nối các ngôi sao theo thứ tự từ 1 đến 5 để thắp sáng bầu trời! ✨🌌";
+            if (gardenMsg) gardenMsg.textContent = "Đêm xuống rồi! Hãy nối 5 vì sao sáng theo thứ tự từ 1 đến 5 để thắp sáng bầu trời nhé ✨🌌";
             if (typeof window.showMascotSpeech === 'function') {
-                window.showMascotSpeech("Hãy tìm 5 vì sao thật, cẩn thận đừng bấm nhầm sao ảo nhé! 🤖✨", 4000);
+                window.showMascotSpeech("Tìm đúng 5 vì sao thật nhé, cẩn thận đừng để các vì sao ảo đánh lừa nha! ✨", 4000);
             }
             if (typeof window.playMelodicHarpChime === 'function') {
                 window.playMelodicHarpChime(4);
@@ -415,7 +415,7 @@
             }
 
             if (typeof window.showMascotSpeech === 'function') {
-                window.showMascotSpeech("Khu vườn hoa sen nở rực rỡ và ngập tràn tình yêu! 🪷💖", 5000);
+                window.showMascotSpeech("Oa, hoa nở rực rỡ cả một góc trời rồi! Chúc bạn một ngày 20/10 ngập tràn niềm vui và yêu thương nha! 🌸💖", 5000);
             }
             if (typeof window.playChimeSFX === 'function') window.playChimeSFX();
         }
@@ -527,14 +527,14 @@
         const mascotCompanion = document.getElementById('garden-mascot-companion');
 
         if (window.gardenState.currentStage === 1) {
-            if (gardenMsg) gardenMsg.textContent = "Tuyệt vời! Hạt giống đang nảy mầm...";
+            if (gardenMsg) gardenMsg.textContent = "Mầm xanh đã thức giấc! Từng chiếc lá non đang đón nắng... 🌱";
             const seedHint = document.getElementById('seed-hint');
             if (seedHint) seedHint.style.opacity = '0';
             if (typeof window.triggerNextStage === 'function') window.triggerNextStage();
             syncGardenStageSelector(2);
 
             setTimeout(() => {
-                if (gardenMsg) gardenMsg.textContent = "Mầm non đang khát nước. Hãy gom mây gọi mưa sương sớm nhé! 🌧️";
+                if (gardenMsg) gardenMsg.textContent = "Mầm non cần thêm chút ẩm mát. Bạn gọi vài giọt sương lành cho cây nhé 🌧️";
                 window.gardenState.isWatered = false;
                 if (livingHudEl) {
                     livingHudEl.classList.remove('hidden');
@@ -551,12 +551,12 @@
             }, 3000);
         }
         else if (window.gardenState.currentStage === 2) {
-            if (gardenMsg) gardenMsg.textContent = "Cây non lớn nhanh quá!";
+            if (gardenMsg) gardenMsg.textContent = "Cây non lớn nhanh và cứng cáp ghê!";
             if (typeof window.triggerNextStage === 'function') window.triggerNextStage();
             syncGardenStageSelector(3);
 
             setTimeout(() => {
-                if (gardenMsg) gardenMsg.textContent = "Hãy kéo vệt nắng ban mai sưởi ấm để cây chuẩn bị ra hoa nhé! ☀️";
+                if (gardenMsg) gardenMsg.textContent = "Hãy kéo vệt nắng ban mai sưởi ấm để cây sẵn sàng nở hoa nhé! ☀️";
                 window.gardenState.isFertilized = false;
                 if (livingHudEl) {
                     livingHudEl.classList.remove('hidden');
@@ -573,12 +573,12 @@
             }, 3000);
         }
         else if (window.gardenState.currentStage === 3) {
-            if (gardenMsg) gardenMsg.textContent = "Phép màu đang xảy ra...";
+            if (gardenMsg) gardenMsg.textContent = "Điều kỳ diệu đã đơm hoa kết trái...";
             cleanupStage('all');
             if (gardenUI) gardenUI.classList.add('hidden');
             if (livingHudEl) livingHudEl.classList.add('hidden');
             if (typeof window.showMascotSpeech === 'function') {
-                window.showMascotSpeech("Tuyệt vời quá! Khu vườn nở hoa rực rỡ rồi! 🌸🎉", 6000);
+                window.showMascotSpeech("Oa, hoa nở rực rỡ cả một góc trời rồi! Chúc bạn một ngày 20/10 ngập tràn niềm vui và yêu thương nha! 🌸✨", 6000);
             }
             if (mascotCompanion) mascotCompanion.classList.add('jump-bounce');
             if (typeof window.playRobotChirpSFX === 'function') window.playRobotChirpSFX();
@@ -595,10 +595,10 @@
         if (state.currentStage === 0 && state.isWatered && state.isFertilized) {
             advanceStage(0);
         } else if (state.currentStage === 1 && state.isWatered) {
-            if (gardenMsg) gardenMsg.textContent = "Hãy lắng nghe và lặp lại giai điệu ma thuật!";
+            if (gardenMsg) gardenMsg.textContent = "Hãy lắng nghe và gảy lại giai điệu mộc cầm ngân vang nhé!";
             if (typeof window.startSimonGame === 'function') window.startSimonGame();
         } else if (state.currentStage === 2 && state.isFertilized) {
-            if (gardenMsg) gardenMsg.textContent = "Hãy vẽ lại chòm sao trên bầu trời!";
+            if (gardenMsg) gardenMsg.textContent = "Hãy nối liền các vì sao để thắp sáng bầu trời đêm!";
             if (typeof window.startConstellationGame === 'function') window.startConstellationGame();
         }
     };
@@ -634,11 +634,11 @@
         const aoDaiFig = document.getElementById('ao-dai-viet-stage4');
         const poemText = document.getElementById('ao-dai-poem-text');
         const aoDaiVerses = [
-            "Chúc nàng một ngày 20/10 vạn dặm an yên, rạng rỡ như nắng mai và ngọt ngào như đóa sen đầu hạ 🌸",
-            "Tà áo thướt tha nghiêng vành nón lá, nét duyên ngọc ngà thắp sáng cả vườn thương ✨",
-            "Mong bạn luôn kiêu hãnh tỏa sáng theo cách riêng, được yêu thương và chở che trọn vẹn 💖",
-            "Dịu dàng mà kiên cường, tựa như đóa sen tinh khiết ngát hương giữa đất trời 🪷",
-            "Cảm ơn vì sự dịu êm và những điều kỳ diệu mà bạn luôn mang đến cho cuộc đời 🌿✨"
+            "Chúc bạn một ngày 20/10 thật thảnh thơi, rạng rỡ như nắng ban mai và ngọt ngào như nụ cười của chính bạn 🌸",
+            "Tà áo dài duyên dáng nghiêng che nón lá, nét đẹp mộc mạc mà tỏa sáng dịu dàng giữa đất trời ✨",
+            "Mong bạn luôn kiêu hãnh bước đi theo cách của riêng mình, vừa đủ mạnh mẽ, vừa trọn vẹn yêu thương 💖",
+            "Dịu dàng nhưng không hề yếu đuối, bạn luôn tỏa hương thơm ngát và kiên cường như đóa sen đầu hạ 🪷",
+            "Cảm ơn bạn vì nguồn năng lượng tích cực và sự ấm áp bạn luôn mang đến cho mọi người xung quanh 🌿✨"
         ];
         let verseIndex = 0;
 

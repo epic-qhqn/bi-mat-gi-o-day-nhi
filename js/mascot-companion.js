@@ -18,24 +18,24 @@
     const mascotAffectionBurst = document.getElementById('mascot-affection-burst');
 
     const mascotCheerQuotes = [
-        "Chào bạn nhé! Tớ là chú bé đồng dao chăm sóc vườn hoa 20/10 nè! 🌾✨",
-        "Gió đưa cành trúc la đà, hoa tình yêu nở đậm đà sắc hương! 🌸🎐",
-        "Tưới giọt sương mai, cây vươn đón nắng thu ấm áp! 💧☀️",
-        "Nụ cười của bạn làm khu vườn bừng sáng cả một góc trời! 💖",
-        "Bạn chăm vườn khéo ghê, từng nhánh lá đều ngập tràn yêu thương! 🍃🪷",
-        "Mưa thuận gió hòa, mầm non tình yêu sắp đơm hoa kết trái rồi! 🌱🌟",
-        "Mỗi người con gái đều là một đóa hoa thơm ngát của quê hương! 🌺✨",
-        "Tháng Mười hoa cúc vàng ươm, gửi trao cô gái ngát hương dịu dàng! 🌼🌾",
-        "Bình yên là khi ngắm nhìn mầm cây lớn lên từng ngày cùng bạn! 🌿🕊️",
-        "Chưa rõ phải làm gì ư? Chạm vào nút '📖 Hướng Dẫn' góc trên tớ chỉ cho nha! 💡✨",
-        "Tớ luôn ở đây cùng bạn ngân nga câu hát đồng dao! (≗ω≗) ♡"
+        "Chào bạn nhé! Hôm nay ghé thăm vườn có thấy lòng nhẹ nhõm hơn chút nào không? 🌿✨",
+        "Gió thổi qua cành lá xào xạc như đang khen hôm nay bạn thật rạng rỡ đó! 🍃🌸",
+        "Một giọt nước mát lành cho mầm cây, và một nụ cười thật tươi cho bạn nè! 💧☀️",
+        "Thỉnh thoảng cho phép mình thảnh thơi một chút, như cách mầm cây thong thả lớn lên nha 🪴",
+        "Bạn chăm vườn khéo ghê, mầm cây dường như cảm nhận được sự dịu dàng của bạn đó 🪷",
+        "Mưa nắng ngoài kia có thế nào thì ở đây luôn có một góc bình yên dành riêng cho bạn 🌟",
+        "Chúc bạn ngày 20/10 và cả 364 ngày còn lại đều được tự do làm điều mình yêu thích! 🌻✨",
+        "Trời tháng Mười dịu mát ghê, mong mọi điều âu lo của bạn đều tan biến theo gió nha 🌼",
+        "Mỗi chúng mình là một đóa hoa với thời điểm nở rộ của riêng mình, không việc gì phải vội 🌿🕊️",
+        "Nếu có lúc bối rối chưa biết làm gì, chạm nút '📖 Hướng Dẫn' phía trên tớ chỉ cho nha! 💡✨",
+        "Tớ ở đây canh vườn và luôn sẵn sàng lắng nghe bạn tâm tình! (≗ω≗) ♡"
     ];
 
     const petQuotes = [
-        "Aww, được bạn xoa đầu thích quá đi thôi! (≧◡≦) ♡",
-        "Bạn dịu dàng thật đấy, tớ cảm thấy ấm áp ghê! 🌸",
-        "Hi hi, cù lét tớ hả? Tớ chúc bạn 20/10 luôn tươi cười như hoa nhé! 🌼✨",
-        "Rù rù... Chú bé đồng dao sẽ luôn ở bên canh giữ vườn hoa cho bạn! 🪷💖"
+        "Aww, xoa đầu tớ hả? Thích ghê, cảm ơn bạn nhiều nha! (≧◡≦) ♡",
+        "Bàn tay ấm áp quá! Chúc bạn hôm nay nhận được thật nhiều điều ngọt ngào 🌸",
+        "Hi hi, cù lét tớ hả? Nhìn bạn cười là tớ cũng thấy vui lây luôn á! 🌼✨",
+        "Tớ sẽ luôn ở đây canh giữ khu vườn, bất cứ khi nào cần thảnh thơi cứ ghé chơi nghen! 🪷💖"
     ];
 
     let mascotBubbleTimeout = null;
@@ -155,7 +155,7 @@
             }, 2400);
         }
 
-        showMascotSpeech("Gọi mây gom sương sớm! Cho mầm cây mau đơm chồi biếc nhé! ☁️💧🌿", 2600);
+        showMascotSpeech("Gọi đám mây gom chút sương mát lành vỗ về mầm xanh nhé! ☁️💧🌿", 2600);
         triggerMascotHappyWink(2000);
         
         if (typeof window.playHydroBlasterSFX === 'function') {
@@ -181,7 +181,7 @@
             }, 2400);
         }
 
-        showMascotSpeech("Thắp vầng nắng thu ấm áp! Chúc mầm sống vươn cao đón gió trời! ☀️🌾✨", 2600);
+        showMascotSpeech("Kéo vệt nắng ban mai sưởi ấm, cho rễ cây thêm vững vàng đón gió thu! ☀️🌾✨", 2600);
         triggerMascotHappyWink(2000);
 
         if (typeof window.playStarMagicSFX === 'function') {
@@ -238,7 +238,7 @@
         }
 
         if (typeof window.playRobotChirpSFX === 'function') window.playRobotChirpSFX();
-        showMascotSpeech("Hoan hô! Đóa sen nở ngát hương đồng nội rồi! Chúc bạn 20/10 vạn điều may mắn! (⁄ ⁄•⁄ω⁄•⁄ ⁄) ♡", 4200);
+        showMascotSpeech("Oa nhìn kìa! Cây tình yêu đã nở hoa rực rỡ rồi! Chúc bạn một ngày 20/10 ngập tràn niềm vui và hạnh phúc nhé! 🌸💖", 4200);
         setTimeout(() => {
             if (mascotCompanion) mascotCompanion.classList.remove('jump-bounce');
         }, 1400);
@@ -250,7 +250,7 @@
         mascotCompanion.classList.add('jump-bounce');
         triggerMascotHappyWink(2200);
         if (typeof window.playChimeSFX === 'function') window.playChimeSFX();
-        showMascotSpeech("Ôi! Bạn đã chạm vào ngọn Cỏ Bốn Lá may mắn rồi! Điều ước sẽ thành hiện thực nhé! 🍀✨", 3800);
+        showMascotSpeech("Oa, bạn tinh mắt thật! Chạm vào Cỏ Bốn Lá rồi thì hôm nay chắc chắn gặp toàn điều may mắn nha! 🍀✨", 3800);
         setTimeout(() => {
             if (mascotCompanion) mascotCompanion.classList.remove('jump-bounce');
         }, 1000);
@@ -287,11 +287,11 @@
             const isFertilized = state.isFertilized || false;
 
             if (isRelocated) {
-                showMascotSpeech("Chạm vào tấm ảnh Polaroid hoặc Bưu thiếp để mở lá thư bí mật 20/10 nhé! 💌🪷");
+                showMascotSpeech("Chạm vào tấm ảnh Polaroid hoặc Bưu thiếp để mở món quà bí mật 20/10 nhé! 💌🪷");
             } else if (!isWatered && (stage === 0 || stage === 1)) {
-                showMascotSpeech("Kéo cụm mây trắng hoặc gõ nhẹ đất lành để tưới sương cho mầm cây nhé! 💧🌾");
+                showMascotSpeech("Bạn kéo đám mây hoặc gõ nhẹ mặt đất để tưới sương cho mầm cây nhé! 💧🌾");
             } else if (!isFertilized && (stage === 0 || stage === 2)) {
-                showMascotSpeech("Kéo vệt nắng ban mai hoặc xoa ấm rễ để sưởi ấm cho mầm non nè! ☀️🌱");
+                showMascotSpeech("Bạn kéo vệt nắng ban mai hoặc xoa nhẹ gốc để sưởi ấm cho mầm non nè! ☀️🌱");
             } else {
                 quoteIndex = (quoteIndex + 1) % mascotCheerQuotes.length;
                 showMascotSpeech(mascotCheerQuotes[quoteIndex]);

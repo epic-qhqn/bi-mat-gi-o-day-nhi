@@ -139,8 +139,8 @@
         sessionStorage.setItem('epic_gate_unlocked', 'true');
         if (timeLockMsg) {
             timeLockMsg.textContent = isAuto 
-                ? "Đã qua 12:00 trưa rồi! Cổng bí mật chính thức mở cửa! ✨" 
-                : "Mật mã chính xác! Chào mừng ACN đẹp trai bước vào điều bí mật... ✨";
+                ? "Đã qua 12:00 trưa rồi! Cổng bí mật chính thức mở cửa đón bạn! ✨" 
+                : "Mở khóa thành công! Chào mừng bạn ghé thăm khu vườn bí mật 20/10... 🌸✨";
             timeLockMsg.className = 'time-lock-msg success';
         }
         if (typeof window.playChimeSFX !== 'undefined') window.playChimeSFX();
@@ -177,15 +177,15 @@
 
         if (state === 'STRICT_LOCK') {
             if (lockSubtitle) {
-                lockSubtitle.innerHTML = 'Cổng thời gian đang niêm phong tuyệt đối! ⏳<br><strong class="highlight-time">Chưa tới giờ đâu cưng à! Đúng 12:00 trưa 25/10/2026 mới mở nha!</strong> ✨';
+                lockSubtitle.innerHTML = 'Cổng thời gian đang giữ bí mật món quà đặc biệt ⏳<br><strong class="highlight-time">Hẹn bạn đúng 12:00 trưa ngày 25/10/2026 cổng sẽ tự động mở nhé!</strong> ✨';
             }
-            if (timeLockInput) timeLockInput.placeholder = "Cổng đang phong ấn...";
+            if (timeLockInput) timeLockInput.placeholder = "Cổng đang tạm đóng...";
         } else {
             if (lockSubtitle) {
-                lockSubtitle.innerHTML = 'Hãy nhập mật mã để mở khóa cổng bí mật ✨<br><small style="opacity: 0.85;">(Mọi ngày bình thường cần mật khẩu • Sau 12:00 trưa 25/10/2026 sẽ tự do)</small>';
+                lockSubtitle.innerHTML = 'Hãy nhập mật mã để mở khóa cổng bí mật ✨<br><small style="opacity: 0.85;">(Khu vườn sẽ mở tự do sau 12:00 trưa ngày 25/10/2026)</small>';
             }
             if (timeLockInput) {
-                timeLockInput.placeholder = "Nhập mật mã bí mật...";
+                timeLockInput.placeholder = "Nhập mật mã mở sớm...";
                 setTimeout(() => timeLockInput.focus(), 350);
                 timeLockInput.addEventListener('input', () => {
                     triggerStartMusicAt20();
@@ -213,10 +213,10 @@
 
             if (currentState === 'STRICT_LOCK') {
                 const strictFailQuotes = [
-                    "Chưa tới giờ đâu cưng à! 😜 Dù là ACN đẹp trai thì cũng phải đợi tới 12h trưa nay nhé!",
-                    "Khóa nghiêm ngặt rồi cưng ơi! Cổng chỉ tự động mở đúng 12:00 trưa nay 25/10/2026 thôi! ⏳",
-                    "Nóng vội thế cưng! Uống miếng trà sữa chờ tới đúng 12h trưa nha 🧋",
-                    "Chưa tới giờ đâu cưng à! Mọi mật mã đều bị vô hiệu hóa trước 12h trưa! 🚀"
+                    "Chưa tới giờ mở cổng rồi nè! Đúng 12:00 trưa nay khu vườn mới bật mí nhé ⏳✨",
+                    "Khu vườn đang được chăm chút những khâu cuối cùng, hẹn bạn đúng 12h trưa quay lại nha! 🌸",
+                    "Uống một ngụm trà ấm thảnh thơi chờ tới 12:00 trưa nay nhé 🧋✨",
+                    "Cổng thời gian đang giữ kín bất ngờ, đúng 12h trưa nay sẽ tự động mở toang đón bạn! 🚀"
                 ];
                 const msg = strictFailQuotes[failQuoteIndex % strictFailQuotes.length];
                 failQuoteIndex++;
@@ -229,11 +229,11 @@
                 unlockGateway(false);
             } else {
                 const normalFailQuotes = [
-                    "Mật mã sai rồi cưng ơi! Chỉ có ACN đẹp trai mới vào được thôi nhé! 😉",
-                    "Chưa đúng mật mã đâu cưng à! 😜 Thử lại xem nào~",
-                    "Sai rồi nha cưng! Gợi ý: Ai đẹp trai nhất nào? 🚀",
-                    "Chưa qua được ải đâu cưng! Nghĩ lại xem mật mã là gì nha 🧋",
-                    "Mật mã không đúng rồi! Hỏi admin ACN để lấy pass nha cưng! 🔒"
+                    "Mật mã chưa đúng rồi nè, thử nhớ lại xem ai trong team hay tự tin nhất nhé! 😉",
+                    "Chưa đúng mật mã rồi~ Gợi ý nhỏ: mật mã liên quan đến một bạn nam rất tự tin trong nhóm ✨",
+                    "Sai một chút xíu rồi nha, uống ngụm nước rồi thử lại xem nào 🧋",
+                    "Chưa mở được nè! Thử kiểm tra xem có gõ nhầm chữ nào không nhé 🔑",
+                    "Vẫn chưa chính xác rồi! Hỏi nhỏ admin ACN để nhận gợi ý mật mã nha ✨"
                 ];
                 const msg = normalFailQuotes[failQuoteIndex % normalFailQuotes.length];
                 failQuoteIndex++;
@@ -265,7 +265,7 @@
         if (!embossWrapEl) return;
         const trimmed = val ? val.trimStart() : '';
         if (!trimmed) {
-            embossWrapEl.innerHTML = `<span class="emboss-placeholder">✦ Chạm gõ để dập tên nàng lên khuôn đồng ✦</span>`;
+            embossWrapEl.innerHTML = `<span class="emboss-placeholder">✦ Gõ tên bạn để xem mẫu dập đồng ✦</span>`;
             prevNameValue = '';
             return;
         }
@@ -335,9 +335,9 @@
     };
 
     const STEP_HINTS = {
-        1: 'Chọn sắc sáp & hoa văn triện nàng yêu thích 🎨',
-        2: 'Sáp thơm đang đun chảy óng ả trên ngọn lửa nến ấm 🔥',
-        3: 'Dập triện son lưu giữ kỷ niệm và mở lối vào vườn hoa 💮'
+        1: 'Chọn màu sáp & hoa văn con dấu bạn thích nhất 🎨',
+        2: 'Sáp thơm đang tan chảy êm đềm bên ánh nến ấm áp 🔥',
+        3: 'Dập con dấu để hoàn tất phong thư và mở lối vào vườn hoa 💮'
     };
 
     const updateStartBtnLabel = () => {
@@ -354,7 +354,7 @@
             btnText.textContent = 'Rót Sáp Lên Phong Thư 🍯';
         } else {
             if (btnIcon) btnIcon.textContent = '💮';
-            btnText.textContent = 'Dập Triện Son & Mở Cổng ✨';
+            btnText.textContent = 'Dập Con Dấu & Mở Cổng Vườn ✨';
         }
     };
 
@@ -571,7 +571,7 @@
         if (isWaxMelted) return;
         if (selectedBeads.length >= 3) {
             if (waxSealGuideTip) {
-                waxSealGuideTip.innerHTML = `<span>Thìa đồng đã đầy 3 hạt sáp! Hãy đun chảy để tạo vân ✨</span>`;
+                waxSealGuideTip.innerHTML = `<span>Thìa đồng đã đủ 3 hạt sáp! Cùng đun nóng để tạo vân cẩm thạch nhé ✨</span>`;
             }
             return;
         }
@@ -595,7 +595,7 @@
             }
         } else {
             if (waxSealGuideTip) {
-                waxSealGuideTip.innerHTML = `<span>Đã thả hạt ${conf.name}. Chọn thêm hạt sáp phối màu 🎨</span>`;
+                waxSealGuideTip.innerHTML = `<span>Đã chọn sắc ${conf.name}. Bạn chọn thêm hạt sáp phối màu nhé 🎨</span>`;
             }
         }
     };
@@ -797,7 +797,7 @@
                 setTimeout(() => { inputEl.style.borderColor = ''; }, 600);
             }
             if (waxSealGuideTip) {
-                waxSealGuideTip.innerHTML = `<span>✨ Hãy nhập tên của bạn lên khuôn đồng trước nhé!</span>`;
+                waxSealGuideTip.innerHTML = `<span>✨ Hãy ghi tên của bạn lên khuôn đồng trước nhé!</span>`;
             }
             if (navigator.vibrate) navigator.vibrate(20);
             return { ready: false, step: 0 };
@@ -948,8 +948,8 @@
 
         const desc = document.getElementById('name-prompt-desc') || document.querySelector('#name-modal .name-panel p');
         if (desc) {
-            const recipientName = (name || window.currentUserName || 'NÀNG THƠ').toUpperCase();
-            desc.innerHTML = `✨ Triện son cẩm thạch đã khắc dấu <strong>${recipientName}</strong>, mầm hoa thức giấc...<br>Những hạt mầm ánh sáng đang gieo vào khu vườn của bạn! ✨`;
+            const recipientName = (name || window.currentUserName || 'BẠN').toUpperCase();
+            desc.innerHTML = `✨ Con dấu sáp mang tên <strong>${recipientName}</strong> đã hoàn tất!<br>Khu vườn bí mật đang bừng tỉnh để đón chào bạn... ✨`;
         }
 
         if (nameModal) nameModal.style.pointerEvents = 'none';

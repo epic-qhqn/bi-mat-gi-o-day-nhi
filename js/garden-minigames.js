@@ -97,7 +97,7 @@
                     if (simonPlaying || (state.currentStage !== undefined && state.currentStage !== 1)) return;
                     simonInput = [];
                     const msg = document.getElementById('garden-message');
-                    if (msg) msg.textContent = "Đang phát lại giai điệu ma thuật...";
+                    if (msg) msg.textContent = "Đang phát lại giai điệu mộc cầm...";
                     if (typeof window.playKeyTapSFX !== 'undefined') window.playKeyTapSFX();
                     await playSimonSequence(simonGenerationId);
                 };
@@ -155,7 +155,7 @@
         }
 
         const msg = document.getElementById('garden-message');
-        if (msg) msg.textContent = `🎵 ${chosenPalette.name}: Hãy lắng nghe khúc giai điệu ma thuật...`;
+        if (msg) msg.textContent = `🎵 ${chosenPalette.name}: Lắng nghe những nốt nhạc ngân vang...`;
         await sleep(1200);
         if (currentGen !== simonGenerationId) return;
         await playSimonSequence(currentGen);
@@ -185,7 +185,7 @@
         simonPlaying = false;
         if (replayBtn) replayBtn.classList.remove('disabled');
         const msg = document.getElementById('garden-message');
-        if (msg) msg.textContent = "Đến lượt bạn lặp lại giai điệu nhé! 🌸";
+        if (msg) msg.textContent = "Đến lượt bạn gảy lại từng nốt nhạc nhé! 🌸";
     };
 
     const handleSimonClick = async (node, index) => {
@@ -206,14 +206,14 @@
 
         if (simonInput[currentStep] !== simonSequence[currentStep]) {
             simonPlaying = true;
-            if (msg) msg.textContent = "Sai nhịp rồi, cùng lắng nghe lại nhé...";
+            if (msg) msg.textContent = "Lạc mất một nhịp rồi, cùng nghe lại để tìm giai điệu nhé... 🎶";
             node.classList.add('wrong');
             setTimeout(() => node.classList.remove('wrong'), 500);
             await sleep(1000);
             const currentGen = ++simonGenerationId;
             rollNewMelody();
             const paletteName = window.activeHarmonicPalette ? window.activeHarmonicPalette.name : 'Khúc ca';
-            if (msg) msg.textContent = `🎵 ${paletteName}: giai điệu mới, hãy lắng nghe...`;
+            if (msg) msg.textContent = `🎵 ${paletteName}: giai điệu mới, cùng lắng nghe nhé...`;
             await playSimonSequence(currentGen);
         } else if (simonInput.length === simonSequence.length) {
             simonPlaying = true;
@@ -224,7 +224,7 @@
             if (simonContainer) simonContainer.classList.add('hidden');
             const replayBtn = document.getElementById('simon-replay-btn');
             if (replayBtn) replayBtn.classList.add('hidden');
-            if (msg) msg.textContent = "Tuyệt vời! Bản tình ca thật đẹp. 🌸✨";
+            if (msg) msg.textContent = "Giai điệu hòa quyện tuyệt đẹp! Cây non đang lớn vùn vụt kìa 🌸✨";
             setTimeout(() => {
                 if (typeof window.advanceStage === 'function') window.advanceStage(1);
             }, 1000);
@@ -232,7 +232,7 @@
             // Nốt đúng nhưng chưa hết dãy -> thông báo động viên & số nốt còn lại
             if (msg) {
                 const remaining = simonSequence.length - simonInput.length;
-                msg.textContent = `Tuyệt vời! 🎶 Còn ${remaining} nốt nữa...`;
+                msg.textContent = `Chuẩn xác rồi! 🎶 Còn ${remaining} nốt nữa thôi...`;
             }
         }
     };
@@ -457,7 +457,7 @@
         'Ánh Lửa Tinh Khôi Dẫn Lối',
         'Đóa Hoa Tinh Tú Nở Rộ Giữa Vũ Trụ',
         'Chiếc Thuyền Ánh Sáng Vượt Thời Gian',
-        'Gió Đêm Thì Thầm Lời Yêu'
+        'Gió Đêm Gửi Lời Bình Yên'
     ];
 
     const generateConstellationName = () => {
@@ -641,9 +641,9 @@
 
         if (!silent) {
             const msg = document.getElementById('garden-message');
-            if (msg) msg.textContent = `✨ Đó là ngôi sao ảo ma thuật! Hãy tiếp tục nối các sao từ 1 đến ${starCoords.length} nhé!`;
+            if (msg) msg.textContent = `✨ Ngôi sao ảo vừa tan thành bụi sáng! Hãy tiếp tục nối các vì sao thật từ 1 đến ${starCoords.length} nghen!`;
             if (typeof window.showMascotSpeech === 'function') {
-                window.showMascotSpeech("Suýt nữa thì bị sao ảo đánh lừa rồi nè! Bạn tinh mắt thật đó! 🤖✨", 2800);
+                window.showMascotSpeech("Suýt bị sao ảo đánh lừa rồi nè, may mà bạn tinh ý ghê á! ✨", 2800);
             }
         }
     };
@@ -802,7 +802,7 @@
             const constName = activeConstellationName ? activeConstellationName.latinName : 'Định Mệnh';
             const constSub = activeConstellationName ? ` (${activeConstellationName.subtitle})` : '';
             const msg = document.getElementById('garden-message');
-            if (msg) msg.textContent = `Chòm sao ${constName}${constSub} đã sáng bừng vũ trụ! 🌟✨`;
+            if (msg) msg.textContent = `Bầu trời rực sáng! Chòm sao ${constName}${constSub} đã nối liền ước nguyện 🌟✨`;
             if (typeof window.playChimeSFX !== 'undefined') window.playChimeSFX();
 
             const badge = document.getElementById('constellation-name-badge');
@@ -945,7 +945,7 @@
         });
 
         const msg = document.getElementById('garden-message');
-        if (msg) msg.textContent = `✨ Chòm sao ${activeConstellationName.latinName}: Hãy nối ${starCoords.length} ngôi sao (${activeConstellationName.subtitle})!`;
+        if (msg) msg.textContent = `✨ Chòm sao ${activeConstellationName.latinName}: Hãy nối ${starCoords.length} ngôi sao (${activeConstellationName.subtitle}) nhé!`;
         highlightNextTargetStar();
         showConstellationHint();
     };

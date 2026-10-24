@@ -91,7 +91,7 @@
             <h2>CỔNG THỜI GIAN BÍ MẬT</h2>
             <p class="lock-subtitle" id="lock-subtitle">
                 Hãy nhập mật mã để mở khóa cổng bí mật ✨<br>
-                <small style="opacity: 0.85;">(Sau 12:00 trưa ngày 25/10/2026 sẽ tự động mở tự do)</small>
+                <small style="opacity: 0.85;">(Khu vườn sẽ mở tự do sau 12:00 trưa ngày 25/10/2026)</small>
             </p>
             <div class="lock-input-group">
                 <input type="text" id="time-lock-input" class="lyrical-input time-lock-input" placeholder="Nhập mật mã mở sớm..." autocomplete="off" maxlength="20">
@@ -127,8 +127,8 @@
                 </div>
 
                 <div class="atelier-header">
-                    <h2>LƯU DẤU TÊN NÀNG VÀO VƯỜN HOA</h2>
-                    <p id="name-prompt-desc">Hãy ghi tên của bạn lên khuôn dập đồng để nghệ nhân đúc thành triện sáp son và đánh thức mầm hoa bí mật ✨</p>
+                    <h2>GỬI TÊN BẠN VÀO KHU VƯỜN</h2>
+                    <p id="name-prompt-desc">Hãy để lại tên hoặc biệt danh để dập nên con dấu sáp riêng, mở lối bước vào khu vườn hoa di sản ✨</p>
                 </div>
 
                 <!-- Vintage Brass Letterpress Plate -->
@@ -139,9 +139,9 @@
                     <span class="brass-rivet rivet-br"></span>
                     <div class="plate-inner-rim">
                         <div class="plate-engraving-label">✦ VINTAGE BRASS LETTERPRESS ✦</div>
-                        <input type="text" id="name-input" class="lyrical-input portal-input atelier-input" placeholder="Nhập tên của bạn..." autocomplete="off" maxlength="15">
+                        <input type="text" id="name-input" class="lyrical-input portal-input atelier-input" placeholder="Tên hoặc biệt danh của bạn..." autocomplete="off" maxlength="15">
                         <div id="emboss-preview-wrap" class="emboss-preview-wrap" aria-hidden="true">
-                            <span class="emboss-placeholder">Bản dập nổi tên son sẽ hiển thị ở đây</span>
+                            <span class="emboss-placeholder">✦ Gõ tên bạn để xem mẫu dập đồng ✦</span>
                         </div>
                     </div>
                 </div>
@@ -430,12 +430,12 @@
                     </div>
 
                     <!-- Action Button & Poetic Artisan Guide Tip -->
-                    <button id="start-btn" class="lyrical-btn portal-btn atelier-seal-btn" title="Thực hiện nghi thức hoàn tất con dấu và mở cổng hoa">
+                    <button id="start-btn" class="lyrical-btn portal-btn atelier-seal-btn" title="Hoàn tất con dấu và mở cổng vườn hoa">
                         <span class="seal-icon">🪶</span>
-                        <span class="seal-text">Khắc Dấu & Mở Cổng Hoa ✨</span>
+                        <span class="seal-text">Dập Con Dấu & Mở Cổng Vườn ✨</span>
                     </button>
                     <div class="wax-seal-guide-tip" id="wax-seal-guide-tip">
-                        <span>Hãy chọn sắc sáp và bấm nút để bắt đầu nghi thức đúc triện son ✨</span>
+                        <span>Hãy chọn màu sáp và hoa văn bạn yêu thích để bắt đầu nhé ✨</span>
                     </div>
                 </div>
             </div>
@@ -515,7 +515,7 @@
 
     <!-- UI Vườn Hoa (Lyrical Design) -->
     <div id="garden-ui" class="garden-ui lyrical-panel">
-        <div class="instruction">Hãy chăm sóc hạt giống để điều kỳ diệu xảy ra</div>
+        <div class="instruction">Cùng chăm sóc hạt giống để khu vườn hé mở những điều bất ngờ nhé</div>
         <!-- Thanh Sinh Trưởng Mầm Hoa Cây Lớn Lên Hiện Đại (Living Botanical Sap Strand) -->
         <div id="growth-progress" class="growth-progress" aria-label="Tiến trình phát triển mầm cây">
             <div class="growth-track-rail" aria-hidden="true">
@@ -527,7 +527,7 @@
                     <span class="node-icon">🌱</span>
                     <span class="node-label">Mầm Sinh</span>
                 </div>
-                <div class="step step-node" data-node="2" title="Chặng 2: Vươn Cành (Khúc đồng dao Simon)">
+                <div class="step step-node" data-node="2" title="Chặng 2: Vươn Cành (Điệu mộc cầm)">
                     <span class="node-halo"></span>
                     <span class="node-icon">🌿</span>
                     <span class="node-label">Vươn Cành</span>
@@ -539,10 +539,10 @@
                 </div>
             </div>
         </div>
-        <div id="garden-message" class="garden-message">Gom mây gọi mưa sương sớm hoặc sưởi ấm mầm non bằng vệt nắng 🌤️</div>
+        <div id="garden-message" class="garden-message">Gom mây gọi mưa sương sớm hoặc kéo vệt nắng ấm vỗ về mầm non 🌤️</div>
         <div id="terrarium-gesture-hint" class="terrarium-gesture-hint">
             <span class="hint-dot">✦</span>
-            <span>Mẹo Khu Vườn: Gõ đúp ngưng tụ sương · Xoa rễ sưởi ấm · Chạm vuốt cành gảy đàn hạc 🌿🎶</span>
+            <span>Gợi ý: Chạm hai lần tạo sương · Xoa rễ sưởi ấm · Vuốt cành gảy đàn hạc 🌿🎶</span>
             <span class="hint-dot">✦</span>
         </div>
         <button id="simon-replay-btn" class="simon-replay-btn hidden" title="Nghe lại giai điệu ma thuật">
@@ -753,7 +753,7 @@
     <div id="garden-mascot-companion" class="mascot-companion-wrap" title="Nhấn vào tớ để trò chuyện nè!">
         <div class="mascot-halo-glow"></div>
         <div class="mascot-speech-bubble" id="mascot-speech-bubble">
-            <span class="bubble-text" id="mascot-bubble-text">Chào bạn! Tớ là chú bé đồng dao chăm vườn hoa 20/10 nè! 🌾✨</span>
+            <span class="bubble-text" id="mascot-bubble-text">Chào bạn nhé! Hôm nay ghé thăm vườn có thấy lòng nhẹ nhõm hơn chút nào không? 🌿✨</span>
             <div class="bubble-tail"></div>
         </div>
         <div class="mascot-puppet-container" id="mascot-puppet">
@@ -938,7 +938,7 @@
                 <!-- Interactive Poetic Verse Tooltip / Ribbon -->
                 <div class="ao-dai-poem-badge" id="ao-dai-poem-badge">
                     <span class="poem-lotus-icon">🪷</span>
-                    <span class="poem-verse-text" id="ao-dai-poem-text">Chúc nàng một ngày 20/10 vạn dặm an yên, rạng rỡ như nắng mai và ngọt ngào như đóa sen đầu hạ 🌸</span>
+                    <span class="poem-verse-text" id="ao-dai-poem-text">Chúc bạn một ngày 20/10 thật thảnh thơi, rạng rỡ như nắng ban mai và ngọt ngào như nụ cười của chính bạn 🌸</span>
                     <span class="poem-sparkle">✨</span>
                 </div>
                 <!-- Floating Lotus Petals around Áo Dài -->

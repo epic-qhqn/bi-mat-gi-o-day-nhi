@@ -13,9 +13,9 @@
 ---
 
 ## Phase 2: Đại Phẫu Thuật Văn Phong Nghi Thức Mở Vườn, Mascot & Stage HUD
-- [ ] 2.1: Viết lại lời dẫn nghi thức nung sáp, đóng dấu đồng trong `js/wax-seal-ceremony.js` và `index.html` (trang nhã, tôn vinh người nhận).
-- [ ] 2.2: Làm mới toàn bộ hệ thống thoại của Mascot trong `js/mascot-companion.js` (hóm hỉnh, mộc mạc, ấm áp, xóa sạch giọng máy móc).
-- [ ] 2.3: Viết lại chỉ dẫn tương tác và lời thơ của Stage 1 (Mầm non), Stage 2 (Giai điệu Simon), Stage 3 (Nối sao), Stage 4 (Cây tim & Áo dài).
+- [x] 2.1: Viết lại lời dẫn nghi thức nung sáp, đóng dấu đồng trong `js/wax-seal-ceremony.js` và `index.html` (trang nhã, tôn vinh người nhận).
+- [x] 2.2: Làm mới toàn bộ hệ thống thoại của Mascot trong `js/mascot-companion.js` (hóm hỉnh, mộc mạc, ấm áp, xóa sạch giọng máy móc).
+- [x] 2.3: Viết lại chỉ dẫn tương tác và lời thơ của Stage 1 (Mầm non), Stage 2 (Giai điệu Simon), Stage 3 (Nối sao), Stage 4 (Cây tim & Áo dài).
 
 ---
 
