@@ -16,6 +16,78 @@
     let simonPlaying = false;
     let simonGenerationId = 0;
     let lastTapNodeTime = 0;
+    let stage2FailCount = 0;
+    let stage2StartTime = 0;
+    let stage2SkipTimer = null;
+
+    // Graceful Skip Fallback: tự động hiển thị nút bỏ qua sau 5 lần thử sai hoặc sau 40 giây
+    const showSimonSkipButton = () => {
+        const skipBtn = document.getElementById('simon-skip-btn');
+        if (!skipBtn) return;
+        if (skipBtn.classList.contains('hidden')) {
+            skipBtn.classList.remove('hidden');
+            skipBtn.style.display = 'inline-flex';
+            skipBtn.classList.remove('disabled');
+            if (typeof window.showMascotSpeech === 'function') {
+                window.showMascotSpeech("Nếu giai điệu hơi nhanh, bạn có thể đón làn gió thoảng để hoa tự nở nhé! 🍃🌸", 4500);
+            }
+        }
+    };
+
+    const handleSimonSkip = async (e) => {
+        if (e) {
+            e.preventDefault();
+            e.stopPropagation();
+        }
+        if (simonPlaying) return;
+        simonPlaying = true;
+
+        if (stage2SkipTimer) {
+            clearTimeout(stage2SkipTimer);
+            stage2SkipTimer = null;
+        }
+
+        if (typeof window.triggerHaptic === 'function') window.triggerHaptic('success');
+        if (typeof window.playMelodicHarpChime === 'function') {
+            window.playMelodicHarpChime(3);
+        } else if (typeof window.playWindChimesSFX === 'function') {
+            window.playWindChimesSFX();
+        }
+
+        const msg = document.getElementById('garden-message');
+        if (msg) msg.textContent = "Làn gió thơm lành thổi qua... Cây non đã vươn cành đơm nụ! 🍃🌸✨";
+
+        const skipBtn = document.getElementById('simon-skip-btn');
+        if (skipBtn) skipBtn.classList.add('disabled');
+        const replayBtn = document.getElementById('simon-replay-btn');
+        if (replayBtn) replayBtn.classList.add('disabled');
+
+        const container = document.getElementById('simon-game');
+        if (container) {
+            const nodes = container.querySelectorAll('.simon-node');
+            nodes.forEach((node, i) => {
+                setTimeout(() => {
+                    node.classList.add('highlight');
+                    if (typeof window.playSimonSFX === 'function') window.playSimonSFX(i);
+                    setTimeout(() => node.classList.remove('highlight'), 300);
+                }, i * 160);
+            });
+        }
+
+        if (typeof window.duckBgmForMinigame === 'function') {
+            window.duckBgmForMinigame(false, 2000);
+        }
+
+        setTimeout(() => {
+            if (container) container.classList.add('hidden');
+            if (replayBtn) replayBtn.classList.add('hidden');
+            if (skipBtn) skipBtn.classList.add('hidden');
+            simonPlaying = false;
+            if (typeof window.advanceStage === 'function') {
+                window.advanceStage(1);
+            }
+        }, 1000);
+    };
 
     // Tạo dãy nốt ngẫu nhiên: 4-5 nốt, không lặp liền nhau, có >= 3 nốt khác nhau.
     const generateRandomSequence = () => {
@@ -61,6 +133,16 @@
         simonPlaying = false;
         simonGenerationId++;
         simonInput = [];
+        stage2FailCount = 0;
+        if (stage2SkipTimer) {
+            clearTimeout(stage2SkipTimer);
+            stage2SkipTimer = null;
+        }
+        const skipBtn = document.getElementById('simon-skip-btn');
+        if (skipBtn) {
+            skipBtn.classList.add('hidden');
+            skipBtn.style.display = 'none';
+        }
     };
 
     const startSimonGame = async () => {
@@ -83,11 +165,30 @@
         const instructionEl = document.querySelector('.garden-ui .instruction');
         if (instructionEl) instructionEl.style.display = 'none';
 
+        stage2FailCount = 0;
+        stage2StartTime = Date.now();
+        if (stage2SkipTimer) clearTimeout(stage2SkipTimer);
+        stage2SkipTimer = setTimeout(() => {
+            showSimonSkipButton();
+        }, 40000);
+
+        const skipBtn = document.getElementById('simon-skip-btn');
+        if (skipBtn) {
+            skipBtn.classList.add('hidden');
+            skipBtn.style.display = 'none';
+            skipBtn.classList.remove('disabled');
+            if (!skipBtn.dataset.bound) {
+                skipBtn.dataset.bound = 'true';
+                skipBtn.addEventListener('click', handleSimonSkip);
+            }
+        }
+
         const replayBtn = document.getElementById('simon-replay-btn');
         if (replayBtn) {
             replayBtn.classList.remove('hidden');
             replayBtn.style.display = 'flex';
             replayBtn.style.pointerEvents = 'auto';
+            replayBtn.classList.remove('disabled');
             if (!replayBtn.dataset.bound) {
                 replayBtn.dataset.bound = 'true';
                 const triggerReplay = async (e) => {
@@ -97,7 +198,7 @@
                     if (simonPlaying || (state.currentStage !== undefined && state.currentStage !== 1)) return;
                     simonInput = [];
                     const msg = document.getElementById('garden-message');
-                    if (msg) msg.textContent = "Đang phát lại giai điệu mộc cầm...";
+                    if (msg) msg.textContent = "Đang phát lại giai điệu chuông hoa... 🌸🎵";
                     if (typeof window.triggerHaptic === 'function') window.triggerHaptic('tap');
                     if (typeof window.playKeyTapSFX !== 'undefined') window.playKeyTapSFX();
                     await playSimonSequence(simonGenerationId);
@@ -107,14 +208,18 @@
         }
 
         const isMobileLandscape = (typeof window !== 'undefined') &&
-            (window.innerWidth > window.innerHeight && window.innerHeight <= 540);
+            (window.matchMedia ? window.matchMedia('(max-height: 540px) and (orientation: landscape)').matches : (window.innerWidth > window.innerHeight && window.innerHeight <= 540));
 
+        // Bilateral Thumb Zones (2 Trái - 2 Phải) trên mobile landscape:
+        // Trái: Nốt 0 (16%, 36%) & Nốt 1 (24%, 56%)
+        // Phải: Nốt 2 (76%, 56%) & Nốt 3 (84%, 36%)
+        // Giải phóng hoàn toàn 572px trung tâm cho mầm cây, không cản trở tầm nhìn
         const celestialArcSlots = isMobileLandscape
             ? [
-                { l: 18, t: 38 },
-                { l: 32, t: 50 },
-                { l: 68, t: 50 },
-                { l: 82, t: 38 }
+                { l: 16, t: 36 },
+                { l: 24, t: 56 },
+                { l: 76, t: 56 },
+                { l: 84, t: 36 }
             ]
             : [
                 { l: 20, t: 34 },
@@ -166,7 +271,7 @@
         }
 
         const msg = document.getElementById('garden-message');
-        if (msg) msg.textContent = `🎵 ${chosenPalette.name}: Lắng nghe những nốt nhạc ngân vang...`;
+        if (msg) msg.textContent = `🌸 ${chosenPalette.name}: Lắng nghe 4 chuông hoa ngân vang...`;
         await sleep(1200);
         if (currentGen !== simonGenerationId) return;
         await playSimonSequence(currentGen);
@@ -196,7 +301,7 @@
         simonPlaying = false;
         if (replayBtn) replayBtn.classList.remove('disabled');
         const msg = document.getElementById('garden-message');
-        if (msg) msg.textContent = "Đến lượt bạn gảy lại từng nốt nhạc nhé! 🌸";
+        if (msg) msg.textContent = "Chạm lại các chuông hoa ngân vang theo đúng giai điệu nhé! 🌸🎵";
     };
 
     const handleSimonClick = async (node, index) => {
@@ -218,18 +323,28 @@
 
         if (simonInput[currentStep] !== simonSequence[currentStep]) {
             simonPlaying = true;
+            stage2FailCount++;
             if (typeof window.triggerHaptic === 'function') window.triggerHaptic('medium');
-            if (msg) msg.textContent = "Lạc mất một nhịp rồi, cùng nghe lại để tìm giai điệu nhé... 🎶";
+            if (msg) msg.textContent = "Lạc mất một nhịp chuông rồi, cùng lắng nghe lại nhé... 🌸🎶";
             node.classList.add('wrong');
             setTimeout(() => node.classList.remove('wrong'), 500);
+
+            if (stage2FailCount >= 5) {
+                showSimonSkipButton();
+            }
+
             await sleep(1000);
             const currentGen = ++simonGenerationId;
             rollNewMelody();
             const paletteName = window.activeHarmonicPalette ? window.activeHarmonicPalette.name : 'Khúc ca';
-            if (msg) msg.textContent = `🎵 ${paletteName}: giai điệu mới, cùng lắng nghe nhé...`;
+            if (msg) msg.textContent = `🌸 ${paletteName}: giai điệu mới, cùng lắng nghe chuông hoa nhé...`;
             await playSimonSequence(currentGen);
         } else if (simonInput.length === simonSequence.length) {
             simonPlaying = true;
+            if (stage2SkipTimer) {
+                clearTimeout(stage2SkipTimer);
+                stage2SkipTimer = null;
+            }
             if (typeof window.triggerHaptic === 'function') window.triggerHaptic('success');
             if (typeof window.duckBgmForMinigame === 'function') {
                 window.duckBgmForMinigame(false, 2000);
@@ -238,7 +353,9 @@
             if (simonContainer) simonContainer.classList.add('hidden');
             const replayBtn = document.getElementById('simon-replay-btn');
             if (replayBtn) replayBtn.classList.add('hidden');
-            if (msg) msg.textContent = "Giai điệu hòa quyện tuyệt đẹp! Cây non đang lớn vùn vụt kìa 🌸✨";
+            const skipBtn = document.getElementById('simon-skip-btn');
+            if (skipBtn) skipBtn.classList.add('hidden');
+            if (msg) msg.textContent = "Chuông hoa ngân vang tuyệt đẹp! Cây non đang vươn cành đón nắng kìa 🌸✨";
             setTimeout(() => {
                 if (typeof window.advanceStage === 'function') window.advanceStage(1);
             }, 1000);
@@ -246,7 +363,7 @@
             // Nốt đúng nhưng chưa hết dãy -> thông báo động viên & số nốt còn lại
             if (msg) {
                 const remaining = simonSequence.length - simonInput.length;
-                msg.textContent = `Chuẩn xác rồi! 🎶 Còn ${remaining} nốt nữa thôi...`;
+                msg.textContent = `Chuẩn xác rồi! 🌸 Còn ${remaining} chuông hoa nữa thôi...`;
             }
         }
     };
@@ -996,6 +1113,8 @@
     // Public API
     window.startSimonGame = startSimonGame;
     window.stopSimonGame = stopSimonGame;
+    window.skipSimonGame = handleSimonSkip;
+    window.getStage2FailCount = () => stage2FailCount;
     window.isSimonPlaying = () => simonPlaying;
     window.playSimonSequence = playSimonSequence;
     window.startConstellationGame = startConstellationGame;

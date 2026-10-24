@@ -10397,27 +10397,34 @@ body.zen-mode-active .garden-stage-selector {
   }
 
   /* Phase 5: Minigames Adaptation in Landscape */
-  /* Stage 2: Simon Melody Nodes & Replay Button */
+  /* Stage 2: Simon Melody Nodes & Replay/Skip Action Controls */
   .simon-node {
-    width: 96px !important;
-    height: 96px !important;
-    font-size: 38px !important;
+    width: 104px !important;
+    height: 104px !important;
+    font-size: 42px !important;
+    box-shadow: 0 6px 22px rgba(19, 28, 78, 0.22), 0 0 18px var(--note-color, rgba(212, 175, 55, 0.4)) !important;
   }
   .simon-node::after {
-    top: -16px !important;
-    left: -16px !important;
-    right: -16px !important;
-    bottom: -16px !important;
+    top: -18px !important;
+    left: -18px !important;
+    right: -18px !important;
+    bottom: -18px !important;
   }
-  .simon-replay-btn {
-    min-height: 38px !important;
-    padding: 6px 16px !important;
-    font-size: 12px !important;
-    border-radius: 999px !important;
+  .simon-actions-bar {
     gap: 6px !important;
+    margin-top: 3px !important;
+  }
+  .simon-replay-btn,
+  .simon-skip-btn {
+    min-height: 36px !important;
+    padding: 5px 12px !important;
+    font-size: 11px !important;
+    border-radius: 999px !important;
+    gap: 5px !important;
     position: relative;
   }
-  .simon-replay-btn::before {
+  .simon-replay-btn::before,
+  .simon-skip-btn::before {
     content: "";
     position: absolute;
     inset: -6px;

@@ -101,6 +101,12 @@
                 simonReplayBtn.style.display = 'none';
                 simonReplayBtn.style.pointerEvents = 'none';
             }
+            const simonSkipBtn = document.getElementById('simon-skip-btn');
+            if (simonSkipBtn) {
+                simonSkipBtn.classList.add('hidden');
+                simonSkipBtn.style.display = 'none';
+                simonSkipBtn.style.pointerEvents = 'none';
+            }
         }
 
         // Stage 3 (2): Constellation minigame
@@ -321,9 +327,9 @@
                 steps[2].classList.remove('active');
             }
 
-            if (gardenMsg) gardenMsg.textContent = "Cây non lắng nghe gió trời... Hãy gảy lại giai điệu mộc cầm vừa ngân vang nhé! 🎵✨";
+            if (gardenMsg) gardenMsg.textContent = "Cây non lắng nghe gió trời... Hãy chạm lại 4 chuông hoa ngân vang theo đúng giai điệu nhé! 🌸🎵";
             if (typeof window.showMascotSpeech === 'function') {
-                window.showMascotSpeech("Giai điệu du dương bắt đầu rồi, bạn lắng nghe thật kỹ nha! 🎶✨", 4000);
+                window.showMascotSpeech("4 chuông hoa sắp ngân vang trên bầu trời, bạn lắng nghe thật kỹ nha! 🌸🎵", 4000);
             }
             if (typeof window.playMelodicHarpChime === 'function') {
                 window.playMelodicHarpChime(2);
@@ -595,7 +601,7 @@
         if (state.currentStage === 0 && state.isWatered && state.isFertilized) {
             advanceStage(0);
         } else if (state.currentStage === 1 && state.isWatered) {
-            if (gardenMsg) gardenMsg.textContent = "Hãy lắng nghe và gảy lại giai điệu mộc cầm ngân vang nhé!";
+            if (gardenMsg) gardenMsg.textContent = "Hãy lắng nghe và chạm lại 4 chuông hoa ngân vang theo đúng giai điệu nhé! 🌸🎵";
             if (typeof window.startSimonGame === 'function') window.startSimonGame();
         } else if (state.currentStage === 2 && state.isFertilized) {
             if (gardenMsg) gardenMsg.textContent = "Hãy nối liền các vì sao để thắp sáng bầu trời đêm!";

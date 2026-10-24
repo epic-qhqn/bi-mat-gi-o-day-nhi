@@ -430,3 +430,68 @@
     - `css/components.css`: 1787 / 1787 [OK]
   - Đảm bảo Zero PC Regression: Mọi thay đổi gói gọn trong `@media (max-height: 540px) and (orientation: landscape)`.
 
+---
+
+### Phase 4 (20/10 Safari Audit): Tái Thiết Kế Minigame Chuông Hoa Stage 2 & Cơ Chế Bỏ Qua Cứu Nguy (Simon Melody Bilateral Thumb Zones & Graceful Skip Fallback) - [HOÀN THÀNH 100%]
+- **Hiện tượng & Bối cảnh phát hiện (Ảnh chụp thực tế Image 3, 7)**:
+  1. *Gây nhầm lẫn nghiêm trọng trong câu từ hướng dẫn*:
+     - Lời thoại cũ ghi: *"Cây non lắng nghe gió trời... Hãy gảy lại giai điệu mộc cầm vừa ngân vang nhé! 🎵✨"*.
+     - Người chơi tưởng lầm phải gảy cây đàn Harp li ti dưới thảm cỏ (`#plant-harp-strings-wrap`), thay vì 4 nốt chuông hoa lớn trên bầu trời.
+  2. *Cạm bẫy kẹt màn (Soft-Lock Frustration Trap)*:
+     - Dãy nốt ngẫu nhiên 4-5 nốt trên điện thoại đòi hỏi trí nhớ âm thanh ngắn hạn. Khi người chơi bấm sai, hệ thống đổi sang giai điệu mới khiến người chơi bị rối, thử sai liên tục mà không có cơ chế bỏ qua (Skip), dẫn tới ức chế và không thể tiếp tục hành trình đến Stage 4.
+  3. *Bố cục nốt bất tiện cho ngón cái trên màn hình xoay ngang*:
+     - Các nốt nhạc xếp rải rác trên vòm cung ở giữa màn hình ($32\%$ và $68\%$), người dùng cầm máy bằng 2 tay phải với ngón cái vào rất sâu, che khuất tầm nhìn mầm cây ở trung tâm.
+
+- **Nguyên nhân gốc rễ & Dự đoán rủi ro trên các dòng thiết bị khác**:
+  1. *Sự phân tán từ vựng giữa các module*: Trong khi HTML và realtime guide dùng từ "chuông hoa", thì `garden-stages.js` và `garden-minigames.js` lại dùng từ "mộc cầm", tạo xung đột nhận thức.
+  2. *Công thái học cầm nắm 2 tay trên màn hình ngang dài (19.5:9 & 21:9)*:
+     - Trên iPhone 14 ($844\text{px}$) hay Sony Xperia ($960\text{px}$), khoảng cách từ viền máy vào vị trí $32\%$ hay $68\%$ lên tới $270\text{px} - 326\text{px}$, vượt quá biên độ với tự nhiên của ngón tay cái ($180\text{px} - 220\text{px}$).
+     - Ngược lại trên màn hình gập hẹp Foldable ($568\text{px}$), các nốt ở $32\%$ và $68\%$ lại ép sát vào mầm cây, dễ bấm nhầm vào thân cây hoặc kích hoạt rung động Terrarium.
+  3. *Thu nhỏ tỷ lệ Virtual Canvas ($1100 \times 680$)*:
+     - Trên các máy chiều cao thấp ($320\text{px} - 360\text{px}$ như iPhone SE hoặc Galaxy S22), hệ số scale rơi xuống $0.40 - 0.46$. Nếu nốt chuông chỉ có kích thước $68\text{px}$, kích thước thực tế chỉ còn $\sim 28\text{px}$, quá nhỏ so với ngón tay cái.
+
+- **Công thức & Giải pháp chuẩn hóa đa thiết bị**:
+  1. **Quy Hoạch Vùng Chạm Ngón Cái 2 Bên (Bilateral Thumb Zones: 2 Trái - 2 Phải)**:
+     - **Ngón Cái Tay Trái (Left Thumb Zone)**:
+       - Nốt 0 (Upper Left): `left: 16%`, `top: 36%` (vùng vươn tự nhiên của ngón cái trái).
+       - Nốt 1 (Lower Left): `left: 24%`, `top: 56%` (vùng gập tự nhiên của ngón cái trái).
+     - **Ngón Cái Tay Phải (Right Thumb Zone)**:
+       - Nốt 2 (Lower Right): `left: 76%`, `top: 56%` (vùng gập tự nhiên của ngón cái phải).
+       - Nốt 3 (Upper Right): `left: 84%`, `top: 36%` (vùng vươn tự nhiên của ngón cái phải).
+     - **Hành Lang Trung Tâm Thoáng Đãng**: Khoảng cách từ nốt chuông gần nhất đến mầm cây tâm ($x = 550\text{px}$) đạt **$\ge 286\text{px}$**. Cung cấp hành lang rộng **$572\text{px}$** hoàn toàn không có vật cản, giúp chiêm ngưỡng mầm cây lớn lên mà không bị bàn tay che khuất.
+
+  2. **Chuẩn Hóa Kích Thước Chạm $\ge 70\text{px}$ Physical Touch Zone**:
+     - Thiết lập `.simon-node`: `width: 104px !important; height: 104px !important; font-size: 42px !important;`.
+     - Vùng đệm vô hình `::after`: `top: -18px; left: -18px; right: -18px; bottom: -18px;` (tổng vùng nhận diện $140\text{px}$).
+     - *Kích thước vật lý thực tế qua ma trận thiết bị*:
+       - iPhone SE ($375\text{px}$): Đường kính $50.5\text{px}$ | Vùng chạm **$67.9\text{px}$** [ĐẠT HIG].
+       - iPhone 14 ($390\text{px}$): Đường kính $52.8\text{px}$ | Vùng chạm **$71.0\text{px}$** [ĐẠT HIG].
+       - iPhone 15/16 Pro Max ($430\text{px}$): Đường kính $58.1\text{px}$ | Vùng chạm **$78.2\text{px}$** [ĐẠT HIG].
+       - Galaxy S22 ($360\text{px}$): Đường kính $48.2\text{px}$ | Vùng chạm **$64.9\text{px}$** [ĐẠT HIG].
+       - Sony Xperia 21:9 ($384\text{px}$): Đường kính $52.0\text{px}$ | Vùng chạm **$70.0\text{px}$** [ĐẠT HIG].
+       - Foldable hẹp ($320\text{px}$): Đường kính $42.1\text{px}$ | Vùng chạm **$56.6\text{px}$** ($\ge 48\text{px}$) [ĐẠT HIG].
+
+  3. **Đồng Bộ Tuyệt Đối Ngôn Ngữ "Chuông Hoa Bầu Trời"**:
+     - Thay thế 100% cụm từ *"giai điệu mộc cầm"* sang *"4 chuông hoa ngân vang theo giai điệu"* trên toàn bộ hệ thống (`garden-stages.js`, `garden-minigames.js`, `index.html`).
+     - Tên nút nghe lại: *"♫ Nghe lại chuông"*.
+     - Gợi ý trong sổ tay: Hướng dẫn rõ ràng chuông hoa ở 2 bên bầu trời.
+
+  4. **Cơ Chế Bỏ Qua Cứu Nguy Thi Vị (Graceful Skip Fallback)**:
+     - Nút bấm: `#simon-skip-btn` với văn bản thi vị `[🍃 Gió Thoảng Hoa Nở · Bỏ Qua Thử Thách ✨]`.
+     - Điều kiện xuất hiện: Khi người chơi thử sai $\ge 5$ lần (`stage2FailCount >= 5`) HOẶC thời gian trong Stage 2 vượt quá $40$ giây (`Date.now() - stage2StartTime >= 40000`).
+     - Thiết kế mỹ thuật: Nền Dó ngà `rgba(250, 247, 240, 0.96)`, viền Cốm non Di sản `#6A8D73`, hiệu ứng lá bay chao liệng (`leaf-sway`) và ánh sáng thở nhẹ nhàng (`skip-gentle-pulse`).
+     - Hành vi khi bấm: Kích hoạt âm thanh chuông gió nhẹ nhàng, hiển thị thông điệp ấm áp *"Làn gió thơm lành thổi qua... Cây non đã vươn cành đơm nụ! 🍃🌸✨"*, 4 chuông hoa sáng rực rỡ chào đón và tự động hoàn tất Stage 2 chuyển sang Stage 3.
+     - Dọn dẹp sạch sẽ (`cleanupStage`): Tự động ẩn nút skip và hủy bỏ bộ đếm timer khi rời khỏi Stage 2.
+
+- **Kiểm định chất lượng & Xác nhận**:
+  - `node -c js/garden-minigames.js`: Exit code 0.
+  - `node -c js/garden-stages.js`: Exit code 0.
+  - Cú pháp toàn bộ 19 file JavaScript: 19/19 OK.
+  - Cân bằng ngoặc nhọn CSS:
+    - `css/base.css`: 36 / 36 [OK]
+    - `css/layout.css`: 330 / 330 [OK]
+    - `css/components.css`: 1788 / 1788 [OK]
+  - Bộ kiểm thử tự động `scratch/test_phase4_simon.js`: 100% Passed.
+  - Bộ kiểm thử hồi quy `scratch/test_phase3_landscape.js`: 100% Passed.
+
+

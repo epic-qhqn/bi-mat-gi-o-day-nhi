@@ -30,10 +30,10 @@
 ---
 
 ### Phase 4: Tái Thiết Kế Minigame Stage 2 & Cơ Chế Skip Cứu Nguy (Simon Melody & Skip Fallback)
-- [ ] 4.1: Tái định vị 4 nốt chuông hoa Simon Melody trên mobile landscape vào 2 vùng chạm ngón cái tiện lợi (Trái: Nốt 1 & 2; Phải: Nốt 3 & 4), đường kính nốt $\ge 64\text{px}$ (vùng chạm 72px) với hào quang rực rỡ.
-- [ ] 4.2: Tinh chỉnh câu thoại trong `garden-stages.js` và `garden-minigames.js`: đổi từ "gảy lại giai điệu mộc cầm" thành "Chạm lại các chuông hoa ngân vang theo giai điệu nhé! 🌸🎵" để người chơi không nhầm lẫn với đàn Harp li ti dưới cỏ.
-- [ ] 4.3: Xây dựng cơ chế bỏ qua cứu nguy (Graceful Skip Fallback): Thêm bộ đếm `stage2FailCount` và thời gian; nếu thử sai quá 5 lần hoặc quá 40 giây, tự động hiển thị nút bấm thi vị `[Gió Thoảng Hoa Nở · Bỏ Qua Thử Thách 🍃✨]`.
-- [ ] 4.4: Xử lý sự kiện click nút skip: phát âm thanh chuông gió, tự động hoàn thành Stage 2 và kích hoạt mầm cây vươn cành mượt mà.
+- [x] 4.1: Tái định vị 4 nốt chuông hoa Simon Melody trên mobile landscape vào 2 vùng chạm ngón cái tiện lợi (Trái: Nốt 1 & 2; Phải: Nốt 3 & 4), đường kính nốt $\ge 64\text{px}$ (vùng chạm 72px) với hào quang rực rỡ.
+- [x] 4.2: Tinh chỉnh câu thoại trong `garden-stages.js` và `garden-minigames.js`: đổi từ "gảy lại giai điệu mộc cầm" thành "Chạm lại các chuông hoa ngân vang theo giai điệu nhé! 🌸🎵" để người chơi không nhầm lẫn với đàn Harp li ti dưới cỏ.
+- [x] 4.3: Xây dựng cơ chế bỏ qua cứu nguy (Graceful Skip Fallback): Thêm bộ đếm `stage2FailCount` và thời gian; nếu thử sai quá 5 lần hoặc quá 40 giây, tự động hiển thị nút bấm thi vị `[Gió Thoảng Hoa Nở · Bỏ Qua Thử Thách 🍃✨]`.
+- [x] 4.4: Xử lý sự kiện click nút skip: phát âm thanh chuông gió, tự động hoàn thành Stage 2 và kích hoạt mầm cây vươn cành mượt mà.
 
 ---
 
