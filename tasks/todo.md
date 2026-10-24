@@ -21,13 +21,13 @@
 
 ---
 
-## MILESTONE 3: ĐẠI PHẪU THUẬT CON TRỎ HƯỚNG DẪN & BỘ NÂNG CẤP TRẢI NGHIỆM TINH TẾ (CHỜ DUYỆT)
+## MILESTONE 3: ĐẠI PHẪU THUẬT CON TRỎ HƯỚNG DẪN & BỘ NÂNG CẤP TRẢI NGHIỆM TINH TẾ (ĐANG THỰC HIỆN)
 
 ### Phase 10: Tái Sinh Con Trỏ Hướng Dẫn Nghệ Thuật & Vòng Sương Mai Cảm Ứng (`js/realtime-guide.js`, `css/components.css`)
-- [ ] 10.1: **Bút Lông Thư Họa / Cánh Sen Dát Vàng (Vector SVG)**: Xóa bỏ 100% emoji bàn tay thô (`👇👆👉👈`). Thay bằng biểu tượng cọ lông dát vàng thanh thoát hoặc cánh sen lấp lánh với góc nghiêng tự nhiên 45°, chuyển động thở êm ái (breathe animation).
-- [ ] 10.2: **Vòng Tròn Sương Mai Cảm Ứng (Touch Aura / Morning Dewdrop Ripple) trên Mobile**: Tự động nhận diện thiết bị cảm ứng `(pointer: coarse)` để ẩn hình bàn tay/cọ (tránh che khuất ngón tay người dùng). Thay bằng vòng sóng nước sương mai ánh kim đồng tỏa nhẹ quanh nút cần chạm.
-- [ ] 10.3: **Vệt Cử Chỉ Hướng Dẫn Trực Quan (Animated Drag / Swipe Gesture Trail)**: Với các thao tác quẹt que diêm, kéo mây mưa sương, kéo nắng ấm, kéo triện son: hiển thị một vệt lụa ánh kim mềm mại lướt nhẹ theo quỹ đạo cần kéo (Ghost Drag Curve) rồi tan biến, giúp hiểu ngay động tác mà không cần đọc chữ.
-- [ ] 10.4: **Thanh Lọc Khung Ngắm Sci-Fi & Tạo Hào Quang Thủy Mặc**: Gỡ bỏ 4 góc ngắm cơ học bắn tỉa `.realtime-target-corners` và bóng neon rực chói. Thay bằng viền gân lụa dát vàng siêu mảnh kèm quầng sáng sương mờ (`backdrop-filter` nhẹ và hào quang vàng nhạt), đồng điệu 100% với giấy Dó.
+- [x] 10.1: **Bút Lông Thư Họa / Cánh Sen Dát Vàng (Vector SVG)**: Xóa bỏ 100% emoji bàn tay thô (`👇👆👉👈`). Thay bằng biểu tượng cọ lông dát vàng thanh thoát hoặc cánh sen lấp lánh với góc nghiêng tự nhiên 45°, chuyển động thở êm ái (breathe animation).
+- [x] 10.2: **Vòng Tròn Sương Mai Cảm Ứng (Touch Aura / Morning Dewdrop Ripple) trên Mobile**: Tự động nhận diện thiết bị cảm ứng `(pointer: coarse)` để ẩn hình bàn tay/cọ (tránh che khuất ngón tay người dùng). Thay bằng vòng sóng nước sương mai ánh kim đồng tỏa nhẹ quanh nút cần chạm.
+- [x] 10.3: **Vệt Cử Chỉ Hướng Dẫn Trực Quan (Animated Drag / Swipe Gesture Trail)**: Với các thao tác quẹt que diêm, kéo mây mưa sương, kéo nắng ấm, kéo triện son: hiển thị một vệt lụa ánh kim mềm mại lướt nhẹ theo quỹ đạo cần kéo (Ghost Drag Curve) rồi tan biến, giúp hiểu ngay động tác mà không cần đọc chữ.
+- [x] 10.4: **Thanh Lọc Khung Ngắm Sci-Fi & Tạo Hào Quang Thủy Mặc**: Gỡ bỏ 4 góc ngắm cơ học bắn tỉa `.realtime-target-corners` và bóng neon rực chói. Thay bằng viền gân lụa dát vàng siêu mảnh kèm quầng sáng sương mờ (`backdrop-filter` nhẹ và hào quang vàng nhạt), đồng điệu 100% với giấy Dó.
 
 ---
 

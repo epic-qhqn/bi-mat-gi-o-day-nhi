@@ -8117,128 +8117,233 @@ body.sky-night .realtime-guide-msg {
   top: 0;
   left: 0;
   border-radius: 14px;
-  border: 2px solid #D4AF37;
+  border: 1.5px solid rgba(212, 175, 55, 0.65);
+  background: rgba(212, 175, 55, 0.03);
   pointer-events: none;
   opacity: 0;
   transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), width 0.35s cubic-bezier(0.16, 1, 0.3, 1), height 0.35s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.3s ease;
   will-change: transform, width, height, opacity;
+  box-shadow: 0 0 14px rgba(212, 175, 55, 0.2), inset 0 0 8px rgba(212, 175, 55, 0.1);
 }
 
 .realtime-target-glow {
   position: absolute;
-  inset: -6px;
+  inset: -4px;
   border-radius: 18px;
   box-shadow: 
-    0 0 16px rgba(212, 175, 55, 0.7),
-    0 0 32px rgba(245, 206, 86, 0.35),
-    inset 0 0 12px rgba(212, 175, 55, 0.4);
-  animation: realtime-glow-pulse 1.8s ease-in-out infinite alternate;
+    0 0 16px rgba(212, 175, 55, 0.35),
+    inset 0 0 10px rgba(212, 175, 55, 0.15);
+  animation: heritage-ambient-breathe 2.8s ease-in-out infinite alternate;
 }
 
-@keyframes realtime-glow-pulse {
-  0% { opacity: 0.6; transform: scale(0.99); }
-  100% { opacity: 1; transform: scale(1.02); }
+@keyframes heritage-ambient-breathe {
+  0% { opacity: 0.5; transform: scale(0.995); box-shadow: 0 0 12px rgba(212, 175, 55, 0.25); }
+  100% { opacity: 0.95; transform: scale(1.015); box-shadow: 0 0 20px rgba(245, 206, 86, 0.45); }
 }
 
-.realtime-target-corners span {
+/* Delicate Heritage Floral Starlight Corners */
+.realtime-heritage-corners {
   position: absolute;
-  width: 8px;
-  height: 8px;
-  border-color: #FFFDF5;
-  border-style: solid;
+  inset: 0;
+  pointer-events: none;
 }
 
-.realtime-target-corners .c-tl { top: -2px; left: -2px; border-width: 2.5px 0 0 2.5px; border-top-left-radius: 4px; }
-.realtime-target-corners .c-tr { top: -2px; right: -2px; border-width: 2.5px 2.5px 0 0; border-top-right-radius: 4px; }
-.realtime-target-corners .c-bl { bottom: -2px; left: -2px; border-width: 0 0 2.5px 2.5px; border-bottom-left-radius: 4px; }
-.realtime-target-corners .c-br { bottom: -2px; right: -2px; border-width: 0 2.5px 2.5px 0; border-bottom-right-radius: 4px; }
+.realtime-heritage-corners .hc-corner {
+  position: absolute;
+  font-size: 11px;
+  line-height: 1;
+  color: #D4AF37;
+  opacity: 0.9;
+  filter: drop-shadow(0 0 4px rgba(245, 206, 86, 0.6));
+  user-select: none;
+}
 
-/* Pointer Hand & Action Badge */
+.realtime-heritage-corners .hc-tl { top: -6px; left: -6px; }
+.realtime-heritage-corners .hc-tr { top: -6px; right: -6px; }
+.realtime-heritage-corners .hc-bl { bottom: -6px; left: -6px; }
+.realtime-heritage-corners .hc-br { bottom: -6px; right: -6px; }
+
+/* Mobile Touch Dewdrop Ripple (Soft water ripple around target button) */
+.realtime-dewdrop-ripple {
+  display: none;
+  position: absolute;
+  inset: -10px;
+  border-radius: 20px;
+  pointer-events: none;
+  z-index: 5;
+}
+
+.realtime-dewdrop-ripple .dewdrop-ring {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  border: 1.5px solid rgba(212, 175, 55, 0.75);
+  opacity: 0;
+  transform: scale(0.92);
+  will-change: transform, opacity;
+}
+
+.realtime-dewdrop-ripple .dewdrop-ring.ring-1 {
+  animation: dewdrop-ripple-expand 2.4s cubic-bezier(0.1, 0.8, 0.3, 1) infinite;
+}
+
+.realtime-dewdrop-ripple .dewdrop-ring.ring-2 {
+  animation: dewdrop-ripple-expand 2.4s cubic-bezier(0.1, 0.8, 0.3, 1) infinite 1.2s;
+}
+
+@keyframes dewdrop-ripple-expand {
+  0% { transform: scale(0.9); opacity: 0.85; border-color: rgba(212, 175, 55, 0.85); box-shadow: 0 0 0 0 rgba(212, 175, 55, 0.4); }
+  65% { transform: scale(1.08); opacity: 0.3; border-color: rgba(245, 206, 86, 0.45); box-shadow: 0 0 16px 4px rgba(212, 175, 55, 0); }
+  100% { transform: scale(1.18); opacity: 0; border-color: transparent; }
+}
+
+/* Luminous Gesture Trail (Ghost drag line & spark) */
+.realtime-gesture-trail-svg {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  pointer-events: none;
+  z-index: 100004;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.realtime-gesture-trail-svg .gesture-path-line {
+  stroke: url(#gesture-gold-grad);
+  stroke-width: 2.8;
+  stroke-dasharray: 8 5;
+  stroke-linecap: round;
+  fill: none;
+  filter: url(#gesture-trail-glow);
+  animation: gesture-path-pulse 1.8s ease-in-out infinite;
+}
+
+.realtime-gesture-trail-svg .gesture-spark-dot {
+  fill: #FFFDF5;
+  filter: drop-shadow(0 0 8px #F5CE56);
+}
+
+@keyframes gesture-path-pulse {
+  0%, 100% { opacity: 0.65; stroke-dashoffset: 0; }
+  50% { opacity: 1; stroke-dashoffset: -26; }
+}
+
+/* Poetic Calligraphy Brush Pointer & Action Badge */
 .realtime-pointer-hand {
   position: absolute;
   display: flex;
   align-items: center;
-  gap: 6px;
+  gap: 7px;
   pointer-events: none;
   user-select: none;
   z-index: 10;
 }
 
+.pointer-brush-wrap {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 34px;
+  height: 34px;
+  filter: drop-shadow(0 4px 10px rgba(19, 28, 78, 0.35));
+}
+
+.pointer-brush-svg {
+  width: 32px;
+  height: 32px;
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
 .realtime-pointer-hand.dir-bottom {
-  top: calc(100% + 8px);
+  top: calc(100% + 10px);
   left: 50%;
   transform: translateX(-50%);
   flex-direction: column;
-  animation: hand-bounce-towards-up 1.2s ease-in-out infinite;
+  animation: brush-float-up 2.2s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+}
+
+.realtime-pointer-hand.dir-bottom .pointer-brush-svg {
+  transform: rotate(180deg);
 }
 
 .realtime-pointer-hand.dir-top {
-  bottom: calc(100% + 8px);
+  bottom: calc(100% + 10px);
   left: 50%;
   transform: translateX(-50%);
   flex-direction: column-reverse;
-  animation: hand-bounce-towards-down 1.2s ease-in-out infinite;
+  animation: brush-float-down 2.2s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+}
+
+.realtime-pointer-hand.dir-top .pointer-brush-svg {
+  transform: rotate(0deg);
 }
 
 .realtime-pointer-hand.dir-left {
   top: 50%;
-  right: calc(100% + 8px);
+  right: calc(100% + 10px);
   transform: translateY(-50%);
   flex-direction: row-reverse;
-  animation: hand-bounce-towards-right 1.2s ease-in-out infinite;
+  animation: brush-float-right 2.2s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+}
+
+.realtime-pointer-hand.dir-left .pointer-brush-svg {
+  transform: rotate(-90deg);
 }
 
 .realtime-pointer-hand.dir-right {
   top: 50%;
-  left: calc(100% + 8px);
+  left: calc(100% + 10px);
   transform: translateY(-50%);
   flex-direction: row;
-  animation: hand-bounce-towards-left 1.2s ease-in-out infinite;
+  animation: brush-float-left 2.2s cubic-bezier(0.4, 0, 0.2, 1) infinite;
 }
 
-@keyframes hand-bounce-towards-up {
+.realtime-pointer-hand.dir-right .pointer-brush-svg {
+  transform: rotate(90deg);
+}
+
+@keyframes brush-float-up {
   0%, 100% { transform: translate(-50%, 0); }
-  50% { transform: translate(-50%, -7px); }
+  50% { transform: translate(-50%, -6px); }
 }
 
-@keyframes hand-bounce-towards-down {
+@keyframes brush-float-down {
   0%, 100% { transform: translate(-50%, 0); }
-  50% { transform: translate(-50%, 7px); }
+  50% { transform: translate(-50%, 6px); }
 }
 
-@keyframes hand-bounce-towards-right {
+@keyframes brush-float-right {
   0%, 100% { transform: translate(0, -50%); }
-  50% { transform: translate(7px, -50%); }
+  50% { transform: translate(6px, -50%); }
 }
 
-@keyframes hand-bounce-towards-left {
+@keyframes brush-float-left {
   0%, 100% { transform: translate(0, -50%); }
-  50% { transform: translate(-7px, -50%); }
-}
-
-.pointer-hand-glyph {
-  font-size: 26px;
-  line-height: 1;
-  filter: drop-shadow(0 4px 8px rgba(19, 28, 78, 0.4));
+  50% { transform: translate(-6px, -50%); }
 }
 
 .pointer-action-badge {
-  background: #1E2749;
+  background: rgba(30, 39, 73, 0.92);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
   color: #FFFDF5;
-  border: 1.2px solid #D4AF37;
-  border-radius: 999px;
-  padding: 3px 10px;
-  font-family: 'Be Vietnam Pro', sans-serif;
+  border: 1px solid rgba(212, 175, 55, 0.85);
+  border-radius: 12px;
+  padding: 4px 11px;
+  font-family: 'Be Vietnam Pro', 'Outfit', sans-serif;
   font-size: 11px;
-  font-weight: 700;
+  font-weight: 600;
   letter-spacing: 0.3px;
   white-space: nowrap;
-  box-shadow: 0 4px 14px rgba(19, 28, 78, 0.3);
+  box-shadow: 0 4px 16px rgba(19, 28, 78, 0.3), inset 0 0 8px rgba(212, 175, 55, 0.2);
 }
 
 body.sky-night .pointer-action-badge {
-  background: #FAF7F0;
+  background: rgba(250, 247, 240, 0.94);
   color: #131C4E;
+  border-color: rgba(212, 175, 55, 0.9);
 }
 
 /* Mobile Adjustments for Real-time HUD & Minigame Touch Targets */
@@ -8266,8 +8371,11 @@ body.sky-night .pointer-action-badge {
     font-size: 9px !important;
     padding: 2px 6px !important;
   }
-  .pointer-hand-glyph {
-    font-size: 20px;
+  .pointer-brush-wrap {
+    display: none !important;
+  }
+  .realtime-dewdrop-ripple {
+    display: block !important;
   }
   .pointer-action-badge {
     font-size: 10px;

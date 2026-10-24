@@ -17,6 +17,10 @@
     let targetBoxEl = null;
     let pointerHandEl = null;
     let pointerBadgeEl = null;
+    let gestureTrailSvg = null;
+    let gesturePathEl = null;
+    let gestureSparkEl = null;
+    let dewdropRippleEl = null;
 
     let isGuideEnabled = true;
     let currentTargetEl = null;
@@ -26,6 +30,13 @@
     let revealedStateKey = '';
     let currentPointerDir = 'bottom';
     let currentPointerText = '';
+    let currentGesture = null;
+    let gestureAnimFrame = null;
+
+    // Detect mobile touch capability to prioritize non-obtrusive dewdrop ripples
+    const isTouchDevice = () => {
+        return ('ontouchstart' in window) || (navigator.maxTouchPoints > 0) || (window.matchMedia && window.matchMedia('(pointer: coarse)').matches);
+    };
 
     // Smart Exploration Memory: Tracks features user has already opened or interacted with in Stage 4
     const userInteractions = {
@@ -121,7 +132,8 @@
                     icon: '⚡',
                     targetSelector: '#match-striker-strip',
                     pointerDirection: 'top',
-                    pointerText: 'Chạm quẹt diêm lấy lửa'
+                    pointerText: 'Chạm quẹt diêm lấy lửa',
+                    gesture: 'drag-horizontal'
                 };
             }
 
@@ -168,7 +180,8 @@
                     icon: '🍯',
                     targetSelector: '#brass-spoon',
                     pointerDirection: 'top',
-                    pointerText: 'Chạm rót sáp'
+                    pointerText: 'Chạm rót sáp',
+                    gesture: 'drag-down'
                 };
             }
 
@@ -181,7 +194,8 @@
                     icon: '💮',
                     targetSelector: '#wax-seal-stamp',
                     pointerDirection: 'top',
-                    pointerText: 'Chạm dập con dấu'
+                    pointerText: 'Chạm dập con dấu',
+                    gesture: 'drag-down'
                 };
             }
 
@@ -263,7 +277,8 @@
                     icon: '🌧️',
                     targetSelector: '#atmosphere-cloud-shifter',
                     pointerDirection: 'bottom',
-                    pointerText: 'Chạm gọi mưa sương'
+                    pointerText: 'Chạm gọi mưa sương',
+                    gesture: 'drag-down'
                 };
             }
 
@@ -279,7 +294,8 @@
                     icon: '☀️',
                     targetSelector: '#atmosphere-sun-shifter',
                     pointerDirection: 'bottom',
-                    pointerText: 'Chạm sưởi ấm mầm'
+                    pointerText: 'Chạm sưởi ấm mầm',
+                    gesture: 'drag-horizontal'
                 };
             }
 
@@ -309,7 +325,8 @@
                     icon: '🌧️',
                     targetSelector: '#atmosphere-cloud-shifter',
                     pointerDirection: 'bottom',
-                    pointerText: 'Chạm gọi mưa sương'
+                    pointerText: 'Chạm gọi mưa sương',
+                    gesture: 'drag-down'
                 };
             }
 
@@ -353,7 +370,8 @@
                     icon: '☀️',
                     targetSelector: '#atmosphere-sun-shifter',
                     pointerDirection: 'bottom',
-                    pointerText: 'Chạm sưởi ấm cành'
+                    pointerText: 'Chạm sưởi ấm cành',
+                    gesture: 'drag-horizontal'
                 };
             }
 
@@ -446,19 +464,91 @@
         return null;
     };
 
+    // Animate Luminous Silk Gesture Trail (Quẹt diêm, Kéo mây, Kéo nắng, Dập triện)
+    const updateGestureTrail = (gesture, targetRect) => {
+        if (!gestureTrailSvg || !gesturePathEl || !gestureSparkEl) return;
+
+        if (!gesture || !targetRect || targetRect.width === 0 || targetRect.bottom < 0 || targetRect.top > window.innerHeight) {
+            gestureTrailSvg.style.opacity = '0';
+            if (gestureAnimFrame) {
+                cancelAnimationFrame(gestureAnimFrame);
+                gestureAnimFrame = null;
+            }
+            currentGesture = null;
+            return;
+        }
+
+        let startX, startY, endX, endY;
+        if (gesture === 'drag-down') {
+            startX = targetRect.left + targetRect.width / 2;
+            startY = targetRect.top + targetRect.height * 0.35;
+            endX = startX;
+            endY = startY + Math.min(85, window.innerHeight - startY - 24);
+        } else if (gesture === 'drag-horizontal') {
+            startX = targetRect.left + targetRect.width * 0.15;
+            startY = targetRect.top + targetRect.height / 2;
+            endX = startX + Math.min(95, window.innerWidth - startX - 24);
+            endY = startY;
+        } else {
+            gestureTrailSvg.style.opacity = '0';
+            if (gestureAnimFrame) {
+                cancelAnimationFrame(gestureAnimFrame);
+                gestureAnimFrame = null;
+            }
+            currentGesture = null;
+            return;
+        }
+
+        gestureTrailSvg.style.opacity = '1';
+        gesturePathEl.setAttribute('d', `M ${startX.toFixed(1)} ${startY.toFixed(1)} L ${endX.toFixed(1)} ${endY.toFixed(1)}`);
+
+        // Continuous smooth spark glide along path
+        if (currentGesture === gesture && gestureAnimFrame) return;
+        currentGesture = gesture;
+
+        if (gestureAnimFrame) cancelAnimationFrame(gestureAnimFrame);
+
+        const startTime = performance.now();
+        const duration = 1800; // ms per stroke cycle
+
+        const loopSpark = (now) => {
+            if (!gestureTrailSvg || gestureTrailSvg.style.opacity === '0') {
+                gestureAnimFrame = null;
+                return;
+            }
+            const elapsed = (now - startTime) % duration;
+            const p = elapsed / duration;
+            if (p < 0.75) {
+                const prog = p / 0.75;
+                const ease = prog < 0.5 ? 2 * prog * prog : 1 - Math.pow(-2 * prog + 2, 2) / 2;
+                const curX = startX + (endX - startX) * ease;
+                const curY = startY + (endY - startY) * ease;
+                gestureSparkEl.setAttribute('cx', curX.toFixed(1));
+                gestureSparkEl.setAttribute('cy', curY.toFixed(1));
+                gestureSparkEl.style.opacity = Math.sin(prog * Math.PI).toFixed(2);
+            } else {
+                gestureSparkEl.style.opacity = '0';
+            }
+            gestureAnimFrame = requestAnimationFrame(loopSpark);
+        };
+        gestureAnimFrame = requestAnimationFrame(loopSpark);
+    };
+
     // Update Spotlight Position to Wrap Target Element
-    const updateSpotlightPosition = (targetEl, pointerDir = 'bottom', pointerText = 'Chạm vào đây', lockDirection = false) => {
+    const updateSpotlightPosition = (targetEl, pointerDir = 'bottom', pointerText = 'Chạm vào đây', lockDirection = false, gesture = null) => {
         if (!targetBoxEl || !pointerHandEl || !pointerBadgeEl) return;
 
         if (!targetEl || !isGuideEnabled) {
             targetBoxEl.style.opacity = '0';
             targetBoxEl.style.pointerEvents = 'none';
+            updateGestureTrail(null, null);
             return;
         }
 
         const rect = targetEl.getBoundingClientRect();
         if (rect.width === 0 || rect.height === 0 || rect.bottom < 0 || rect.top > window.innerHeight) {
             targetBoxEl.style.opacity = '0';
+            updateGestureTrail(null, null);
             return;
         }
 
@@ -476,7 +566,7 @@
 
         pointerBadgeEl.textContent = pointerText || '';
 
-        // Dynamic edge detection to prevent hand clipping
+        // Dynamic edge detection to prevent clipping
         let effectiveDir = pointerDir;
         if (lockDirection) {
             // Direction is part of the tutorial contract (e.g. hand above, pointing down): never flip it
@@ -491,18 +581,11 @@
             effectiveDir = 'left';
         }
 
+        // Apply directional class for SVG Calligraphy Brush rotation & animation
         pointerHandEl.className = `realtime-pointer-hand dir-${effectiveDir}`;
-        const handGlyph = pointerHandEl.querySelector('.pointer-hand-glyph');
 
-        if (effectiveDir === 'top') {
-            if (handGlyph) handGlyph.textContent = '👇';
-        } else if (effectiveDir === 'bottom') {
-            if (handGlyph) handGlyph.textContent = '👆';
-        } else if (effectiveDir === 'left') {
-            if (handGlyph) handGlyph.textContent = '👉';
-        } else {
-            if (handGlyph) handGlyph.textContent = '👈';
-        }
+        // Render gesture drag hint trail
+        updateGestureTrail(gesture, rect);
     };
 
     // Scroll the atelier card (if it scrolls) so the target is on screen AND a hand drawn above it has room.
@@ -528,6 +611,7 @@
         if (!state) {
             if (hudEl) hudEl.classList.add('hidden');
             if (targetBoxEl) targetBoxEl.style.opacity = '0';
+            updateGestureTrail(null, null);
             return;
         }
 
@@ -567,7 +651,8 @@
         currentLockDirection = Boolean(state.lockDirection);
         currentPointerDir = state.pointerDirection;
         currentPointerText = state.pointerText;
-        updateSpotlightPosition(targetEl, state.pointerDirection, state.pointerText, currentLockDirection);
+        currentGesture = state.gesture || null;
+        updateSpotlightPosition(targetEl, state.pointerDirection, state.pointerText, currentLockDirection, state.gesture);
         lastStateKey = state.key;
     };
 
@@ -582,6 +667,9 @@
         }
         if (targetBoxEl) {
             targetBoxEl.style.opacity = isGuideEnabled ? '1' : '0';
+        }
+        if (!isGuideEnabled) {
+            updateGestureTrail(null, null);
         }
         if (typeof window.playKeyTapSFX === 'function') {
             window.playKeyTapSFX();
@@ -603,6 +691,14 @@
         targetBoxEl = document.getElementById('realtime-target-box');
         pointerHandEl = document.getElementById('realtime-pointer-hand');
         pointerBadgeEl = document.getElementById('realtime-pointer-badge');
+        gestureTrailSvg = document.getElementById('realtime-gesture-trail-svg');
+        gesturePathEl = document.getElementById('realtime-gesture-path');
+        gestureSparkEl = document.getElementById('realtime-gesture-spark');
+        dewdropRippleEl = document.getElementById('realtime-dewdrop-ripple');
+
+        if (isTouchDevice()) {
+            document.body.classList.add('touch-guided');
+        }
 
         if (toggleBtn) {
             toggleBtn.addEventListener('click', (e) => {
@@ -657,7 +753,7 @@
 
         window.addEventListener('resize', () => {
             if (currentTargetEl) {
-                updateSpotlightPosition(currentTargetEl, currentPointerDir, currentPointerText, currentLockDirection);
+                updateSpotlightPosition(currentTargetEl, currentPointerDir, currentPointerText, currentLockDirection, currentGesture);
             }
         });
 
