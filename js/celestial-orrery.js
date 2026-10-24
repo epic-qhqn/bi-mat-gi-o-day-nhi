@@ -502,6 +502,13 @@
 
         setOrreryAngle(45, { smooth: false, playSound: false });
 
+        if (window.innerWidth <= 768 && celestialOrreryEl) {
+            celestialOrreryEl.classList.add('orrery-minimized');
+            if (lodestarSeasonPipEl && ORRERY_SEASONS[currentOrrerySeasonKey]) {
+                lodestarSeasonPipEl.textContent = ORRERY_SEASONS[currentOrrerySeasonKey].icon;
+            }
+        }
+
         // Tối ưu: O(1) toán học thuần túy, không getBoundingClientRect() khi move
         const calcAngleFromPointer = (clientX, clientY) => {
             if (!cachedCenter) updateCachedCenter();

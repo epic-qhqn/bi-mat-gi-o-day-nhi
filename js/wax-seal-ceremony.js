@@ -1029,6 +1029,9 @@
         const celestialOrrery = document.getElementById('celestial-weather-orrery');
         if (celestialOrrery) {
             celestialOrrery.classList.remove('hidden');
+            if (window.innerWidth <= 768) {
+                celestialOrrery.classList.add('orrery-minimized');
+            }
             celestialOrrery.style.display = 'flex';
             celestialOrrery.style.opacity = '1';
             celestialOrrery.style.pointerEvents = 'auto';

@@ -242,7 +242,12 @@
             if (instructionEl) instructionEl.style.display = '';
             const celestialOrrery = document.getElementById('celestial-weather-orrery');
             if (celestialOrrery) {
-                celestialOrrery.classList.remove('hidden', 'orrery-minimized');
+                celestialOrrery.classList.remove('hidden');
+                if (window.innerWidth <= 768) {
+                    celestialOrrery.classList.add('orrery-minimized');
+                } else {
+                    celestialOrrery.classList.remove('orrery-minimized');
+                }
                 celestialOrrery.style.display = 'flex';
                 celestialOrrery.style.opacity = '1';
                 celestialOrrery.style.pointerEvents = 'auto';

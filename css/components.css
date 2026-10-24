@@ -4095,14 +4095,33 @@ body.sky-night .wax-seal-guide-tip {
 /* Mobile responsive layout */
 @media (max-width: 768px) {
   .celestial-weather-orrery {
-    top: calc(52px + var(--sat, 6px));
-    right: calc(10px + var(--sar, 0px));
+    position: fixed !important;
   }
   .celestial-weather-orrery.orrery-minimized {
     top: calc(8px + var(--sat, 4px)) !important;
     right: calc(10px + var(--sar, 0px)) !important;
+    left: auto !important;
+    bottom: auto !important;
+    transform: none !important;
     width: 36px !important;
     height: 36px !important;
+    z-index: 100005 !important;
+  }
+  .celestial-weather-orrery:not(.orrery-minimized) {
+    top: 50% !important;
+    left: 50% !important;
+    transform: translate(-50%, -50%) !important;
+    right: auto !important;
+    bottom: auto !important;
+    z-index: 100010 !important;
+  }
+  .celestial-weather-orrery:not(.orrery-minimized) .orrery-expanded-wrap {
+    transform: scale(1.05) !important;
+    background: rgba(20, 27, 56, 0.96) !important;
+    border: 2px solid #D4AF37 !important;
+    border-radius: 28px !important;
+    padding: 16px !important;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.7), 0 0 30px rgba(212, 175, 55, 0.4) !important;
   }
   .orrery-lodestar-btn {
     width: 36px !important;
@@ -4498,7 +4517,7 @@ body.sky-night .shifter-pill-label {
 
 @media (max-width: 768px) {
   .living-atmosphere-hud {
-    top: calc(134px + var(--sat, 8px)) !important;
+    top: calc(162px + var(--sat, 6px)) !important;
     width: min(92vw, 350px) !important;
     left: 50% !important;
     transform: translateX(-50%) !important;
@@ -4512,15 +4531,15 @@ body.sky-night .shifter-pill-label {
     margin-right: 2px;
   }
   .cloud-svg {
-    width: 58px;
+    width: 52px;
     height: auto;
   }
   .sun-svg {
-    width: 54px;
+    width: 48px;
     height: auto;
   }
   .shifter-pill-label {
-    font-size: 10.5px;
+    font-size: 10px;
     padding: 3px 8px;
     white-space: nowrap;
   }
@@ -4815,15 +4834,16 @@ body.sky-night .harp-header-badge {
 
 @media (max-width: 768px) {
   .plant-harp-strings-wrap {
-    position: absolute;
-    left: auto;
-    right: 18px;
-    bottom: calc(18px + var(--sab, 8px));
-    top: auto;
-    transform: none;
-    width: 155px;
-    height: 140px;
-    z-index: 1200;
+    position: fixed !important;
+    left: auto !important;
+    right: calc(12px + var(--sar, 0px)) !important;
+    bottom: calc(64px + var(--sab, 8px)) !important;
+    top: auto !important;
+    transform: scale(0.85) !important;
+    transform-origin: bottom right !important;
+    width: 155px !important;
+    height: 140px !important;
+    z-index: 1200 !important;
   }
   .harp-string-wire {
     width: 28px;
