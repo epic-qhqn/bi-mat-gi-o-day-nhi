@@ -1347,8 +1347,8 @@ body.sky-dawn .dewdrops {
 
 
 /* Phase 9: Day Parallax Clouds */
-.parallax-bg .cloud { animation-duration: 60s; opacity: 0.6; transform: scale(0.7); }
-.parallax-fg .cloud { animation-duration: 40s; opacity: 1; transform: scale(1.2); }
+.parallax-bg .cloud { animation-duration: 60s; opacity: 0.55; --cloud-scale: 0.75; }
+.parallax-fg .cloud { animation-duration: 42s; opacity: 0.72; --cloud-scale: 1.05; }
 
 /* Phase 9: Day Dandelions */
 .dandelions {
