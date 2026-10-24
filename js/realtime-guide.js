@@ -329,7 +329,7 @@
                 return {
                     key: 'stage-4-letter',
                     stepTag: 'THƯ BÍ MẬT',
-                    message: 'Mở bức Thư Polaroid Bí Mật ở góc trái để đọc lời chúc yêu thương 💌',
+                    message: 'Mở bức Thư Polaroid Bí Mật ở góc phải để đọc lời chúc yêu thương 💌',
                     icon: '💌',
                     targetSelector: '#secret-letter-trigger-btn',
                     pointerDirection: 'top',

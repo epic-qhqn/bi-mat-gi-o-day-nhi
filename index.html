@@ -1007,16 +1007,6 @@
     <!-- Thư viện Marked.js nhẹ để parse markdown -->
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
     
-    <!-- BOTTOM-LEFT ZONE: Secret Letter Trigger Pill -->
-    <div id="secret-letter-container" class="secret-letter-container hidden">
-        <button id="secret-letter-trigger-btn" class="secret-letter-trigger-pill" title="Mở bức thư bí mật">
-            <span class="letter-pill-icon">💌</span>
-            <span class="letter-pill-text">Thư Bí Mật 20/10</span>
-            <span class="letter-pill-clover" aria-hidden="true">🍀</span>
-            <span class="letter-pill-sparkle">✨</span>
-        </button>
-    </div>
-
     <!-- Centered Modal Overlay for Polaroid Secret Letter (Zero Overlap with Bottom Controls) -->
     <div id="secret-letter-modal" class="modal-overlay hidden" style="z-index: 100003;">
         <div class="secret-letter-dialog">
@@ -1059,15 +1049,8 @@
         </div>
     </div>
 
-    <!-- BOTTOM-RIGHT ZONE: Unified System Dock (BGM Audio + Boarding Pass) -->
+    <!-- BOTTOM-LEFT ZONE: Audio Control Dock (Positioned cleanly under Mascot Companion) -->
     <div id="bottom-system-dock" class="bottom-system-dock">
-        <!-- Nút mở Bưu Thiếp Kỷ Niệm & Thẻ Hoa 20/10 -->
-        <button id="open-boarding-pass-btn" class="open-boarding-pass-btn hidden" title="Mở Bưu Thiếp Kỷ Niệm 20/10 · Hương Đồng Cỏ Nội">
-            <span class="btn-icon">💌</span>
-            <span class="btn-text">Bưu Thiếp 20/10</span>
-            <span class="btn-sparkle">🪷</span>
-        </button>
-
         <!-- Bảng điều khiển Âm Nhạc & Âm lượng -->
         <div class="music-panel lyrical-panel">
             <button id="music-toggle" aria-label="Toggle Music" class="music-btn-inner" title="Bật/Tắt nhạc nền">
@@ -1079,6 +1062,26 @@
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path><path d="M19.07 4.93a10 10 0 0 1 0 14.14"></path></svg>
                 <input type="range" id="volume-slider" min="0" max="1" step="0.01" value="0.05" title="Điều chỉnh âm lượng">
             </div>
+        </div>
+    </div>
+
+    <!-- BOTTOM-RIGHT ZONE: Heritage Keepsake Actions Dock (Bưu Thiếp 20/10 & Thư Bí Mật 20/10) -->
+    <div id="bottom-right-action-dock" class="bottom-right-action-dock" aria-label="Khu vực thư bí mật và bưu thiếp 20/10">
+        <!-- Nút mở Bưu Thiếp Kỷ Niệm & Thẻ Hoa 20/10 -->
+        <button id="open-boarding-pass-btn" class="open-boarding-pass-btn hidden" title="Mở Bưu Thiếp Kỷ Niệm 20/10 · Hương Đồng Cỏ Nội">
+            <span class="btn-icon">💌</span>
+            <span class="btn-text">Bưu Thiếp 20/10</span>
+            <span class="btn-sparkle">🪷</span>
+        </button>
+
+        <!-- Nút mở Thư Bí Mật 20/10 -->
+        <div id="secret-letter-container" class="secret-letter-container hidden">
+            <button id="secret-letter-trigger-btn" class="secret-letter-trigger-pill" title="Mở bức thư bí mật">
+                <span class="letter-pill-icon">💌</span>
+                <span class="letter-pill-text">Thư Bí Mật 20/10</span>
+                <span class="letter-pill-clover" aria-hidden="true">🍀</span>
+                <span class="letter-pill-sparkle">✨</span>
+            </button>
         </div>
     </div>
 

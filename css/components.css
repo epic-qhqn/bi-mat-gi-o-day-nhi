@@ -774,13 +774,30 @@ body.aurora-active .aurora {
 }
 
 /* ==========================================================================
-   BOTTOM-LEFT ZONE: Secret Letter Trigger Pill & Centered Modal Dialog
+   BOTTOM-RIGHT ZONE: Unified Action Dock (Bưu Thiếp 20/10 & Thư Bí Mật 20/10)
    ========================================================================== */
-.secret-letter-container {
+.bottom-right-action-dock {
   position: fixed;
-  bottom: calc(22px + var(--sab, 0px));
-  left: calc(22px + var(--sal, 0px));
-  z-index: 4500;
+  bottom: calc(20px + var(--sab, 0px));
+  right: calc(22px + var(--sar, 0px));
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 10px;
+  z-index: 3000;
+  pointer-events: none;
+}
+
+.bottom-right-action-dock > * {
+  pointer-events: auto;
+}
+
+.secret-letter-container {
+  position: relative;
+  bottom: auto;
+  left: auto;
+  right: auto;
+  z-index: auto;
   pointer-events: auto;
   transition: opacity 0.4s ease, transform 0.4s ease;
 }
@@ -789,17 +806,24 @@ body.aurora-active .aurora {
   opacity: 0 !important;
   pointer-events: none !important;
   transform: translateY(16px);
+  display: none !important;
 }
 
-@media (max-width: 600px) {
-  .secret-letter-container {
-    bottom: calc(118px + var(--sab, 0px));
-    left: calc(14px + var(--sal, 0px));
+@media (max-width: 768px) {
+  .bottom-right-action-dock {
+    bottom: calc(14px + var(--sab, 6px));
+    right: calc(12px + var(--sar, 0px));
+    gap: 8px;
   }
-  .secret-letter-trigger-pill {
-    padding: 7px 14px;
-    font-size: 12px;
-    gap: 6px;
+}
+
+@media (max-height: 540px) and (orientation: landscape) {
+  .bottom-right-action-dock {
+    right: calc(155px + var(--sar, 0px));
+    bottom: calc(8px + var(--sab, 0px));
+    flex-direction: row;
+    align-items: center;
+    gap: 8px;
   }
 }
 
@@ -4663,7 +4687,7 @@ body.sky-night .terrarium-gesture-hint {
 .plant-harp-strings-wrap {
   position: absolute;
   left: 1060px;
-  top: 475px;
+  top: 385px;
   transform: translate(-50%, -50%);
   width: 180px;
   height: 205px;
@@ -4771,7 +4795,7 @@ body.sky-night .harp-header-badge {
     position: fixed;
     left: auto;
     right: 12px;
-    bottom: calc(75px + var(--sab, 12px));
+    bottom: calc(125px + var(--sab, 12px));
     top: auto;
     transform: none;
     width: 155px;
@@ -5856,7 +5880,7 @@ body.sky-night .found-letter-slot.filled {
   color: #FFFFFF;
   border: 1.5px solid rgba(255, 255, 255, 0.4);
   padding: 10px 20px;
-  border-radius: 12px;
+  border-radius: var(--radius-pill);
   font-family: 'Be Vietnam Pro', sans-serif;
   font-size: 13.5px;
   font-weight: 700;
