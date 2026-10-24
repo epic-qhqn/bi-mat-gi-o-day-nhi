@@ -12,29 +12,21 @@ Ngoài ra cũng không thể quên gửi một lời cảm ơn thật to lớn �
 
 // Danh sách phong phú các lá thư gửi gắm từ các thành viên nam trong công ty / CLB
 const randomClubLetters = [
-    { author: "Hải Đăng", content: "Chúc bạn luôn tươi vui như đóa hoa đang nở rộ. 20/10 thật nhiều niềm vui và luôn là phiên bản hạnh phúc nhất của chính mình nhé!" },
-    { author: "Minh Quân", content: "Hãy luôn tự tin và tỏa sáng theo cách riêng của mình. Nụ cười của bạn là nguồn năng lượng tuyệt vời cho cả team đấy. Chúc bạn 20/10 ngập tràn niềm vui!" },
-    { author: "Hoàng Phong", content: "Cảm ơn vì đã luôn mang lại năng lượng tích cực cho mọi người xung quanh. 20/10 ngập tràn yêu thương, nhận thật nhiều hoa và quà nha!" },
-    { author: "Tiến Đạt", content: "Chúc những bông hồng của chúng ta mãi luôn rạng rỡ, hoàn thành xuất sắc mọi mục tiêu và luôn được yêu thương chiều chuộng mỗi ngày!" },
-    { author: "Gia Bảo", content: "Mong bạn luôn giữ nụ cười trên môi, dù công việc có bận rộn thì vẫn luôn an yên và yêu đời. Chúc mừng ngày của một nửa thế giới tuyệt vời nhất!" },
-    { author: "Tuấn Anh", content: "20/10 chúc bạn visual lúc nào cũng đỉnh chóp, deadline luôn đúng hạn, bug tự động biến mất và ví tiền thì lúc nào cũng rủng rỉnh nha!" },
-    { author: "Đức Huy", content: "Gửi ngàn lời chúc tốt đẹp nhất đến bạn! Mong bạn luôn bình an, may mắn trên mọi chặng đường và luôn có những người bạn đồng hành tuyệt vời bên cạnh." },
-    { author: "Quang Minh", content: "Phụ nữ sinh ra là để được yêu thương. 20/10 này chúc bạn được cưng chiều như công chúa, ăn ngon không béo và luôn hạnh phúc mỗi sớm mai thức giấc!" },
-    { author: "Thành Nam", content: "Cảm ơn sự dịu dàng và nhiệt huyết bạn luôn mang vào công việc mỗi ngày. Chúc bạn một ngày 20/10 trọn vẹn, ấm áp bên những người thân thương." },
-    { author: "Quốc Bảo", content: "Chúc bạn có một ngày 20/10 thật 'slay', nhận được nhiều lời khen, uống trà sữa không sợ tăng cân và luôn là chính mình rạng ngời nhất!" },
-    { author: "Trọng Hiếu", content: "Mỗi ngày có bạn ở văn phòng là một ngày ngập tràn tiếng cười. Cảm ơn vì bạn đã luôn là một mảnh ghép đặc biệt của tập thể chúng ta!" },
-    { author: "Đình Trọng", content: "Chúc bạn một ngày 20/10 thật chill, không lo âu muộn phiền, công việc hanh thông và mọi điều ước hôm nay đều sẽ trở thành hiện thực!" },
-    { author: "Văn Toàn", content: "Nụ cười của bạn làm bừng sáng cả không gian làm việc. 20/10 chúc bạn luôn giữ được nét hồn nhiên, sự kiên định và trái tim ấm áp nhé!" },
-    { author: "Duy Mạnh", content: "Chúc bạn nhận được thật nhiều hoa, nhiều quà và tình cảm chân thành nhất. Bạn xứng đáng với tất cả những điều ngọt ngào nhất trên thế giới này." },
-    { author: "Thế Vinh", content: "Mong rằng bạn luôn mạnh mẽ khi cần, dịu dàng khi muốn và luôn được trân trọng bởi những người xung quanh. 20/10 thật hạnh phúc nhé!" },
-    { author: "Bảo Long", content: "20/10 chúc bạn vạn dặm bình an, một đời vui vẻ. Hãy cứ sống hết mình với đam mê và luôn tự hào về những điều bạn đã làm được!" },
-    { author: "Hùng Cường", content: "Cảm ơn bạn vì những đóng góp tuyệt vời và sự thấu hiểu dành cho anh em. Chúc bạn ngày Phụ nữ Việt Nam thật nhiều niềm vui bất ngờ!" },
-    { author: "Hoàng Anh", content: "Gửi đến bạn những lời chúc ấm áp nhất! Chúc bạn mỗi ngày đi làm đều là một ngày vui, không áp lực và luôn có động lực tiến bước." },
-    { author: "Trung Kiên", content: "Chúc bạn ngày 20/10 ngập tràn 'vitamin hạnh phúc', luôn được đồng nghiệp quý mến và đạt được mọi ước mơ ấp ủ!" },
-    { author: "Việt Dũng", content: "Dù thế giới ngoài kia có xô bồ, chúc bạn luôn giữ được sự bình yên trong tâm hồn và sự ngọt ngào trong ánh mắt. 20/10 vui vẻ nhé!" },
-    { author: "Khánh Duy", content: "Chúc bông hoa xinh đẹp của công ty luôn tỏa ngát hương thơm, thông minh, sắc sảo và luôn là nguồn cảm hứng cho tất cả chúng mình!" },
-    { author: "Phúc Lâm", content: "20/10 chúc bạn shopping không cần nhìn giá, ăn ngon ngủ ngon và luôn được chở che, yêu thương trọn vẹn!" },
-    { author: "Thái Sơn", content: "Chúc bạn ngày Phụ nữ Việt Nam thật ngọt ngào như ly trà sữa full topping, rạng rỡ như nắng mai và lúc nào cũng ngập tràn may mắn!" }
+    { author: "Trung Con Trai", content: 'Chúc mừng 20/10, chúc "hệ thống" của chị em luôn vận hành mượt mà không Bug, "cảm biến" dò trúng tần số hạnh phúc và trọn đời báo lỗi "Error 404: Nỗi buồn Not Found"! ( •̀ ω •́ )✧' },
+    { author: "Trung Kiên", content: 'Chúc mừng ngày 20/10! thân chúc toàn thể chị em luôn khỏe mạnh, xinh đẹp, mãi là phiên bản độc nhất tỏa sáng và đón nhận thật nhiều thành công, hạnh phúc trong cuộc sống!' },
+    { author: "Boom shakalaka m ỉa trong quần đi", content: "Chúc người con gái STREAM tớ yêu luôn là những con người hạnh phúc nhất, hiền hòa nhất, hạnh phúc nhất và luôn giữ được tinh thần hào hứng, hóng hớt, hớn hở với những sự kiện của EPIC nhóooo. Habibi VIETNAMESE(PIC)'S WOMEN DAY" },
+    { author: "Kon Pò", content: "chúc các bống hồng xinh đẹp của CLB STEM càng ngày càng được toả sáng dưới ánh mặt trời nha" },
+    { author: "Du Nhiên", content: "Chúc các bạn nữ clb EPIC STEMS 20/10 vui vẻ bên các anh tài nha. Ngày hôm nay các anh ấy là của các bạn hết, mình ko giành. Happi Vietnamese national Women Day" },
+    { author: "XeneoBlue", content: "Chúc những bông hoa của EPIC mình sẽ luôn hạnh phúc, trọn vẹn, luôn rực rỡ theo cách riêng của chính mình. Chúc các nàng công chúa bất kể ngày nào cũng là một ngày 20/10 nha" },
+    { author: "TBN", content: "Chúc những cô gái của team luôn là những bông hoa đẹp nhất, luôn xinh đẹp, mỗi ngày đều tươi cười, và sẽ luôn là người mà bất cứ ai để mất cx tiếc nuối. Chúc mn 20/10 thật rực rỡ." },
+    { author: "PCN 2", content: "Bánh xèo, bánh xe, bánh khọt, bánh đúc, bánh mì,...cớ sao tui lại phải lòng bánh bèo EPIC. Chúc các bèo luôn hạnh phục, dễ thương, kute, kawai, moi moi kyu." },
+    { author: "Khiết Đan", content: "Chúc các chị em trong CLB 20/10 vui vẻ, nhan sắc thăng hạng, tiền tài rủng rỉnh, deadline tự né, làm gì cũng thuận lợi, đi đâu cũng được quý, mãi keo mãi slay và luôn giữ vững phong độ nữ hoàng nhaaa!" },
+    { author: "Chauzzz bell", content: "Chúc mấy bạn, mấy chị trong CLB STEM 20/10 có tất cả trừ vất vả, mọi thứ đến với mình đều suôn sẻ, không gặp khó khăn trong học tập cũng như cuộc sống. Chúc mấy bèo của tập thể mình lun xinh đẹp, mạnh khoẻ. Queen never cry!" },
+    { author: "ACN", content: "Hông biết cậu là ai, nhưng mà tớ chúc cậu sẽ là hoa, là gió, là mây. Được toả sáng, được bay bổng, được tự do thật toả sáng theo cách cậu muốn, thật xinh đẹp, được làm mọi điều cậu thích và điều gì cũng như ý nhoa (❁´◡`❁)" },
+    { author: "Tuấn", content: "Chúc các bạn nữ trong CLB STEM luôn xinh đẹp, vui vẻ, học tập tốt và luôn giữ được niềm đam mê sáng tạo. Chúc các bạn luôn tự tin, tỏa sáng và cùng CLB tạo nên thật nhiều dự án thú vị nhé!" },
+    { author: "TP", content: "Chúc các bạn nữ EPIC 20/10 ngày càng xinh hơn, tiền vào như nước, deadline tự biến mất, được làm nữ chính còn hội bạn xách đồ." },
+    { author: "LMN", content: "Chúc các cô gái của EPIC - STEM luôn là những bông hoa tươi sắc, sức khoẻ dồi dào, không bao giờ ốm đau bệnh tật hay làm việc quá sức. Chúc các bạn 20/10 vui vẻ" },
+    { author: "NHP", content: "Tuy là hơi trễ rùi nhma chúc các bông hoa của STEM 20/10 luôn giữ đc năng lượng vui tươi, hạnh phúc, nhan sắc ngày càng thăng hạng nhaaa!! 🌸✨" }
 ];
 
 // Cơ chế Non-Repeating Random Deck (Fisher-Yates Shuffled Pool)
