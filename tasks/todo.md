@@ -1,67 +1,71 @@
-# TODO: TÍCH HỢP 12 CUNG HOÀNG ĐẠO & TRÌNH DIỄN CHÒM SAO THIÊN VĂN 2 GIÂY (PHASE 3)
+# TODO: ĐẠI TU TOÀN DIỆN LỖI MOBILE & CHỐNG VA CHẠM GIAO DIỆN ĐA THIẾT BỊ (MOBILE OVERHAUL & ZERO PC REGRESSION)
 
-> **Mục tiêu**: Thực thi lộ trình 5 giai đoạn trong `tasks/plan.md`. Cho phép người dùng nhập ngày & tháng sinh ở Bàn chế tác Stage 0 $\rightarrow$ tra Cung Hoàng Đạo $\rightarrow$ nối chòm sao hoàng đạo tương ứng ở Stage 3 $\rightarrow$ **trình diễn toàn cảnh hình vẽ chòm sao thần thoại phát sáng trong 2 giây** đúng theo hình ảnh mẫu trước khi nở hoa ở Stage 4.  
-> **Cam kết**: 100% Client-Side Pure Static Web (Offline-ready), Touch Target $\ge 48\text{px}$, Zero PC Regression.
+> **Mục tiêu**: Thực thi lộ trình 5 giai đoạn trong `tasks/plan.md` nhằm khắc phục 100% các lỗi mobile thực tế (từ 7 ảnh chụp trên iPhone 14 và máy Android qua Safari, Cốc Cốc, Chrome) và các lỗi mã nguồn tiềm tàng.  
+> **Cam kết**: Zero PC Regression (100% không đụng vào UI trên PC Desktop), Touch Target $\ge 48\text{px}$, 100% Client-Side Pure Static Web.
 
 ---
 
-### Phase 1: Chuẩn Hóa CSDL & Bộ Vector Art 12 Chòm Sao Di Sản (Zodiac Vector Art & Star Topology)
-- [x] 1.1: Thiết kế và số hóa 12 vector SVG nét trắng/vàng bạc thanh nhã (`viewBox="0 0 1100 680"`) cho 12 cung hoàng đạo (Bạch Dương, Kim Ngưu, Song Tử, Cự Giải, Sư Tử, Xử Nữ, Thiên Bình, Thiên Yết, Nhân Mã, Ma Kết, Bảo Bình, Song Ngư) đồng bộ phong cách ảnh mẫu.
-- [x] 1.2: Định nghĩa bản đồ tọa độ các ngôi sao thật `pts` và thứ tự nối `edges` cho từng cung hoàng đạo trong `SIGNS` (`js/zodiac-constellation.js`), khớp 1:1 với các điểm sao chủ chốt trên hình vẽ vector.
-- [x] 1.3: Xây dựng script kiểm thử tự động `scratch/test_zodiac_bounds.js`: chạy mô phỏng Monte Carlo xác nhận 100% các ngôi sao của cả 12 cung nằm trong vùng trời an toàn, không va chạm với 4 vùng cấm (HUD trên, tán cây giữa, mascot góc trái, mộc cầm góc phải).
+### Phase 1: Chống Va Chạm Dock Trên, Khí Hậu Tự Nhiên & Linh Vật (Top Dock & Atmosphere HUD Anti-Collision)
+- [ ] 1.1: Tinh chỉnh khoảng cách dock góc phải trong `css/components.css`: chuyển `#top-experiential-dock` sang `right: calc(68px + var(--sar, 8px))` để triệt tiêu 100% va chạm giữa nút Kim chỉ nam (Orrery Lodestar) và nút Chụp ảnh (Camera Capture) trên mọi thiết bị mobile.
+- [ ] 1.2: Mở rộng khoảng cách 2 token khí hậu trong mobile landscape (`width: calc(100vw - 32px - var(--sal, 0px) - var(--sar, 0px))`) và ẩn nhãn chữ `.shifter-pill-label` rườm rà để không bao giờ đè lên bảng thông báo `#garden-ui`.
+- [ ] 1.3: Thêm quy tắc CSS cưỡng chế ẩn `#living-atmosphere-hud` ở Stage 2, 3 và 4 (`display: none !important; opacity: 0 !important;`) trong `css/layout.css` và `css/components.css`; cập nhật hàm chuyển cảnh trong `js/garden-stages.js`.
+- [ ] 1.4: Nâng vị trí Linh vật Mascot trong mobile landscape lên `bottom: calc(56px + var(--sab, 0px))` trong `css/components.css`, triệt tiêu hoàn toàn sự tiếp xúc/va chạm với thanh nhạc đáy màn hình `.bottom-system-dock`.
 
 #### Checkpoint 1: Sau Phase 1
-- [x] Chạy `node scratch/test_zodiac_bounds.js` đạt 100% pass với 0 va chạm.
-- [x] 12/12 chòm sao có đầy đủ vector SVG và bộ tọa độ sao hợp lệ.
+- [ ] Không còn bất kỳ sự chồng chéo nút nào ở góc trên bên phải (Orrery vs Camera).
+- [ ] Token Mây Mưa và Nắng Vàng không đè lên bảng `#garden-ui` ở Stage 1 và biến mất hoàn toàn khi sang Stage 2.
+- [ ] Linh vật Mascot đứng tách biệt rõ ràng phía trên thanh âm thanh.
 
 ---
 
-### Phase 2: Tối Ưu UX/UI Thẻ Ngày Sinh Tại Bàn Chế Tác Stage 0 (Heritage Birthday Atelier)
-- [x] 2.1: Tinh chỉnh mỹ thuật `.zodiac-birth-card` trong `css/zodiac.css`: chuyển từ màu tím sang phong cách Giấy Dó ngà `#FAF7F0`, viền đồng mạ `#D4AF37`, cỡ chữ select 16px chống Safari tự zoom, touch target $\ge 44\text{px}$.
-- [x] 2.2: Đồng bộ trạng thái vào `window.gardenState.zodiac` và `localStorage['epic.birthday']`; xây dựng cơ chế tự động gán cung hoàng đạo thi vị dự phòng nếu người chơi không nhập ngày sinh (không bắt buộc, không chặn dập sáp).
-- [x] 2.3: Tối ưu hiển thị responsive đa chiều cho thẻ ngày sinh:
-  - Mobile Portrait: Căn giữa thanh thoát, không đẩy lệch khay sáp và bếp nến.
-  - Mobile Landscape (cao $\le 540\text{px}$): Thu gọn tối đa $\le 60\text{px}$ trong cột trái bàn chế tác, cuộn mượt mà.
-  - Desktop PC: Cân xứng, hài hòa tuyệt đối với vintage brass letterpress.
+### Phase 2: Tái Thiết Kế Không Gian Stage 2 Chuông Hoa (Simon Melody Spatial Redesign)
+- [ ] 2.1: Tinh gọn bảng hướng dẫn `#garden-ui` ở Stage 2 trong `css/layout.css`: giới hạn chiều cao $\le 56\text{px}$ trên landscape, thu nhỏ nút "Nghe lại chuông" (`#simon-replay-btn`) dạng icon $36\text{px} \times 36\text{px}$ gọn gàng.
+- [ ] 2.2: Thay đổi tọa độ sinh 4 nốt chuông hoa trong `js/garden-minigames.js`: dời từ vùng $t: 34\% - 36\%$ xuống 2 vùng an toàn hai bên cánh gà ($t \ge 54\% - 72\%$, $l \in [15\%, 23\%]$ và $[77\%, 85\%]$), đảm bảo khoảng cách đến `#garden-ui` luôn $\ge 70\text{px}$.
+- [ ] 2.3: Đảm bảo vùng cảm ứng `hitbox` của mỗi nốt `.simon-node` đạt $\ge 52\text{px}$ qua pseudo-element `::after` và kiểm tra hoạt động trơn tru của nút Bỏ qua cứu nguy `#simon-skip-btn` sau 5 lần sai hoặc 40 giây.
 
 #### Checkpoint 2: Sau Phase 2
-- [x] Chọn ngày/tháng tra đúng 12 cung hoàng đạo và lưu state chuẩn xác.
-- [x] Giao diện thẻ ngày sinh hòa quyện với Bàn chế tác dập sáp trên cả điện thoại (dọc/ngang) và PC.
+- [ ] 100% nốt chuông hoa sinh ra ở vùng trống thoáng đãng bên dưới hai bên cánh gà, không bao giờ bị `#garden-ui` che khuất.
+- [ ] Người chơi chạm vào nốt phản hồi âm thanh ngũ cung tức thì, không bị nuốt touch.
 
 ---
 
-### Phase 3: Tái Cấu Trúc Minigame Stage 3 Nối Sao Theo Cung Hoàng Đạo (Dynamic Constellation Linker)
-- [x] 3.1: Nâng cấp `startConstellationGame()` trong `js/garden-minigames.js`: đọc `window.getZodiacConstellation()` để nạp bộ sao thật (5–7 sao đánh số thứ tự) cùng 1–2 sao ảo decoys (cách xa $\ge 95\text{px}$) của đúng cung hoàng đạo người chơi.
-- [x] 3.2: Tối ưu cảm ứng bắt dính ngón tay (`proximityRadius` $\ge 48\text{px}$ trên mobile) và hỗ trợ vẽ đường nối sao rực sáng nối tiếp mượt mà, hỗ trợ khép vòng kín cho các cung khép kín (Thiên Bình, Ma Kết, Nhân Mã).
-- [x] 3.3: Tích hợp cơ chế bỏ qua cứu nguy (Graceful Skip Fallback): nếu thử sai quá 5 lần hoặc quá 40 giây, hiển thị nút `#constellation-skip-btn`; khi bấm skip sẽ tự động nối sao và vẫn kích hoạt trọn vẹn màn trình diễn 2 giây.
+### Phase 3: Đại Tu Bố Cục Màn Hình Dọc - Mặt Trời, Cây & Mặt Đất (Portrait Horizon Overhaul)
+- [ ] 3.1: Thêm quy tắc CSS trong `@media (max-width: 768px) and (orientation: portrait)` tại `css/layout.css`: neo giữ các thiên thể `.celestial-body.sun`, `.sun-dawn`, `.sun-dusk`, `.moon` ở vùng trời cao `top: 12% - 14%`, xóa bỏ lỗi mặt trời chìm xuống dưới rễ cây.
+- [ ] 3.2: Tinh chỉnh nét vẽ của `Footer` trong `js/love.js`: kiểm tra viewport dọc hoặc cấu hình màu, thay thế đường kẻ đen đặc `rgb(35, 31, 32)` bằng màu sương mờ `rgba(106, 141, 115, 0.25)` đồng điệu với màu thảm cỏ, xóa bỏ vết nứt đen lơ lửng giữa trời.
+- [ ] 3.3: Cân chỉnh vị trí `#wrap` trong portrait tại `css/layout.css` và bổ sung dải chuyển tiếp chân trời mềm mại giúp gốc cây cắm rễ tự nhiên vào mặt đất mẹ.
 
 #### Checkpoint 3: Sau Phase 3
-- [x] Thao tác kéo ngón tay nối sao trên điện thoại và chuột trên PC hoạt động trơn tru.
-- [x] Nút Bỏ qua cứu nguy kích hoạt chính xác sau 5 lần sai hoặc 40s.
+- [ ] Mặt trời/mặt trăng ở đúng 1/4 trên cùng của bầu trời trên iPhone 14 và mọi máy dọc.
+- [ ] Cây hoa và mặt đất kết nối tự nhiên, không còn đường kẻ đen thô cứng cắt ngang bầu trời.
 
 ---
 
-### Phase 4: Trình Diễn Toàn Cảnh Chòm Sao 2 Giây & Audio VFX (Grand 2-Second Celestial Reveal)
-- [x] 4.1: Xây dựng container đồ họa `#zodiac-artwork-reveal`: khi hoàn thành nối sao (hoặc skip), hiển thị toàn cảnh hình tượng vector thần thoại phát sáng ngân hà (`filter: drop-shadow`) đè khớp lên cụm sao vừa nối kèm thẻ thông điệp thi vị.
-- [x] 4.2: Xây dựng bộ đếm thời gian và biên đạo hoạt họa `triggerCelestialGrandReveal()`:
-  - Khóa tương tác tạm thời để bảo vệ màn trình diễn (`isRevealingConstellation = true`).
-  - Phát hiệu ứng `celestial-bloom` trong đúng 2000ms.
-  - Sau 2000ms, mờ dần (`fade-out 400ms`), dọn dẹp DOM sạch sẽ và gọi `window.advanceStage(2)` kích hoạt cây nở hoa (Stage 4).
-- [x] 4.3: Thiết kế âm thanh thiên thể kỳ ảo `playCelestialGrandRevealSFX()` trong `js/audio-vfx.js`: hợp âm ngũ cung Web Audio API ngân vang thanh khiết, tự động ducking 30% nhạc nền trong 2 giây.
-- [x] 4.4: Tích hợp câu chúc mừng riêng biệt của Linh vật Mascot (`#mascot-companion`) tương ứng với tính cách của cung hoàng đạo đó trong 2 giây trình diễn.
+### Phase 4: Sửa Triệt Để Lỗi Chụp Ảnh Màn Hình Polaroid (Instant Garden Capture Engine)
+- [ ] 4.1: Tại `js/main.js` hàm `moveAnimate()`: bắt snapshot cây nở hoa hoàn mỹ lưu vào `window.bloomedTreeSnapshotDataUrl` và nạp vào đối tượng ảnh `window.bloomedTreeImage` trước khi chuyển sang `jumpAnimate()`.
+- [ ] 4.2: Tái cấu trúc hàm `renderGardenPolaroidToCanvas` trong `js/garden-stages.js`: vẽ hình ảnh cây nở hoa từ `window.bloomedTreeImage` hoặc `canvas.parentNode.style.backgroundImage` vào khung ảnh Polaroid trước khi vẽ cánh hoa rơi và thiếu nữ Áo Dài.
+- [ ] 4.3: Tối ưu hóa tải ảnh và tương thích chia sẻ ảnh trên Safari iOS (`navigator.share` hoặc fallback mở tab mới) và Cốc Cốc.
 
 #### Checkpoint 4: Sau Phase 4
-- [x] Màn trình diễn toàn cảnh chòm sao hiển thị trọn vẹn đúng 2000ms với hiệu ứng ánh sáng và âm thanh thiên thể lung linh.
-- [x] Tự động chuyển cảnh sang Stage 4 mượt mà, không bị khựng hay lỗi console.
+- [ ] Bấm nút 📸 "Lưu Khoảnh Khắc", bức ảnh Polaroid xuất hiện và ảnh tải về chứa trọn vẹn 100% cây hoa trái tim nở rực rỡ, không bị rỗng như trong ảnh lỗi.
+- [ ] Hoạt động trơn tru trên cả iPhone Safari, Cốc Cốc và Chrome Android.
 
 ---
 
-### Phase 5: Kiểm Thử Toàn Diện Đa Thiết Bị, Zero PC Regression & Git 3-Dev Harmony
-- [x] 5.1: Xây dựng bộ test tự động `scratch/test_phase9_zodiac_constellation.js`: kiểm tra toàn diện 12 cung hoàng đạo, logic cutoff ngày sinh, chu trình 2s và cơ chế skip.
-- [x] 5.2: Kiểm tra cú pháp toàn bộ file JavaScript (`node -c js/*.js`) và đếm số lượng dấu ngoặc `{}` trên toàn bộ file CSS (`base.css`, `layout.css`, `components.css`, `zodiac.css`) đảm bảo cân bằng tuyệt đối.
-- [x] 5.3: Kiểm thử thị giác đa thiết bị: Mobile Landscape (iPhone 14/15/16, Samsung S22, Pixel, Sony Xperia, màn hình gập 320px), Mobile Portrait, Tablet, PC Desktop ($1920 \times 1080$, 4K) cam kết Zero PC Regression.
-- [x] 5.4: Thực hiện quy trình Git 3-Dev: `git fetch --all --prune`, giải quyết xung đột với các commit đồng đội (nếu có), commit và push nhánh feature sạch sẽ.
+### Phase 5: Bọc Khung Giới Hạn Hộp Thoại & Kiểm Thử Toàn Diện (Overlay Bounds & Comprehensive Verification)
+- [ ] 5.1: Cấu hình giới hạn chiều cao `max-height: min(92dvh, 92vh)` và `overflow-y: auto` cho `.rotate-device-card` trong `css/components.css`; thu gọn kích thước mô hình điện thoại xuống 64px trong landscape để nút "Tiếp tục ở góc nhìn hiện tại" hiển thị 100% không bị che khuất trên trình duyệt có tab.
+- [ ] 5.2: Tối ưu Bàn chế tác dập sáp Stage 0 trên mobile portrait: đưa 4 nút hoa văn triện về 1 hàng 4 cột cân xứng (`flex: 1 1 0`), thu gọn khoảng cách padding giúp người dùng Safari cuộn mượt mà và dễ dàng nhấn nút dập sáp.
+- [ ] 5.3: Xây dựng script kiểm thử tự động toàn diện `scratch/test_mobile_overhaul_regression.js`:
+  - Kiểm tra va chạm tọa độ giữa Simon nodes và `#garden-ui` ($\ge 70\text{px}$).
+  - Kiểm tra va chạm giữa Orrery và Dock Camera ($\ge 10\text{px}$).
+  - Kiểm tra va chạm giữa Mascot và Bottom Audio Dock ($\ge 10\text{px}$).
+  - Kiểm tra vị trí mặt trời/mặt trăng trong media query portrait ($top \le 16\%$).
+  - Kiểm tra logic cache cây nở hoa và vẽ ảnh chụp Polaroid.
+  - Kiểm tra cân bằng tuyệt đối dấu ngoặc `{}` trên tất cả các file CSS.
+  - Kiểm tra cú pháp JS (`node -c js/*.js`).
+  - Kiểm tra Zero PC Regression (100% CSS Desktop không bị ảnh hưởng).
+- [ ] 5.4: Thực hiện quy trình Git 3-Dev: `git fetch --all --prune`, giải quyết xung đột với commit đồng đội (nếu có), commit trên nhánh feature `feat/mobile-device-overhaul-fixes` sạch sẽ.
 
 #### Checkpoint 5: Hoàn Tất Bàn Giao
-- [x] Tất cả các bài kiểm tra tự động chạy qua không lỗi.
-- [x] Working tree sạch sẽ, nhánh feature đồng bộ hoàn hảo.
+- [ ] Khắc phục triệt để 100% lỗi từ 7 bức ảnh chụp thực tế và các lỗi tiềm tàng.
+- [ ] Đạt 100% tiêu chí kiểm thử tự động.
+- [ ] Giao diện Desktop PC giữ nguyên vẹn 100% (Zero PC Regression).
