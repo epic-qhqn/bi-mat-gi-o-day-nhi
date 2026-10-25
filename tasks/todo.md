@@ -57,11 +57,11 @@
 ---
 
 ### Phase 5: Kiểm Thử Toàn Diện Đa Thiết Bị, Zero PC Regression & Git 3-Dev Harmony
-- [ ] 5.1: Xây dựng bộ test tự động `scratch/test_phase9_zodiac_constellation.js`: kiểm tra toàn diện 12 cung hoàng đạo, logic cutoff ngày sinh, chu trình 2s và cơ chế skip.
-- [ ] 5.2: Kiểm tra cú pháp toàn bộ file JavaScript (`node -c js/*.js`) và đếm số lượng dấu ngoặc `{}` trên toàn bộ file CSS (`base.css`, `layout.css`, `components.css`, `zodiac.css`) đảm bảo cân bằng tuyệt đối.
-- [ ] 5.3: Kiểm thử thị giác đa thiết bị: Mobile Landscape (iPhone 14/15/16, Samsung S22, Pixel, Sony Xperia, màn hình gập 320px), Mobile Portrait, Tablet, PC Desktop ($1920 \times 1080$, 4K) cam kết Zero PC Regression.
-- [ ] 5.4: Thực hiện quy trình Git 3-Dev: `git fetch --all --prune`, giải quyết xung đột với các commit đồng đội (nếu có), commit và push nhánh feature sạch sẽ.
+- [x] 5.1: Xây dựng bộ test tự động `scratch/test_phase9_zodiac_constellation.js`: kiểm tra toàn diện 12 cung hoàng đạo, logic cutoff ngày sinh, chu trình 2s và cơ chế skip.
+- [x] 5.2: Kiểm tra cú pháp toàn bộ file JavaScript (`node -c js/*.js`) và đếm số lượng dấu ngoặc `{}` trên toàn bộ file CSS (`base.css`, `layout.css`, `components.css`, `zodiac.css`) đảm bảo cân bằng tuyệt đối.
+- [x] 5.3: Kiểm thử thị giác đa thiết bị: Mobile Landscape (iPhone 14/15/16, Samsung S22, Pixel, Sony Xperia, màn hình gập 320px), Mobile Portrait, Tablet, PC Desktop ($1920 \times 1080$, 4K) cam kết Zero PC Regression.
+- [x] 5.4: Thực hiện quy trình Git 3-Dev: `git fetch --all --prune`, giải quyết xung đột với các commit đồng đội (nếu có), commit và push nhánh feature sạch sẽ.
 
 #### Checkpoint 5: Hoàn Tất Bàn Giao
-- [ ] Tất cả các bài kiểm tra tự động chạy qua không lỗi.
-- [ ] Working tree sạch sẽ, nhánh feature đồng bộ hoàn hảo.
+- [x] Tất cả các bài kiểm tra tự động chạy qua không lỗi.
+- [x] Working tree sạch sẽ, nhánh feature đồng bộ hoàn hảo.
