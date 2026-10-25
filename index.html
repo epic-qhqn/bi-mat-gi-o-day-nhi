@@ -18,6 +18,7 @@
     <link rel="stylesheet" href="./css/base.css">
     <link rel="stylesheet" href="./css/layout.css">
     <link rel="stylesheet" href="./css/components.css">
+    <link rel="stylesheet" href="./css/zodiac.css">
     <script type="text/javascript" src="./js/love.js" charset="utf-8"></script>
 </head>
 
@@ -267,6 +268,21 @@
                                     <span class="emboss-placeholder">✦ Gõ tên bạn để xem mẫu dập đồng ✦</span>
                                 </div>
                             </div>
+                        </div>
+
+                        <!-- Ngày sinh & Cung Hoàng Đạo -->
+                        <div class="zodiac-birth-card" id="zodiac-birth-card">
+                            <label for="birthdate-input" class="zodiac-birth-label">🌙 NGÀY SINH CỦA BẠN <em>(không bắt buộc)</em></label>
+                            <input type="date" id="birthdate-input" class="zodiac-birth-input" min="1900-01-01" placeholder="dd/mm/yyyy" autocomplete="bday">
+                            <div id="zodiac-result" class="zodiac-result hidden" aria-live="polite">
+                                <span class="zodiac-symbol" aria-hidden="true">♈</span>
+                                <div class="zodiac-info">
+                                    <strong class="zodiac-name"></strong>
+                                    <span class="zodiac-dates"></span>
+                                    <p class="zodiac-msg"></p>
+                                </div>
+                            </div>
+                            <button type="button" id="zodiac-draw-btn" class="zodiac-draw-btn hidden">✨ Vẽ chòm sao của bạn</button>
                         </div>
 
                         <!-- Deep Link Gift Action Toolbar (Phase 13) -->
@@ -1023,7 +1039,14 @@
             <!-- Phase 3.3: Botanical Melodic Harp Strings (Dây Đàn Hạc Thảo Mộc Ngân Vang Đặt Tại Góc Khu Vườn) -->
             <div id="plant-harp-strings-wrap" class="plant-harp-strings-wrap" aria-label="Dây đàn hạc thảo mộc ngân vang">
                 <div class="harp-corner-vignette" aria-hidden="true">
-                    <img src="./img/dan.svg" class="harp-vine-frame-svg" alt="" draggable="false">
+                    <svg viewBox="0 0 180 220" class="harp-vine-frame-svg" fill="none">
+                        <!-- Khung mộc cầm uốn lượn mộc mạc như rễ cây phong lan -->
+                        <path d="M15,210 C15,120 40,30 90,15 C135,2 165,40 160,85 C155,125 125,160 140,210" stroke="#7E5835" stroke-width="6" stroke-linecap="round"/>
+                        <path d="M15,210 C15,120 40,30 90,15 C135,2 165,40 160,85 C155,125 125,160 140,210" stroke="#D4AF37" stroke-width="1.8" stroke-dasharray="8 6" opacity="0.6"/>
+                        <!-- Đọt lá non điểm xuyết viền đàn -->
+                        <circle cx="92" cy="15" r="4" fill="#6A8D73"/>
+                        <circle cx="162" cy="85" r="4" fill="#D47A88"/>
+                    </svg>
                     <div class="harp-header-badge">
                         <span class="badge-icon">♫</span>
                         <span class="badge-txt">Mộc Cầm</span>
@@ -1705,6 +1728,29 @@
     <script src="./js/environment.js"></script>
     <script src="./js/mascot-companion.js"></script>
     <script src="./js/orientation-guard.js"></script>
+    <!-- Zodiac Constellation Mini-game -->
+    <div id="zodiac-modal" class="zodiac-modal hidden" role="dialog" aria-modal="true" aria-labelledby="zc-title" aria-hidden="true">
+        <div class="zc-card">
+            <button type="button" id="zc-close" class="zc-close" aria-label="Đóng">✕</button>
+            <h3 id="zc-title" class="zc-title"></h3>
+            <div class="zc-top-row">
+                <span id="zc-progress" class="zc-progress"></span>
+                <button type="button" id="zc-reset" class="zc-btn">Vẽ lại ↺</button>
+            </div>
+            <div id="zc-stage" class="zc-stage">
+                <svg id="zc-svg" class="zc-svg" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true"></svg>
+                <div id="zc-stars" class="zc-stars"></div>
+            </div>
+            <p id="zc-hint" class="zc-hint" aria-live="polite"></p>
+            <div id="zc-finale" class="zc-finale hidden">
+                <p id="zc-finale-msg" class="zc-finale-msg"></p>
+                <div class="zc-actions">
+                    <button type="button" id="zc-finale-close" class="zc-btn primary">Đóng ✨</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <script src="./js/wax-seal-ceremony.js"></script>
     <script src="./js/atmosphere-shifter.js"></script>
     <script src="./js/botanical-harp.js"></script>
@@ -1714,6 +1760,7 @@
     <script src="./js/experience-guide.js"></script>
     <script src="./js/realtime-guide.js"></script>
     <script src="./js/secret-letter.js"></script>
+    <script src="./js/zodiac-constellation.js"></script>
     <script src="./js/boarding-pass-modal.js"></script>
     <script src="./js/boarding-pass-canvas.js"></script>
     <script src="./js/main.js"></script>
