@@ -12,7 +12,7 @@ Ngoài ra cũng không thể quên gửi một lời cảm ơn thật to lớn �
 
 // Danh sách phong phú các lá thư gửi gắm từ các thành viên nam trong công ty / CLB
 const randomClubLetters = [
-    { author: "Trung Con Trai", content: 'Chúc mừng 20/10, chúc "hệ thống" của chị em luôn vận hành mượt mà không Bug, "cảm biến" dò trúng tần số hạnh phúc và trọn đời báo lỗi "Error 404: Nỗi buồn Not Found"! ( •̀ ω •́ )✧' },
+    { author: "Trung Con Trai", content: 'Lời chúc tuy đến hơi trễ, nhưng mong các bông hoa của EPIC đã có một ngày 20/10 thật trọn vẹn. Chúc phái đẹp của chúng ta luôn lộng lẫy rạng ngời bất chấp camera thường hay son phấn, ung dung bình yên bước qua mọi giông bão. Chúc chị em luôn được nâng niu bởi người mình đã chọn, và mãi mãi là những "ngoại lệ" kiêu hãnh, ngọt ngào nhất của đại gia đình EPIC nhé! ( •̀ ω •́ )✧' },
     { author: "Trung Kiên", content: 'Chúc mừng ngày 20/10! thân chúc toàn thể chị em luôn khỏe mạnh, xinh đẹp, mãi là phiên bản độc nhất tỏa sáng và đón nhận thật nhiều thành công, hạnh phúc trong cuộc sống!' },
     { author: "Boom shakalaka m ỉa trong quần đi", content: "Chúc người con gái STREAM tớ yêu luôn là những con người hạnh phúc nhất, hiền hòa nhất, hạnh phúc nhất và luôn giữ được tinh thần hào hứng, hóng hớt, hớn hở với những sự kiện của EPIC nhóooo. Habibi VIETNAMESE(PIC)'S WOMEN DAY" },
     { author: "Kon Pò", content: "chúc các bống hồng xinh đẹp của CLB STEM càng ngày càng được toả sáng dưới ánh mặt trời nha" },
