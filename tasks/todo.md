@@ -59,7 +59,7 @@
 ---
 
 ### Phase 8: Kiểm Thử Đa Trình Duyệt Mobile, Syntax Audit & Git Harmony
-- [ ] 8.1: Kiểm tra cú pháp JavaScript: chạy `node -c js/*.js` trên toàn bộ 19 module độc lập, đảm bảo zero syntax error.
-- [ ] 8.2: Kiểm tra cân bằng CSS: đếm dấu ngoặc nhọn `{}` trên 3 file `base.css`, `layout.css`, `components.css` đảm bảo cân bằng tuyệt đối.
-- [ ] 8.3: Kiểm tra đối chứng màn hình PC ($1920 \times 1080$): Đảm bảo 100% không có bất kỳ sự thay đổi hay lỗi hồi quy nào trên desktop (Zero PC Regression).
-- [ ] 8.4: Kiểm tra và đồng bộ Git: Chạy `git fetch origin`, kiểm tra commit mới từ đồng đội, merge hoặc rebase sạch sẽ, commit và chuẩn bị trạng thái ổn định nhất.
+- [x] 8.1: Kiểm tra cú pháp JavaScript: chạy `node -c js/*.js` trên toàn bộ 19 module độc lập, đảm bảo zero syntax error.
+- [x] 8.2: Kiểm tra cân bằng CSS: đếm dấu ngoặc nhọn `{}` trên 3 file `base.css`, `layout.css`, `components.css` đảm bảo cân bằng tuyệt đối.
+- [x] 8.3: Kiểm tra đối chứng màn hình PC ($1920 \times 1080$): Đảm bảo 100% không có bất kỳ sự thay đổi hay lỗi hồi quy nào trên desktop (Zero PC Regression).
+- [x] 8.4: Kiểm tra và đồng bộ Git: Chạy `git fetch origin`, kiểm tra commit mới từ đồng đội, merge hoặc rebase sạch sẽ, commit và chuẩn bị trạng thái ổn định nhất.

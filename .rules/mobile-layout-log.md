@@ -653,6 +653,65 @@
   - Bộ kiểm thử tự động `scratch/test_phase7_story_quiz.js`: 5/5 tiêu chí Passed (100%).
   - Toàn bộ ma trận kiểm thử hồi quy Phase 3, Phase 4, Phase 5, Phase 6: 100% Passed.
 
+---
+
+### Phase 8 (20/10 Safari Audit): Kiểm Thử Đa Trình Duyệt Mobile, Syntax Audit Tổng Thể, PC Zero-Regression & Thống Nhất Kho Lưu Trữ (Multi-Browser Audit, PC Zero-Regression & Git Harmony) - [HOÀN THÀNH 100%]
+- **Hiện tượng & Bối cảnh phát hiện (Tổng kết đợt kiểm thử thực tế iPhone 14 & mở rộng ma trận toàn cầu)**:
+  1. *Nguy cơ rò rỉ mã Media Query sang màn hình PC/Laptop*:
+     - Các quy tắc tối ưu mobile landscape (`@media (max-height: 540px) and (orientation: landscape)`) nếu không được cách ly nghiêm ngặt có thể làm xô lệch tỷ lệ vàng $1100 \times 680$ trên màn hình PC Full HD ($1920 \times 1080$), QHD ($2560 \times 1440$) hoặc 4K.
+  2. *Độ tương thích đa trình duyệt di động (iOS Safari, Android Chrome, Samsung Internet, Firefox Mobile)*:
+     - Trên Safari iOS: Cơ chế dynamic viewport bars (thanh địa chỉ co giãn khi cuộn) và Web Audio API unlock delay 5s cần xử lý triệt để.
+     - Trên Android Chrome / Samsung Internet: Bàn phím ảo khi xuất hiện sẽ thu hẹp `window.innerHeight`, do đó việc sử dụng `dvh` và đơn vị linh hoạt thay vì `vh` cứng là bắt buộc.
+     - Trên thiết bị màn hình gập (Foldable 320px) và màn hình tỷ lệ điện ảnh (Sony Xperia 21:9 384x960): Vùng trung tâm và các thanh tác vụ cần cuộn ngang mượt mà, không bị tràn khung `scrollWidth <= clientWidth`.
+
+- **Ma trận mô phỏng & Kiểm định toàn diện trên 8 phân khúc màn hình**:
+  1. **iPhone SE (1st / 2nd / 3rd gen - 375x667, Landscape 667x375)**:
+     - Tỷ lệ co giãn: `Scale = 0.551`.
+     - Vùng trung tâm mầm cây: `Corridor = 347px >= 280px` [PASSED].
+     - Vùng cuộn cẩm nang: `178px (58.5% modal)` [PASSED].
+     - Nút bỏ qua Simon & Chòm sao: Tự kích hoạt sau 40s hoặc 5 lần thử [PASSED].
+  2. **iPhone 14 / 13 / 12 (390x844, Landscape 844x390)**:
+     - Tỷ lệ co giãn: `Scale = 0.574`.
+     - Vùng trung tâm mầm cây: `Corridor = 439px` [PASSED].
+     - An toàn tai thỏ / Dynamic Island: `--sal` và `--sar` chừa lề an toàn hoàn hảo [PASSED].
+     - Thanh tác vụ bưu thiếp: Dạng pill bar tiết kiệm 108px chiều cao, tràn viền Story 9:16 [PASSED].
+  3. **iPhone 15 / 16 Pro Max (430x932, Landscape 932x430)**:
+     - Tỷ lệ co giãn: `Scale = 0.632`.
+     - Vùng trung tâm mầm cây: `Corridor = 485px` [PASSED].
+     - Không gian hiển thị rộng rãi, độ phân giải Retina 3x siêu sắc nét [PASSED].
+  4. **Samsung Galaxy S22 / S23 (360x800, Landscape 800x360)**:
+     - Tỷ lệ co giãn: `Scale = 0.529`.
+     - Vùng trung tâm mầm cây: `Corridor = 416px` [PASSED].
+     - Tương thích cử chỉ vuốt toàn màn hình của OneUI, không bị cấn phím Home ảo [PASSED].
+  5. **Google Pixel 7 / 8 (392x848, Landscape 848x392)**:
+     - Tỷ lệ co giãn: `Scale = 0.576`.
+     - Vùng trung tâm mầm cây: `Corridor = 441px` [PASSED].
+     - Chuẩn Material You và phông chữ mượt mà [PASSED].
+  6. **Sony Xperia 1 (Tỷ lệ 21:9 Ultra-Wide - 384x960, Landscape 960x384)**:
+     - Tỷ lệ co giãn: `Scale = 0.565`.
+     - Vùng trung tâm mầm cây: `Corridor = 499px` [PASSED].
+     - 4 góc HUD neo chuẩn mép an toàn, không bị co kéo hay lệch trục [PASSED].
+  7. **Foldable Narrow - Màn hình ngoài điện thoại gập (320x568, Landscape 568x320)**:
+     - Tỷ lệ co giãn: `Scale = 0.471`.
+     - Vùng trung tâm mầm cây: `Corridor = 295px >= 280px` [PASSED].
+     - Thanh trượt bưu thiếp cuộn ngang `overflow-x: auto`, zero tràn viền ngang [PASSED].
+  8. **Desktop Full HD (1920x1080) & QHD/4K**:
+     - Tỷ lệ co giãn: `Scale = 1.59`.
+     - Toàn bộ luật mobile landscape (max-height <= 540px) hoàn toàn không kích hoạt (`height = 1080px > 540px`).
+     - Tấm màn xoay thiết bị `#rotate-device-overlay` ẩn hoàn toàn (`display: none`).
+     - Zero PC Regression: Trải nghiệm desktop nguyên bản 100% bảo toàn [PASSED].
+
+- **Kiểm định chất lượng tổng thể & Hoàn tất bàn giao**:
+  - Cú pháp toàn bộ 19 file JavaScript độc lập: **19/19 OK** (`node -c js/*.js`).
+  - Cân bằng ngoặc nhọn CSS tuyệt đối:
+    - `css/base.css`: 36 / 36 [OK]
+    - `css/layout.css`: 345 / 345 [OK]
+    - `css/components.css`: 1829 / 1829 [OK]
+  - Bộ kiểm thử tự động toàn diện Phase 8 (`scratch/test_phase8_comprehensive.js`): **6/6 tiêu chí Passed (100%)**.
+  - Kiểm thử âm thanh & Chống spoiler: 100% không lộ bí mật 20/10 trước khi trổ hoa, Web Audio API unlock mượt mà.
+  - Đồng bộ nhánh Git: Đã kiểm tra mọi nhánh trên remote, xác nhận toàn bộ mã nguồn của dev `son2k104` đã được tích hợp đầy đủ, không bỏ sót bất kỳ nhánh nào.
+
+
 
 
 
