@@ -11455,22 +11455,33 @@ body.readable-font .polaroid-back .letter-content {
 
 
 /* ==========================================================================
-   MỘC CẦM v2 — dùng img/dan.svg làm khung đàn (viewBox 500x600)
-   Toạ độ dây tính theo đơn vị SVG; --u = 1 đơn vị SVG tính bằng px.
-   Chỉnh kích thước đàn: đổi --harp-w (cao = 1.2 x rộng).
-   Chỉnh dây: sửa --xm/--ym (tâm dây), --len (dài), --dxh (nửa độ lệch ngang).
+   MỘC CẦM v3 — khung đàn là img/dan.svg (viewBox 500x600)
+   --------------------------------------------------------------------------
+   • Mọi toạ độ dây tính theo ĐƠN VỊ SVG; --u = 1 đơn vị SVG tính bằng px.
+   • Đổi kích thước cả cây đàn: chỉ cần đổi --harp-w (cao = 1.2 x rộng).
+   • Mỗi dây là đoạn thẳng đi từ mép dưới CẦN ĐÀN xuống mép trước THÙNG ĐÀN,
+     nghiêng 7° (song song cột đàn). Số liệu được đo từ mặt nạ alpha của dan.svg:
+       --xm / --ym : tâm đoạn dây     --len : chiều dài đoạn dây
+   • Nốt nhạc nằm TRÊN dây, cách đầu dưới dây --noff đơn vị -> các nốt cách đều
+     nhau dọc mép thùng đàn (~57 đơn vị) nên không bao giờ đè lên nhau.
    ========================================================================== */
 .plant-harp-strings-wrap {
   --harp-w: 270px;
   --u: calc(var(--harp-w) / 500);
-  --harp-tilt: -8deg; /* bằng độ nghiêng cột đàn: đáy dây lệch sang phải */
+  --harp-tilt: -7deg;
+  --harp-sin: 0.1219;   /* sin 7° — phải khớp --harp-tilt */
+  --harp-cos: 0.9925;   /* cos 7° */
+  right: 36px;
+  bottom: 14px;
   width: var(--harp-w);
   height: calc(var(--harp-w) * 1.2);
   justify-content: flex-start;
 }
 
-/* Khung đàn: nằm dưới, vừa khít vùng 500x600 */
+/* Khung đàn nằm dưới, vừa khít vùng 500x600 */
 .harp-vine-frame-svg {
+  position: relative;
+  z-index: 1;
   display: block;
   width: 100%;
   height: 100%;
@@ -11480,10 +11491,24 @@ body.readable-font .polaroid-back .letter-content {
   filter: drop-shadow(0 6px 12px rgba(0, 0, 0, 0.25));
 }
 
-/* Badge ♫ Mộc Cầm giữ nguyên, đặt góc trên phải (vùng trống của SVG) */
+/* Bóng đổ mềm dưới chân đàn để đàn "đứng" vững trên bãi cỏ (chân đàn ~ x 42%, y 92%) */
+.harp-corner-vignette::before {
+  content: "";
+  position: absolute;
+  left: 22%;
+  bottom: 3.2%;
+  width: 40%;
+  height: 4.5%;
+  z-index: 0;
+  border-radius: 50%;
+  background: radial-gradient(ellipse at center, rgba(38, 24, 10, 0.42) 0%, rgba(38, 24, 10, 0.16) 55%, rgba(38, 24, 10, 0) 75%);
+  pointer-events: none;
+}
+
+/* Badge ♫ Mộc Cầm giữ nguyên, đặt ở vùng trống phía trên bên phải của SVG */
 .harp-header-badge { top: 2px; right: 4px; z-index: 3; }
 
-/* Bảng dây phủ đúng bằng khung SVG, dây định vị tuyệt đối theo toạ độ SVG */
+/* Bảng dây phủ đúng bằng khung SVG; dây định vị tuyệt đối theo toạ độ SVG */
 .harp-strings-board {
   position: absolute;
   inset: 0;
@@ -11496,16 +11521,19 @@ body.readable-font .polaroid-back .letter-content {
   position: absolute;
   left: calc(var(--xm) * var(--u));
   top: calc(var(--ym) * var(--u));
-  width: max(28px, calc(34 * var(--u)));
+  width: max(26px, calc(34 * var(--u)));
   height: calc(var(--len) * var(--u) + 20px);
   translate: -50% -50%;
   padding: 0;
   display: block;
 }
-/* Dây (đường vàng) nghiêng song song cột đàn */
+
+/* Dây: nghiêng song song cột đàn, đậm hơn một chút để nổi trên nền trời */
 .harp-string-line {
+  width: 2.4px;
   transform: translateX(-50%) rotate(var(--harp-tilt));
   transform-origin: 50% 50%;
+  background: linear-gradient(180deg, rgba(245, 206, 86, 0.55) 0%, rgba(255, 224, 120, 0.98) 40%, rgba(167, 243, 208, 0.95) 78%, rgba(245, 206, 86, 0.6) 100%);
 }
 .harp-string-wire.plucked .harp-string-line {
   animation-name: harp-string-vibrate-tilt;
@@ -11519,21 +11547,38 @@ body.readable-font .polaroid-back .letter-content {
   85%  { transform: translateX(calc(-50% + 0.6px)) rotate(var(--harp-tilt)) scaleX(1.05); }
   100% { transform: translateX(-50%) rotate(var(--harp-tilt)) scaleX(1); }
 }
-/* Tên nốt nằm ngay dưới đầu dây (trên thùng đàn), theo độ lệch của dây */
-.harp-note-name {
-  position: absolute;
-  top: 100%;
-  left: 50%;
-  margin: 0;
-  translate: calc(-50% + var(--dxh) * var(--u)) -4px;
+
+/* Nút nốt nhạc: đặt đúng trên dây (tâm dây + (len/2 - noff) dọc theo hướng dây) */
+.harp-string-wire {
+  --noff: 30;
+  --node-d: clamp(15px, calc(40 * var(--u)), 24px);
+  --node-x: calc(50% + (var(--len) / 2 - var(--noff)) * var(--u) * var(--harp-sin));
+  --node-y: calc(50% + (var(--len) / 2 - var(--noff)) * var(--u) * var(--harp-cos));
+}
+.harp-string-node {
+  width: var(--node-d);
+  height: var(--node-d);
+  font-size: calc(var(--node-d) * 0.5);
+  left: var(--node-x);
+  top: var(--node-y);
 }
 
-/* 5 dây: đầu trên ở hàng chốt trên cần đàn, đầu dưới chạm mép thùng đàn */
-.harp-string-wire[data-string-index="0"] { --xm: 209.2; --ym: 297.1; --len: 276.9; --dxh: 19.2; }
-.harp-string-wire[data-string-index="1"] { --xm: 240.7; --ym: 260.1; --len: 225.8; --dxh: 15.7; }
-.harp-string-wire[data-string-index="2"] { --xm: 272.1; --ym: 223.1; --len: 174.6; --dxh: 12.1; }
-.harp-string-wire[data-string-index="3"] { --xm: 303.6; --ym: 186.1; --len: 123.5; --dxh: 8.6; }
-.harp-string-wire[data-string-index="4"] { --xm: 335.0; --ym: 149.1; --len: 72.3;  --dxh: 5.0; }
+/* Tên nốt nằm ngay bên phải nốt của CHÍNH dây đó (trên mặt thùng đàn) */
+.harp-note-name {
+  position: absolute;
+  left: var(--node-x);
+  top: var(--node-y);
+  margin: 0;
+  translate: calc(var(--node-d) / 2 + 4px) -50%;
+  white-space: nowrap;
+}
+
+/* 5 dây (Đô Rê Mi Sol La): từ mép dưới cần đàn xuống mép trước thùng đàn */
+.harp-string-wire[data-string-index="0"] { --xm: 207.6; --ym: 308.1; --len: 275.3; }
+.harp-string-wire[data-string-index="1"] { --xm: 234.0; --ym: 279.0; --len: 228.7; }
+.harp-string-wire[data-string-index="2"] { --xm: 260.1; --ym: 247.8; --len: 185.4; }
+.harp-string-wire[data-string-index="3"] { --xm: 286.3; --ym: 216.5; --len: 143.0; }
+.harp-string-wire[data-string-index="4"] { --xm: 312.9; --ym: 189.1; --len: 91.4;  }
 
 @media (max-width: 768px) {
   .plant-harp-strings-wrap {
@@ -11543,11 +11588,10 @@ body.readable-font .polaroid-back .letter-content {
     transform: scale(0.85) !important;
     transform-origin: bottom right !important;
   }
-  .harp-string-wire { width: 28px; }
 }
 @media (max-height: 540px) and (orientation: landscape) {
   .plant-harp-strings-wrap {
-    --harp-w: 150px;
+    --harp-w: 300px; /* #wrap đang bị thu nhỏ ~0.5 trên điện thoại ngang -> phóng đàn lên để nốt đủ lớn */
     width: var(--harp-w) !important;
     height: calc(var(--harp-w) * 1.2) !important;
   }

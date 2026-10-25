@@ -371,9 +371,12 @@
                 steps[2].classList.add('active');
             }
 
-            if (gardenMsg) gardenMsg.textContent = "Đêm xuống rồi! Hãy nối 5 vì sao sáng theo thứ tự từ 1 đến 5 để thắp sáng bầu trời nhé ✨🌌";
+            const zc3 = (typeof window.getZodiacConstellation === 'function') ? window.getZodiacConstellation() : null;
+            if (gardenMsg) gardenMsg.textContent = zc3
+                ? `Đêm xuống rồi! Chòm sao ${zc3.name} ${zc3.symbol}\uFE0E của bạn đang hiện lên — hãy nối ${zc3.pts.length} vì sao theo thứ tự từ 1 đến ${zc3.pts.length} nhé ✨🌌`
+                : "Đêm xuống rồi! Hãy nối 5 vì sao sáng theo thứ tự từ 1 đến 5 để thắp sáng bầu trời nhé ✨🌌";
             if (typeof window.showMascotSpeech === 'function') {
-                window.showMascotSpeech("Tìm đúng 5 vì sao thật nhé, cẩn thận đừng để các vì sao ảo đánh lừa nha! ✨", 4000);
+                window.showMascotSpeech(zc3 ? `Đây là chòm sao ${zc3.name} của bạn đó! Nối theo số, cẩn thận sao ảo nha ✨` : "Tìm đúng 5 vì sao thật nhé, cẩn thận đừng để các vì sao ảo đánh lừa nha! ✨", 4000);
             }
             if (typeof window.playMelodicHarpChime === 'function') {
                 window.playMelodicHarpChime(4);

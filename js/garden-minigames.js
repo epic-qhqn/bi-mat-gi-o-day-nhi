@@ -1011,6 +1011,7 @@
         if (constellationInput.length === starCoords.length) {
             isDraggingConstellation = false;
             activeStarIndex = null;
+            if (activeZodiacClose && starCoords.length > 2) drawConstellationSegment(index, 0);
             if (stage3SkipTimer) {
                 clearTimeout(stage3SkipTimer);
                 stage3SkipTimer = null;
@@ -1089,6 +1090,28 @@
         }
     };
 
+    // Chòm sao của Cung Hoàng Đạo (nếu người chơi đã chọn ngày sinh): 5–7 sao đánh số, toạ độ px trên canvas 1100x680.
+    let activeZodiacClose = false;
+    const buildZodiacStarField = (zc) => {
+        const stars = zc.pts.map(([cx, cy], i) => ({
+            index: i, cx, cy, l: (cx / 1100) * 100, t: (cy / 680) * 100, label: i + 1
+        }));
+        // 1–2 sao ảo, đặt ở vùng trời an toàn và cách mọi sao thật >= 95px
+        const decoyCount = stars.length <= 5 ? 2 : 1;
+        const decoys = [];
+        const all = stars.map(s => ({ cx: s.cx, cy: s.cy }));
+        for (let n = 0; n < 400 && decoys.length < decoyCount; n++) {
+            const cx = 215 + Math.random() * 660, cy = 112 + Math.random() * 158;
+            if (cy < 150 && cx > 350 && cx < 750) continue;
+            if (cy > 230 && cx > 460 && cx < 640) continue;
+            if (cy < 125 && (cx < 220 || cx > 880)) continue;
+            if (all.some(p => Math.hypot(p.cx - cx, p.cy - cy) < 95)) continue;
+            decoys.push({ index: decoys.length, cx, cy, l: (cx / 1100) * 100, t: (cy / 680) * 100 });
+            all.push({ cx, cy });
+        }
+        return { stars, decoys, starCount: stars.length, decoyCount: decoys.length, minDistance: 84 };
+    };
+
     const startConstellationGame = () => {
         const container = document.getElementById('constellation-game');
         if (!container) return;
@@ -1134,15 +1157,26 @@
         if (previewLine) previewLine.style.display = 'none';
 
         // Sub-phase 5.1: Dynamic Poisson-disk star field generation (5 stars + 2 decoys)
-        const starField = generatePoissonStarField({
-            starCount: 5,
-            decoyCount: 2,
-            minDistance: 92
-        });
+        // Có Cung Hoàng Đạo -> nạp đúng chòm sao của cung; chưa chọn ngày sinh -> sao ngẫu nhiên như cũ
+        const zodiacLayout = (typeof window.getZodiacConstellation === 'function') ? window.getZodiacConstellation() : null;
+        activeZodiacClose = !!(zodiacLayout && zodiacLayout.close);
+        const starField = zodiacLayout
+            ? buildZodiacStarField(zodiacLayout)
+            : generatePoissonStarField({
+                starCount: 5,
+                decoyCount: 2,
+                minDistance: 92
+            });
 
         // Sub-phase 5.2: Dynamic Topology Path & Procedural Nomenclature
         activeConstellationTopology = computeConstellationTopology(starField.stars);
-        activeConstellationName = generateConstellationName();
+        activeConstellationName = zodiacLayout
+            ? {
+                prefix: zodiacLayout.latin, suffix: '', latinName: zodiacLayout.latin,
+                subtitle: `Cung ${zodiacLayout.name} ${zodiacLayout.symbol}\uFE0E`,
+                fullName: `${zodiacLayout.latin} — Cung ${zodiacLayout.name}`, zodiac: true
+            }
+            : generateConstellationName();
 
         // Update Atelier Constellation Badge
         const badge = document.getElementById('constellation-name-badge');

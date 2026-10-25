@@ -107,22 +107,36 @@
         if (!plantHarpWrapEl) return;
         let isSwipingHarp = false;
         let lastSwipedIndex = -1;
-        let cachedWireRects = [];
+        let cachedSegments = [];
+
+        // Mỗi dây là một đoạn thẳng NGHIÊNG (song song cột đàn). Lấy 2 đầu đoạn dây từ
+        // hộp bao của .harp-string-line (đã xoay): đầu trên = góc trái-trên, đầu dưới = góc phải-dưới.
+        const readSegments = () => harpStringWires.map((w) => {
+            const ln = w.querySelector('.harp-string-line');
+            const r = (ln || w).getBoundingClientRect();
+            return { x1: r.left, y1: r.top, x2: r.right, y2: r.bottom };
+        });
+
+        const distToSegment = (px, py, s) => {
+            const dx = s.x2 - s.x1, dy = s.y2 - s.y1;
+            const len2 = dx * dx + dy * dy || 1;
+            let t = ((px - s.x1) * dx + (py - s.y1) * dy) / len2;
+            t = Math.max(0, Math.min(1, t));
+            return Math.hypot(px - (s.x1 + t * dx), py - (s.y1 + t * dy));
+        };
 
         const checkAndPluckFromPoint = (x, y) => {
-            const rects = cachedWireRects.length === harpStringWires.length
-                ? cachedWireRects
-                : harpStringWires.map(w => w.getBoundingClientRect());
+            const segs = cachedSegments.length === harpStringWires.length ? cachedSegments : readSegments();
 
-            // Hit boxes of adjacent (tilted) strings can overlap: choose the nearest centre.
+            // Chọn dây GẦN NHẤT (tính tới đoạn dây nghiêng), trong vùng chạm ~14px mỗi bên.
             let hit = -1, best = Infinity;
-            for (let i = 0; i < harpStringWires.length; i++) {
-                const rect = rects[i];
-                if (rect && x >= rect.left && x <= rect.right && y >= rect.top && y <= rect.bottom) {
-                    const d = Math.abs(x - (rect.left + rect.right) / 2);
-                    if (d < best) { best = d; hit = i; }
-                }
+            for (let i = 0; i < segs.length; i++) {
+                const d = distToSegment(x, y, segs[i]);
+                if (d < best) { best = d; hit = i; }
             }
+            const reach = Math.max(14, harpStringWires[0] ? harpStringWires[0].offsetWidth * 0.5 : 14);
+            if (best > reach) hit = -1;
+
             if (hit !== -1 && hit !== lastSwipedIndex) {
                 lastSwipedIndex = hit;
                 pluckHarpStringByIndex(hit, x, y);
@@ -132,7 +146,7 @@
         plantHarpWrapEl.addEventListener('pointerdown', (e) => {
             isSwipingHarp = true;
             lastSwipedIndex = -1;
-            cachedWireRects = harpStringWires.map(w => w.getBoundingClientRect());
+            cachedSegments = readSegments();
             try { plantHarpWrapEl.setPointerCapture(e.pointerId); } catch (_) {}
             checkAndPluckFromPoint(e.clientX, e.clientY);
         });
@@ -146,7 +160,7 @@
             if (isSwipingHarp) {
                 isSwipingHarp = false;
                 lastSwipedIndex = -1;
-                cachedWireRects = [];
+                cachedSegments = [];
                 try { plantHarpWrapEl.releasePointerCapture(e.pointerId); } catch (_) {}
             }
         };
