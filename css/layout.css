@@ -330,6 +330,25 @@ body.stage-3-active .growth-progress .step-node .node-icon {
   font-size: 9.5px !important;
 }
 
+body.stage-2-active .garden-ui .garden-message,
+body.stage-3-active .garden-ui .garden-message {
+  font-size: 9.5px !important;
+  line-height: 1.25 !important;
+  margin: 2px 0 !important;
+}
+
+body.stage-2-active .simon-actions-bar {
+  margin-top: 2px !important;
+  gap: 5px !important;
+}
+
+body.stage-2-active .simon-replay-btn {
+  margin-top: 0 !important;
+  padding: 3px 10px !important;
+  min-height: 28px !important;
+  font-size: 10px !important;
+}
+
 .garden-stage-selector {
   display: none !important;
 }

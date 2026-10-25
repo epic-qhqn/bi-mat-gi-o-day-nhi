@@ -218,22 +218,22 @@
             (window.matchMedia ? window.matchMedia('(max-height: 540px) and (orientation: landscape)').matches : (window.innerWidth > window.innerHeight && window.innerHeight <= 540));
 
         // Bilateral Thumb Zones (2 Trái - 2 Phải):
-        // Nốt 0 (14%, 45%) & Nốt 1 (23%, 63%) ở phía trái
-        // Nốt 2 (77%, 63%) & Nốt 3 (86%, 45%) ở phía phải
+        // Nốt 0 (14%, 52%) & Nốt 1 (22%, 70%) ở phía trái
+        // Nốt 2 (78%, 70%) & Nốt 3 (86%, 52%) ở phía phải
         // Bố cục phân tách hoàn toàn khỏi khung thẻ hướng dẫn ở phía trên (top < 38%),
-        // đồng thời giải phóng trung tâm cho mầm cây vươn cành và nằm trọn trong tầm với ngón tay cái.
+        // giải phóng 616px trung tâm cho mầm cây và đảm bảo cách xa bảng thông báo tối thiểu 100px.
         const celestialArcSlots = isMobileLandscape
             ? [
-                { l: 14, t: 45 },
-                { l: 23, t: 63 },
-                { l: 77, t: 63 },
-                { l: 86, t: 45 }
+                { l: 14, t: 52 },
+                { l: 22, t: 70 },
+                { l: 78, t: 70 },
+                { l: 86, t: 52 }
             ]
             : [
-                { l: 15, t: 45 },
-                { l: 24, t: 63 },
-                { l: 76, t: 63 },
-                { l: 85, t: 45 }
+                { l: 15, t: 54 },
+                { l: 24, t: 70 },
+                { l: 76, t: 70 },
+                { l: 85, t: 54 }
             ];
 
         const noteIcons = ['🌸', '🎵', '✨', '🎶'];

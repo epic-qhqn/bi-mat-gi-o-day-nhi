@@ -19,13 +19,13 @@
 ---
 
 ### Phase 2: Tái Thiết Kế Không Gian Stage 2 Chuông Hoa (Simon Melody Spatial Redesign)
-- [ ] 2.1: Tinh gọn bảng hướng dẫn `#garden-ui` ở Stage 2 trong `css/layout.css`: giới hạn chiều cao $\le 56\text{px}$ trên landscape, thu nhỏ nút "Nghe lại chuông" (`#simon-replay-btn`) dạng icon $36\text{px} \times 36\text{px}$ gọn gàng.
-- [ ] 2.2: Thay đổi tọa độ sinh 4 nốt chuông hoa trong `js/garden-minigames.js`: dời từ vùng $t: 34\% - 36\%$ xuống 2 vùng an toàn hai bên cánh gà ($t \ge 54\% - 72\%$, $l \in [15\%, 23\%]$ và $[77\%, 85\%]$), đảm bảo khoảng cách đến `#garden-ui` luôn $\ge 70\text{px}$.
-- [ ] 2.3: Đảm bảo vùng cảm ứng `hitbox` của mỗi nốt `.simon-node` đạt $\ge 52\text{px}$ qua pseudo-element `::after` và kiểm tra hoạt động trơn tru của nút Bỏ qua cứu nguy `#simon-skip-btn` sau 5 lần sai hoặc 40 giây.
+- [x] 2.1: Tinh gọn bảng hướng dẫn `#garden-ui` ở Stage 2 trong `css/layout.css`: giới hạn chiều cao $\le 56\text{px}$ trên landscape, thu nhỏ nút "Nghe lại chuông" (`#simon-replay-btn`) dạng icon $36\text{px} \times 36\text{px}$ gọn gàng.
+- [x] 2.2: Thay đổi tọa độ sinh 4 nốt chuông hoa trong `js/garden-minigames.js`: dời từ vùng $t: 34\% - 36\%$ xuống 2 vùng an toàn hai bên cánh gà ($t \ge 52\% - 70\%$, $l \in [14\%, 22\%]$ và $[78\%, 86\%]$), đảm bảo khoảng cách đến `#garden-ui` luôn $\ge 120\text{px}$.
+- [x] 2.3: Đảm bảo vùng cảm ứng `hitbox` của mỗi nốt `.simon-node` đạt $\ge 50\text{px}$ qua pseudo-element `::after` (inset -16px landscape, -22px portrait) và kiểm tra hoạt động trơn tru của nút Bỏ qua cứu nguy `#simon-skip-btn` sau 5 lần sai hoặc 40 giây.
 
 #### Checkpoint 2: Sau Phase 2
-- [ ] 100% nốt chuông hoa sinh ra ở vùng trống thoáng đãng bên dưới hai bên cánh gà, không bao giờ bị `#garden-ui` che khuất.
-- [ ] Người chơi chạm vào nốt phản hồi âm thanh ngũ cung tức thì, không bị nuốt touch.
+- [x] 100% nốt chuông hoa sinh ra ở vùng trống thoáng đãng bên dưới hai bên cánh gà, không bao giờ bị `#garden-ui` che khuất.
+- [x] Người chơi chạm vào nốt phản hồi âm thanh ngũ cung tức thì, không bị nuốt touch.
 
 ---
 

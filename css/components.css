@@ -9307,11 +9307,11 @@ body.sky-night .pointer-action-badge {
     white-space: nowrap;
   }
 
-  /* Simon Says Nodes scaled up for touch on mobile */
+  /* Simon Says Nodes scaled up for touch on mobile portrait */
   .simon-node {
-    width: 104px !important;
-    height: 104px !important;
-    font-size: 42px !important;
+    width: 96px !important;
+    height: 96px !important;
+    font-size: 38px !important;
   }
   .simon-node::after {
     top: -22px !important;
@@ -10464,16 +10464,16 @@ body.zen-mode-active .garden-stage-selector {
   /* Phase 5: Minigames Adaptation in Landscape */
   /* Stage 2: Simon Melody Nodes & Replay/Skip Action Controls */
   .simon-node {
-    width: 88px !important;
-    height: 88px !important;
-    font-size: 34px !important;
-    box-shadow: 0 6px 22px rgba(19, 28, 78, 0.22), 0 0 18px var(--note-color, rgba(212, 175, 55, 0.4)) !important;
+    width: 78px !important;
+    height: 78px !important;
+    font-size: 30px !important;
+    box-shadow: 0 4px 18px rgba(19, 28, 78, 0.22), 0 0 16px var(--note-color, rgba(212, 175, 55, 0.4)) !important;
   }
   .simon-node::after {
-    top: -18px !important;
-    left: -18px !important;
-    right: -18px !important;
-    bottom: -18px !important;
+    top: -16px !important;
+    left: -16px !important;
+    right: -16px !important;
+    bottom: -16px !important;
   }
   .simon-actions-bar {
     gap: 6px !important;
