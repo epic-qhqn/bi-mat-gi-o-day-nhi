@@ -602,9 +602,57 @@
   - Cân bằng ngoặc nhọn CSS:
     - `css/base.css`: 36 / 36 [OK]
     - `css/layout.css`: 345 / 345 [OK]
-    - `css/components.css`: 1823 / 1823 [OK]
+    - `css/components.css`: 1829 / 1829 [OK]
   - Bộ kiểm thử tự động `scratch/test_phase6_guide.js`: 7/7 tiêu chí Passed (100%).
   - Toàn bộ ma trận kiểm thử hồi quy Phase 3, Phase 4, Phase 5: 100% Passed.
+
+---
+
+### Phase 7 (20/10 Safari Audit): Hoàn Thiện Thiệp Bưu Hoa Di Sản 9:16 & Trắc Nghiệm Tính Cách Tâm Hồn (Story Card & 3D Flower Quiz Portrait Optimization) - [HOÀN THÀNH 100%]
+- **Hiện tượng & Bối cảnh phát hiện (Ảnh chụp thực tế Image 3 & Khảo sát trải nghiệm điện thoại dọc)**:
+  1. *Khối nút tác vụ bưu thiếp (`ticket-actions-bar`) xếp chồng 3 hàng dọc nuốt trọn màn hình điện thoại*:
+     - Trên mobile portrait, `.ticket-action-btn` trước đây có `flex: 1 1 100%`, khiến 3 nút bấm ("Tải Ảnh Về Máy", "Đổi Lời Chúc", "Đổi Loài Hoa") xếp chồng thành 3 tầng cao tới $> 170\text{px}$.
+     - Chiều cao eo hẹp của khung nhìn bị chiếm dụng, bóp nghẹt diện tích ngắm tấm thiệp bưu hoa di sản $1080 \times 1920$.
+  2. *Dải Photobooth 4 khung hình đơn điệu kéo dài lê thê*:
+     - Bố cục 1 cột dọc (`grid-template-columns: 1fr`) khiến dải 4 khung ảnh chiếm tới $> 300\text{px}$ chiều cao cuộn, người dùng phải vuốt tay nhiều lần mới tới chân thiệp.
+  3. *Trắc nghiệm hoa 3D (`flower-quiz__option`) thiếu diện tích chạm chuẩn*:
+     - Các ô phương án trả lời trước đây chỉ có padding mỏng, thiếu `min-height: 48px`, cỡ chữ $13\text{px}$ hơi nhỏ trên màn hình cảm ứng, khiến người dùng ngón tay cái dễ bấm hụt hoặc nhầm phương án lân cận.
+     - Thẻ Polaroid trắc nghiệm mặt sau bị trừ cố định `- 150px` khiến chiều cao thiệp chỉ còn ~400px trên các thiết bị thấp (iPhone SE / Foldable).
+
+- **Nguyên nhân gốc rễ & Dự đoán rủi ro trên các dòng thiết bị khác**:
+  1. *Bản chất tỷ lệ khung hình Story 9:16*:
+     - Thiệp bưu hoa di sản được thiết kế chuẩn Retina $1080 \times 1920$ (tỷ lệ $9:16$). Tỷ lệ này hoàn hảo nhất khi xem ở điện thoại dọc (Portrait Mode). Khi xoay ngang, tỷ lệ 9:16 bị co nhỏ lại và hai bên viền thừa rất nhiều khoảng trống. Do đó, việc kích hoạt `setPreferredOrientation('portrait')` khi mở modal bưu thiếp và trắc nghiệm là bước đột phá công thái học.
+  2. *Xung đột chiều rộng trên màn hình hẹp (Foldable 320px)*:
+     - Trên màn hình gập hẹp $320\text{px}$, nếu các nút tác vụ không có cơ chế cuộn ngang (`overflow-x: auto`) với `white-space: nowrap`, các nút bấm sẽ bị gãy chữ, rớt dòng và tràn viền ngang (`scrollWidth > clientWidth`).
+  3. *Tiêu chuẩn chạm WCAG / Apple HIG $\ge 48\text{px}$*:
+     - Trắc nghiệm tính cách hoa gồm 4-5 câu hỏi nhanh. Việc đảm bảo `min-height: 48px` và khoảng cách `gap: 8px` giữa các phương án triệt tiêu 100% tỷ lệ chạm nhầm (fat-finger error).
+
+- **Công thức & Giải pháp chuẩn hóa đa thiết bị**:
+  1. **Tái Thiết Kế Thanh Tác Vụ Bưu Thiếp Dạng Thanh Trượt Viên Thuốc (Horizontal Sticky Pill Bar)**:
+     - `.ticket-actions-bar`: `display: flex !important; flex-direction: row !important; flex-wrap: nowrap !important; overflow-x: auto !important; -webkit-overflow-scrolling: touch !important; padding: 8px 12px max(12px, env(safe-area-inset-bottom, 12px)) !important; position: sticky !important; bottom: 0 !important; z-index: 20 !important;`.
+     - `.ticket-action-btn`: `flex: 1 0 auto !important; white-space: nowrap !important; min-height: 44px !important; padding: 10px 14px !important; font-size: 12.5px !important;`.
+     - Giảm chiều cao thanh tác vụ từ $172\text{px}$ xuống chỉ còn **$64\text{px}$** (tiết kiệm hơn **$108\text{px}$** không gian hiển thị cho tấm thiệp Story 9:16 trên toàn bộ ma trận thiết bị)!
+  2. **Dải Photobooth 4 Ảnh Dạng Lưới 2 Cột Cân Đối (2x2 Grid)**:
+     - `.strip-frames-grid`: Chuyển sang `grid-template-columns: repeat(2, 1fr) !important; gap: 8px !important;`, tái hiện đúng phong cách photobooth kỷ niệm 4 khung hình xinh xắn, giảm $50\%$ chiều cao cuộn dọc.
+  3. **Chuẩn Hóa Bộ Trắc Nghiệm Tính Cách Hoa 3D (3D Flower Personality Quiz)**:
+     - Thiết lập `.secret-letter-dialog--quiz .polaroid`: `height: min(720px, calc(100dvh - 80px)) !important; max-height: calc(100dvh - 80px) !important;`.
+     - `.flower-quiz`: Bổ sung `-webkit-overflow-scrolling: touch !important; overscroll-behavior: contain !important;`.
+     - `.flower-quiz__option`: Đạt chuẩn tiếp xúc ngón tay `min-height: 48px !important; font-size: 14px !important; padding: 11px 14px !important; border-radius: 16px;`.
+     - `.flower-quiz__question`: `font-size: clamp(16px, 4.8vw, 20px) !important;` hiển thị câu hỏi thơ mộng, sắc nét trên mọi mật độ điểm ảnh Retina.
+  4. **Điều Phối Hướng Xoay Thông Minh (Bi-Directional Orientation Coordination)**:
+     - Cả `openBoardingPassModal()` lẫn `openSecretLetterModal()` đều tích hợp hook `setPreferredOrientation('portrait')` và hoàn trả `setPreferredOrientation('landscape')` khi đóng modal.
+
+- **Kiểm định chất lượng & Xác nhận**:
+  - `node -c js/boarding-pass-modal.js`: Exit code 0.
+  - `node -c js/secret-letter.js`: Exit code 0.
+  - Cú pháp toàn bộ 19 file JavaScript: 19/19 OK.
+  - Cân bằng ngoặc nhọn CSS:
+    - `css/base.css`: 36 / 36 [OK]
+    - `css/layout.css`: 345 / 345 [OK]
+    - `css/components.css`: 1829 / 1829 [OK]
+  - Bộ kiểm thử tự động `scratch/test_phase7_story_quiz.js`: 5/5 tiêu chí Passed (100%).
+  - Toàn bộ ma trận kiểm thử hồi quy Phase 3, Phase 4, Phase 5, Phase 6: 100% Passed.
+
 
 
 

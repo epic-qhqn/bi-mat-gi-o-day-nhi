@@ -53,8 +53,8 @@
 ---
 
 ### Phase 7: Hoàn Thiện Thiệp Bưu Hoa 9:16 & Trắc Nghiệm Tính Cách (Story Card & Quiz Portrait)
-- [ ] 7.1: Tối ưu modal bưu thiếp (`#boarding-pass-modal`): gợi ý xoay dọc để tấm thiệp bưu hoa di sản $1080 \times 1920$ hiển thị tràn viền tráng lệ như một Story di động; các nút tải ảnh và đổi hoa neo cố định dưới đáy.
-- [ ] 7.2: Tinh chỉnh bộ câu hỏi trắc nghiệm hoa 3D (`#secret-letter-modal`): vùng chạm phương án $\ge 48\text{px}$, phông chữ thơ $14\text{px} - 16\text{px}$ rõ nét, cuộn mượt mà không bị giật lag.
+- [x] 7.1: Tối ưu modal bưu thiếp (`#boarding-pass-modal`): gợi ý xoay dọc để tấm thiệp bưu hoa di sản $1080 \times 1920$ hiển thị tràn viền tráng lệ như một Story di động; các nút tải ảnh và đổi hoa neo cố định dưới đáy.
+- [x] 7.2: Tinh chỉnh bộ câu hỏi trắc nghiệm hoa 3D (`#secret-letter-modal`): vùng chạm phương án $\ge 48\text{px}$, phông chữ thơ $14\text{px} - 16\text{px}$ rõ nét, cuộn mượt mà không bị giật lag.
 
 ---
 
