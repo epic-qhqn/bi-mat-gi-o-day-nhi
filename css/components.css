@@ -5084,20 +5084,7 @@ body.sky-night .harp-header-badge {
   }
 }
 
-@media (max-height: 540px) and (orientation: landscape) {
-  .plant-harp-strings-wrap {
-    position: fixed !important;
-    left: calc(max(14px, calc(12px + var(--sal, 0px))) + 120px) !important;
-    bottom: max(8px, calc(8px + var(--sab, 0px))) !important;
-    right: auto !important;
-    top: auto !important;
-    transform: scale(0.78) !important;
-    transform-origin: bottom left !important;
-    width: 135px !important;
-    height: 115px !important;
-    z-index: 1004 !important;
-  }
-}
+/* plant-harp-strings-wrap landscape unified at bottom of file */
 
 .harp-string-wire.plucked::before {
   transform: scale(1.4) translateY(-3px);
@@ -6273,7 +6260,7 @@ body.sky-night .found-letter-slot.filled {
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  z-index: 20;
+  z-index: 999;
   transition: transform var(--transition-fast), background-color var(--transition-fast), border-color var(--transition-fast);
   outline: none;
   will-change: transform;
@@ -6982,12 +6969,20 @@ body.sky-night .found-letter-slot.filled {
 
 .check-row {
   display: flex;
-  align-items: center;
-  gap: 12px;
+  align-items: flex-start;
+  flex-direction: column;
+  gap: 6px;
   background: #FAF8F5;
   border: var(--border-width-atelier) solid var(--border-card);
   border-radius: var(--radius-inner);
-  padding: 8px 12px;
+  padding: 10px 12px;
+}
+@media (min-width: 680px) {
+  .check-row {
+    flex-direction: row;
+    align-items: center;
+    gap: 12px;
+  }
 }
 
 .row-label {
@@ -10663,7 +10658,23 @@ body.zen-mode-active .garden-stage-selector {
 }
 
 @media (max-width: 520px) {
-  .artisan-crafting-bench { gap: 12px; padding: 12px; }
+  .artisan-crafting-bench {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) !important;
+    gap: 8px !important;
+    padding: 10px 8px !important;
+    box-sizing: border-box !important;
+  }
+  .hearth-burner-unit {
+    position: relative !important;
+    overflow: hidden !important;
+  }
+  .brass-spoon-stand {
+    position: relative !important;
+    max-width: 100% !important;
+  }
+  .glass-stirring-rod {
+    right: 0px !important;
+  }
   .hearth-burner-unit,
   .wax-seal-workspace { min-height: 320px; padding: 16px 8px; gap: 14px; }
   .hearth-column-title,
@@ -11472,13 +11483,14 @@ body.readable-font .polaroid-back .letter-content {
      nhau dọc mép thùng đàn (~57 đơn vị) nên không bao giờ đè lên nhau.
    ========================================================================== */
 .plant-harp-strings-wrap {
-  --harp-w: 270px;
+  --harp-w: 320px;
   --u: calc(var(--harp-w) / 500);
   --harp-tilt: -7deg;
   --harp-sin: 0.1219;   /* sin 7° — phải khớp --harp-tilt */
   --harp-cos: 0.9925;   /* cos 7° */
-  right: 36px;
-  bottom: 14px;
+  left: auto !important;
+  right: 28px !important;
+  bottom: 18px !important;
   width: var(--harp-w);
   height: calc(var(--harp-w) * 1.2);
   justify-content: flex-start;
@@ -11597,9 +11609,15 @@ body.readable-font .polaroid-back .letter-content {
 }
 @media (max-height: 540px) and (orientation: landscape) {
   .plant-harp-strings-wrap {
-    --harp-w: 300px; /* #wrap đang bị thu nhỏ ~0.5 trên điện thoại ngang -> phóng đàn lên để nốt đủ lớn */
+    position: absolute !important;
+    left: auto !important;
+    right: 24px !important;
+    bottom: 18px !important;
+    top: auto !important;
+    --harp-w: 330px; /* Di chuyển đàn mộc sang góc phải, kích thước lớn vừa vặn hài hòa */
     width: var(--harp-w) !important;
     height: calc(var(--harp-w) * 1.2) !important;
+    transform: none !important;
   }
 }
 
