@@ -866,18 +866,79 @@
         ctx.quadraticCurveTo(px + pw * 0.5, py + ph - 140, px + pw, py + ph);
         ctx.fill();
 
-        // 3. Heart Tree snapshot from live canvas
+        // 3. Heart Tree snapshot (Guaranteed capture engine: Never blank even when jumpAnimate clears canvas)
+        let treeSource = null;
+        if (window.bloomedTreeImage && window.bloomedTreeImage.complete && window.bloomedTreeImage.naturalWidth > 0) {
+            treeSource = window.bloomedTreeImage;
+        } else if (window.bloomedTreeSnapshotDataUrl) {
+            const tempImg = new Image();
+            tempImg.src = window.bloomedTreeSnapshotDataUrl;
+            if (tempImg.complete && tempImg.naturalWidth > 0) {
+                treeSource = tempImg;
+                window.bloomedTreeImage = tempImg;
+            } else {
+                tempImg.onload = () => {
+                    window.bloomedTreeImage = tempImg;
+                    const pCanvas = document.getElementById('garden-polaroid-canvas');
+                    if (pCanvas) renderGardenPolaroidToCanvas(pCanvas);
+                };
+            }
+        }
+
+        if (!treeSource) {
+            // Fallback 1: Check background-image of wrap (parent of canvas)
+            const wrapEl = document.getElementById('wrap');
+            const bgStyle = (wrapEl && wrapEl.style.backgroundImage) || (wrapEl && wrapEl.style.background) || '';
+            const match = bgStyle.match(/url\(['"]?(data:image\/[^'"]+)['"]?\)/);
+            if (match && match[1]) {
+                const bgImg = new Image();
+                bgImg.src = match[1];
+                if (bgImg.complete && bgImg.naturalWidth > 0) {
+                    treeSource = bgImg;
+                    window.bloomedTreeImage = bgImg;
+                } else {
+                    bgImg.onload = () => {
+                        window.bloomedTreeImage = bgImg;
+                        const pCanvas = document.getElementById('garden-polaroid-canvas');
+                        if (pCanvas) renderGardenPolaroidToCanvas(pCanvas);
+                    };
+                }
+            }
+        }
+
+        if (!treeSource && window.currentGardenSnapshotUrl) {
+            const snapImg = new Image();
+            snapImg.src = window.currentGardenSnapshotUrl;
+            if (snapImg.complete && snapImg.naturalWidth > 0) {
+                treeSource = snapImg;
+            }
+        }
+
         const treeCanvas = document.getElementById('canvas');
-        if (treeCanvas && treeCanvas.width > 0) {
-            ctx.drawImage(treeCanvas, 0, 0, treeCanvas.width, treeCanvas.height, px - 20, py + 120, pw + 40, 780);
+        if (treeSource) {
+            const srcW = treeSource.naturalWidth || treeSource.width || 1100;
+            const srcH = treeSource.naturalHeight || treeSource.height || 680;
+            ctx.drawImage(treeSource, 0, 0, srcW, srcH, px - 30, py + 80, pw + 60, 820);
+        } else if (treeCanvas && treeCanvas.width > 0) {
+            ctx.drawImage(treeCanvas, 0, 0, treeCanvas.width, treeCanvas.height, px - 30, py + 80, pw + 60, 820);
+        }
+
+        // Composite active falling petals from live canvas if treeSource is already rendered
+        if (treeSource && treeCanvas && treeCanvas.width > 0) {
+            ctx.drawImage(treeCanvas, 0, 0, treeCanvas.width, treeCanvas.height, px - 30, py + 80, pw + 60, 820);
         }
 
         // 4. Áo Dài Maiden figure (if stage >= 3 and asset available)
-        if (window.gardenState && window.gardenState.currentStage >= 3 && window.aoDaiVietImg && window.aoDaiVietImg.complete && window.aoDaiVietImg.naturalWidth > 0) {
+        const domAoDai = document.querySelector('.ao-dai-figure-img');
+        const aoDaiImg = (window.aoDaiVietImg && window.aoDaiVietImg.complete && window.aoDaiVietImg.naturalWidth > 0)
+            ? window.aoDaiVietImg
+            : (domAoDai && domAoDai.complete && domAoDai.naturalWidth > 0 ? domAoDai : null);
+
+        if (window.gardenState && window.gardenState.currentStage >= 3 && aoDaiImg) {
             ctx.save();
             ctx.shadowColor = 'rgba(74, 55, 40, 0.25)';
             ctx.shadowBlur = 16;
-            ctx.drawImage(window.aoDaiVietImg, px + 80, py + ph - 380, 240, 360);
+            ctx.drawImage(aoDaiImg, px + 80, py + ph - 380, 240, 360);
             ctx.restore();
         }
 
@@ -1043,18 +1104,26 @@
 
                 try {
                     const dataUrl = canvas.toDataURL('image/png');
+                    const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+
                     const link = document.createElement('a');
                     link.download = filename;
                     link.href = dataUrl;
+                    if (isIOS) {
+                        link.target = '_blank';
+                        link.rel = 'noopener';
+                    }
                     document.body.appendChild(link);
                     link.click();
-                    setTimeout(() => link.remove(), 100);
+                    setTimeout(() => link.remove(), 200);
 
                     const toast = document.getElementById('polaroid-action-toast');
                     if (toast) {
-                        toast.textContent = 'Đã tải ảnh Polaroid kỷ niệm HD về máy! 📸✨';
+                        toast.textContent = isIOS 
+                            ? 'Đang mở ảnh Polaroid! Nhấn giữ ảnh để Lưu vào Thư viện 📸✨' 
+                            : 'Đã tải ảnh Polaroid kỷ niệm HD về máy! 📸✨';
                         toast.classList.remove('hidden');
-                        setTimeout(() => toast.classList.add('hidden'), 3000);
+                        setTimeout(() => toast.classList.add('hidden'), 3500);
                     }
                 } catch (err) {
                     console.error('Download error:', err);

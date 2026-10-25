@@ -145,7 +145,14 @@
     foot.draw();
     tree.snapshot("p2", 500, 0, 610, 680);
 
-    canvas.parentNode.style.background = "url(" + tree.toDataURL("image/png") + ")";
+    const snapshotDataUrl = tree.toDataURL("image/png");
+    window.bloomedTreeSnapshotDataUrl = snapshotDataUrl;
+    window.currentGardenSnapshotUrl = snapshotDataUrl;
+    const bloomedImg = new Image();
+    bloomedImg.src = snapshotDataUrl;
+    window.bloomedTreeImage = bloomedImg;
+
+    canvas.parentNode.style.background = "url(" + snapshotDataUrl + ")";
     canvas.style.background = "transparent";
     await sleep(300);
     canvas.style.background = "none";
@@ -181,6 +188,9 @@
           await sleep(10);
         }
       }
+      try {
+        window.currentGardenSnapshotUrl = canvas.toDataURL("image/png");
+      } catch (_) {}
 
       // ==== STAGE 2: Lên cây non (Young Tree) ====
       await awaitNextStage();
@@ -191,6 +201,9 @@
           await sleep(10);
         }
       }
+      try {
+        window.currentGardenSnapshotUrl = canvas.toDataURL("image/png");
+      } catch (_) {}
 
       // ==== STAGE 3: Trưởng thành & Ra hoa (Full Blossom) ====
       await awaitNextStage();

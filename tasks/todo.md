@@ -41,13 +41,13 @@
 ---
 
 ### Phase 4: Sửa Triệt Để Lỗi Chụp Ảnh Màn Hình Polaroid (Instant Garden Capture Engine)
-- [ ] 4.1: Tại `js/main.js` hàm `moveAnimate()`: bắt snapshot cây nở hoa hoàn mỹ lưu vào `window.bloomedTreeSnapshotDataUrl` và nạp vào đối tượng ảnh `window.bloomedTreeImage` trước khi chuyển sang `jumpAnimate()`.
-- [ ] 4.2: Tái cấu trúc hàm `renderGardenPolaroidToCanvas` trong `js/garden-stages.js`: vẽ hình ảnh cây nở hoa từ `window.bloomedTreeImage` hoặc `canvas.parentNode.style.backgroundImage` vào khung ảnh Polaroid trước khi vẽ cánh hoa rơi và thiếu nữ Áo Dài.
-- [ ] 4.3: Tối ưu hóa tải ảnh và tương thích chia sẻ ảnh trên Safari iOS (`navigator.share` hoặc fallback mở tab mới) và Cốc Cốc.
+- [x] 4.1: Tại `js/main.js` hàm `moveAnimate()`: bắt snapshot cây nở hoa hoàn mỹ lưu vào `window.bloomedTreeSnapshotDataUrl` và nạp vào đối tượng ảnh `window.bloomedTreeImage` trước khi chuyển sang `jumpAnimate()`.
+- [x] 4.2: Tái cấu trúc hàm `renderGardenPolaroidToCanvas` trong `js/garden-stages.js`: vẽ hình ảnh cây nở hoa từ `window.bloomedTreeImage` hoặc `canvas.parentNode.style.backgroundImage` vào khung ảnh Polaroid trước khi vẽ cánh hoa rơi và thiếu nữ Áo Dài.
+- [x] 4.3: Tối ưu hóa tải ảnh và tương thích chia sẻ ảnh trên Safari iOS (`navigator.share` hoặc fallback mở tab mới) và Cốc Cốc.
 
 #### Checkpoint 4: Sau Phase 4
-- [ ] Bấm nút 📸 "Lưu Khoảnh Khắc", bức ảnh Polaroid xuất hiện và ảnh tải về chứa trọn vẹn 100% cây hoa trái tim nở rực rỡ, không bị rỗng như trong ảnh lỗi.
-- [ ] Hoạt động trơn tru trên cả iPhone Safari, Cốc Cốc và Chrome Android.
+- [x] Bấm nút 📸 "Lưu Khoảnh Khắc", bức ảnh Polaroid xuất hiện và ảnh tải về chứa trọn vẹn 100% cây hoa trái tim nở rực rỡ, không bị rỗng như trong ảnh lỗi.
+- [x] Hoạt động trơn tru trên cả iPhone Safari, Cốc Cốc và Chrome Android.
 
 ---
 
