@@ -31,13 +31,13 @@
 ---
 
 ### Phase 3: Tái Cấu Trúc Minigame Stage 3 Nối Sao Theo Cung Hoàng Đạo (Dynamic Constellation Linker)
-- [ ] 3.1: Nâng cấp `startConstellationGame()` trong `js/garden-minigames.js`: đọc `window.getZodiacConstellation()` để nạp bộ sao thật (5–7 sao đánh số thứ tự) cùng 1–2 sao ảo decoys (cách xa $\ge 95\text{px}$) của đúng cung hoàng đạo người chơi.
-- [ ] 3.2: Tối ưu cảm ứng bắt dính ngón tay (`proximityRadius` $\ge 48\text{px}$ trên mobile) và hỗ trợ vẽ đường nối sao rực sáng nối tiếp mượt mà, hỗ trợ khép vòng kín cho các cung khép kín (Thiên Bình, Ma Kết, Nhân Mã).
-- [ ] 3.3: Tích hợp cơ chế bỏ qua cứu nguy (Graceful Skip Fallback): nếu thử sai quá 5 lần hoặc quá 40 giây, hiển thị nút `#constellation-skip-btn`; khi bấm skip sẽ tự động nối sao và vẫn kích hoạt trọn vẹn màn trình diễn 2 giây.
+- [x] 3.1: Nâng cấp `startConstellationGame()` trong `js/garden-minigames.js`: đọc `window.getZodiacConstellation()` để nạp bộ sao thật (5–7 sao đánh số thứ tự) cùng 1–2 sao ảo decoys (cách xa $\ge 95\text{px}$) của đúng cung hoàng đạo người chơi.
+- [x] 3.2: Tối ưu cảm ứng bắt dính ngón tay (`proximityRadius` $\ge 48\text{px}$ trên mobile) và hỗ trợ vẽ đường nối sao rực sáng nối tiếp mượt mà, hỗ trợ khép vòng kín cho các cung khép kín (Thiên Bình, Ma Kết, Nhân Mã).
+- [x] 3.3: Tích hợp cơ chế bỏ qua cứu nguy (Graceful Skip Fallback): nếu thử sai quá 5 lần hoặc quá 40 giây, hiển thị nút `#constellation-skip-btn`; khi bấm skip sẽ tự động nối sao và vẫn kích hoạt trọn vẹn màn trình diễn 2 giây.
 
 #### Checkpoint 3: Sau Phase 3
-- [ ] Thao tác kéo ngón tay nối sao trên điện thoại và chuột trên PC hoạt động trơn tru.
-- [ ] Nút Bỏ qua cứu nguy kích hoạt chính xác sau 5 lần sai hoặc 40s.
+- [x] Thao tác kéo ngón tay nối sao trên điện thoại và chuột trên PC hoạt động trơn tru.
+- [x] Nút Bỏ qua cứu nguy kích hoạt chính xác sau 5 lần sai hoặc 40s.
 
 ---
 

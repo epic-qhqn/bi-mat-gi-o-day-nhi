@@ -422,8 +422,11 @@
         for (let i = 0; i < starCoords.length; i++) {
             if (!constellationInput.includes(i)) {
                 connectStar(i);
-                await sleep(220);
+                await sleep(180);
             }
+        }
+        if (activeZodiacEdges) {
+            activeZodiacEdges.forEach(([from, to]) => drawConstellationSegment(from, to));
         }
     };
 
@@ -901,9 +904,11 @@
         removeConstellationHint();
 
         const guidePath = document.createElementNS('http://www.w3.org/2000/svg', 'path');
-        const d = (activeConstellationTopology && activeConstellationTopology.svgGuideD)
-            ? activeConstellationTopology.svgGuideD
-            : starCoords.reduce((acc, s, i) => acc + (i === 0 ? `M ${s.cx} ${s.cy} ` : `L ${s.cx} ${s.cy} `), '');
+        const d = (activeZodiacEdges && starCoords.length)
+            ? activeZodiacEdges.map(([from, to]) => (starCoords[from] && starCoords[to]) ? `M ${starCoords[from].cx} ${starCoords[from].cy} L ${starCoords[to].cx} ${starCoords[to].cy}` : '').join(' ')
+            : (activeConstellationTopology && activeConstellationTopology.svgGuideD)
+                ? activeConstellationTopology.svgGuideD
+                : starCoords.reduce((acc, s, i) => acc + (i === 0 ? `M ${s.cx} ${s.cy} ` : `L ${s.cx} ${s.cy} `), '');
 
         guidePath.setAttribute('d', d);
         guidePath.setAttribute('class', 'constellation-line');
@@ -918,9 +923,15 @@
         }, 7500);
     };
 
+    let drawnConstellationEdges = new Set();
+
     const drawConstellationSegment = (idx1, idx2) => {
         const linesGroup = document.getElementById('constellation-lines-group');
         if (!linesGroup || !starCoords[idx1] || !starCoords[idx2]) return;
+
+        const edgeKey = Math.min(idx1, idx2) + '-' + Math.max(idx1, idx2);
+        if (drawnConstellationEdges.has(edgeKey)) return;
+        drawnConstellationEdges.add(edgeKey);
 
         const p1 = starCoords[idx1];
         const p2 = starCoords[idx2];
@@ -1011,7 +1022,11 @@
         if (constellationInput.length === starCoords.length) {
             isDraggingConstellation = false;
             activeStarIndex = null;
-            if (activeZodiacClose && starCoords.length > 2) drawConstellationSegment(index, 0);
+            if (activeZodiacEdges) {
+                activeZodiacEdges.forEach(([from, to]) => drawConstellationSegment(from, to));
+            } else if (activeZodiacClose && starCoords.length > 2) {
+                drawConstellationSegment(index, 0);
+            }
             if (stage3SkipTimer) {
                 clearTimeout(stage3SkipTimer);
                 stage3SkipTimer = null;
@@ -1092,6 +1107,8 @@
 
     // Chòm sao của Cung Hoàng Đạo (nếu người chơi đã chọn ngày sinh): 5–7 sao đánh số, toạ độ px trên canvas 1100x680.
     let activeZodiacClose = false;
+    let activeZodiacEdges = null;
+    let activeZodiacSvgArt = '';
     const buildZodiacStarField = (zc) => {
         const stars = zc.pts.map(([cx, cy], i) => ({
             index: i, cx, cy, l: (cx / 1100) * 100, t: (cy / 680) * 100, label: i + 1
@@ -1150,6 +1167,7 @@
         }
 
         removeConstellationHint();
+        drawnConstellationEdges = new Set();
         container.querySelectorAll('.star-node').forEach(n => n.remove());
         const linesGroup = document.getElementById('constellation-lines-group');
         if (linesGroup) linesGroup.innerHTML = '';
@@ -1160,6 +1178,8 @@
         // Có Cung Hoàng Đạo -> nạp đúng chòm sao của cung; chưa chọn ngày sinh -> sao ngẫu nhiên như cũ
         const zodiacLayout = (typeof window.getZodiacConstellation === 'function') ? window.getZodiacConstellation() : null;
         activeZodiacClose = !!(zodiacLayout && zodiacLayout.close);
+        activeZodiacEdges = (zodiacLayout && zodiacLayout.edges) ? zodiacLayout.edges : null;
+        activeZodiacSvgArt = (zodiacLayout && zodiacLayout.svgPath) ? zodiacLayout.svgPath : '';
         const starField = zodiacLayout
             ? buildZodiacStarField(zodiacLayout)
             : generatePoissonStarField({
