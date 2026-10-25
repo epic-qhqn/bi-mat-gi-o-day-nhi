@@ -10468,9 +10468,9 @@ body.zen-mode-active .garden-stage-selector {
   /* Phase 5: Minigames Adaptation in Landscape */
   /* Stage 2: Simon Melody Nodes & Replay/Skip Action Controls */
   .simon-node {
-    width: 104px !important;
-    height: 104px !important;
-    font-size: 42px !important;
+    width: 88px !important;
+    height: 88px !important;
+    font-size: 34px !important;
     box-shadow: 0 6px 22px rgba(19, 28, 78, 0.22), 0 0 18px var(--note-color, rgba(212, 175, 55, 0.4)) !important;
   }
   .simon-node::after {

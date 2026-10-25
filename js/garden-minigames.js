@@ -210,22 +210,23 @@
         const isMobileLandscape = (typeof window !== 'undefined') &&
             (window.matchMedia ? window.matchMedia('(max-height: 540px) and (orientation: landscape)').matches : (window.innerWidth > window.innerHeight && window.innerHeight <= 540));
 
-        // Bilateral Thumb Zones (2 Trái - 2 Phải) trên mobile landscape:
-        // Trái: Nốt 0 (16%, 36%) & Nốt 1 (24%, 56%)
-        // Phải: Nốt 2 (76%, 56%) & Nốt 3 (84%, 36%)
-        // Giải phóng hoàn toàn 572px trung tâm cho mầm cây, không cản trở tầm nhìn
+        // Bilateral Thumb Zones (2 Trái - 2 Phải):
+        // Nốt 0 (14%, 45%) & Nốt 1 (23%, 63%) ở phía trái
+        // Nốt 2 (77%, 63%) & Nốt 3 (86%, 45%) ở phía phải
+        // Bố cục phân tách hoàn toàn khỏi khung thẻ hướng dẫn ở phía trên (top < 38%),
+        // đồng thời giải phóng trung tâm cho mầm cây vươn cành và nằm trọn trong tầm với ngón tay cái.
         const celestialArcSlots = isMobileLandscape
             ? [
-                { l: 16, t: 36 },
-                { l: 24, t: 56 },
-                { l: 76, t: 56 },
-                { l: 84, t: 36 }
+                { l: 14, t: 45 },
+                { l: 23, t: 63 },
+                { l: 77, t: 63 },
+                { l: 86, t: 45 }
             ]
             : [
-                { l: 20, t: 34 },
-                { l: 33, t: 48 },
-                { l: 67, t: 48 },
-                { l: 80, t: 34 }
+                { l: 15, t: 45 },
+                { l: 24, t: 63 },
+                { l: 76, t: 63 },
+                { l: 85, t: 45 }
             ];
 
         const noteIcons = ['🌸', '🎵', '✨', '🎶'];

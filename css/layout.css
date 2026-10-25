@@ -300,8 +300,25 @@ body.stage-3-active #terrarium-gesture-hint {
 
 body.stage-2-active .garden-ui,
 body.stage-3-active .garden-ui {
-  padding: 4px 12px !important;
-  max-width: min(270px, 44vw) !important;
+  padding: 3px 10px !important;
+  max-width: min(250px, 42vw) !important;
+}
+
+body.stage-2-active .growth-progress,
+body.stage-3-active .growth-progress {
+  margin: 1px 0 !important;
+}
+
+body.stage-2-active .growth-progress .step-node .node-label,
+body.stage-3-active .growth-progress .step-node .node-label {
+  font-size: 8.5px !important;
+}
+
+body.stage-2-active .growth-progress .step-node .node-icon,
+body.stage-3-active .growth-progress .step-node .node-icon {
+  width: 18px !important;
+  height: 18px !important;
+  font-size: 9.5px !important;
 }
 
 .garden-stage-selector {
