@@ -42,17 +42,17 @@
 ---
 
 ### Phase 4: Trình Diễn Toàn Cảnh Chòm Sao 2 Giây & Audio VFX (Grand 2-Second Celestial Reveal)
-- [ ] 4.1: Xây dựng container đồ họa `#zodiac-artwork-reveal`: khi hoàn thành nối sao (hoặc skip), hiển thị toàn cảnh hình tượng vector thần thoại phát sáng ngân hà (`filter: drop-shadow`) đè khớp lên cụm sao vừa nối kèm thẻ thông điệp thi vị.
-- [ ] 4.2: Xây dựng bộ đếm thời gian và biên đạo hoạt họa `triggerCelestialGrandReveal()`:
+- [x] 4.1: Xây dựng container đồ họa `#zodiac-artwork-reveal`: khi hoàn thành nối sao (hoặc skip), hiển thị toàn cảnh hình tượng vector thần thoại phát sáng ngân hà (`filter: drop-shadow`) đè khớp lên cụm sao vừa nối kèm thẻ thông điệp thi vị.
+- [x] 4.2: Xây dựng bộ đếm thời gian và biên đạo hoạt họa `triggerCelestialGrandReveal()`:
   - Khóa tương tác tạm thời để bảo vệ màn trình diễn (`isRevealingConstellation = true`).
   - Phát hiệu ứng `celestial-bloom` trong đúng 2000ms.
   - Sau 2000ms, mờ dần (`fade-out 400ms`), dọn dẹp DOM sạch sẽ và gọi `window.advanceStage(2)` kích hoạt cây nở hoa (Stage 4).
-- [ ] 4.3: Thiết kế âm thanh thiên thể kỳ ảo `playCelestialGrandRevealSFX()` trong `js/audio-vfx.js`: hợp âm ngũ cung Web Audio API ngân vang thanh khiết, tự động ducking 30% nhạc nền trong 2 giây.
-- [ ] 4.4: Tích hợp câu chúc mừng riêng biệt của Linh vật Mascot (`#mascot-companion`) tương ứng với tính cách của cung hoàng đạo đó trong 2 giây trình diễn.
+- [x] 4.3: Thiết kế âm thanh thiên thể kỳ ảo `playCelestialGrandRevealSFX()` trong `js/audio-vfx.js`: hợp âm ngũ cung Web Audio API ngân vang thanh khiết, tự động ducking 30% nhạc nền trong 2 giây.
+- [x] 4.4: Tích hợp câu chúc mừng riêng biệt của Linh vật Mascot (`#mascot-companion`) tương ứng với tính cách của cung hoàng đạo đó trong 2 giây trình diễn.
 
 #### Checkpoint 4: Sau Phase 4
-- [ ] Màn trình diễn toàn cảnh chòm sao hiển thị trọn vẹn đúng 2000ms với hiệu ứng ánh sáng và âm thanh thiên thể lung linh.
-- [ ] Tự động chuyển cảnh sang Stage 4 mượt mà, không bị khựng hay lỗi console.
+- [x] Màn trình diễn toàn cảnh chòm sao hiển thị trọn vẹn đúng 2000ms với hiệu ứng ánh sáng và âm thanh thiên thể lung linh.
+- [x] Tự động chuyển cảnh sang Stage 4 mượt mà, không bị khựng hay lỗi console.
 
 ---
 

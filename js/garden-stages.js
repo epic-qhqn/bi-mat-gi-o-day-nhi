@@ -122,6 +122,16 @@
                 if (linesGroup) linesGroup.innerHTML = '';
                 const previewLine = document.getElementById('constellation-preview-line');
                 if (previewLine) previewLine.style.display = 'none';
+                const artGroup = document.getElementById('constellation-artwork-group');
+                if (artGroup) {
+                    artGroup.classList.remove('celestial-reveal-active', 'celestial-reveal-exit');
+                    artGroup.innerHTML = '';
+                }
+                const celebCard = document.getElementById('constellation-celebration-card');
+                if (celebCard) {
+                    celebCard.classList.remove('visible', 'fade-out');
+                    celebCard.classList.add('hidden');
+                }
             }
             const constSkipBtn = document.getElementById('constellation-skip-btn');
             if (constSkipBtn) {

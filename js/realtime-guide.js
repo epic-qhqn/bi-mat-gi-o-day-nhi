@@ -375,6 +375,19 @@
                 };
             }
 
+            const celebCard = document.getElementById('constellation-celebration-card');
+            if (celebCard && celebCard.classList.contains('visible')) {
+                return {
+                    key: 'stage-3-celestial-reveal',
+                    stepTag: '✦ CHIÊM NGƯỠNG CHÒM SAO ✦',
+                    message: 'Chòm sao bừng sáng giữa ngân hà! Đang chuẩn bị đơm hoa kết trái... 🌟✨',
+                    icon: '🌌',
+                    targetSelector: null,
+                    pointerDirection: 'top',
+                    pointerText: ''
+                };
+            }
+
             const constellationGame = document.getElementById('constellation-game');
             let targetStar = null;
             if (constellationGame) {

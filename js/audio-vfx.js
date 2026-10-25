@@ -109,6 +109,54 @@ window.playChimeSFX = () => {
     });
 };
 
+window.playCelestialGrandRevealSFX = (out) => {
+    window.initAudio();
+    if (!window.audioCtx) return;
+    const dest = window.resolveSfxOutput ? window.resolveSfxOutput(out) : window.audioCtx.destination;
+    const ctx = window.audioCtx;
+    const now = ctx.currentTime;
+
+    // Pentatonic Starlight Ascending Arpeggio & Chord: F#5, A#5, C#6, F#6, G#6
+    const starlightFreqs = [739.99, 932.33, 1108.73, 1479.98, 1661.22];
+
+    starlightFreqs.forEach((freq, i) => {
+        const osc = ctx.createOscillator();
+        const gain = ctx.createGain();
+        const filter = ctx.createBiquadFilter();
+
+        osc.type = i % 2 === 0 ? 'sine' : 'triangle';
+        osc.frequency.setValueAtTime(freq, now + i * 0.08);
+
+        filter.type = 'lowpass';
+        filter.frequency.setValueAtTime(3200, now + i * 0.08);
+        filter.frequency.exponentialRampToValueAtTime(1200, now + i * 0.08 + 1.8);
+
+        gain.gain.setValueAtTime(0, now + i * 0.08);
+        gain.gain.linearRampToValueAtTime(0.18, now + i * 0.08 + 0.06);
+        gain.gain.exponentialRampToValueAtTime(0.001, now + i * 0.08 + 2.0);
+
+        osc.connect(filter);
+        filter.connect(gain);
+        gain.connect(dest);
+
+        osc.start(now + i * 0.08);
+        osc.stop(now + i * 0.08 + 2.1);
+    });
+
+    // Sub-bass ethereal cosmic wash for rich depth
+    const subOsc = ctx.createOscillator();
+    const subGain = ctx.createGain();
+    subOsc.type = 'sine';
+    subOsc.frequency.setValueAtTime(185.0, now);
+    subGain.gain.setValueAtTime(0, now);
+    subGain.gain.linearRampToValueAtTime(0.12, now + 0.15);
+    subGain.gain.exponentialRampToValueAtTime(0.001, now + 2.0);
+    subOsc.connect(subGain);
+    subGain.connect(dest);
+    subOsc.start(now);
+    subOsc.stop(now + 2.1);
+};
+
 window.playBubbleChimeSFX = (index = 0) => {
     window.initAudio();
     const freqs = [523.25, 587.33, 659.25, 783.99, 880.00, 1046.50, 1174.66, 1318.51]; // C5 to E6

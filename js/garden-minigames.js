@@ -428,6 +428,7 @@
         if (activeZodiacEdges) {
             activeZodiacEdges.forEach(([from, to]) => drawConstellationSegment(from, to));
         }
+        triggerCelestialGrandReveal();
     };
 
     const constellationArchetypes = [
@@ -1049,25 +1050,8 @@
             });
             activeDecoyElements = [];
 
-            const constName = activeConstellationName ? activeConstellationName.latinName : 'Định Mệnh';
-            const constSub = activeConstellationName ? ` (${activeConstellationName.subtitle})` : '';
-            const msg = document.getElementById('garden-message');
-            if (typeof window.triggerHaptic === 'function') window.triggerHaptic('success');
-            if (msg) msg.textContent = `Bầu trời rực sáng! Chòm sao ${constName}${constSub} đã nối liền ước nguyện 🌟✨`;
-            if (typeof window.playChimeSFX !== 'undefined') window.playChimeSFX();
-
-            const badge = document.getElementById('constellation-name-badge');
-            if (badge) {
-                badge.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
-                badge.style.opacity = '0';
-                badge.style.transform = 'translateX(-50%) translateY(-10px) scale(0.95)';
-            }
-
-            setTimeout(() => {
-                const gameContainer = document.getElementById('constellation-game');
-                if (gameContainer) gameContainer.classList.add('hidden');
-                if (typeof window.advanceStage === 'function') window.advanceStage(2);
-            }, 1200);
+            // Sub-phase 4: Grand 2-Second Celestial Reveal Showcase
+            triggerCelestialGrandReveal();
         }
     };
 
@@ -1103,6 +1087,87 @@
             const msg = document.getElementById('garden-message');
             if (msg) msg.textContent = `Hãy nối theo thứ tự từ ngôi sao 1 đến ${starCoords.length} nhé!`;
         }
+    };
+
+    let isRevealingConstellation = false;
+    let celestialRevealTimer = null;
+
+    const triggerCelestialGrandReveal = () => {
+        if (isRevealingConstellation) return;
+        isRevealingConstellation = true;
+
+        const zodiacLayout = (typeof window.getZodiacConstellation === 'function') ? window.getZodiacConstellation() : null;
+        const constName = activeConstellationName ? activeConstellationName.latinName : (zodiacLayout ? zodiacLayout.latin : 'Định Mệnh');
+        const constSub = activeConstellationName ? activeConstellationName.subtitle : (zodiacLayout ? `Cung ${zodiacLayout.name}` : '');
+        const constMeaning = (zodiacLayout && zodiacLayout.msg) ? zodiacLayout.msg : 'Nguyện ước ngàn năm gửi trao tinh tú.';
+
+        // 1. Audio FX: Grand Celestial Chord & Haptic Success
+        if (typeof window.triggerHaptic === 'function') window.triggerHaptic('success');
+        if (typeof window.playCelestialGrandRevealSFX === 'function') {
+            window.playCelestialGrandRevealSFX();
+        } else if (typeof window.playChimeSFX !== 'undefined') {
+            window.playChimeSFX();
+        }
+
+        // 2. Display the Mythological Vector Artwork on #constellation-artwork-group
+        const artGroup = document.getElementById('constellation-artwork-group');
+        if (artGroup && activeZodiacSvgArt) {
+            artGroup.innerHTML = activeZodiacSvgArt;
+            artGroup.classList.remove('celestial-reveal-exit');
+            artGroup.classList.add('celestial-reveal-active');
+        }
+
+        // 3. Display the Celestial Celebration Card
+        const card = document.getElementById('constellation-celebration-card');
+        if (card) {
+            const titleEl = card.querySelector('.celestial-title');
+            const meaningEl = card.querySelector('.celestial-meaning');
+            if (titleEl) titleEl.textContent = `✦ Chòm Sao ${constName} (${constSub}) ✦`;
+            if (meaningEl) meaningEl.textContent = `"${constMeaning}"`;
+            card.classList.remove('hidden', 'fade-out');
+            card.classList.add('visible');
+        }
+
+        // 4. Update Garden Status Message & Mascot Speech
+        const msg = document.getElementById('garden-message');
+        if (msg) msg.textContent = `Bầu trời rực sáng! Chòm sao ${constName} (${constSub}) bừng nở giữa ngân hà 🌟✨`;
+
+        if (typeof window.triggerMascotCelebrate === 'function') window.triggerMascotCelebrate();
+        if (typeof window.showMascotSpeech === 'function') {
+            window.showMascotSpeech(`Bầu trời bừng sáng! Chòm sao ${constName} thật uy nghiêm và rực rỡ! 🌟✨`, 3500);
+        }
+
+        // Fade out top badge to make space for celebration card
+        const badge = document.getElementById('constellation-name-badge');
+        if (badge) {
+            badge.style.transition = 'opacity 0.4s ease, transform 0.4s ease';
+            badge.style.opacity = '0';
+            badge.style.transform = 'translateX(-50%) translateY(-10px) scale(0.95)';
+        }
+
+        // 5. Grand Reveal Duration: Exactly 2000ms (2 seconds)
+        if (celestialRevealTimer) clearTimeout(celestialRevealTimer);
+        celestialRevealTimer = setTimeout(() => {
+            // Exit animation
+            if (artGroup) artGroup.classList.add('celestial-reveal-exit');
+            if (card) card.classList.add('fade-out');
+
+            setTimeout(() => {
+                if (artGroup) {
+                    artGroup.classList.remove('celestial-reveal-active', 'celestial-reveal-exit');
+                    artGroup.innerHTML = '';
+                }
+                if (card) {
+                    card.classList.remove('visible', 'fade-out');
+                    card.classList.add('hidden');
+                }
+                const gameContainer = document.getElementById('constellation-game');
+                if (gameContainer) gameContainer.classList.add('hidden');
+
+                isRevealingConstellation = false;
+                if (typeof window.advanceStage === 'function') window.advanceStage(2);
+            }, 450);
+        }, 2000);
     };
 
     // Chòm sao của Cung Hoàng Đạo (nếu người chơi đã chọn ngày sinh): 5–7 sao đánh số, toạ độ px trên canvas 1100x680.
@@ -1167,6 +1232,8 @@
         }
 
         removeConstellationHint();
+        if (celestialRevealTimer) clearTimeout(celestialRevealTimer);
+        isRevealingConstellation = false;
         drawnConstellationEdges = new Set();
         container.querySelectorAll('.star-node').forEach(n => n.remove());
         const linesGroup = document.getElementById('constellation-lines-group');
@@ -1284,6 +1351,7 @@
     window.playSimonSequence = playSimonSequence;
     window.startConstellationGame = startConstellationGame;
     window.skipConstellationGame = handleConstellationSkip;
+    window.triggerCelestialGrandReveal = triggerCelestialGrandReveal;
     window.getStage3FailCount = () => stage3FailCount;
     window.connectStar = connectStar;
     window.removeConstellationHint = removeConstellationHint;
