@@ -258,12 +258,19 @@
             const now = new Date();
             const fallbackKey = getZodiacKey(now.getMonth() + 1, now.getDate()) || 'libra';
             const sg = SIGNS[fallbackKey];
-            return {
+            const fallbackData = {
                 key: fallbackKey, name: sg.name, latin: sg.latin, symbol: sg.symbol, range: sg.range, msg: sg.msg,
                 close: sg.close, pts: sg.pts.map(p => [p[0], p[1]]),
                 edges: sg.edges ? sg.edges.map(e => [e[0], e[1]]) : null,
                 svgPath: sg.svgPath || '', isFallback: true
             };
+            if (window.gardenState && !window.gardenState.zodiac) {
+                window.gardenState.zodiac = {
+                    key: fallbackKey, name: sg.name, symbol: sg.symbol, latin: sg.latin,
+                    range: sg.range, msg: sg.msg, isFallback: true
+                };
+            }
+            return fallbackData;
         }
         const sg = SIGNS[z.key];
         return {
@@ -295,12 +302,14 @@
         const key = (m && d) ? getZodiacKey(m, d) : null;
         if (!key) {
             window.currentZodiac = null;
+            if (window.gardenState) window.gardenState.zodiac = null;
             if (resultEl) resultEl.classList.add('hidden');
             if (!m && !d) safe(() => localStorage.removeItem(STORE_KEY));
             return;
         }
         const sg = SIGNS[key];
         window.currentZodiac = { key, name: sg.name, symbol: sg.symbol, latin: sg.latin, day: d, month: m };
+        if (window.gardenState) window.gardenState.zodiac = window.currentZodiac;
         if (resultEl) {
             const sym = resultEl.querySelector('.zodiac-symbol');
             if (sym) sym.textContent = sg.symbol + '\uFE0E';

@@ -17,16 +17,16 @@
 ---
 
 ### Phase 2: Tối Ưu UX/UI Thẻ Ngày Sinh Tại Bàn Chế Tác Stage 0 (Heritage Birthday Atelier)
-- [ ] 2.1: Tinh chỉnh mỹ thuật `.zodiac-birth-card` trong `css/zodiac.css`: chuyển từ màu tím sang phong cách Giấy Dó ngà `#FAF7F0`, viền đồng mạ `#D4AF37`, cỡ chữ select 16px chống Safari tự zoom, touch target $\ge 44\text{px}$.
-- [ ] 2.2: Đồng bộ trạng thái vào `window.gardenState.zodiac` và `localStorage['epic.birthday']`; xây dựng cơ chế tự động gán cung hoàng đạo thi vị dự phòng nếu người chơi không nhập ngày sinh (không bắt buộc, không chặn dập sáp).
-- [ ] 2.3: Tối ưu hiển thị responsive đa chiều cho thẻ ngày sinh:
+- [x] 2.1: Tinh chỉnh mỹ thuật `.zodiac-birth-card` trong `css/zodiac.css`: chuyển từ màu tím sang phong cách Giấy Dó ngà `#FAF7F0`, viền đồng mạ `#D4AF37`, cỡ chữ select 16px chống Safari tự zoom, touch target $\ge 44\text{px}$.
+- [x] 2.2: Đồng bộ trạng thái vào `window.gardenState.zodiac` và `localStorage['epic.birthday']`; xây dựng cơ chế tự động gán cung hoàng đạo thi vị dự phòng nếu người chơi không nhập ngày sinh (không bắt buộc, không chặn dập sáp).
+- [x] 2.3: Tối ưu hiển thị responsive đa chiều cho thẻ ngày sinh:
   - Mobile Portrait: Căn giữa thanh thoát, không đẩy lệch khay sáp và bếp nến.
   - Mobile Landscape (cao $\le 540\text{px}$): Thu gọn tối đa $\le 60\text{px}$ trong cột trái bàn chế tác, cuộn mượt mà.
   - Desktop PC: Cân xứng, hài hòa tuyệt đối với vintage brass letterpress.
 
 #### Checkpoint 2: Sau Phase 2
-- [ ] Chọn ngày/tháng tra đúng 12 cung hoàng đạo và lưu state chuẩn xác.
-- [ ] Giao diện thẻ ngày sinh hòa quyện với Bàn chế tác dập sáp trên cả điện thoại (dọc/ngang) và PC.
+- [x] Chọn ngày/tháng tra đúng 12 cung hoàng đạo và lưu state chuẩn xác.
+- [x] Giao diện thẻ ngày sinh hòa quyện với Bàn chế tác dập sáp trên cả điện thoại (dọc/ngang) và PC.
 
 ---
 
