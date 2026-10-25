@@ -11453,3 +11453,102 @@ body.readable-font .polaroid-back .letter-content {
 }
 
 
+
+/* ==========================================================================
+   MỘC CẦM v2 — dùng img/dan.svg làm khung đàn (viewBox 500x600)
+   Toạ độ dây tính theo đơn vị SVG; --u = 1 đơn vị SVG tính bằng px.
+   Chỉnh kích thước đàn: đổi --harp-w (cao = 1.2 x rộng).
+   Chỉnh dây: sửa --xm/--ym (tâm dây), --len (dài), --dxh (nửa độ lệch ngang).
+   ========================================================================== */
+.plant-harp-strings-wrap {
+  --harp-w: 270px;
+  --u: calc(var(--harp-w) / 500);
+  --harp-tilt: -8deg; /* bằng độ nghiêng cột đàn: đáy dây lệch sang phải */
+  width: var(--harp-w);
+  height: calc(var(--harp-w) * 1.2);
+  justify-content: flex-start;
+}
+
+/* Khung đàn: nằm dưới, vừa khít vùng 500x600 */
+.harp-vine-frame-svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  user-select: none;
+  -webkit-user-drag: none;
+  filter: drop-shadow(0 6px 12px rgba(0, 0, 0, 0.25));
+}
+
+/* Badge ♫ Mộc Cầm giữ nguyên, đặt góc trên phải (vùng trống của SVG) */
+.harp-header-badge { top: 2px; right: 4px; z-index: 3; }
+
+/* Bảng dây phủ đúng bằng khung SVG, dây định vị tuyệt đối theo toạ độ SVG */
+.harp-strings-board {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  display: block;
+}
+.harp-string-wire {
+  position: absolute;
+  left: calc(var(--xm) * var(--u));
+  top: calc(var(--ym) * var(--u));
+  width: max(28px, calc(34 * var(--u)));
+  height: calc(var(--len) * var(--u) + 20px);
+  translate: -50% -50%;
+  padding: 0;
+  display: block;
+}
+/* Dây (đường vàng) nghiêng song song cột đàn */
+.harp-string-line {
+  transform: translateX(-50%) rotate(var(--harp-tilt));
+  transform-origin: 50% 50%;
+}
+.harp-string-wire.plucked .harp-string-line {
+  animation-name: harp-string-vibrate-tilt;
+}
+@keyframes harp-string-vibrate-tilt {
+  0%   { transform: translateX(-50%) rotate(var(--harp-tilt)) scaleX(1); }
+  15%  { transform: translateX(calc(-50% + 5px)) rotate(var(--harp-tilt)) scaleX(2.2); }
+  30%  { transform: translateX(calc(-50% - 4px)) rotate(var(--harp-tilt)) scaleX(1.8); }
+  50%  { transform: translateX(calc(-50% + 2.5px)) rotate(var(--harp-tilt)) scaleX(1.4); }
+  70%  { transform: translateX(calc(-50% - 1.2px)) rotate(var(--harp-tilt)) scaleX(1.15); }
+  85%  { transform: translateX(calc(-50% + 0.6px)) rotate(var(--harp-tilt)) scaleX(1.05); }
+  100% { transform: translateX(-50%) rotate(var(--harp-tilt)) scaleX(1); }
+}
+/* Tên nốt nằm ngay dưới đầu dây (trên thùng đàn), theo độ lệch của dây */
+.harp-note-name {
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  margin: 0;
+  translate: calc(-50% + var(--dxh) * var(--u)) -4px;
+}
+
+/* 5 dây: đầu trên ở hàng chốt trên cần đàn, đầu dưới chạm mép thùng đàn */
+.harp-string-wire[data-string-index="0"] { --xm: 209.2; --ym: 297.1; --len: 276.9; --dxh: 19.2; }
+.harp-string-wire[data-string-index="1"] { --xm: 240.7; --ym: 260.1; --len: 225.8; --dxh: 15.7; }
+.harp-string-wire[data-string-index="2"] { --xm: 272.1; --ym: 223.1; --len: 174.6; --dxh: 12.1; }
+.harp-string-wire[data-string-index="3"] { --xm: 303.6; --ym: 186.1; --len: 123.5; --dxh: 8.6; }
+.harp-string-wire[data-string-index="4"] { --xm: 335.0; --ym: 149.1; --len: 72.3;  --dxh: 5.0; }
+
+@media (max-width: 768px) {
+  .plant-harp-strings-wrap {
+    --harp-w: 210px;
+    width: var(--harp-w) !important;
+    height: calc(var(--harp-w) * 1.2) !important;
+    transform: scale(0.85) !important;
+    transform-origin: bottom right !important;
+  }
+  .harp-string-wire { width: 28px; }
+}
+@media (max-height: 540px) and (orientation: landscape) {
+  .plant-harp-strings-wrap {
+    --harp-w: 150px;
+    width: var(--harp-w) !important;
+    height: calc(var(--harp-w) * 1.2) !important;
+  }
+}

@@ -114,15 +114,18 @@
                 ? cachedWireRects
                 : harpStringWires.map(w => w.getBoundingClientRect());
 
+            // Hit boxes of adjacent (tilted) strings can overlap: choose the nearest centre.
+            let hit = -1, best = Infinity;
             for (let i = 0; i < harpStringWires.length; i++) {
                 const rect = rects[i];
                 if (rect && x >= rect.left && x <= rect.right && y >= rect.top && y <= rect.bottom) {
-                    if (i !== lastSwipedIndex) {
-                        lastSwipedIndex = i;
-                        pluckHarpStringByIndex(i, x, y);
-                    }
-                    return;
+                    const d = Math.abs(x - (rect.left + rect.right) / 2);
+                    if (d < best) { best = d; hit = i; }
                 }
+            }
+            if (hit !== -1 && hit !== lastSwipedIndex) {
+                lastSwipedIndex = hit;
+                pluckHarpStringByIndex(hit, x, y);
             }
         };
 
