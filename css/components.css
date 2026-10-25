@@ -1408,6 +1408,20 @@ body.sky-dusk .dusk-glow {
 /* ==========================================================================
    PHASE 2: THE FLORAL WAX SEAL & LETTERPRESS ATELIER
    ========================================================================== */
+
+/* Phase 2: Suppress Realtime Guide HUD while any modal or atelier desk is active to prevent header collisions */
+body:has(#name-modal:not(.hidden)) .realtime-guide-hud,
+body:has(#time-lock-modal:not(.hidden)) .realtime-guide-hud,
+body:has(#boarding-pass-modal:not(.hidden)) .realtime-guide-hud,
+body:has(#secret-letter-modal:not(.hidden)) .realtime-guide-hud,
+body:has(#experience-guide-modal:not(.hidden)) .realtime-guide-hud,
+body:has(#rotate-device-overlay:not(.hidden)) .realtime-guide-hud {
+  display: none !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
+  visibility: hidden !important;
+}
+
 .atelier-stationery-desk {
   width: 100%;
   max-width: 520px;
@@ -1416,14 +1430,17 @@ body.sky-dusk .dusk-glow {
   align-items: center;
   box-sizing: border-box;
   perspective: 1200px;
+  margin: auto !important;
 }
 
 .atelier-paper-card,
 .luminous-portal {
   width: min(510px, 94vw);
-  max-height: 92vh !important;
+  max-height: min(92dvh, 92vh, 880px) !important;
   overflow-y: auto !important;
   overflow-x: hidden !important;
+  -webkit-overflow-scrolling: touch !important;
+  margin: auto !important;
   background: #FAF8F5 !important;
   background-image: radial-gradient(rgba(200, 185, 160, 0.15) 1px, transparent 1px);
   background-size: 14px 14px;
@@ -3541,63 +3558,224 @@ body.sky-night .wax-seal-guide-tip {
   color: #C8D1EC;
 }
 
-/* Mobile & Tablet Responsive Adjustments */
-/* Mobile & Tablet Responsive Adjustments */
+/* Mobile & Tablet Responsive Adjustments (Phase 2 Atelier Desk) */
 @media (max-width: 520px) {
   .atelier-paper-card {
-    padding: 20px 14px 16px 14px !important;
+    padding: 16px 14px 14px 14px !important;
+    max-height: min(92dvh, 92vh, 860px) !important;
+    margin: auto !important;
+    border-radius: 20px !important;
   }
+
+  .botanical-sprig-wrap .pressed-botanical-branch {
+    width: 90px !important;
+    height: 26px !important;
+  }
+
+  .atelier-header h2 {
+    font-size: clamp(15px, 4.4vw, 19px) !important;
+    margin: 2px 0 4px 0 !important;
+    letter-spacing: 0.8px !important;
+  }
+
+  .atelier-header p {
+    font-size: 11.5px !important;
+    line-height: 1.35 !important;
+    margin: 0 0 10px 0 !important;
+  }
+
+  .letterpress-brass-plate {
+    margin-bottom: 10px !important;
+    padding: 10px 10px 8px 10px !important;
+    border-radius: 14px !important;
+  }
+
+  .atelier-input {
+    height: 44px !important;
+    font-size: 16px !important; /* Prevents iOS Safari auto-zoom on input tap */
+    scroll-margin-top: 24px;
+  }
+
+  .gift-link-action-bar {
+    margin-bottom: 8px !important;
+  }
+
+  .gift-share-link-btn {
+    min-height: 38px !important;
+    font-size: 11px !important;
+  }
+
   .ritual-step-bar {
-    padding: 5px 8px;
-    gap: 4px;
+    padding: 6px 10px !important;
+    gap: 4px !important;
+    margin: 4px 0 8px 0 !important;
   }
+
   .step-dot {
-    font-size: 10.5px;
-    padding: 3px 5px;
+    font-size: 10.5px !important;
+    padding: 4px 6px !important;
+    min-height: 32px !important;
   }
+
   .step-dot i {
-    font-size: 10px;
-    display: inline;
+    font-size: 10px !important;
+    display: inline !important;
   }
+
   .wax-beads-tray {
-    padding: 10px 10px;
+    padding: 8px 10px !important;
+    margin-bottom: 8px !important;
+    border-radius: 12px !important;
   }
+
+  .beads-container {
+    gap: 6px !important;
+    justify-content: space-around !important;
+  }
+
+  .wax-bead-item {
+    min-width: 48px !important;
+    min-height: 48px !important;
+    padding: 4px 2px !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: center !important;
+  }
+
   .hex-bead-shape {
-    width: 32px;
-    height: 32px;
+    width: 34px !important;
+    height: 34px !important;
   }
+
   .bead-label {
-    font-size: 10px;
+    font-size: 10px !important;
+    margin-top: 2px !important;
   }
+
+  .crest-selector-wrap {
+    margin-top: 4px !important;
+    padding: 6px 8px !important;
+    border-radius: 10px !important;
+  }
+
   .crest-options-row {
-    grid-template-columns: repeat(2, 1fr);
-    gap: 6px;
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 6px !important;
   }
+
   .crest-opt-btn {
-    min-height: 36px;
-    font-size: 11.5px;
-    padding: 5px 8px;
+    min-height: 44px !important;
+    font-size: 12px !important;
+    padding: 6px 8px !important;
   }
+
   .artisan-crafting-bench {
-    gap: 8px;
-    padding: 8px;
+    gap: 8px !important;
+    padding: 8px 6px !important;
   }
+
   .hearth-burner-unit,
   .wax-seal-workspace {
-    padding: 8px 6px;
+    padding: 8px 6px !important;
   }
+
+  .match-striker-strip {
+    min-height: 44px !important;
+    padding: 6px 10px !important;
+    box-sizing: border-box !important;
+  }
+
+  .artisan-matchstick {
+    position: relative !important;
+  }
+
+  .artisan-matchstick::before {
+    content: '';
+    position: absolute;
+    inset: -14px -14px;
+    min-width: 48px;
+    min-height: 48px;
+  }
+
+  .artisan-candle {
+    min-width: 48px !important;
+    min-height: 48px !important;
+    margin: 2px auto 8px auto !important;
+  }
+
+  .brass-spoon {
+    min-width: 48px !important;
+    min-height: 48px !important;
+  }
+
+  .glass-stirring-rod::before {
+    content: '';
+    position: absolute;
+    inset: -10px -16px;
+    min-width: 48px;
+    min-height: 52px;
+  }
+
   .wax-target-zone {
-    width: 74px;
-    height: 74px;
+    width: 76px !important;
+    height: 76px !important;
+  }
+
+  .wax-seal-stamp {
+    width: 52px !important;
+    height: 74px !important;
+    position: relative !important;
+  }
+
+  .wax-seal-stamp::before {
+    content: '';
+    position: absolute;
+    inset: -10px -10px;
+    min-width: 48px;
+    min-height: 48px;
+  }
+
+  .artisan-sprinkle-vial {
+    min-height: 44px !important;
+    padding: 6px 12px !important;
+    font-size: 11px !important;
+  }
+
+  .atelier-seal-btn {
+    min-height: 46px !important;
+    font-size: 14px !important;
+    padding: 10px 16px !important;
+    width: 100% !important;
+    border-radius: 12px !important;
+    margin-top: 8px !important;
+  }
+
+  .wax-seal-guide-tip {
+    font-size: 11px !important;
+    line-height: 1.35 !important;
+    margin-top: 4px !important;
   }
 }
 
 @media (max-width: 360px) {
-  .artisan-crafting-bench {
-    grid-template-columns: 1fr;
+  .atelier-paper-card {
+    padding: 12px 10px 12px 10px !important;
   }
+
+  .artisan-crafting-bench {
+    grid-template-columns: 1fr !important;
+    gap: 8px !important;
+  }
+
   .step-dot {
-    font-size: 9.5px;
+    font-size: 9.5px !important;
+    padding: 3px 4px !important;
+  }
+
+  .hex-bead-shape {
+    width: 30px !important;
+    height: 30px !important;
   }
 }
 
@@ -7296,8 +7474,8 @@ body.sky-night .found-letter-slot.filled {
   }
 
   .strip-frames-grid {
-    grid-template-columns: 1fr;
-    gap: 8px;
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 8px !important;
   }
 
   .strip-frame {
@@ -7323,38 +7501,89 @@ body.sky-night .found-letter-slot.filled {
   }
 
   .ticket-actions-bar {
-    padding: 10px 14px max(14px, env(safe-area-inset-bottom, 14px));
-    gap: 8px;
+    display: flex !important;
+    flex-direction: row !important;
+    flex-wrap: nowrap !important;
+    overflow-x: auto !important;
+    -webkit-overflow-scrolling: touch !important;
+    scrollbar-width: none !important;
+    padding: 8px 12px max(12px, env(safe-area-inset-bottom, 12px)) !important;
+    gap: 8px !important;
+    background: rgba(255, 255, 255, 0.96) !important;
+    backdrop-filter: blur(10px) !important;
+    -webkit-backdrop-filter: blur(10px) !important;
+    border-top: 1px solid rgba(212, 175, 55, 0.25) !important;
+    position: sticky !important;
+    bottom: 0 !important;
+    z-index: 20 !important;
+  }
+
+  .ticket-actions-bar::-webkit-scrollbar {
+    display: none !important;
   }
 
   .ticket-action-btn {
-    flex: 1 1 100%;
-    justify-content: center;
-    padding: 11px 16px;
-    font-size: 13px;
+    flex: 1 0 auto !important;
+    white-space: nowrap !important;
+    justify-content: center !important;
+    padding: 10px 14px !important;
+    font-size: 12.5px !important;
+    min-height: 44px !important;
   }
 
   .open-boarding-pass-btn {
     padding: 7px 14px;
     font-size: 12px;
   }
+
+  /* 3D Flower Quiz in Mobile Portrait */
+  .secret-letter-dialog--quiz {
+    max-width: 96vw !important;
+    width: 96vw !important;
+  }
+
+  .secret-letter-dialog--quiz .polaroid {
+    width: 100% !important;
+    height: min(720px, calc(100dvh - 80px)) !important;
+    max-height: calc(100dvh - 80px) !important;
+    padding: 10px 10px 14px !important;
+  }
+
+  .secret-letter-dialog--quiz .polaroid-back {
+    padding: 12px 10px !important;
+  }
+
+  .flower-quiz {
+    padding: 4px 6px 10px !important;
+    -webkit-overflow-scrolling: touch !important;
+    overscroll-behavior: contain !important;
+  }
+
+  .flower-quiz__option {
+    min-height: 48px !important;
+    font-size: 14px !important;
+    padding: 11px 14px !important;
+  }
 }
 
 /* Mobile Landscape Optimization for Modals & Atelier (Phase 3 2-Column Split Workbench) */
 @media (max-height: 540px) and (orientation: landscape) {
   .modal-overlay {
-    align-items: center !important;
+    align-items: flex-start !important;
     justify-content: center !important;
+    overflow-y: auto !important;
+    -webkit-overflow-scrolling: touch !important;
     padding: calc(6px + var(--sat, 4px)) calc(12px + var(--sar, 8px)) calc(6px + var(--sab, 4px)) calc(12px + var(--sal, 8px)) !important;
   }
 
   /* 1. Time Lock Gateway Modal (2-Column Horizontal Split) */
   .time-lock-panel {
     width: min(720px, 94vw) !important;
-    max-height: min(92vh, 360px) !important;
-    padding: 16px 24px !important;
-    border-radius: 20px !important;
+    max-height: min(92dvh, 92vh, 360px) !important;
+    padding: 14px 20px !important;
+    border-radius: 18px !important;
     overflow-y: auto !important;
+    -webkit-overflow-scrolling: touch !important;
     margin: auto !important;
   }
 
@@ -7413,8 +7642,9 @@ body.sky-night .found-letter-slot.filled {
 
   .time-lock-col-right .time-lock-input {
     height: 40px !important;
-    font-size: 13px !important;
+    font-size: 16px !important; /* Prevents iOS Safari auto-zoom on input tap */
     padding: 0 12px !important;
+    scroll-margin-top: 16px;
   }
 
   .time-lock-col-right .time-lock-btn {
@@ -7437,11 +7667,12 @@ body.sky-night .found-letter-slot.filled {
 
   .atelier-paper-card {
     width: min(840px, 96vw) !important;
-    max-height: 94vh !important;
+    max-height: min(94dvh, 94vh, 370px) !important;
     padding: 8px 18px 10px 18px !important;
-    margin: 0 auto !important;
+    margin: auto !important;
     border-radius: 18px !important;
     overflow-y: auto !important;
+    -webkit-overflow-scrolling: touch !important;
   }
 
   .botanical-sprig-wrap {
@@ -7504,9 +7735,10 @@ body.sky-night .found-letter-slot.filled {
   }
 
   .atelier-input {
-    height: 34px !important;
-    font-size: 12.5px !important;
+    height: 38px !important;
+    font-size: 16px !important; /* Prevents iOS Safari auto-zoom on input tap */
     padding: 0 10px !important;
+    scroll-margin-top: 16px;
   }
 
   .emboss-preview-wrap {
@@ -7523,6 +7755,7 @@ body.sky-night .found-letter-slot.filled {
     padding: 4px 10px !important;
     font-size: 10.5px !important;
     gap: 4px !important;
+    min-height: 32px !important;
   }
 
   .wax-beads-tray {
@@ -7547,6 +7780,7 @@ body.sky-night .found-letter-slot.filled {
   .tray-reset-btn {
     font-size: 9.5px !important;
     padding: 2px 6px !important;
+    min-height: 28px !important;
   }
 
   .beads-container {
@@ -7557,6 +7791,12 @@ body.sky-night .found-letter-slot.filled {
   .wax-bead-item {
     padding: 2px 3px !important;
     gap: 2px !important;
+    min-width: 44px !important;
+    min-height: 44px !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: center !important;
   }
 
   .hex-bead-shape {
@@ -7589,8 +7829,9 @@ body.sky-night .found-letter-slot.filled {
   }
 
   .crest-opt-btn {
-    padding: 3px 4px !important;
+    padding: 4px 6px !important;
     font-size: 9.5px !important;
+    min-height: 38px !important;
     gap: 2px !important;
   }
 
@@ -7612,6 +7853,7 @@ body.sky-night .found-letter-slot.filled {
     gap: 3px !important;
     padding: 2px 5px !important;
     font-size: 9px !important;
+    min-height: 26px !important;
   }
 
   .ritual-step-bar .step-dot-icon {
@@ -7654,8 +7896,24 @@ body.sky-night .found-letter-slot.filled {
   }
 
   .match-striker-strip {
-    padding: 2px 6px !important;
+    padding: 4px 8px !important;
     font-size: 9.5px !important;
+    min-height: 38px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+  }
+
+  .artisan-matchstick {
+    position: relative !important;
+  }
+
+  .artisan-matchstick::before {
+    content: '';
+    position: absolute;
+    inset: -10px -10px;
+    min-width: 44px;
+    min-height: 44px;
   }
 
   .hearth-burner-stage {
@@ -7664,6 +7922,8 @@ body.sky-night .found-letter-slot.filled {
 
   .artisan-candle {
     height: 40px !important;
+    min-width: 44px !important;
+    min-height: 44px !important;
   }
 
   .candle-body {
@@ -7673,11 +7933,21 @@ body.sky-night .found-letter-slot.filled {
 
   .brass-melting-spoon {
     top: -4px !important;
+    min-width: 44px !important;
+    min-height: 44px !important;
   }
 
   .spoon-bowl {
     width: 32px !important;
     height: 32px !important;
+  }
+
+  .glass-stirring-rod::before {
+    content: '';
+    position: absolute;
+    inset: -8px -12px;
+    min-width: 44px;
+    min-height: 48px;
   }
 
   .envelope-sealing-bench {
@@ -7695,8 +7965,8 @@ body.sky-night .found-letter-slot.filled {
   }
 
   .wax-target-zone {
-    width: 54px !important;
-    height: 54px !important;
+    width: 58px !important;
+    height: 58px !important;
   }
 
   .poured-wax-puddle {
@@ -7705,10 +7975,19 @@ body.sky-night .found-letter-slot.filled {
   }
 
   .wax-seal-stamp {
-    width: 44px !important;
-    height: 54px !important;
+    width: 46px !important;
+    height: 56px !important;
     top: -6px !important;
     right: -2px !important;
+    position: relative !important;
+  }
+
+  .wax-seal-stamp::before {
+    content: '';
+    position: absolute;
+    inset: -8px -8px;
+    min-width: 48px;
+    min-height: 48px;
   }
 
   .stamp-3d-wrap {
@@ -7731,14 +8010,16 @@ body.sky-night .found-letter-slot.filled {
   }
 
   .artisan-sprinkle-vial {
-    padding: 2px 6px !important;
-    font-size: 9.5px !important;
+    padding: 4px 8px !important;
+    font-size: 10px !important;
+    min-height: 36px !important;
     margin-top: 2px !important;
   }
 
   .atelier-seal-btn {
-    padding: 7px 14px !important;
-    font-size: 12px !important;
+    padding: 8px 14px !important;
+    font-size: 12.5px !important;
+    min-height: 40px !important;
     border-radius: 9px !important;
     max-width: 100% !important;
     margin: 2px 0 0 0 !important;
@@ -7816,6 +8097,94 @@ body.sky-night .found-letter-slot.filled {
     font-size: 9.5px !important;
     padding: 2px 7px !important;
     margin-top: 2px !important;
+  }
+
+  /* Realtime Guide HUD in Mobile Landscape: Compact Jewel Icon docked to Top-Left Safe Area */
+  .realtime-guide-hud {
+    top: max(8px, calc(4px + var(--sat, 0px))) !important;
+    left: max(14px, calc(10px + var(--sal, 0px))) !important;
+    right: auto !important;
+    transform: none !important;
+    max-width: none !important;
+    z-index: 10005 !important;
+  }
+
+  .realtime-guide-pill {
+    width: 40px !important;
+    height: 40px !important;
+    min-height: 40px !important;
+    padding: 0 !important;
+    border-radius: 50% !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    box-shadow: 0 4px 14px rgba(19, 28, 78, 0.2), 0 0 12px rgba(212, 175, 55, 0.45) !important;
+    border: 1.5px solid #D4AF37 !important;
+    background: rgba(250, 247, 240, 0.95) !important;
+    transition: transform 0.25s ease, box-shadow 0.25s ease !important;
+  }
+
+  body.sky-night .realtime-guide-pill {
+    background: rgba(20, 28, 48, 0.95) !important;
+    border-color: rgba(212, 175, 55, 0.8) !important;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.6), 0 0 14px rgba(212, 175, 55, 0.5) !important;
+  }
+
+  .realtime-guide-icon {
+    font-size: 19px !important;
+    margin: 0 !important;
+  }
+
+  .realtime-guide-step-tag,
+  .realtime-guide-toggle-btn {
+    display: none !important;
+  }
+
+  /* Default state in mobile landscape: text bubble is collapsed inside the jewel */
+  .realtime-guide-hud:not(.is-expanded-hint) .realtime-guide-text-group {
+    display: none !important;
+  }
+
+  /* Expanded state on tap: Poetic Hint Bubble floats beside the jewel icon */
+  .realtime-guide-hud.is-expanded-hint .realtime-guide-text-group {
+    display: flex !important;
+    position: absolute !important;
+    left: 48px !important;
+    top: 50% !important;
+    transform: translateY(-50%) !important;
+    background: rgba(250, 247, 240, 0.97) !important;
+    backdrop-filter: blur(14px) !important;
+    -webkit-backdrop-filter: blur(14px) !important;
+    border: 1.5px solid #D4AF37 !important;
+    border-radius: 14px !important;
+    padding: 8px 14px !important;
+    box-shadow: 0 8px 24px rgba(19, 28, 78, 0.28), 0 0 14px rgba(212, 175, 55, 0.3) !important;
+    white-space: normal !important;
+    max-width: min(280px, 46vw) !important;
+    min-width: 180px !important;
+    z-index: 10006 !important;
+    animation: guide-bubble-pop 0.3s cubic-bezier(0.16, 1, 0.3, 1) !important;
+  }
+
+  body.sky-night .realtime-guide-hud.is-expanded-hint .realtime-guide-text-group {
+    background: rgba(20, 28, 48, 0.97) !important;
+    border-color: rgba(212, 175, 55, 0.8) !important;
+  }
+
+  .realtime-guide-hud.is-expanded-hint .realtime-guide-msg {
+    white-space: normal !important;
+    font-size: 11.5px !important;
+    line-height: 1.4 !important;
+    color: #131C4E !important;
+  }
+
+  body.sky-night .realtime-guide-hud.is-expanded-hint .realtime-guide-msg {
+    color: #FFFDF5 !important;
+  }
+
+  @keyframes guide-bubble-pop {
+    from { opacity: 0; transform: translateY(-50%) scale(0.92); }
+    to { opacity: 1; transform: translateY(-50%) scale(1); }
   }
 }
 
@@ -8121,6 +8490,9 @@ body.sky-night .hint-bubble-text {
   overflow-y: auto;
   overflow-x: hidden;
   flex: 1 1 auto;
+  min-height: 0;
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior: contain;
   scrollbar-width: thin;
   scrollbar-color: rgba(212, 175, 55, 0.5) rgba(0, 0, 0, 0.04);
 }
@@ -8412,16 +8784,21 @@ body.sky-night .hint-bubble-text {
     margin: 0 !important;
   }
   .guide-close-btn {
-    top: 10px !important;
-    right: 10px !important;
+    top: max(10px, env(safe-area-inset-top)) !important;
+    right: max(10px, env(safe-area-inset-right)) !important;
+    width: 36px !important;
+    height: 36px !important;
   }
   .guide-dialog {
-    width: 96vw;
-    max-height: 90vh;
-    border-radius: 20px;
+    width: min(94vw, 540px) !important;
+    max-height: min(88dvh, 88vh, 760px) !important;
+    border-radius: 20px !important;
+    display: flex !important;
+    flex-direction: column !important;
   }
   .guide-header {
     padding: 18px 16px 10px 16px;
+    flex-shrink: 0 !important;
   }
   .guide-title {
     font-size: 17px;
@@ -8432,6 +8809,7 @@ body.sky-night .hint-bubble-text {
   .guide-tabs-bar {
     padding: 8px 12px;
     gap: 6px;
+    flex-shrink: 0 !important;
   }
   .guide-tab-btn {
     padding: 6px 12px;
@@ -8439,6 +8817,10 @@ body.sky-night .hint-bubble-text {
   }
   .guide-body-scroll {
     padding: 14px 14px;
+    flex: 1 1 auto !important;
+    min-height: 0 !important;
+    overflow-y: auto !important;
+    -webkit-overflow-scrolling: touch !important;
   }
   .guide-step-card {
     flex-direction: column;
@@ -8464,7 +8846,8 @@ body.sky-night .hint-bubble-text {
     grid-template-columns: 1fr;
   }
   .guide-footer {
-    padding: 12px 16px 16px 16px;
+    padding: 12px 16px max(14px, env(safe-area-inset-bottom)) 16px !important;
+    flex-shrink: 0 !important;
   }
   .guide-acknowledge-btn {
     width: 100%;
@@ -8883,7 +9266,7 @@ body.sky-night .pointer-action-badge {
 }
 
 /* Mobile Adjustments for Real-time HUD & Minigame Touch Targets */
-@media (max-width: 768px) {
+@media (max-width: 768px) and (orientation: portrait) {
   .realtime-guide-hud {
     top: calc(8px + var(--sat, 4px)) !important;
     left: 50% !important;
@@ -9115,11 +9498,12 @@ body.sky-night .pointer-action-badge {
   align-items: center;
   gap: 10px;
   width: 100%;
-  padding: 10px 12px;
+  min-height: 48px;
+  padding: 11px 14px;
   text-align: left;
   font: inherit;
-  font-size: 13px;
-  line-height: 1.35;
+  font-size: 14px;
+  line-height: 1.4;
   color: var(--fq-ink);
   background: #fff;
   border: 1.5px solid var(--fq-line);
@@ -9330,39 +9714,45 @@ body.sky-night .pointer-action-badge {
 }
 
 /* =========================================================================
-   FORCE-LANDSCAPE OVERLAY (mobile portrait only)
-   Shown ONLY on touch-first phones held in portrait; hidden automatically the
-   moment the viewport becomes landscape (no JS needed for show/hide).
+   DUAL-ORIENTATION ADAPTIVE GUIDE OVERLAY
+   Mobile only; dynamically adapted with zero spoilers, Vietnamese heritage
+   Dó paper ivory & gold leaf aesthetics, and graceful user bypass support.
    ========================================================================= */
 .rotate-device-overlay {
   display: none;
 }
 
-@media (orientation: portrait) and (hover: none) and (pointer: coarse) and (max-width: 820px) {
-  .rotate-device-overlay {
-    position: fixed;
-    inset: 0;
-    z-index: 2147483000;           /* above every modal, HUD and spotlight */
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    background: radial-gradient(ellipse at 50% 35%, rgba(35, 22, 28, 0.98) 0%, rgba(18, 12, 16, 0.99) 70%, #0d090d 100%);
-    backdrop-filter: blur(14px);
-    -webkit-backdrop-filter: blur(14px);
-    color: #FAF7F0;
-    padding: max(20px, env(safe-area-inset-top, 20px)) max(18px, env(safe-area-inset-right, 18px)) max(20px, env(safe-area-inset-bottom, 20px)) max(18px, env(safe-area-inset-left, 18px));
-    touch-action: none;            /* swallow scroll / pinch gestures */
-    overscroll-behavior: contain;
-    user-select: none;
-    -webkit-user-select: none;
-    pointer-events: auto;          /* blocks every tap reaching the app below */
-    overflow: hidden;
-  }
-  html.is-portrait-blocked,
-  html.is-portrait-blocked body {
-    overflow: hidden !important;
-  }
+.rotate-device-overlay.is-active,
+html.is-orientation-blocked .rotate-device-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 2147483000;           /* above every modal, HUD and spotlight */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: radial-gradient(ellipse at 50% 36%, rgba(30, 22, 28, 0.96) 0%, rgba(18, 14, 20, 0.98) 70%, #0c090c 100%);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  color: #FAF7F0;
+  padding: max(20px, env(safe-area-inset-top, 20px)) max(18px, env(safe-area-inset-right, 18px)) max(20px, env(safe-area-inset-bottom, 20px)) max(18px, env(safe-area-inset-left, 18px));
+  touch-action: none;
+  overscroll-behavior: contain;
+  user-select: none;
+  -webkit-user-select: none;
+  pointer-events: auto;
+  overflow: hidden;
+}
+
+/* User chose to bypass orientation lock: instantly hide overlay */
+html.orientation-bypassed .rotate-device-overlay {
+  display: none !important;
+  pointer-events: none !important;
+}
+
+html.is-orientation-blocked,
+html.is-orientation-blocked body {
+  overflow: hidden !important;
 }
 
 /* Atmospheric floating mist & subtle drifting petals */
@@ -9404,11 +9794,11 @@ body.sky-night .pointer-action-badge {
   position: relative;
   z-index: 2;
   width: min(340px, 88vw);
-  background: linear-gradient(165deg, rgba(250, 247, 240, 0.08) 0%, rgba(250, 247, 240, 0.03) 100%);
-  border: 1px solid rgba(212, 175, 55, 0.38);
-  border-radius: 16px;
-  padding: 30px 22px 26px;
-  box-shadow: 0 24px 60px -12px rgba(0, 0, 0, 0.75), 0 0 28px rgba(212, 122, 136, 0.16);
+  background: linear-gradient(165deg, rgba(250, 247, 240, 0.12) 0%, rgba(250, 247, 240, 0.05) 100%);
+  border: 1.5px solid rgba(212, 175, 55, 0.45);
+  border-radius: 20px;
+  padding: 28px 22px 24px;
+  box-shadow: 0 24px 60px -12px rgba(0, 0, 0, 0.75), 0 0 32px rgba(212, 175, 55, 0.2);
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -9421,11 +9811,11 @@ body.sky-night .pointer-action-badge {
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  padding: 4px 14px;
-  background: rgba(212, 122, 136, 0.18);
-  border: 1px solid rgba(212, 122, 136, 0.45);
+  padding: 5px 16px;
+  background: rgba(212, 122, 136, 0.2);
+  border: 1px solid rgba(212, 122, 136, 0.5);
   border-radius: 999px;
-  margin-bottom: 22px;
+  margin-bottom: 18px;
 }
 
 .silk-ribbon-gem {
@@ -9445,8 +9835,8 @@ body.sky-night .pointer-action-badge {
 /* Rotation Visual Stage */
 .rotate-device-stage {
   position: relative;
-  width: 140px;
-  height: 140px;
+  width: 130px;
+  height: 130px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -9456,8 +9846,8 @@ body.sky-night .pointer-action-badge {
 /* Circular Arc Trajectory */
 .rotate-motion-arc {
   position: absolute;
-  width: 136px;
-  height: 136px;
+  width: 128px;
+  height: 128px;
   pointer-events: none;
 }
 
@@ -9473,8 +9863,8 @@ body.sky-night .pointer-action-badge {
 /* Artisan Phone Silhouette */
 .rotate-phone {
   position: relative;
-  width: 52px;
-  height: 92px;
+  width: 50px;
+  height: 88px;
   background: linear-gradient(180deg, #241A1E 0%, #151013 100%);
   border: 2.5px solid #D4AF37;
   border-radius: 12px;
@@ -9487,6 +9877,14 @@ body.sky-night .pointer-action-badge {
   align-items: center;
   justify-content: space-between;
   padding: 6px 4px;
+}
+
+.rotate-device-overlay.suggest-portrait .rotate-phone {
+  animation: rotate-phone-to-portrait 3.2s cubic-bezier(0.65, 0, 0.35, 1) infinite;
+}
+
+.rotate-device-overlay.suggest-portrait .rotate-motion-arc {
+  transform: scaleX(-1);
 }
 
 .rotate-phone-speaker,
@@ -9564,6 +9962,12 @@ body.sky-night .pointer-action-badge {
   100%      { transform: rotate(0deg); }
 }
 
+@keyframes rotate-phone-to-portrait {
+  0%, 15%   { transform: rotate(-90deg); }
+  45%, 72%  { transform: rotate(0deg); }
+  100%      { transform: rotate(-90deg); }
+}
+
 /* Poetic Typography */
 .rotate-poetic-title {
   font-family: 'Playfair Display', Georgia, serif;
@@ -9576,10 +9980,10 @@ body.sky-night .pointer-action-badge {
 }
 
 .rotate-device-text {
-  margin: 0 0 14px 0;
+  margin: 0 0 12px 0;
   font-family: 'Be Vietnam Pro', 'Outfit', system-ui, sans-serif;
-  font-size: 14px;
-  line-height: 1.6;
+  font-size: 13.5px;
+  line-height: 1.55;
   font-weight: 400;
   color: rgba(250, 247, 240, 0.92);
   letter-spacing: 0.2px;
@@ -9593,6 +9997,7 @@ body.sky-night .pointer-action-badge {
   font-size: 11.5px;
   color: #D4AF37;
   opacity: 0.88;
+  margin-bottom: 6px;
 }
 
 .rotate-hint-sub .hint-dot {
@@ -9601,6 +10006,48 @@ body.sky-night .pointer-action-badge {
   background: #D4AF37;
   border-radius: 50%;
   box-shadow: 0 0 6px #D4AF37;
+}
+
+/* Bypass Button: Cho phép tiếp tục nếu điện thoại bị khóa xoay */
+.rotate-bypass-btn {
+  margin-top: 14px;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(250, 247, 240, 0.1);
+  border: 1px solid rgba(212, 175, 55, 0.45);
+  border-radius: 999px;
+  padding: 8px 18px;
+  color: #FAF7F0;
+  font-family: 'Be Vietnam Pro', system-ui, sans-serif;
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.3px;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+  pointer-events: auto;
+}
+
+.rotate-bypass-btn:hover {
+  background: rgba(212, 175, 55, 0.2);
+  border-color: #D4AF37;
+  transform: translateY(-1px);
+}
+
+.rotate-bypass-btn:active {
+  transform: scale(0.96);
+}
+
+.rotate-bypass-btn .bypass-arrow {
+  color: #D4AF37;
+  font-size: 13px;
+  transition: transform 0.2s;
+}
+
+.rotate-bypass-btn:hover .bypass-arrow {
+  transform: translateX(3px);
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -10005,29 +10452,6 @@ body.zen-mode-active .garden-stage-selector {
   .experiential-btn .btn-label {
     display: none !important;
   }
-  .realtime-guide-hud {
-    top: max(8px, var(--sat, 8px)) !important;
-    left: max(16px, calc(var(--sal, 0px) + 16px)) !important;
-    transform: none !important;
-    max-width: min(340px, 46vw) !important;
-    z-index: 10001 !important;
-  }
-  .realtime-guide-pill {
-    padding: 4px 10px !important;
-    gap: 6px !important;
-    min-height: 34px !important;
-  }
-  .realtime-guide-msg {
-    font-size: 11.5px !important;
-    max-width: 190px !important;
-    white-space: nowrap !important;
-    overflow: hidden !important;
-    text-overflow: ellipsis !important;
-  }
-  .realtime-guide-step-tag {
-    font-size: 9px !important;
-    padding: 2px 6px !important;
-  }
   .pointer-brush-wrap {
     display: none !important;
   }
@@ -10036,27 +10460,36 @@ body.zen-mode-active .garden-stage-selector {
   }
 
   /* Phase 5: Minigames Adaptation in Landscape */
-  /* Stage 2: Simon Melody Nodes & Replay Button */
+  /* Stage 2: Simon Melody Nodes & Replay/Skip Action Controls */
   .simon-node {
-    width: 96px !important;
-    height: 96px !important;
-    font-size: 38px !important;
+    width: 104px !important;
+    height: 104px !important;
+    font-size: 42px !important;
+    box-shadow: 0 6px 22px rgba(19, 28, 78, 0.22), 0 0 18px var(--note-color, rgba(212, 175, 55, 0.4)) !important;
   }
   .simon-node::after {
-    top: -16px !important;
-    left: -16px !important;
-    right: -16px !important;
-    bottom: -16px !important;
+    top: -18px !important;
+    left: -18px !important;
+    right: -18px !important;
+    bottom: -18px !important;
   }
-  .simon-replay-btn {
-    min-height: 38px !important;
-    padding: 6px 16px !important;
-    font-size: 12px !important;
-    border-radius: 999px !important;
+  .simon-actions-bar {
     gap: 6px !important;
+    margin-top: 3px !important;
+  }
+  .simon-replay-btn,
+  .simon-skip-btn,
+  .constellation-skip-btn {
+    min-height: 36px !important;
+    padding: 5px 12px !important;
+    font-size: 11px !important;
+    border-radius: 999px !important;
+    gap: 5px !important;
     position: relative;
   }
-  .simon-replay-btn::before {
+  .simon-replay-btn::before,
+  .simon-skip-btn::before,
+  .constellation-skip-btn::before {
     content: "";
     position: absolute;
     inset: -6px;
@@ -10065,19 +10498,19 @@ body.zen-mode-active .garden-stage-selector {
 
   /* Stage 3: Constellation Linker Star Nodes & Decoys */
   .star-node {
-    width: 82px !important;
-    height: 82px !important;
-    font-size: 26px !important;
+    width: 88px !important;
+    height: 88px !important;
+    font-size: 28px !important;
   }
   .star-node::before {
-    width: 18px !important;
-    height: 18px !important;
+    width: 20px !important;
+    height: 20px !important;
   }
   .star-node::after {
-    top: -16px !important;
-    left: -16px !important;
-    right: -16px !important;
-    bottom: -16px !important;
+    top: -18px !important;
+    left: -18px !important;
+    right: -18px !important;
+    bottom: -18px !important;
   }
   .star-node.decoy-star {
     width: 74px !important;
@@ -10671,6 +11104,217 @@ body.readable-font .polaroid-back .letter-content {
     padding: 8px 16px !important;
     font-size: 12.5px !important;
     border-radius: 12px !important;
+  }
+
+  /* ---------- 4. MODAL CẨM NANG TRẢI NGHIỆM (#experience-guide-modal) ---------- */
+  #experience-guide-modal {
+    align-items: center !important;
+    justify-content: center !important;
+    padding: max(6px, env(safe-area-inset-top)) max(10px, env(safe-area-inset-right)) max(6px, env(safe-area-inset-bottom)) max(10px, env(safe-area-inset-left)) !important;
+  }
+
+  .guide-dialog {
+    width: min(660px, 94vw) !important;
+    height: min(92dvh, 92vh, 480px) !important;
+    max-height: min(92dvh, 92vh, 480px) !important;
+    border-radius: 18px !important;
+    border-width: 1.5px !important;
+    display: flex !important;
+    flex-direction: column !important;
+    overflow: hidden !important;
+    box-sizing: border-box !important;
+  }
+
+  .guide-close-btn {
+    top: 6px !important;
+    right: max(10px, env(safe-area-inset-right)) !important;
+    width: 36px !important;
+    height: 36px !important;
+    font-size: 14px !important;
+    background: rgba(255, 255, 255, 0.9) !important;
+    border: 1.2px solid rgba(212, 175, 55, 0.5) !important;
+    z-index: 25 !important;
+  }
+
+  .guide-header {
+    padding: 8px 48px 6px 16px !important;
+    border-bottom: 1px dashed rgba(212, 175, 55, 0.3) !important;
+    flex-shrink: 0 !important;
+    text-align: center !important;
+  }
+
+  .guide-sprig-wrap {
+    display: none !important;
+  }
+
+  .guide-badge {
+    font-size: 9.5px !important;
+    letter-spacing: 1px !important;
+    margin-bottom: 2px !important;
+  }
+
+  .guide-title {
+    font-size: 15px !important;
+    letter-spacing: 0.5px !important;
+    margin: 0 !important;
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+  }
+
+  .guide-subtitle {
+    display: none !important;
+  }
+
+  .guide-tabs-bar {
+    padding: 5px 12px !important;
+    gap: 6px !important;
+    background: rgba(255, 255, 255, 0.7) !important;
+    border-bottom: 1px solid rgba(74, 55, 40, 0.1) !important;
+    flex-shrink: 0 !important;
+  }
+
+  .guide-tab-btn {
+    padding: 5px 12px !important;
+    font-size: 11.5px !important;
+    min-height: 32px !important;
+    gap: 4px !important;
+    border-radius: 999px !important;
+  }
+
+  .guide-tab-btn .tab-icon {
+    font-size: 13px !important;
+  }
+
+  .guide-body-scroll {
+    flex: 1 1 auto !important;
+    min-height: 0 !important;
+    padding: 10px 14px !important;
+    overflow-y: auto !important;
+    overflow-x: hidden !important;
+    -webkit-overflow-scrolling: touch !important;
+    overscroll-behavior: contain !important;
+  }
+
+  .guide-steps-list {
+    gap: 10px !important;
+  }
+
+  .guide-step-card {
+    padding: 10px 14px !important;
+    border-radius: 14px !important;
+    gap: 12px !important;
+  }
+
+  .step-card-badge {
+    width: 38px !important;
+    gap: 2px !important;
+  }
+
+  .badge-num {
+    width: 30px !important;
+    height: 30px !important;
+    font-size: 13.5px !important;
+  }
+
+  .badge-tag {
+    font-size: 8.5px !important;
+  }
+
+  .step-card-title {
+    font-size: 13.5px !important;
+  }
+
+  .guide-step-jump-btn {
+    padding: 3px 8px !important;
+    font-size: 10.5px !important;
+  }
+
+  .step-card-desc {
+    font-size: 12px !important;
+    margin: 0 0 4px 0 !important;
+    line-height: 1.45 !important;
+  }
+
+  .step-instructions {
+    font-size: 12px !important;
+    padding-left: 14px !important;
+    line-height: 1.5 !important;
+  }
+
+  .step-instructions li {
+    margin-bottom: 2px !important;
+  }
+
+  .guide-features-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 8px !important;
+  }
+
+  .guide-feature-box {
+    padding: 10px 12px !important;
+    border-radius: 12px !important;
+  }
+
+  .guide-feature-box .feature-icon {
+    font-size: 20px !important;
+    margin-bottom: 4px !important;
+  }
+
+  .guide-feature-box h4 {
+    font-size: 13px !important;
+    margin: 0 0 3px 0 !important;
+  }
+
+  .guide-feature-box p {
+    font-size: 11.5px !important;
+    line-height: 1.45 !important;
+  }
+
+  .guide-tips-stack {
+    gap: 8px !important;
+  }
+
+  .guide-tip-item {
+    padding: 10px 12px !important;
+    border-radius: 12px !important;
+    gap: 10px !important;
+  }
+
+  .tip-glyph {
+    font-size: 18px !important;
+  }
+
+  .tip-text strong {
+    font-size: 13px !important;
+    margin-bottom: 2px !important;
+  }
+
+  .tip-text p {
+    font-size: 12px !important;
+    line-height: 1.45 !important;
+  }
+
+  .guide-footer {
+    padding: 8px 16px max(8px, env(safe-area-inset-bottom)) 16px !important;
+    background: rgba(250, 247, 240, 0.95) !important;
+    backdrop-filter: blur(8px) !important;
+    -webkit-backdrop-filter: blur(8px) !important;
+    border-top: 1px solid rgba(212, 175, 55, 0.25) !important;
+    gap: 4px !important;
+    flex-shrink: 0 !important;
+  }
+
+  .guide-acknowledge-btn {
+    padding: 7px 24px !important;
+    font-size: 13px !important;
+    min-height: 38px !important;
+    border-radius: 999px !important;
+  }
+
+  .guide-footer-note {
+    font-size: 11px !important;
+    line-height: 1.3 !important;
   }
 }
 

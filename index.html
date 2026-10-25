@@ -145,8 +145,8 @@
         </div>
     </div>
 
-    <!-- Force-Landscape Overlay (mobile portrait only; shown/hidden purely by CSS media queries) -->
-    <div id="rotate-device-overlay" class="rotate-device-overlay" role="alertdialog" aria-modal="true" aria-live="assertive" aria-label="Vui lòng xoay ngang màn hình">
+    <!-- Dual-Orientation Adaptive Guide Overlay (Mobile only; dynamically adapted with zero spoilers) -->
+    <div id="rotate-device-overlay" class="rotate-device-overlay" role="alertdialog" aria-modal="true" aria-live="assertive" aria-label="Gợi ý góc nhìn tối ưu cho màn hình">
         <div class="rotate-ambient-mist" aria-hidden="true">
             <span class="rotate-petal p1"></span>
             <span class="rotate-petal p2"></span>
@@ -156,7 +156,7 @@
         <div class="rotate-device-card">
             <div class="rotate-silk-ribbon" aria-hidden="true">
                 <span class="silk-ribbon-gem">✦</span>
-                <span class="silk-ribbon-text">Khu Vườn Di Sản 20/10</span>
+                <span class="silk-ribbon-text" id="rotate-ribbon-text">Nét Đẹp Khu Vườn</span>
                 <span class="silk-ribbon-gem">✦</span>
             </div>
             <div class="rotate-device-stage" aria-hidden="true">
@@ -164,7 +164,7 @@
                     <path class="arc-track" d="M 125,48 A 56,56 0 0 1 48,125" stroke="rgba(212, 175, 55, 0.45)" stroke-width="2" stroke-dasharray="4 4"/>
                     <path class="arc-arrow" d="M 42,114 L 48,125 L 60,123" stroke="#D4AF37" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
                 </svg>
-                <div class="rotate-phone rotate-artisan-phone">
+                <div class="rotate-phone rotate-artisan-phone" id="rotate-artisan-phone">
                     <span class="rotate-phone-speaker artisan-phone-notch"></span>
                     <div class="rotate-phone-screen artisan-phone-screen">
                         <div class="screen-lotus-core">
@@ -175,12 +175,16 @@
                     <span class="rotate-phone-home artisan-phone-chin"></span>
                 </div>
             </div>
-            <h2 class="rotate-poetic-title">Góc Nhìn Trọn Vẹn</h2>
-            <p class="rotate-device-text">Để cảm nhận trọn vẹn khu vườn hoa di sản 20/10, bạn vui lòng xoay ngang màn hình nhé ✨</p>
+            <h2 class="rotate-poetic-title" id="rotate-poetic-title">Góc Nhìn Toàn Cảnh</h2>
+            <p class="rotate-device-text" id="rotate-device-text">Để cảm nhận trọn vẹn cảnh sắc khu vườn và những giai điệu êm đềm, bạn vui lòng xoay ngang màn hình nhé ✨</p>
             <div class="rotate-hint-sub">
                 <span class="hint-dot"></span>
-                <span>Khung trời hoa lá &amp; giai điệu bình yên đang chờ đón</span>
+                <span id="rotate-hint-sub-text">Khung trời hoa lá &amp; giai điệu bình yên đang chờ đón bạn</span>
             </div>
+            <button type="button" id="rotate-bypass-btn" class="rotate-bypass-btn" aria-label="Tiếp tục ở góc nhìn hiện tại">
+                <span>Tiếp tục ở góc nhìn hiện tại</span>
+                <span class="bypass-arrow">→</span>
+            </button>
         </div>
     </div>
 
@@ -675,10 +679,22 @@
             <span>Gợi ý: Chạm hai lần tạo sương · Xoa rễ sưởi ấm · Vuốt cành gảy đàn hạc 🌿🎶</span>
             <span class="hint-dot">✦</span>
         </div>
-        <button id="simon-replay-btn" class="simon-replay-btn hidden" title="Nghe lại giai điệu ma thuật">
-            <span class="replay-icon">♫</span>
-            <span>Nghe lại giai điệu</span>
-        </button>
+        <div id="simon-actions-bar" class="simon-actions-bar">
+            <button id="simon-replay-btn" class="simon-replay-btn hidden" title="Nghe lại giai điệu chuông hoa">
+                <span class="replay-icon">♫</span>
+                <span>Nghe lại chuông</span>
+            </button>
+            <button id="simon-skip-btn" class="simon-skip-btn hidden" title="Gió Thoảng Hoa Nở · Bỏ Qua Thử Thách 🍃✨">
+                <span class="skip-icon">🍃</span>
+                <span>Gió thoảng hoa nở</span>
+            </button>
+        </div>
+        <div id="constellation-actions-bar" class="constellation-actions-bar">
+            <button id="constellation-skip-btn" class="constellation-skip-btn hidden" title="Sao Sáng Dẫn Lối · Đi Tiếp ✦✨">
+                <span class="star-skip-icon">✦</span>
+                <span>Sao sáng dẫn lối</span>
+            </button>
+        </div>
     </div>
 
 
@@ -1492,7 +1508,7 @@
                         <circle cx="95" cy="8" r="3" fill="#F3C5C9" opacity="0.9"/>
                     </svg>
                 </div>
-                <div class="guide-badge">🌸 CẨM NANG KHÁM PHÁ · 20/10 🌸</div>
+                <div class="guide-badge">🌸 CẨM NANG KHÁM PHÁ · HOA BÍ MẬT 🌸</div>
                 <h2 class="guide-title">HÀNH TRÌNH ĐÁNH THỨC VƯỜN HOA BÍ MẬT</h2>
                 <p class="guide-subtitle">Hướng dẫn chi tiết từng bước trải nghiệm và những điều kỳ diệu đang chờ đón bạn ✨</p>
             </div>
@@ -1569,9 +1585,9 @@
                                 </div>
                                 <p class="step-card-desc">Giai điệu âm nhạc tiếp thêm sức sống cho cây vươn cành:</p>
                                 <ul class="step-instructions">
-                                    <li><strong>Lắng nghe chuông hoa:</strong> Quan sát và lắng nghe các chuông hoa phát sáng theo một giai điệu ma thuật.</li>
-                                    <li><strong>Gõ lại giai điệu:</strong> Chạm lại đúng các phím hoa theo thứ tự vừa nghe.</li>
-                                    <li><strong>Mẹo nhỏ:</strong> Nếu quên, bạn có thể bấm nút <em>"♫ Nghe lại giai điệu"</em> bất cứ lúc nào!</li>
+                                    <li><strong>Lắng nghe chuông hoa:</strong> Quan sát và lắng nghe 4 chuông hoa phát sáng theo giai điệu di sản.</li>
+                                    <li><strong>Chạm lại giai điệu:</strong> Chạm lại các chuông hoa 2 bên theo đúng thứ tự vừa nghe.</li>
+                                    <li><strong>Mẹo nhỏ:</strong> Bấm <em>"♫ Nghe lại chuông"</em> bất cứ lúc nào, hoặc đón làn gió <em>"🍃 Gió thoảng hoa nở"</em> nếu muốn vượt qua nhanh nhé!</li>
                                 </ul>
                             </div>
                         </div>

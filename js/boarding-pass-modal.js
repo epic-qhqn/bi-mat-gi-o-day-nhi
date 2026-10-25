@@ -148,6 +148,10 @@
         if (typeof window.getCurrentFlowerProfile === 'function') {
             applyFlowerProfileToUI(window.getCurrentFlowerProfile());
         }
+        // Thiệp bưu hoa di sản khổ dọc 1080x1920: Ưu tiên góc nhìn dọc trọn vẹn
+        if (typeof window.setPreferredOrientation === 'function') {
+            window.setPreferredOrientation('portrait');
+        }
         modal.classList.remove('hidden');
         if (openBtn) openBtn.classList.remove('attention-pulse');
         if (typeof window.playChimeSFX === 'function') window.playChimeSFX();
@@ -156,6 +160,10 @@
     const closeBoardingPass = () => {
         if (!modal) return;
         modal.classList.add('hidden');
+        // Quay trở lại không gian vườn hoa toàn cảnh
+        if (typeof window.setPreferredOrientation === 'function') {
+            window.setPreferredOrientation('landscape');
+        }
     };
 
     const revealBoardingPassButton = () => {

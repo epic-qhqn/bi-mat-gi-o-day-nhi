@@ -16,6 +16,78 @@
     let simonPlaying = false;
     let simonGenerationId = 0;
     let lastTapNodeTime = 0;
+    let stage2FailCount = 0;
+    let stage2StartTime = 0;
+    let stage2SkipTimer = null;
+
+    // Graceful Skip Fallback: tự động hiển thị nút bỏ qua sau 5 lần thử sai hoặc sau 40 giây
+    const showSimonSkipButton = () => {
+        const skipBtn = document.getElementById('simon-skip-btn');
+        if (!skipBtn) return;
+        if (skipBtn.classList.contains('hidden')) {
+            skipBtn.classList.remove('hidden');
+            skipBtn.style.display = 'inline-flex';
+            skipBtn.classList.remove('disabled');
+            if (typeof window.showMascotSpeech === 'function') {
+                window.showMascotSpeech("Nếu giai điệu hơi nhanh, bạn có thể đón làn gió thoảng để hoa tự nở nhé! 🍃🌸", 4500);
+            }
+        }
+    };
+
+    const handleSimonSkip = async (e) => {
+        if (e) {
+            e.preventDefault();
+            e.stopPropagation();
+        }
+        if (simonPlaying) return;
+        simonPlaying = true;
+
+        if (stage2SkipTimer) {
+            clearTimeout(stage2SkipTimer);
+            stage2SkipTimer = null;
+        }
+
+        if (typeof window.triggerHaptic === 'function') window.triggerHaptic('success');
+        if (typeof window.playMelodicHarpChime === 'function') {
+            window.playMelodicHarpChime(3);
+        } else if (typeof window.playWindChimesSFX === 'function') {
+            window.playWindChimesSFX();
+        }
+
+        const msg = document.getElementById('garden-message');
+        if (msg) msg.textContent = "Làn gió thơm lành thổi qua... Cây non đã vươn cành đơm nụ! 🍃🌸✨";
+
+        const skipBtn = document.getElementById('simon-skip-btn');
+        if (skipBtn) skipBtn.classList.add('disabled');
+        const replayBtn = document.getElementById('simon-replay-btn');
+        if (replayBtn) replayBtn.classList.add('disabled');
+
+        const container = document.getElementById('simon-game');
+        if (container) {
+            const nodes = container.querySelectorAll('.simon-node');
+            nodes.forEach((node, i) => {
+                setTimeout(() => {
+                    node.classList.add('highlight');
+                    if (typeof window.playSimonSFX === 'function') window.playSimonSFX(i);
+                    setTimeout(() => node.classList.remove('highlight'), 300);
+                }, i * 160);
+            });
+        }
+
+        if (typeof window.duckBgmForMinigame === 'function') {
+            window.duckBgmForMinigame(false, 2000);
+        }
+
+        setTimeout(() => {
+            if (container) container.classList.add('hidden');
+            if (replayBtn) replayBtn.classList.add('hidden');
+            if (skipBtn) skipBtn.classList.add('hidden');
+            simonPlaying = false;
+            if (typeof window.advanceStage === 'function') {
+                window.advanceStage(1);
+            }
+        }, 1000);
+    };
 
     // Tạo dãy nốt ngẫu nhiên: 4-5 nốt, không lặp liền nhau, có >= 3 nốt khác nhau.
     const generateRandomSequence = () => {
@@ -61,6 +133,16 @@
         simonPlaying = false;
         simonGenerationId++;
         simonInput = [];
+        stage2FailCount = 0;
+        if (stage2SkipTimer) {
+            clearTimeout(stage2SkipTimer);
+            stage2SkipTimer = null;
+        }
+        const skipBtn = document.getElementById('simon-skip-btn');
+        if (skipBtn) {
+            skipBtn.classList.add('hidden');
+            skipBtn.style.display = 'none';
+        }
     };
 
     const startSimonGame = async () => {
@@ -83,11 +165,30 @@
         const instructionEl = document.querySelector('.garden-ui .instruction');
         if (instructionEl) instructionEl.style.display = 'none';
 
+        stage2FailCount = 0;
+        stage2StartTime = Date.now();
+        if (stage2SkipTimer) clearTimeout(stage2SkipTimer);
+        stage2SkipTimer = setTimeout(() => {
+            showSimonSkipButton();
+        }, 40000);
+
+        const skipBtn = document.getElementById('simon-skip-btn');
+        if (skipBtn) {
+            skipBtn.classList.add('hidden');
+            skipBtn.style.display = 'none';
+            skipBtn.classList.remove('disabled');
+            if (!skipBtn.dataset.bound) {
+                skipBtn.dataset.bound = 'true';
+                skipBtn.addEventListener('click', handleSimonSkip);
+            }
+        }
+
         const replayBtn = document.getElementById('simon-replay-btn');
         if (replayBtn) {
             replayBtn.classList.remove('hidden');
             replayBtn.style.display = 'flex';
             replayBtn.style.pointerEvents = 'auto';
+            replayBtn.classList.remove('disabled');
             if (!replayBtn.dataset.bound) {
                 replayBtn.dataset.bound = 'true';
                 const triggerReplay = async (e) => {
@@ -97,7 +198,7 @@
                     if (simonPlaying || (state.currentStage !== undefined && state.currentStage !== 1)) return;
                     simonInput = [];
                     const msg = document.getElementById('garden-message');
-                    if (msg) msg.textContent = "Đang phát lại giai điệu mộc cầm...";
+                    if (msg) msg.textContent = "Đang phát lại giai điệu chuông hoa... 🌸🎵";
                     if (typeof window.triggerHaptic === 'function') window.triggerHaptic('tap');
                     if (typeof window.playKeyTapSFX !== 'undefined') window.playKeyTapSFX();
                     await playSimonSequence(simonGenerationId);
@@ -107,14 +208,18 @@
         }
 
         const isMobileLandscape = (typeof window !== 'undefined') &&
-            (window.innerWidth > window.innerHeight && window.innerHeight <= 540);
+            (window.matchMedia ? window.matchMedia('(max-height: 540px) and (orientation: landscape)').matches : (window.innerWidth > window.innerHeight && window.innerHeight <= 540));
 
+        // Bilateral Thumb Zones (2 Trái - 2 Phải) trên mobile landscape:
+        // Trái: Nốt 0 (16%, 36%) & Nốt 1 (24%, 56%)
+        // Phải: Nốt 2 (76%, 56%) & Nốt 3 (84%, 36%)
+        // Giải phóng hoàn toàn 572px trung tâm cho mầm cây, không cản trở tầm nhìn
         const celestialArcSlots = isMobileLandscape
             ? [
-                { l: 18, t: 38 },
-                { l: 32, t: 50 },
-                { l: 68, t: 50 },
-                { l: 82, t: 38 }
+                { l: 16, t: 36 },
+                { l: 24, t: 56 },
+                { l: 76, t: 56 },
+                { l: 84, t: 36 }
             ]
             : [
                 { l: 20, t: 34 },
@@ -166,7 +271,7 @@
         }
 
         const msg = document.getElementById('garden-message');
-        if (msg) msg.textContent = `🎵 ${chosenPalette.name}: Lắng nghe những nốt nhạc ngân vang...`;
+        if (msg) msg.textContent = `🌸 ${chosenPalette.name}: Lắng nghe 4 chuông hoa ngân vang...`;
         await sleep(1200);
         if (currentGen !== simonGenerationId) return;
         await playSimonSequence(currentGen);
@@ -196,7 +301,7 @@
         simonPlaying = false;
         if (replayBtn) replayBtn.classList.remove('disabled');
         const msg = document.getElementById('garden-message');
-        if (msg) msg.textContent = "Đến lượt bạn gảy lại từng nốt nhạc nhé! 🌸";
+        if (msg) msg.textContent = "Chạm lại các chuông hoa ngân vang theo đúng giai điệu nhé! 🌸🎵";
     };
 
     const handleSimonClick = async (node, index) => {
@@ -218,18 +323,28 @@
 
         if (simonInput[currentStep] !== simonSequence[currentStep]) {
             simonPlaying = true;
+            stage2FailCount++;
             if (typeof window.triggerHaptic === 'function') window.triggerHaptic('medium');
-            if (msg) msg.textContent = "Lạc mất một nhịp rồi, cùng nghe lại để tìm giai điệu nhé... 🎶";
+            if (msg) msg.textContent = "Lạc mất một nhịp chuông rồi, cùng lắng nghe lại nhé... 🌸🎶";
             node.classList.add('wrong');
             setTimeout(() => node.classList.remove('wrong'), 500);
+
+            if (stage2FailCount >= 5) {
+                showSimonSkipButton();
+            }
+
             await sleep(1000);
             const currentGen = ++simonGenerationId;
             rollNewMelody();
             const paletteName = window.activeHarmonicPalette ? window.activeHarmonicPalette.name : 'Khúc ca';
-            if (msg) msg.textContent = `🎵 ${paletteName}: giai điệu mới, cùng lắng nghe nhé...`;
+            if (msg) msg.textContent = `🌸 ${paletteName}: giai điệu mới, cùng lắng nghe chuông hoa nhé...`;
             await playSimonSequence(currentGen);
         } else if (simonInput.length === simonSequence.length) {
             simonPlaying = true;
+            if (stage2SkipTimer) {
+                clearTimeout(stage2SkipTimer);
+                stage2SkipTimer = null;
+            }
             if (typeof window.triggerHaptic === 'function') window.triggerHaptic('success');
             if (typeof window.duckBgmForMinigame === 'function') {
                 window.duckBgmForMinigame(false, 2000);
@@ -238,7 +353,9 @@
             if (simonContainer) simonContainer.classList.add('hidden');
             const replayBtn = document.getElementById('simon-replay-btn');
             if (replayBtn) replayBtn.classList.add('hidden');
-            if (msg) msg.textContent = "Giai điệu hòa quyện tuyệt đẹp! Cây non đang lớn vùn vụt kìa 🌸✨";
+            const skipBtn = document.getElementById('simon-skip-btn');
+            if (skipBtn) skipBtn.classList.add('hidden');
+            if (msg) msg.textContent = "Chuông hoa ngân vang tuyệt đẹp! Cây non đang vươn cành đón nắng kìa 🌸✨";
             setTimeout(() => {
                 if (typeof window.advanceStage === 'function') window.advanceStage(1);
             }, 1000);
@@ -246,7 +363,7 @@
             // Nốt đúng nhưng chưa hết dãy -> thông báo động viên & số nốt còn lại
             if (msg) {
                 const remaining = simonSequence.length - simonInput.length;
-                msg.textContent = `Chuẩn xác rồi! 🎶 Còn ${remaining} nốt nữa thôi...`;
+                msg.textContent = `Chuẩn xác rồi! 🌸 Còn ${remaining} chuông hoa nữa thôi...`;
             }
         }
     };
@@ -263,6 +380,52 @@
     let activeDecoyElements = [];
     let activeConstellationTopology = null;
     let activeConstellationName = null;
+    let stage3FailCount = 0;
+    let stage3StartTime = 0;
+    let stage3SkipTimer = null;
+
+    // Graceful Skip Fallback cho Stage 3 (Chòm Sao Định Mệnh)
+    const showConstellationSkipButton = () => {
+        const skipBtn = document.getElementById('constellation-skip-btn');
+        if (!skipBtn) return;
+        if (skipBtn.classList.contains('hidden')) {
+            skipBtn.classList.remove('hidden');
+            skipBtn.style.display = 'inline-flex';
+            skipBtn.classList.remove('disabled');
+            if (typeof window.showMascotSpeech === 'function') {
+                window.showMascotSpeech("Nếu bầu trời đêm hơi khó nối, bạn có thể chọn Sao Sáng Dẫn Lối để đi tiếp nha! ✦✨", 4500);
+            }
+        }
+    };
+
+    const handleConstellationSkip = async (e) => {
+        if (e) {
+            e.preventDefault();
+            e.stopPropagation();
+        }
+        if (stage3SkipTimer) {
+            clearTimeout(stage3SkipTimer);
+            stage3SkipTimer = null;
+        }
+
+        const skipBtn = document.getElementById('constellation-skip-btn');
+        if (skipBtn) skipBtn.classList.add('disabled');
+
+        if (typeof window.triggerHaptic === 'function') window.triggerHaptic('success');
+        if (typeof window.playChimeSFX !== 'undefined') window.playChimeSFX();
+
+        const msg = document.getElementById('garden-message');
+        const constName = activeConstellationName ? activeConstellationName.latinName : 'Astra Nova';
+        if (msg) msg.textContent = `Ánh sao dẫn lối... Chòm sao ${constName} tự động nối liền dải ngân hà! ✦✨`;
+
+        // Tự động kết nối tuần tự các ngôi sao còn lại kèm hiệu ứng ánh sáng
+        for (let i = 0; i < starCoords.length; i++) {
+            if (!constellationInput.includes(i)) {
+                connectStar(i);
+                await sleep(220);
+            }
+        }
+    };
 
     const constellationArchetypes = [
         {
@@ -302,10 +465,10 @@
     // =========================================================================
     const generatePoissonStarField = (options = {}) => {
         const isMobileLandscape = (typeof window !== 'undefined') &&
-            (window.innerWidth > window.innerHeight && window.innerHeight <= 540);
+            (window.matchMedia ? window.matchMedia('(max-height: 540px) and (orientation: landscape)').matches : (window.innerWidth > window.innerHeight && window.innerHeight <= 540));
         const defaultBounds = isMobileLandscape
-            ? { minL: 19, maxL: 81, minT: 14, maxT: 41 }
-            : { minL: 18, maxL: 82, minT: 13, maxT: 42 };
+            ? { minL: 19, maxL: 81, minT: 16, maxT: 40 }
+            : { minL: 18, maxL: 82, minT: 14, maxT: 41 };
 
         const {
             starCount = 5,
@@ -323,17 +486,22 @@
             cy: (t / 100) * CANVAS_H
         });
 
-        const isSafeDistance = (cx, cy, existingList) => {
+        const isSafeDistance = (cx, cy, existingList, customMinDist = minDistance) => {
             // Avoid tree canopy top center if cy is in crown zone
-            if (cy > 235 && cx > 480 && cx < 620) return false;
-            // Avoid center header zone under garden UI ribbon
-            if (cy < 135 && cx > 370 && cx < 730) return false;
+            if (cy > 230 && cx > 460 && cx < 640) return false;
+            // Avoid center header zone under garden UI card & actions
+            if (cy < 150 && cx > 350 && cx < 750) return false;
+            // Avoid top-left realtime guide jewel safe zone
+            if (cy < 125 && cx < 220) return false;
+            // Avoid top-right experiential dock safe zone
+            if (cy < 125 && cx > 880) return false;
 
+            const distSq = customMinDist * customMinDist;
             for (let i = 0; i < existingList.length; i++) {
                 const p = existingList[i];
                 const dx = p.cx - cx;
                 const dy = p.cy - cy;
-                if ((dx * dx + dy * dy) < minDistanceSq) return false;
+                if ((dx * dx + dy * dy) < distSq) return false;
             }
             return true;
         };
@@ -341,10 +509,24 @@
         const existingPoints = [];
         const stars = [];
 
-        // 1. Initial Anchor Star (Star 1) in safe upper-left/center area
-        let startL = bounds.minL + Math.random() * (bounds.maxL * 0.35 - bounds.minL);
-        let startT = bounds.minT + 4 + Math.random() * (bounds.maxT - bounds.minT - 8);
-        let p0 = toPixels(startL, startT);
+        // 1. Initial Anchor Star (Star 1) in safe upper-left/center area with exclusion verification
+        let p0 = null;
+        let startL = 0;
+        let startT = 0;
+        for (let attempt = 0; attempt < 50; attempt++) {
+            startL = (bounds.minL + 3) + Math.random() * (bounds.maxL * 0.36 - bounds.minL);
+            startT = bounds.minT + 2 + Math.random() * (bounds.maxT - bounds.minT - 4);
+            const candP = toPixels(startL, startT);
+            if (isSafeDistance(candP.cx, candP.cy, existingPoints)) {
+                p0 = candP;
+                break;
+            }
+        }
+        if (!p0) {
+            startL = 28;
+            startT = 24;
+            p0 = toPixels(startL, startT);
+        }
         stars.push({ index: 0, l: startL, t: startT, cx: p0.cx, cy: p0.cy, label: 1 });
         existingPoints.push(p0);
 
@@ -407,6 +589,21 @@
                     existingPoints.push(candP);
                     placedDecoy = true;
                     break;
+                }
+            }
+            // Secondary fallback pass with relaxed distance (minDistance * 0.78 = 70px) to guarantee placement without touching exclusion zones
+            if (!placedDecoy) {
+                for (let fallbackAttempt = 0; fallbackAttempt < 100; fallbackAttempt++) {
+                    const candL = bounds.minL + 2 + Math.random() * (bounds.maxL - bounds.minL - 4);
+                    const candT = bounds.minT + 2 + Math.random() * (bounds.maxT - bounds.minT - 4);
+                    const candP = toPixels(candL, candT);
+                    if (isSafeDistance(candP.cx, candP.cy, existingPoints, minDistance * 0.78)) {
+                        const decoyObj = { index: d, l: candL, t: candT, cx: candP.cx, cy: candP.cy };
+                        decoys.push(decoyObj);
+                        existingPoints.push(candP);
+                        placedDecoy = true;
+                        break;
+                    }
                 }
             }
         }
@@ -663,6 +860,10 @@
         activeDecoyElements = activeDecoyElements.filter(d => d !== decoyEl);
 
         if (!silent) {
+            stage3FailCount++;
+            if (stage3FailCount >= 5) {
+                showConstellationSkipButton();
+            }
             const msg = document.getElementById('garden-message');
             if (msg) msg.textContent = `✨ Ngôi sao ảo vừa tan thành bụi sáng! Hãy tiếp tục nối các vì sao thật từ 1 đến ${starCoords.length} nghen!`;
             if (typeof window.showMascotSpeech === 'function') {
@@ -771,9 +972,9 @@
         const centerY = rect.top + rect.height / 2;
         const curScale = window.currentWrapScale || 1;
         const isTouchOrLandscape = ('ontouchstart' in window) ||
-            (typeof window !== 'undefined' && window.innerWidth > window.innerHeight && window.innerHeight <= 540);
-        const baseRadius = isTouchOrLandscape ? 88 : 68;
-        const proximityRadius = Math.max(44, Math.min(84, baseRadius * curScale));
+            (window.matchMedia ? window.matchMedia('(max-height: 540px) and (orientation: landscape)').matches : (window.innerWidth > window.innerHeight && window.innerHeight <= 540));
+        const baseRadius = isTouchOrLandscape ? 105 : 72;
+        const proximityRadius = Math.max(48, Math.min(96, baseRadius * curScale));
         const dist = Math.hypot(centerX - clientX, centerY - clientY);
 
         if (dist < proximityRadius) {
@@ -810,6 +1011,12 @@
         if (constellationInput.length === starCoords.length) {
             isDraggingConstellation = false;
             activeStarIndex = null;
+            if (stage3SkipTimer) {
+                clearTimeout(stage3SkipTimer);
+                stage3SkipTimer = null;
+            }
+            const skipBtn = document.getElementById('constellation-skip-btn');
+            if (skipBtn) skipBtn.classList.add('hidden');
             const previewLine = document.getElementById('constellation-preview-line');
             if (previewLine) previewLine.style.display = 'none';
 
@@ -873,6 +1080,10 @@
                 setTimeout(() => star.classList.remove('wrong'), 400);
             }
             if (typeof window.triggerHaptic === 'function') window.triggerHaptic('medium');
+            stage3FailCount++;
+            if (stage3FailCount >= 5) {
+                showConstellationSkipButton();
+            }
             const msg = document.getElementById('garden-message');
             if (msg) msg.textContent = `Hãy nối theo thứ tự từ ngôi sao 1 đến ${starCoords.length} nhé!`;
         }
@@ -897,6 +1108,23 @@
         isDraggingConstellation = false;
         activeStarIndex = null;
         activeDecoyElements = [];
+        stage3FailCount = 0;
+        stage3StartTime = Date.now();
+        if (stage3SkipTimer) clearTimeout(stage3SkipTimer);
+        stage3SkipTimer = setTimeout(() => {
+            showConstellationSkipButton();
+        }, 40000);
+
+        const skipBtn = document.getElementById('constellation-skip-btn');
+        if (skipBtn) {
+            skipBtn.classList.add('hidden');
+            skipBtn.style.display = 'none';
+            skipBtn.classList.remove('disabled');
+            if (!skipBtn.dataset.bound) {
+                skipBtn.dataset.bound = 'true';
+                skipBtn.addEventListener('click', handleConstellationSkip);
+            }
+        }
 
         removeConstellationHint();
         container.querySelectorAll('.star-node').forEach(n => n.remove());
@@ -996,9 +1224,13 @@
     // Public API
     window.startSimonGame = startSimonGame;
     window.stopSimonGame = stopSimonGame;
+    window.skipSimonGame = handleSimonSkip;
+    window.getStage2FailCount = () => stage2FailCount;
     window.isSimonPlaying = () => simonPlaying;
     window.playSimonSequence = playSimonSequence;
     window.startConstellationGame = startConstellationGame;
+    window.skipConstellationGame = handleConstellationSkip;
+    window.getStage3FailCount = () => stage3FailCount;
     window.connectStar = connectStar;
     window.removeConstellationHint = removeConstellationHint;
     window.generatePoissonStarField = generatePoissonStarField;

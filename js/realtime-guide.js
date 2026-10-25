@@ -607,6 +607,23 @@
 
     // Main Update Loop
     const tickRealtimeGuide = () => {
+        // Modal & Atelier Overlay Guard: Keep HUD and tutorial overlays quiet while modals are open
+        const nameModalEl = document.getElementById('name-modal');
+        const timeLockModalEl = document.getElementById('time-lock-modal');
+        const rotateOverlayEl = document.getElementById('rotate-device-overlay');
+        const isModalActive = Boolean(
+            (nameModalEl && !nameModalEl.classList.contains('hidden') && nameModalEl.style.display !== 'none') ||
+            (timeLockModalEl && !timeLockModalEl.classList.contains('hidden') && timeLockModalEl.style.display !== 'none') ||
+            (rotateOverlayEl && !rotateOverlayEl.classList.contains('hidden'))
+        );
+
+        if (isModalActive) {
+            if (hudEl) hudEl.classList.add('hidden');
+            if (targetBoxEl) targetBoxEl.style.opacity = '0';
+            updateGestureTrail(null, null);
+            return;
+        }
+
         const state = evaluateCurrentState();
         if (!state) {
             if (hudEl) hudEl.classList.add('hidden');
@@ -707,10 +724,40 @@
             });
         }
 
-        // Tap HUD to open full handbook
+        // Tap HUD: In mobile landscape, toggle hint bubble with 4s auto-hide; otherwise open full handbook
+        let hintBubbleTimer = null;
         if (hudEl) {
             hudEl.addEventListener('click', (e) => {
-                if (e.target === toggleBtn || toggleBtn.contains(e.target)) return;
+                if (toggleBtn && (e.target === toggleBtn || toggleBtn.contains(e.target))) return;
+
+                const isLandscapeMobile = window.matchMedia('(max-height: 540px) and (orientation: landscape)').matches;
+                if (isLandscapeMobile) {
+                    // If user taps the expanded bubble text itself, open full handbook
+                    if (hudEl.classList.contains('is-expanded-hint') && e.target.closest('.realtime-guide-text-group')) {
+                        if (typeof window.openExperienceGuide === 'function') {
+                            window.openExperienceGuide('steps');
+                        }
+                        return;
+                    }
+
+                    if (typeof window.playWaxClickSFX === 'function') {
+                        window.playWaxClickSFX();
+                    }
+
+                    const isNowExpanded = hudEl.classList.toggle('is-expanded-hint');
+                    if (hintBubbleTimer) {
+                        clearTimeout(hintBubbleTimer);
+                        hintBubbleTimer = null;
+                    }
+                    if (isNowExpanded) {
+                        hintBubbleTimer = setTimeout(() => {
+                            if (hudEl) hudEl.classList.remove('is-expanded-hint');
+                            hintBubbleTimer = null;
+                        }, 4000);
+                    }
+                    return;
+                }
+
                 if (typeof window.openExperienceGuide === 'function') {
                     window.openExperienceGuide('steps');
                 }
