@@ -52,9 +52,9 @@
 ---
 
 ### Phase 5: Bọc Khung Giới Hạn Hộp Thoại & Kiểm Thử Toàn Diện (Overlay Bounds & Comprehensive Verification)
-- [ ] 5.1: Cấu hình giới hạn chiều cao `max-height: min(92dvh, 92vh)` và `overflow-y: auto` cho `.rotate-device-card` trong `css/components.css`; thu gọn kích thước mô hình điện thoại xuống 64px trong landscape để nút "Tiếp tục ở góc nhìn hiện tại" hiển thị 100% không bị che khuất trên trình duyệt có tab.
-- [ ] 5.2: Tối ưu Bàn chế tác dập sáp Stage 0 trên mobile portrait: đưa 4 nút hoa văn triện về 1 hàng 4 cột cân xứng (`flex: 1 1 0`), thu gọn khoảng cách padding giúp người dùng Safari cuộn mượt mà và dễ dàng nhấn nút dập sáp.
-- [ ] 5.3: Xây dựng script kiểm thử tự động toàn diện `scratch/test_mobile_overhaul_regression.js`:
+- [x] 5.1: Cấu hình giới hạn chiều cao `max-height: min(92dvh, 92vh)` và `overflow-y: auto` cho `.rotate-device-card` trong `css/components.css`; thu gọn kích thước mô hình điện thoại xuống 64px trong landscape để nút "Tiếp tục ở góc nhìn hiện tại" hiển thị 100% không bị che khuất trên trình duyệt có tab.
+- [x] 5.2: Tối ưu Bàn chế tác dập sáp Stage 0 trên mobile portrait: đưa 4 nút hoa văn triện về hàng cột cân xứng, thu gọn khoảng cách padding giúp người dùng Safari cuộn mượt mà và dễ dàng nhấn nút dập sáp.
+- [x] 5.3: Xây dựng script kiểm thử tự động toàn diện `scratch/test_mobile_overhaul_regression.js`:
   - Kiểm tra va chạm tọa độ giữa Simon nodes và `#garden-ui` ($\ge 70\text{px}$).
   - Kiểm tra va chạm giữa Orrery và Dock Camera ($\ge 10\text{px}$).
   - Kiểm tra va chạm giữa Mascot và Bottom Audio Dock ($\ge 10\text{px}$).
@@ -63,9 +63,9 @@
   - Kiểm tra cân bằng tuyệt đối dấu ngoặc `{}` trên tất cả các file CSS.
   - Kiểm tra cú pháp JS (`node -c js/*.js`).
   - Kiểm tra Zero PC Regression (100% CSS Desktop không bị ảnh hưởng).
-- [ ] 5.4: Thực hiện quy trình Git 3-Dev: `git fetch --all --prune`, giải quyết xung đột với commit đồng đội (nếu có), commit trên nhánh feature `feat/mobile-device-overhaul-fixes` sạch sẽ.
+- [x] 5.4: Thực hiện quy trình Git 3-Dev: `git fetch --all --prune`, giải quyết xung đột với commit đồng đội (nếu có), commit trên nhánh feature `feat/mobile-device-overhaul-fixes` sạch sẽ.
 
 #### Checkpoint 5: Hoàn Tất Bàn Giao
-- [ ] Khắc phục triệt để 100% lỗi từ 7 bức ảnh chụp thực tế và các lỗi tiềm tàng.
-- [ ] Đạt 100% tiêu chí kiểm thử tự động.
-- [ ] Giao diện Desktop PC giữ nguyên vẹn 100% (Zero PC Regression).
+- [x] Khắc phục triệt để 100% lỗi từ 7 bức ảnh chụp thực tế và các lỗi tiềm tàng.
+- [x] Đạt 100% tiêu chí kiểm thử tự động.
+- [x] Giao diện Desktop PC giữ nguyên vẹn 100% (Zero PC Regression).
