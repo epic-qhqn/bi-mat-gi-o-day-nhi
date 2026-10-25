@@ -1257,13 +1257,13 @@ a:hover {
 /* On mobile portrait (iPhone 14, etc.), elevate #wrap so blooming tree is in upper center */
 @media (max-width: 768px) and (orientation: portrait) {
   #wrap {
-    top: 44%;
+    top: 50%;
     transition: top 0.9s cubic-bezier(0.16, 1, 0.3, 1), transform 0.2s cubic-bezier(0.4, 0, 0.2, 1);
   }
   body.stage-4-active #wrap,
   body.has-letter-open #wrap,
   body:has(.text-panel.show) #wrap {
-    top: 25%;
+    top: 28%;
   }
 }
 
@@ -2125,10 +2125,11 @@ body.sky-night .modal-overlay {
   }
 
   .ao-dai-poem-badge {
-    bottom: calc(100% + 10px);
-    font-size: 0.78rem;
-    padding: 7px 12px;
-    max-width: min(290px, 86vw);
+    bottom: calc(100% + 14px);
+    font-size: 1.25rem !important;
+    line-height: 1.4 !important;
+    padding: 8px 14px !important;
+    max-width: min(380px, 86vw) !important;
   }
 
   /* Responsive sky clouds - gentle, soft and strictly confined to uppermost sky */

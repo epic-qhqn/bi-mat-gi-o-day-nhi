@@ -85,3 +85,74 @@
   cursor: pointer;
   text-align-last: center;
 }
+
+/* Mobile Portrait Refinement (Zero Horizontal Overflow) */
+@media (max-width: 520px) {
+  .zodiac-birth-card {
+    margin: 8px auto 10px auto;
+    padding: 8px 12px 10px 12px;
+    gap: 6px;
+    border-radius: 14px;
+    width: 100%;
+    box-sizing: border-box;
+  }
+  .zodiac-birth-label {
+    font-size: 11px;
+    letter-spacing: 0.6px;
+  }
+  .zodiac-birth-input {
+    height: 38px;
+    font-size: 15px;
+  }
+  .zodiac-result {
+    padding: 6px 10px;
+    gap: 8px;
+  }
+  .zodiac-symbol {
+    font-size: 26px;
+  }
+  .zodiac-name {
+    font-size: 14px;
+  }
+  .zodiac-msg {
+    font-size: 11.5px;
+    line-height: 1.35;
+  }
+}
+
+/* Mobile Landscape Horizon Refinement (Preserve Vertical Room) */
+@media (max-height: 540px) and (orientation: landscape) {
+  .zodiac-birth-card {
+    margin: 4px auto 6px auto;
+    padding: 5px 8px;
+    gap: 4px;
+    border-radius: 10px;
+  }
+  .zodiac-birth-label {
+    font-size: 9.5px;
+    letter-spacing: 0.4px;
+  }
+  .zodiac-birth-input {
+    height: 32px;
+    font-size: 13px;
+    padding: 0 8px;
+  }
+  .zodiac-result {
+    padding: 3px 6px;
+    gap: 6px;
+  }
+  .zodiac-symbol {
+    font-size: 20px;
+  }
+  .zodiac-name {
+    font-size: 12px;
+  }
+  .zodiac-dates {
+    font-size: 10px;
+  }
+  .zodiac-msg {
+    font-size: 10px;
+    line-height: 1.25;
+    margin-top: 2px;
+  }
+}
