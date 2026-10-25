@@ -30,13 +30,13 @@
 ---
 
 ### Phase 3: Đại Tu Bố Cục Màn Hình Dọc - Mặt Trời, Cây & Mặt Đất (Portrait Horizon Overhaul)
-- [ ] 3.1: Thêm quy tắc CSS trong `@media (max-width: 768px) and (orientation: portrait)` tại `css/layout.css`: neo giữ các thiên thể `.celestial-body.sun`, `.sun-dawn`, `.sun-dusk`, `.moon` ở vùng trời cao `top: 12% - 14%`, xóa bỏ lỗi mặt trời chìm xuống dưới rễ cây.
-- [ ] 3.2: Tinh chỉnh nét vẽ của `Footer` trong `js/love.js`: kiểm tra viewport dọc hoặc cấu hình màu, thay thế đường kẻ đen đặc `rgb(35, 31, 32)` bằng màu sương mờ `rgba(106, 141, 115, 0.25)` đồng điệu với màu thảm cỏ, xóa bỏ vết nứt đen lơ lửng giữa trời.
-- [ ] 3.3: Cân chỉnh vị trí `#wrap` trong portrait tại `css/layout.css` và bổ sung dải chuyển tiếp chân trời mềm mại giúp gốc cây cắm rễ tự nhiên vào mặt đất mẹ.
+- [x] 3.1: Thêm quy tắc CSS trong `@media (max-width: 768px) and (orientation: portrait)` tại `css/layout.css`: neo giữ các thiên thể `.celestial-body.sun`, `.sun-dawn`, `.sun-dusk`, `.moon` ở vùng trời cao `top: 12% - 14%`, xóa bỏ lỗi mặt trời chìm xuống dưới rễ cây.
+- [x] 3.2: Tinh chỉnh nét vẽ của `Footer` trong `js/love.js`: kiểm tra viewport dọc hoặc cấu hình màu, thay thế đường kẻ đen đặc `rgb(35, 31, 32)` bằng màu sương mờ `rgba(106, 141, 115, 0.25)` đồng điệu với màu thảm cỏ, xóa bỏ vết nứt đen lơ lửng giữa trời.
+- [x] 3.3: Cân chỉnh vị trí `#wrap` trong portrait tại `css/layout.css` và bổ sung dải chuyển tiếp chân trời mềm mại giúp gốc cây cắm rễ tự nhiên vào mặt đất mẹ.
 
 #### Checkpoint 3: Sau Phase 3
-- [ ] Mặt trời/mặt trăng ở đúng 1/4 trên cùng của bầu trời trên iPhone 14 và mọi máy dọc.
-- [ ] Cây hoa và mặt đất kết nối tự nhiên, không còn đường kẻ đen thô cứng cắt ngang bầu trời.
+- [x] Mặt trời/mặt trăng ở đúng 1/4 trên cùng của bầu trời trên iPhone 14 và mọi máy dọc.
+- [x] Cây hoa và mặt đất kết nối tự nhiên, không còn đường kẻ đen thô cứng cắt ngang bầu trời.
 
 ---
 

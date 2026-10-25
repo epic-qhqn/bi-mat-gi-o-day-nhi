@@ -185,7 +185,21 @@
             const len = this.length / 2;
 
             ctx.save();
-            ctx.strokeStyle = 'rgb(35, 31, 32)';
+            const footerOpt = this.tree.opt && this.tree.opt.footer;
+            const explicitColor = footerOpt && footerOpt.color;
+            if (explicitColor) {
+                ctx.strokeStyle = explicitColor;
+            } else {
+                // Soft poetic watercolor mist gradient harmonizing with Vietnamese Dó paper and countryside
+                // Center matches rustic wood trunk hue, fading smoothly into young rice green and soft transparency
+                const grad = ctx.createLinearGradient(-len, 0, len, 0);
+                grad.addColorStop(0, 'rgba(106, 141, 115, 0)');
+                grad.addColorStop(0.15, 'rgba(106, 141, 115, 0.22)');
+                grad.addColorStop(0.5, 'rgba(74, 55, 40, 0.32)');
+                grad.addColorStop(0.85, 'rgba(106, 141, 115, 0.22)');
+                grad.addColorStop(1, 'rgba(106, 141, 115, 0)');
+                ctx.strokeStyle = grad;
+            }
             ctx.lineWidth = this.height;
             ctx.lineCap = 'round';
             ctx.lineJoin = 'round';

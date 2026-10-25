@@ -1299,16 +1299,55 @@ a:hover {
   pointer-events: none;
 }
 
-/* On mobile portrait (iPhone 14, etc.), elevate #wrap so blooming tree is in upper center */
+/* On mobile portrait (iPhone 14, Android, etc.), elevate #wrap so blooming tree is in upper center */
 @media (max-width: 768px) and (orientation: portrait) {
   #wrap {
-    top: 50%;
+    top: 48%;
     transition: top 0.9s cubic-bezier(0.16, 1, 0.3, 1), transform 0.2s cubic-bezier(0.4, 0, 0.2, 1);
   }
   body.stage-4-active #wrap,
   body.has-letter-open #wrap,
   body:has(.text-panel.show) #wrap {
-    top: 28%;
+    top: 32%;
+  }
+
+  /* Celestial body anchoring in high sky on mobile portrait (anti-sink & proportional) */
+  .celestial-body.sun,
+  .celestial-body.sun-dawn,
+  .celestial-body.sun-dusk,
+  .celestial-body.moon {
+    top: 13% !important;
+    right: 12% !important;
+    width: clamp(64px, 18vw, 84px) !important;
+    height: clamp(64px, 18vw, 84px) !important;
+  }
+  .celestial-body.sun-dawn {
+    top: 14% !important;
+    right: 10% !important;
+  }
+  .celestial-body.sun-dusk {
+    top: 13% !important;
+    right: 14% !important;
+  }
+  .celestial-body.moon {
+    top: 12% !important;
+    right: 15% !important;
+    width: clamp(56px, 15vw, 72px) !important;
+    height: clamp(56px, 15vw, 72px) !important;
+  }
+
+  /* Natural ground pedestal transition for mobile portrait:
+     Soft earthy hill gradient connecting tree roots naturally down to screen edge */
+  #main-container::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: clamp(140px, 28vh, 240px);
+    background: radial-gradient(ellipse 120% 70% at 50% 100%, rgba(106, 141, 115, 0.28) 0%, rgba(106, 141, 115, 0.08) 60%, rgba(106, 141, 115, 0) 100%);
+    pointer-events: none;
+    z-index: 1;
   }
 }
 
@@ -1317,6 +1356,31 @@ a:hover {
   #wrap {
     top: 48%;
     transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  /* Proportional celestial bodies in mobile landscape (keep above Mộc Cầm and tree base) */
+  .celestial-body.sun,
+  .celestial-body.sun-dawn,
+  .celestial-body.sun-dusk,
+  .celestial-body.moon {
+    width: clamp(52px, 14vh, 72px) !important;
+    height: clamp(52px, 14vh, 72px) !important;
+    top: 14% !important;
+    right: 22% !important;
+  }
+  .celestial-body.sun-dawn {
+    top: 18% !important;
+    right: 20% !important;
+  }
+  .celestial-body.sun-dusk {
+    top: 22% !important;
+    right: 24% !important;
+  }
+  .celestial-body.moon {
+    top: 14% !important;
+    right: 22% !important;
+    width: clamp(44px, 12vh, 60px) !important;
+    height: clamp(44px, 12vh, 60px) !important;
   }
 }
 
