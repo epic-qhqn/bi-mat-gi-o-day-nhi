@@ -6,13 +6,13 @@
 ---
 
 ### Phase 1: Chuẩn Hóa CSDL & Bộ Vector Art 12 Chòm Sao Di Sản (Zodiac Vector Art & Star Topology)
-- [ ] 1.1: Thiết kế và số hóa 12 vector SVG nét trắng/vàng bạc thanh nhã (`viewBox="0 0 1100 680"`) cho 12 cung hoàng đạo (Bạch Dương, Kim Ngưu, Song Tử, Cự Giải, Sư Tử, Xử Nữ, Thiên Bình, Thiên Yết, Nhân Mã, Ma Kết, Bảo Bình, Song Ngư) đồng bộ phong cách ảnh mẫu.
-- [ ] 1.2: Định nghĩa bản đồ tọa độ các ngôi sao thật `pts` và thứ tự nối `edges` cho từng cung hoàng đạo trong `SIGNS` (`js/zodiac-constellation.js`), khớp 1:1 với các điểm sao chủ chốt trên hình vẽ vector.
-- [ ] 1.3: Xây dựng script kiểm thử tự động `scratch/test_zodiac_bounds.js`: chạy mô phỏng Monte Carlo xác nhận 100% các ngôi sao của cả 12 cung nằm trong vùng trời an toàn, không va chạm với 4 vùng cấm (HUD trên, tán cây giữa, mascot góc trái, mộc cầm góc phải).
+- [x] 1.1: Thiết kế và số hóa 12 vector SVG nét trắng/vàng bạc thanh nhã (`viewBox="0 0 1100 680"`) cho 12 cung hoàng đạo (Bạch Dương, Kim Ngưu, Song Tử, Cự Giải, Sư Tử, Xử Nữ, Thiên Bình, Thiên Yết, Nhân Mã, Ma Kết, Bảo Bình, Song Ngư) đồng bộ phong cách ảnh mẫu.
+- [x] 1.2: Định nghĩa bản đồ tọa độ các ngôi sao thật `pts` và thứ tự nối `edges` cho từng cung hoàng đạo trong `SIGNS` (`js/zodiac-constellation.js`), khớp 1:1 với các điểm sao chủ chốt trên hình vẽ vector.
+- [x] 1.3: Xây dựng script kiểm thử tự động `scratch/test_zodiac_bounds.js`: chạy mô phỏng Monte Carlo xác nhận 100% các ngôi sao của cả 12 cung nằm trong vùng trời an toàn, không va chạm với 4 vùng cấm (HUD trên, tán cây giữa, mascot góc trái, mộc cầm góc phải).
 
 #### Checkpoint 1: Sau Phase 1
-- [ ] Chạy `node scratch/test_zodiac_bounds.js` đạt 100% pass với 0 va chạm.
-- [ ] 12/12 chòm sao có đầy đủ vector SVG và bộ tọa độ sao hợp lệ.
+- [x] Chạy `node scratch/test_zodiac_bounds.js` đạt 100% pass với 0 va chạm.
+- [x] 12/12 chòm sao có đầy đủ vector SVG và bộ tọa độ sao hợp lệ.
 
 ---
 
