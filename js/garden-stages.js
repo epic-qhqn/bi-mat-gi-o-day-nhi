@@ -322,7 +322,12 @@
             window.gardenState.isFertilized = false;
 
             if (gardenUI) gardenUI.classList.remove('hidden');
-            if (livingHudEl) livingHudEl.classList.add('hidden');
+            if (livingHudEl) {
+                livingHudEl.classList.add('hidden');
+                livingHudEl.style.display = 'none';
+                livingHudEl.style.opacity = '0';
+                livingHudEl.style.pointerEvents = 'none';
+            }
             if (toolWater) toolWater.style.display = 'none';
             if (toolFertilize) toolFertilize.style.display = 'none';
 

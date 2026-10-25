@@ -5490,19 +5490,19 @@ body.sky-night .found-letter-slot.filled {
 
 @media (max-width: 768px) {
   .mascot-companion-wrap {
-    bottom: calc(56px + var(--sab, 8px));
+    bottom: calc(64px + var(--sab, 8px));
     left: calc(12px + var(--sal, 0px));
     right: auto;
-    width: clamp(72px, 18vw, 86px);
+    width: clamp(68px, 16vw, 84px);
   }
 }
 
 @media (max-height: 540px) and (orientation: landscape) {
   .mascot-companion-wrap {
-    bottom: calc(48px + var(--sab, 0px));
+    bottom: calc(56px + var(--sab, 0px));
     left: calc(12px + var(--sal, 0px));
     right: auto;
-    width: clamp(64px, 10vw, 86px);
+    width: clamp(58px, 9vw, 76px);
   }
 }
 
@@ -8062,15 +8062,18 @@ body.sky-night .found-letter-slot.filled {
     box-shadow: 0 16px 50px rgba(0, 0, 0, 0.75), 0 0 24px rgba(212, 175, 55, 0.4) !important;
   }
 
-  /* Living Atmosphere HUD in Mobile Landscape (Top Center, Zero Corner Collision) */
+  /* Living Atmosphere HUD in Mobile Landscape: Autoscale Full Width & Zero Garden UI Collision */
   .living-atmosphere-hud {
     top: calc(8px + var(--sat, 4px)) !important;
-    left: 50% !important;
-    transform: translateX(-50%) !important;
-    width: min(94vw, 540px) !important;
+    left: 0 !important;
+    right: 0 !important;
+    width: 100% !important;
+    transform: none !important;
+    padding: 0 max(72px, calc(64px + var(--sar, 0px))) 0 max(64px, calc(56px + var(--sal, 0px))) !important;
+    box-sizing: border-box !important;
     justify-content: space-between !important;
     pointer-events: none !important;
-    z-index: 1005 !important;
+    z-index: 95 !important;
   }
   .living-atmosphere-hud .atmosphere-shifter-token {
     pointer-events: auto !important;
@@ -8094,10 +8097,8 @@ body.sky-night .found-letter-slot.filled {
     height: auto !important;
   }
 
-  .shifter-pill-label {
-    font-size: 9.5px !important;
-    padding: 2px 7px !important;
-    margin-top: 2px !important;
+  .living-atmosphere-hud .shifter-pill-label {
+    display: none !important;
   }
 
   /* Realtime Guide HUD in Mobile Landscape: Compact Jewel Icon docked to Top-Left Safe Area */
@@ -10409,7 +10410,7 @@ body.zen-mode-active .garden-stage-selector {
 @media (max-width: 768px) {
   .top-experiential-dock {
     top: max(8px, var(--sat, 8px)) !important;
-    right: calc(64px + var(--sar, 0px)) !important;
+    right: calc(68px + var(--sar, 8px)) !important;
     gap: 6px !important;
   }
   .experiential-btn {
@@ -10438,7 +10439,7 @@ body.zen-mode-active .garden-stage-selector {
 @media (max-height: 540px) and (orientation: landscape) {
   .top-experiential-dock {
     top: max(8px, var(--sat, 8px)) !important;
-    right: calc(58px + var(--sar, 0px)) !important;
+    right: calc(68px + var(--sar, 8px)) !important;
     gap: 5px !important;
   }
   .experiential-btn {

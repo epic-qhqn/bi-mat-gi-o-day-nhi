@@ -164,6 +164,13 @@
         if (hintEl) hintEl.style.display = 'none';
         const instructionEl = document.querySelector('.garden-ui .instruction');
         if (instructionEl) instructionEl.style.display = 'none';
+        const livingHudEl = document.getElementById('living-atmosphere-hud');
+        if (livingHudEl) {
+            livingHudEl.classList.add('hidden');
+            livingHudEl.style.display = 'none';
+            livingHudEl.style.opacity = '0';
+            livingHudEl.style.pointerEvents = 'none';
+        }
 
         stage2FailCount = 0;
         stage2StartTime = Date.now();
@@ -1209,6 +1216,13 @@
         if (hintEl) hintEl.style.display = 'none';
         const instructionEl = document.querySelector('.garden-ui .instruction');
         if (instructionEl) instructionEl.style.display = 'none';
+        const livingHudEl = document.getElementById('living-atmosphere-hud');
+        if (livingHudEl) {
+            livingHudEl.classList.add('hidden');
+            livingHudEl.style.display = 'none';
+            livingHudEl.style.opacity = '0';
+            livingHudEl.style.pointerEvents = 'none';
+        }
 
         constellationInput = [];
         isDraggingConstellation = false;

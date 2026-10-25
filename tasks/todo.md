@@ -6,15 +6,15 @@
 ---
 
 ### Phase 1: Chống Va Chạm Dock Trên, Khí Hậu Tự Nhiên & Linh Vật (Top Dock & Atmosphere HUD Anti-Collision)
-- [ ] 1.1: Tinh chỉnh khoảng cách dock góc phải trong `css/components.css`: chuyển `#top-experiential-dock` sang `right: calc(68px + var(--sar, 8px))` để triệt tiêu 100% va chạm giữa nút Kim chỉ nam (Orrery Lodestar) và nút Chụp ảnh (Camera Capture) trên mọi thiết bị mobile.
-- [ ] 1.2: Mở rộng khoảng cách 2 token khí hậu trong mobile landscape (`width: calc(100vw - 32px - var(--sal, 0px) - var(--sar, 0px))`) và ẩn nhãn chữ `.shifter-pill-label` rườm rà để không bao giờ đè lên bảng thông báo `#garden-ui`.
-- [ ] 1.3: Thêm quy tắc CSS cưỡng chế ẩn `#living-atmosphere-hud` ở Stage 2, 3 và 4 (`display: none !important; opacity: 0 !important;`) trong `css/layout.css` và `css/components.css`; cập nhật hàm chuyển cảnh trong `js/garden-stages.js`.
-- [ ] 1.4: Nâng vị trí Linh vật Mascot trong mobile landscape lên `bottom: calc(56px + var(--sab, 0px))` trong `css/components.css`, triệt tiêu hoàn toàn sự tiếp xúc/va chạm với thanh nhạc đáy màn hình `.bottom-system-dock`.
+- [x] 1.1: Tinh chỉnh khoảng cách dock góc phải trong `css/components.css`: chuyển `#top-experiential-dock` sang `right: calc(68px + var(--sar, 8px))` để triệt tiêu 100% va chạm giữa nút Kim chỉ nam (Orrery Lodestar) và nút Chụp ảnh (Camera Capture) trên mọi thiết bị mobile.
+- [x] 1.2: Mở rộng khoảng cách 2 token khí hậu trong mobile landscape (`width: calc(100vw - 32px - var(--sal, 0px) - var(--sar, 0px))`) và ẩn nhãn chữ `.shifter-pill-label` rườm rà để không bao giờ đè lên bảng thông báo `#garden-ui`.
+- [x] 1.3: Thêm quy tắc CSS cưỡng chế ẩn `#living-atmosphere-hud` ở Stage 2, 3 và 4 (`display: none !important; opacity: 0 !important;`) trong `css/layout.css` và `css/components.css`; cập nhật hàm chuyển cảnh trong `js/garden-stages.js`.
+- [x] 1.4: Nâng vị trí Linh vật Mascot trong mobile landscape lên `bottom: calc(56px + var(--sab, 0px))` trong `css/components.css`, triệt tiêu hoàn toàn sự tiếp xúc/va chạm với thanh nhạc đáy màn hình `.bottom-system-dock`.
 
 #### Checkpoint 1: Sau Phase 1
-- [ ] Không còn bất kỳ sự chồng chéo nút nào ở góc trên bên phải (Orrery vs Camera).
-- [ ] Token Mây Mưa và Nắng Vàng không đè lên bảng `#garden-ui` ở Stage 1 và biến mất hoàn toàn khi sang Stage 2.
-- [ ] Linh vật Mascot đứng tách biệt rõ ràng phía trên thanh âm thanh.
+- [x] Không còn bất kỳ sự chồng chéo nút nào ở góc trên bên phải (Orrery vs Camera).
+- [x] Token Mây Mưa và Nắng Vàng không đè lên bảng `#garden-ui` ở Stage 1 và biến mất hoàn toàn khi sang Stage 2.
+- [x] Linh vật Mascot đứng tách biệt rõ ràng phía trên thanh âm thanh.
 
 ---
 

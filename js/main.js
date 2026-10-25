@@ -459,11 +459,11 @@
 
     let scale;
     if (isPortrait) {
-      scale = (vWidth * 0.96) / baseWidth;
+      const safeWidth = Math.max(300, vWidth - insets.sal - insets.sar);
+      scale = (safeWidth * 0.96) / baseWidth;
     } else {
       // In landscape on short viewports (mobile/tablet landscape <= 540px), ensure safe breathing space & notch insets
       if (vHeight <= 540) {
-        const insets = getSafeAreaInsets();
         // Usable width avoiding left/right notches and Dynamic Island
         const safeWidth = Math.max(320, vWidth - insets.sal - insets.sar);
         // Reserve vertical room for top HUD and bottom system dock
@@ -482,6 +482,18 @@
 
     wrap.style.transform = `scale(${scale})`;
     window.currentWrapScale = scale;
+
+    // Broadcast dynamic root custom properties for automatic sub-element layout synchronization
+    const docStyle = document.documentElement.style;
+    docStyle.setProperty('--current-wrap-scale', scale.toFixed(4));
+    docStyle.setProperty('--viewport-actual-width', `${Math.round(vWidth)}px`);
+    docStyle.setProperty('--viewport-actual-height', `${Math.round(vHeight)}px`);
+
+    if (typeof window.dispatchEvent === 'function') {
+      window.dispatchEvent(new CustomEvent('garden-viewport-scale', {
+        detail: { scale, vWidth, vHeight, isPortrait, insets }
+      }));
+    }
   };
 
   let resizeTimer = null;
