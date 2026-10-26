@@ -1,10 +1,10 @@
 // Nội dung bức thư chúc mừng chính 20/10
 const letterContent = `
-Xin chào {{NAME}}! Là chúng mình - các "quý ông" của CLB/Công ty đây.
+Hề nhôooooo {{NAME}}! Đây là chương trình thường trực 20/10 của quý ông EPIC đè su.
 
 Nhân dịp ngày Phụ nữ Việt Nam 20/10, chúng mình cũng có một lời muốn nói với mọi người đó đó!
 
-Mong rằng các "bóng hồng" của chúng ta sẽ ngày càng xinh đẹp, tự tin, có nhiều sức khỏe, học giỏi/công tác tốt và sẽ luôn hạnh phúc với những gì mình đang có.
+Mong rằng các bạn nữ sẽ ngày càng xinh đẹp, tự tin, có thật nhiều sức khỏe, học thật giỏi và sẽ luôn làm được nhiều điều mình thích nè
 
 Ngoài ra cũng không thể quên gửi một lời cảm ơn thật to lớn đến các bạn nữ vì đã luôn đồng hành và cùng chúng mình tạo ra những kỷ niệm thật đẹp nha!
 [Mở món quà bí mật và ấm áp dành riêng cho bạn tại đây nhé! 🎁](https://drive.google.com/drive/folders/1fILtFYl7tkBWg5vCPuzsZf9s9cpOf1NL?usp=drive_link)
@@ -49,7 +49,7 @@ function shuffleLetters(arr) {
 
 window.randomClubLetters = randomClubLetters;
 
-window.getNextRandomLetter = function() {
+window.getNextRandomLetter = function () {
     if (!window.randomClubLetters || window.randomClubLetters.length === 0) {
         return { author: "Nam Đồng Nghiệp", content: "Chúc bạn ngày 20/10 thật nhiều niềm vui và hạnh phúc!" };
     }
