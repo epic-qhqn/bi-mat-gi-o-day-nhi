@@ -702,14 +702,37 @@
      - Zero PC Regression: Trải nghiệm desktop nguyên bản 100% bảo toàn [PASSED].
 
 - **Kiểm định chất lượng tổng thể & Hoàn tất bàn giao**:
-  - Cú pháp toàn bộ 19 file JavaScript độc lập: **19/19 OK** (`node -c js/*.js`).
+  - Cú pháp toàn bộ 20 file JavaScript độc lập: **20/20 OK** (`node -c js/*.js`).
   - Cân bằng ngoặc nhọn CSS tuyệt đối:
     - `css/base.css`: 36 / 36 [OK]
-    - `css/layout.css`: 345 / 345 [OK]
-    - `css/components.css`: 1829 / 1829 [OK]
-  - Bộ kiểm thử tự động toàn diện Phase 8 (`scratch/test_phase8_comprehensive.js`): **6/6 tiêu chí Passed (100%)**.
+    - `css/layout.css`: 360 / 360 [OK]
+    - `css/components.css`: 1906 / 1906 [OK]
+    - `css/zodiac.css`: 80 / 80 [OK]
+  - Bộ kiểm thử tự động toàn diện Phase 8 & Mobile Harmonization: **100% Passed**.
   - Kiểm thử âm thanh & Chống spoiler: 100% không lộ bí mật 20/10 trước khi trổ hoa, Web Audio API unlock mượt mà.
-  - Đồng bộ nhánh Git: Đã kiểm tra mọi nhánh trên remote, xác nhận toàn bộ mã nguồn của dev `son2k104` đã được tích hợp đầy đủ, không bỏ sót bất kỳ nhánh nào.
+  - Đồng bộ nhánh Git: 100% các nhánh remote hòa trộn sạch sẽ, không sót nhánh nào.
+
+---
+
+### 11. Vấn Đề: Đồng Nhất Toàn Diện Bố Cục Mobile Đa Thiết Bị (Harmonization Pass)
+- **Triệu chứng & Căn nguyên**:
+  1. *Ô chọn ngày sinh trên Safari mobile*: chữ tiếng Việt có đuôi ("Tháng 7", "Ngày 14") bị cắt chân dưới do line-height và padding dọc mặc định.
+  2. *Bếp sáp Stage 0 trên màn hình hẹp ($\le 560\text{px}$)*: Bố cục 2 cột cố định khiến cột phong thư bị ép chỉ còn ~90px, đè lên nút "Rắc vụn vàng".
+  3. *Nút rắc vụn vàng bị lệch trái*: Animation `badge-bob` chứa `translateX(-50%)` làm nút định vị tương đối bị dịch sang trái 50% độ rộng.
+  4. *Bong bóng thoại linh vật trong Landscape*: Khi Mascot ở góc trái, bong bóng mọc lên trên che mất nốt chuông Simon và sao thiên văn.
+  5. *Huy hiệu tên chòm sao Stage 3*: Neo ở đỉnh đầu màn hình đè lên thanh tiến trình `#garden-ui` và HUD hướng dẫn.
+  6. *Thanh nút Bưu Thiếp Postcard*: Dạng flex cuộn ngang khiến người dùng phải vuốt mới thấy hết các nút thao tác.
+  7. *Màn hình xoay trên máy cực thấp ($\le 460\text{px}$)*: Khung thẻ căn giữa làm nút "Tiếp tục" tràn ra khỏi đáy màn hình.
+- **Công thức chuẩn hóa**:
+  - Ô select ngày sinh: Thêm `line-height: 1.3; padding: 0; text-overflow: ellipsis;` trong `@media (max-width: 768px)`.
+  - Bàn chế tác sáp: Tự động xếp chồng 1 cột (`grid-template-columns: minmax(0, 1fr) !important`) khi $\le 560\text{px}$, que khuấy neo `left: calc(50% + 72px)`.
+  - Nút rắc vụn vàng: Định nghĩa `@keyframes vial-bob { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-3px); } }` độc lập.
+  - Bong bóng thoại ngang: Neo sang phải linh vật (`left: calc(100% + 8px)`) với đuôi nhọn trỏ trái (`border-right: 7px solid #FFFFFF`).
+  - Huy hiệu chòm sao: Đặt tại `bottom: 27% !important` vùng trời thoáng giữa sao và cỏ.
+  - Thanh nút Bưu Thiếp: Chuyển sang lưới 2 cột (`grid-template-columns: 1fr 1fr`), nút "Tải Về" chiếm trọn dòng đầu (`grid-column: 1 / -1`), nút bấm cao $\ge 46\text{px}$.
+  - Hộp thoại xoay màn hình: Hỗ trợ cuộn dọc `overflow-y: auto; touch-action: pan-y;` khi `max-height: 460px`.
+  - Nút Lodestar: Đưa lên góc trên-trái (`top: 8px; left: 12px;`) khi xoay ngang, hoàn toàn tách biệt khỏi linh vật.
+
 
 
 

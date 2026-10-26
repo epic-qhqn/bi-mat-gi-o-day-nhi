@@ -69,3 +69,21 @@
 - [x] Khắc phục triệt để 100% lỗi từ 7 bức ảnh chụp thực tế và các lỗi tiềm tàng.
 - [x] Đạt 100% tiêu chí kiểm thử tự động.
 - [x] Giao diện Desktop PC giữ nguyên vẹn 100% (Zero PC Regression).
+
+---
+
+### Phase 6: Đồng Nhất Mã Nguồn Đồng Nghiệp & Dọn Dẹp Toàn Diện (Teammate Reconcile & Workspace Cleanup)
+- [x] 6.1: Phân tích toàn bộ 44 file trong gói source độc lập của đồng nghiệp; xác định chính xác các điểm chỉnh sửa trong `css/components.css`.
+- [x] 6.2: Đồng nhất bố cục Bàn chế tác sáp Stage 0 dạng 1 cột khi $\le 560\text{px}$, căn chỉnh que khuấy và triệt tiêu lỗi dịch ngang của lọ vụn vàng bằng keyframes `vial-bob`.
+- [x] 6.3: Khắc phục lỗi cắt đuôi chữ tiếng Việt trên ô chọn ngày sinh (`.zodiac-birth-card select`).
+- [x] 6.4: Tối ưu vị trí bong bóng thoại Mascot sang bên phải (`left: calc(100% + 8px)`) khi xoay ngang, tránh che chuông Simon và sao thiên văn.
+- [x] 6.5: Dời huy hiệu chòm sao xuống `bottom: 27%` tránh đè thanh tiến trình; đưa nút Lodestar lên góc trên-trái khi xoay ngang.
+- [x] 6.6: Tái cấu trúc thanh nút Bưu Thiếp Postcard thành lưới 2 cột tiện dụng trên mobile $\le 560\text{px}$, nút bấm $\ge 46\text{px}$.
+- [x] 6.7: Dọn dẹp toàn bộ thư mục và file thừa (`source đã fix một số lỗi UI mobile/`, các file scratch so sánh tạm thời và test cũ).
+- [x] 6.8: Cập nhật chuẩn hóa tài liệu kiến trúc [AGENTS.md](file:///c:/Users/kishikuun/Documents/dieu-bi-mat-epic/AGENTS.md) và [.rules/mobile-layout-log.md](file:///c:/Users/kishikuun/Documents/dieu-bi-mat-epic/.rules/mobile-layout-log.md) theo thực tế mới nhất.
+
+#### Checkpoint 6: Dự Án Hoàn Toàn Tinh Gọn & Chuẩn Mực
+- [x] Toàn bộ 15 bộ test hồi quy trong `scratch/` đạt kết quả 100% Passed.
+- [x] Thư mục gốc sạch sẽ tuyệt đối, không còn file/thư mục rác.
+- [x] Tài liệu quy tắc kiến trúc và module đồng bộ 100% với mã nguồn hiện hành.
+
