@@ -731,7 +731,22 @@
   - Huy hiệu chòm sao: Đặt tại `bottom: 27% !important` vùng trời thoáng giữa sao và cỏ.
   - Thanh nút Bưu Thiếp: Chuyển sang lưới 2 cột (`grid-template-columns: 1fr 1fr`), nút "Tải Về" chiếm trọn dòng đầu (`grid-column: 1 / -1`), nút bấm cao $\ge 46\text{px}$.
   - Hộp thoại xoay màn hình: Hỗ trợ cuộn dọc `overflow-y: auto; touch-action: pan-y;` khi `max-height: 460px`.
-  - Nút Lodestar: Đưa lên góc trên-trái (`top: 8px; left: 12px;`) khi xoay ngang, hoàn toàn tách biệt khỏi linh vật.
+---
+
+### 12. Vấn Đề: Kẹt Tương Tác Stage 2 (Vươn Cành) Trên Cả PC và Mobile
+- **Triệu chứng & Căn nguyên**:
+  1. *Triệu chứng*: Khi hoàn thành Minigame Simon và bước vào Stage 2 (Vươn Cành), cây trơ trụi cành không có lá hay hoa, thông báo hiển thị "Hãy kéo vệt nắng ban mai sưởi ấm để cây sẵn sàng nở hoa nhé! ☀️" nhưng trên màn hình hoàn toàn KHÔNG có biểu tượng Vệt Nắng hay nút tương tác nào. Người dùng double-tap hay vuốt đất cũng không có tác dụng.
+  2. *Căn nguyên kỹ thuật*:
+     - Trong [css/layout.css](file:///c:/Users/kishikuun/Documents/dieu-bi-mat-epic/css/layout.css), selector `body.stage-3-active #living-atmosphere-hud` áp dụng `display: none !important; opacity: 0 !important; visibility: hidden !important; pointer-events: none !important;`.
+     - Khi chuyển sang Stage 2 (`currentStage === 2`), `advanceStage(1)` thêm class `stage-3-active` vào `document.body`. Vì vậy quy tắc CSS ghi đè toàn bộ inline style của JS (`style.display = 'flex'`), giam hãm Vệt Nắng Ban Mai `#atmosphere-sun-shifter` vĩnh viễn ở trạng thái ẩn.
+     - Trong [js/atmosphere-shifter.js](file:///c:/Users/kishikuun/Documents/dieu-bi-mat-epic/js/atmosphere-shifter.js), hàm gõ đúp `triggerDewCondensation` chỉ gán `isWatered = true` (tưới nước) trong khi Stage 2 yêu cầu `isFertilized = true` (sưởi ấm rễ mầm). Thao tác xoay tròn quanh rễ yêu cầu góc $\ge 1.8\pi$ (gần 360 độ) quá khắt khe, không có phản hồi trực quan.
+- **Công thức chuẩn hóa (Phase 7 Solution)**:
+  1. **Giải phóng HUD khí hậu**: Xóa bỏ `body.stage-3-active #living-atmosphere-hud` khỏi danh sách `display: none !important` trong [css/layout.css](file:///c:/Users/kishikuun/Documents/dieu-bi-mat-epic/css/layout.css). Khi Stage 2 kích hoạt, token Vệt Nắng Ban Mai `#atmosphere-sun-shifter` xuất hiện lấp lánh trên bầu trời, người dùng có thể kéo hoặc chạm để sưởi ấm mầm cây.
+  2. **Đa dạng hóa phương thức tương tác**: Trong [js/atmosphere-shifter.js](file:///c:/Users/kishikuun/Documents/dieu-bi-mat-epic/js/atmosphere-shifter.js):
+     - Gõ đúp (double-tap) khi `currentStage === 2` tự động kích hoạt `triggerRootThermalWarmth(target)` thay vì tưới nước.
+     - Chạm trực tiếp vào gốc cây/mầm non (`distToTarget < 140`) khi `currentStage === 2` ngay lập tức kích hoạt sưởi ấm rễ mầm.
+     - Giảm ngưỡng vuốt rễ xuống $\ge 0.75\pi$ hoặc vuốt giữ $> 600\text{ms}$ giúp kích hoạt nhẹ nhàng, phản hồi tia lửa ấm áp tức thì.
+  3. **Cơ chế cứu nguy tự động (Graceful Auto-Fallback)**: Trong [js/garden-stages.js](file:///c:/Users/kishikuun/Documents/dieu-bi-mat-epic/js/garden-stages.js), thiết lập `stage2AutoWarmthTimer` 25 giây. Nếu người dùng không thực hiện thao tác nào sau 25s, một làn gió nắng ấm thoảng qua sẽ tự động sưởi ấm mầm cây và chuyển sang Minigame Chòm Sao Stage 3. Timer được hủy ngay lập tức khi người dùng tương tác thành công hoặc dọn dẹp sân khấu.
 
 
 

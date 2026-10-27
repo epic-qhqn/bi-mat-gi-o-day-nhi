@@ -225,6 +225,12 @@
     const triggerDewCondensation = (tapX, tapY) => {
         const target = getSeedOrSproutCenter();
 
+        // Stage 2 (Vươn Cành): Cây cần năng lượng nắng ấm / phân bón để vươn cành
+        if (window.gardenState && window.gardenState.currentStage === 2) {
+            triggerRootThermalWarmth(target);
+            return;
+        }
+
         const vortex = document.createElement('div');
         vortex.className = 'dew-condensation-vortex';
         vortex.style.left = `${tapX}px`;
@@ -343,6 +349,10 @@
                 lastTerrariumTapPos = { x: e.clientX, y: e.clientY };
 
                 if (distToTarget < 140) {
+                    if (window.gardenState && window.gardenState.currentStage === 2) {
+                        triggerRootThermalWarmth(target);
+                        return;
+                    }
                     isRubbingRoots = true;
                     rubStartTimestamp = now;
                     lastRubAngle = Math.atan2(e.clientY - target.y, e.clientX - target.x);
@@ -377,7 +387,7 @@
                     setTimeout(() => { if (ember.parentNode) ember.parentNode.removeChild(ember); }, 850);
                 }
 
-                if (cumulativeRubAngle >= Math.PI * 1.8 && (Date.now() - rubStartTimestamp) < 3000) {
+                if ((cumulativeRubAngle >= Math.PI * 0.75 || (Date.now() - rubStartTimestamp) > 600) && (Date.now() - rubStartTimestamp) < 4000) {
                     isRubbingRoots = false;
                     triggerRootThermalWarmth(target);
                 }

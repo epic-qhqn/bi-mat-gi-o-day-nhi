@@ -12,3 +12,7 @@ Thumbs.db
 scratch/
 test_thực_tế_trên_iphone/
 source đã fix một số lỗi UI mobile/
+
+# Large raw video assets (> 100MB, use optimized _opt.mp4 instead)
+video/vid_1.mp4
+video/vid_2.mp4

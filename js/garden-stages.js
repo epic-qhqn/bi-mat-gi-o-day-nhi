@@ -12,7 +12,14 @@
         isFertilized: false
     };
 
+    let stage2AutoWarmthTimer = null;
+
     const cleanupStage = (stageId) => {
+        if (stage2AutoWarmthTimer) {
+            clearTimeout(stage2AutoWarmthTimer);
+            stage2AutoWarmthTimer = null;
+        }
+
         // Stage 0: Seed Hint
         if (stageId === 0 || stageId === 'all') {
             const seedHint = document.getElementById('seed-hint');
@@ -600,6 +607,24 @@
                     sunShifterEl.style.pointerEvents = 'auto';
                     sunShifterEl.style.transform = '';
                 }
+
+                // Graceful Auto-Fallback: Sau 25s nếu người dùng chưa sưởi ấm mầm cây, tự động làn gió nắng ấm thoảng qua
+                if (stage2AutoWarmthTimer) clearTimeout(stage2AutoWarmthTimer);
+                stage2AutoWarmthTimer = setTimeout(() => {
+                    if (window.gardenState.currentStage === 2 && !window.gardenState.isFertilized) {
+                        const target = typeof window.getSeedOrSproutCenter === 'function'
+                            ? window.getSeedOrSproutCenter()
+                            : { x: window.innerWidth / 2, y: window.innerHeight * 0.65 };
+                        if (typeof window.triggerRootThermalWarmth === 'function') {
+                            window.triggerRootThermalWarmth(target);
+                        } else if (typeof window.triggerAtmosphereSunbeam === 'function') {
+                            window.triggerAtmosphereSunbeam();
+                        } else {
+                            window.gardenState.isFertilized = true;
+                            if (typeof window.checkGrowth === 'function') window.checkGrowth();
+                        }
+                    }
+                }, 25000);
             }, 3000);
         }
         else if (window.gardenState.currentStage === 3) {
@@ -628,6 +653,10 @@
             if (gardenMsg) gardenMsg.textContent = "Hãy lắng nghe và chạm lại 4 chuông hoa ngân vang theo đúng giai điệu nhé! 🌸🎵";
             if (typeof window.startSimonGame === 'function') window.startSimonGame();
         } else if (state.currentStage === 2 && state.isFertilized) {
+            if (stage2AutoWarmthTimer) {
+                clearTimeout(stage2AutoWarmthTimer);
+                stage2AutoWarmthTimer = null;
+            }
             if (gardenMsg) gardenMsg.textContent = "Hãy nối liền các vì sao để thắp sáng bầu trời đêm!";
             if (typeof window.startConstellationGame === 'function') window.startConstellationGame();
         }

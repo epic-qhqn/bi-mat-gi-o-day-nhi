@@ -1,89 +1,86 @@
-# TODO: ĐẠI TU TOÀN DIỆN LỖI MOBILE & CHỐNG VA CHẠM GIAO DIỆN ĐA THIẾT BỊ (MOBILE OVERHAUL & ZERO PC REGRESSION)
+# TODO: KHẮC PHỤC TRIỆT ĐỂ BUGS PC & MOBILE, HỘP QUÀ BÍ MẬT TUẦN TỰ & NÂNG CẤP ÂM NHẠC
 
-> **Mục tiêu**: Thực thi lộ trình 5 giai đoạn trong `tasks/plan.md` nhằm khắc phục 100% các lỗi mobile thực tế (từ 7 ảnh chụp trên iPhone 14 và máy Android qua Safari, Cốc Cốc, Chrome) và các lỗi mã nguồn tiềm tàng.  
-> **Cam kết**: Zero PC Regression (100% không đụng vào UI trên PC Desktop), Touch Target $\ge 48\text{px}$, 100% Client-Side Pure Static Web.
-
----
-
-### Phase 1: Chống Va Chạm Dock Trên, Khí Hậu Tự Nhiên & Linh Vật (Top Dock & Atmosphere HUD Anti-Collision)
-- [x] 1.1: Tinh chỉnh khoảng cách dock góc phải trong `css/components.css`: chuyển `#top-experiential-dock` sang `right: calc(68px + var(--sar, 8px))` để triệt tiêu 100% va chạm giữa nút Kim chỉ nam (Orrery Lodestar) và nút Chụp ảnh (Camera Capture) trên mọi thiết bị mobile.
-- [x] 1.2: Mở rộng khoảng cách 2 token khí hậu trong mobile landscape (`width: calc(100vw - 32px - var(--sal, 0px) - var(--sar, 0px))`) và ẩn nhãn chữ `.shifter-pill-label` rườm rà để không bao giờ đè lên bảng thông báo `#garden-ui`.
-- [x] 1.3: Thêm quy tắc CSS cưỡng chế ẩn `#living-atmosphere-hud` ở Stage 2, 3 và 4 (`display: none !important; opacity: 0 !important;`) trong `css/layout.css` và `css/components.css`; cập nhật hàm chuyển cảnh trong `js/garden-stages.js`.
-- [x] 1.4: Nâng vị trí Linh vật Mascot trong mobile landscape lên `bottom: calc(56px + var(--sab, 0px))` trong `css/components.css`, triệt tiêu hoàn toàn sự tiếp xúc/va chạm với thanh nhạc đáy màn hình `.bottom-system-dock`.
-
-#### Checkpoint 1: Sau Phase 1
-- [x] Không còn bất kỳ sự chồng chéo nút nào ở góc trên bên phải (Orrery vs Camera).
-- [x] Token Mây Mưa và Nắng Vàng không đè lên bảng `#garden-ui` ở Stage 1 và biến mất hoàn toàn khi sang Stage 2.
-- [x] Linh vật Mascot đứng tách biệt rõ ràng phía trên thanh âm thanh.
+> **Mục tiêu**: Thực thi lộ trình 6 giai đoạn mới (Phase 7 đến Phase 12) trong `tasks/plan.md` nhằm khắc phục 100% các lỗi mobile thực tế (từ 5 ảnh chụp trên iPhone và PC trong thư mục `test_thực_tế_trên_iphone/`), hoàn thiện hệ thống 2 Hộp Quà bí mật tuần tự, nén video siêu nhẹ và nâng cấp hệ thống âm nhạc BGM.  
+> **Cam kết**: Zero PC Regression (100% không ảnh hưởng UI Desktop PC), Touch Target $\ge 48\text{px}$, 100% Client-Side Pure Static Web.
 
 ---
 
-### Phase 2: Tái Thiết Kế Không Gian Stage 2 Chuông Hoa (Simon Melody Spatial Redesign)
-- [x] 2.1: Tinh gọn bảng hướng dẫn `#garden-ui` ở Stage 2 trong `css/layout.css`: giới hạn chiều cao $\le 56\text{px}$ trên landscape, thu nhỏ nút "Nghe lại chuông" (`#simon-replay-btn`) dạng icon $36\text{px} \times 36\text{px}$ gọn gàng.
-- [x] 2.2: Thay đổi tọa độ sinh 4 nốt chuông hoa trong `js/garden-minigames.js`: dời từ vùng $t: 34\% - 36\%$ xuống 2 vùng an toàn hai bên cánh gà ($t \ge 52\% - 70\%$, $l \in [14\%, 22\%]$ và $[78\%, 86\%]$), đảm bảo khoảng cách đến `#garden-ui` luôn $\ge 120\text{px}$.
-- [x] 2.3: Đảm bảo vùng cảm ứng `hitbox` của mỗi nốt `.simon-node` đạt $\ge 50\text{px}$ qua pseudo-element `::after` (inset -16px landscape, -22px portrait) và kiểm tra hoạt động trơn tru của nút Bỏ qua cứu nguy `#simon-skip-btn` sau 5 lần sai hoặc 40 giây.
-
-#### Checkpoint 2: Sau Phase 2
-- [x] 100% nốt chuông hoa sinh ra ở vùng trống thoáng đãng bên dưới hai bên cánh gà, không bao giờ bị `#garden-ui` che khuất.
-- [x] Người chơi chạm vào nốt phản hồi âm thanh ngũ cung tức thì, không bị nuốt touch.
-
----
-
-### Phase 3: Đại Tu Bố Cục Màn Hình Dọc - Mặt Trời, Cây & Mặt Đất (Portrait Horizon Overhaul)
-- [x] 3.1: Thêm quy tắc CSS trong `@media (max-width: 768px) and (orientation: portrait)` tại `css/layout.css`: neo giữ các thiên thể `.celestial-body.sun`, `.sun-dawn`, `.sun-dusk`, `.moon` ở vùng trời cao `top: 12% - 14%`, xóa bỏ lỗi mặt trời chìm xuống dưới rễ cây.
-- [x] 3.2: Tinh chỉnh nét vẽ của `Footer` trong `js/love.js`: kiểm tra viewport dọc hoặc cấu hình màu, thay thế đường kẻ đen đặc `rgb(35, 31, 32)` bằng màu sương mờ `rgba(106, 141, 115, 0.25)` đồng điệu với màu thảm cỏ, xóa bỏ vết nứt đen lơ lửng giữa trời.
-- [x] 3.3: Cân chỉnh vị trí `#wrap` trong portrait tại `css/layout.css` và bổ sung dải chuyển tiếp chân trời mềm mại giúp gốc cây cắm rễ tự nhiên vào mặt đất mẹ.
-
-#### Checkpoint 3: Sau Phase 3
-- [x] Mặt trời/mặt trăng ở đúng 1/4 trên cùng của bầu trời trên iPhone 14 và mọi máy dọc.
-- [x] Cây hoa và mặt đất kết nối tự nhiên, không còn đường kẻ đen thô cứng cắt ngang bầu trời.
+### [Hoàn Thành Trước Đây] Phase 1 - Phase 6
+- [x] Phase 1: Chống va chạm dock trên & khí hậu tự nhiên (Orrery vs Camera, Mascot vs Volume Dock).
+- [x] Phase 2: Tái thiết kế không gian Stage 2 chuông hoa bước đầu.
+- [x] Phase 3: Đại tu bố cục màn hình dọc (Mặt trời, cây & mặt đất).
+- [x] Phase 4: Sửa lỗi chụp ảnh màn hình Polaroid lưu giữ cây hoa nở rộ.
+- [x] Phase 5: Bọc khung giới hạn hộp thoại xoay màn hình & kiểm thử gắt gao.
+- [x] Phase 6: Đồng nhất mã nguồn đồng nghiệp & dọn dẹp toàn diện workspace.
 
 ---
 
-### Phase 4: Sửa Triệt Để Lỗi Chụp Ảnh Màn Hình Polaroid (Instant Garden Capture Engine)
-- [x] 4.1: Tại `js/main.js` hàm `moveAnimate()`: bắt snapshot cây nở hoa hoàn mỹ lưu vào `window.bloomedTreeSnapshotDataUrl` và nạp vào đối tượng ảnh `window.bloomedTreeImage` trước khi chuyển sang `jumpAnimate()`.
-- [x] 4.2: Tái cấu trúc hàm `renderGardenPolaroidToCanvas` trong `js/garden-stages.js`: vẽ hình ảnh cây nở hoa từ `window.bloomedTreeImage` hoặc `canvas.parentNode.style.backgroundImage` vào khung ảnh Polaroid trước khi vẽ cánh hoa rơi và thiếu nữ Áo Dài.
-- [x] 4.3: Tối ưu hóa tải ảnh và tương thích chia sẻ ảnh trên Safari iOS (`navigator.share` hoặc fallback mở tab mới) và Cốc Cốc.
+### Phase 7: Sửa Triệt Để Lỗi Kẹt Tương Tác Stage 2 (Vươn Cành) Trên Cả PC và Mobile
+- [x] 7.1: Gỡ bỏ `display: none !important; opacity: 0 !important;` trên `body.stage-3-active #living-atmosphere-hud` trong `css/layout.css`; bảo đảm Vệt Nắng Ban Mai `#atmosphere-sun-shifter` xuất hiện lấp lánh ở Stage 2 để người dùng tương tác kéo/chạm sưởi ấm mầm cây.
+- [x] 7.2: Khắc phục lỗi double-tap trong `js/atmosphere-shifter.js`: khi đang ở Stage 2 (`currentStage === 2`), nếu người dùng double-tap màn hình hoặc vuốt/chạm rễ cây, hệ thống thông minh kích hoạt sưởi ấm mầm cây (`isFertilized = true` & `triggerRootThermalWarmth()`), thay vì gọi `isWatered` khiến người dùng bị kẹt vô vọng.
+- [x] 7.3: Bổ sung Graceful Auto-Fallback cho Stage 2: nếu sau 25 giây người dùng chưa tương tác sưởi nắng, hệ thống tự động thổi làn gió nắng ấm giúp cây vươn cành và tiến lên Stage 3 (kết nối chòm sao).
 
-#### Checkpoint 4: Sau Phase 4
-- [x] Bấm nút 📸 "Lưu Khoảnh Khắc", bức ảnh Polaroid xuất hiện và ảnh tải về chứa trọn vẹn 100% cây hoa trái tim nở rực rỡ, không bị rỗng như trong ảnh lỗi.
-- [x] Hoạt động trơn tru trên cả iPhone Safari, Cốc Cốc và Chrome Android.
-
----
-
-### Phase 5: Bọc Khung Giới Hạn Hộp Thoại & Kiểm Thử Toàn Diện (Overlay Bounds & Comprehensive Verification)
-- [x] 5.1: Cấu hình giới hạn chiều cao `max-height: min(92dvh, 92vh)` và `overflow-y: auto` cho `.rotate-device-card` trong `css/components.css`; thu gọn kích thước mô hình điện thoại xuống 64px trong landscape để nút "Tiếp tục ở góc nhìn hiện tại" hiển thị 100% không bị che khuất trên trình duyệt có tab.
-- [x] 5.2: Tối ưu Bàn chế tác dập sáp Stage 0 trên mobile portrait: đưa 4 nút hoa văn triện về hàng cột cân xứng, thu gọn khoảng cách padding giúp người dùng Safari cuộn mượt mà và dễ dàng nhấn nút dập sáp.
-- [x] 5.3: Xây dựng script kiểm thử tự động toàn diện `scratch/test_mobile_overhaul_regression.js`:
-  - Kiểm tra va chạm tọa độ giữa Simon nodes và `#garden-ui` ($\ge 70\text{px}$).
-  - Kiểm tra va chạm giữa Orrery và Dock Camera ($\ge 10\text{px}$).
-  - Kiểm tra va chạm giữa Mascot và Bottom Audio Dock ($\ge 10\text{px}$).
-  - Kiểm tra vị trí mặt trời/mặt trăng trong media query portrait ($top \le 16\%$).
-  - Kiểm tra logic cache cây nở hoa và vẽ ảnh chụp Polaroid.
-  - Kiểm tra cân bằng tuyệt đối dấu ngoặc `{}` trên tất cả các file CSS.
-  - Kiểm tra cú pháp JS (`node -c js/*.js`).
-  - Kiểm tra Zero PC Regression (100% CSS Desktop không bị ảnh hưởng).
-- [x] 5.4: Thực hiện quy trình Git 3-Dev: `git fetch --all --prune`, giải quyết xung đột với commit đồng đội (nếu có), commit trên nhánh feature `feat/mobile-device-overhaul-fixes` sạch sẽ.
-
-#### Checkpoint 5: Hoàn Tất Bàn Giao
-- [x] Khắc phục triệt để 100% lỗi từ 7 bức ảnh chụp thực tế và các lỗi tiềm tàng.
-- [x] Đạt 100% tiêu chí kiểm thử tự động.
-- [x] Giao diện Desktop PC giữ nguyên vẹn 100% (Zero PC Regression).
+#### Checkpoint 7: Sau Phase 7
+- [x] Người dùng trên cả PC và Mobile khi bước vào Stage 2 (Vươn Cành) đều thấy Vệt Nắng Ban Mai rõ ràng, kéo nắng hoặc double-tap sưởi ấm cây thành công 100%, không bao giờ bị kẹt.
 
 ---
 
-### Phase 6: Đồng Nhất Mã Nguồn Đồng Nghiệp & Dọn Dẹp Toàn Diện (Teammate Reconcile & Workspace Cleanup)
-- [x] 6.1: Phân tích toàn bộ 44 file trong gói source độc lập của đồng nghiệp; xác định chính xác các điểm chỉnh sửa trong `css/components.css`.
-- [x] 6.2: Đồng nhất bố cục Bàn chế tác sáp Stage 0 dạng 1 cột khi $\le 560\text{px}$, căn chỉnh que khuấy và triệt tiêu lỗi dịch ngang của lọ vụn vàng bằng keyframes `vial-bob`.
-- [x] 6.3: Khắc phục lỗi cắt đuôi chữ tiếng Việt trên ô chọn ngày sinh (`.zodiac-birth-card select`).
-- [x] 6.4: Tối ưu vị trí bong bóng thoại Mascot sang bên phải (`left: calc(100% + 8px)`) khi xoay ngang, tránh che chuông Simon và sao thiên văn.
-- [x] 6.5: Dời huy hiệu chòm sao xuống `bottom: 27%` tránh đè thanh tiến trình; đưa nút Lodestar lên góc trên-trái khi xoay ngang.
-- [x] 6.6: Tái cấu trúc thanh nút Bưu Thiếp Postcard thành lưới 2 cột tiện dụng trên mobile $\le 560\text{px}$, nút bấm $\ge 46\text{px}$.
-- [x] 6.7: Dọn dẹp toàn bộ thư mục và file thừa (`source đã fix một số lỗi UI mobile/`, các file scratch so sánh tạm thời và test cũ).
-- [x] 6.8: Cập nhật chuẩn hóa tài liệu kiến trúc [AGENTS.md](file:///c:/Users/kishikuun/Documents/dieu-bi-mat-epic/AGENTS.md) và [.rules/mobile-layout-log.md](file:///c:/Users/kishikuun/Documents/dieu-bi-mat-epic/.rules/mobile-layout-log.md) theo thực tế mới nhất.
+### Phase 8: Tái Cấu Trúc Toàn Diện Chuông Hoa (Simon Melody) & Chống Va Chạm Linh Vật, Đàn Mộc Cầm
+- [ ] 8.1: Chống va chạm phía Trái trên Mobile Landscape: Tái định vị 2 nốt Simon trái (slot 0: `l: 18%, t: 44%`, slot 1: `l: 28%, t: 66%`), cách xa Linh vật Mascot và thanh volume dock $\ge 65\text{px}$, không bao giờ bị đè lấp.
+- [ ] 8.2: Chống va chạm phía Phải trên Mobile Landscape: Giảm kích thước Đàn Mộc Cầm trên mobile landscape từ `--harp-w: 330px` về `--harp-w: 220px`; khi Minigame Simon đang chạy (`body.stage-2-active`), tạm thời làm mờ hoặc ẩn Đàn Mộc Cầm (`opacity: 0.15; pointer-events: none;`) để giải phóng toàn bộ không gian cho nốt Simon 2 và 3 (`l: 72%, t: 66%` và `l: 82%, t: 44%`).
+- [ ] 8.3: Tối ưu hiển thị Chuông Hoa trên Mobile Portrait & Chế độ Bypass: Định vị 4 nốt Simon ở 2 bên thân mầm cây (`l: 16%, 22%, 78%, 84%`), kích thước $\ge 80\text{px}$ với `hitbox ::after` mở rộng, nâng `z-index: 2600` cao hơn lớp cỏ `#co-hoa` và mầm cây, bảo đảm hiển thị sắc nét và chạm nhạy trên màn hình dọc.
+- [ ] 8.4: Tinh gọn bảng hướng dẫn `#garden-ui` khi `body.stage-2-active` trên landscape $\le 52\text{px}$, padding $4\text{px} \times 12\text{px}$, không che khuất mầm cây.
+- [ ] 8.5: Đại tu toàn diện Đàn Mộc Cầm trên Mobile (Landscape & Portrait): Xóa bỏ quy tắc `display: none !important` trên portrait; xử lý containing block do `transform: scale` của `#wrap`; neo giữ đàn trang nhã ở góc phải dưới thảm cỏ với `--harp-w: 160px` trên portrait và `--harp-w: 220px` trên landscape, đảm bảo 5 dây đàn luôn có điểm chạm $\ge 44\text{px}$ ngân vang du dương.
 
-#### Checkpoint 6: Dự Án Hoàn Toàn Tinh Gọn & Chuẩn Mực
-- [x] Toàn bộ 15 bộ test hồi quy trong `scratch/` đạt kết quả 100% Passed.
-- [x] Thư mục gốc sạch sẽ tuyệt đối, không còn file/thư mục rác.
-- [x] Tài liệu quy tắc kiến trúc và module đồng bộ 100% với mã nguồn hiện hành.
+#### Checkpoint 8: Sau Phase 8
+- [ ] 4 nốt chuông hoa Simon xuất hiện hoàn toàn ở vùng trống thoáng đãng trên cả điện thoại ngang và dọc, không bị Mascot hay Đàn Mộc Cầm che khuất, ngón cái hai bên chạm cực kỳ thuận tiện.
+- [ ] Đàn Mộc Cầm hiển thị cân đối, vừa vặn, không bao giờ bị biến mất hoàn toàn trên màn hình dọc hay quá to/quá nhỏ trên màn hình ngang.
 
+---
+
+### Phase 9: Nén Video Siêu Nhẹ & Thuật Toán Trình Chiếu Zero-Lag
+- [x] 9.1: Hoàn tất chuyển đổi nén video bằng `ffmpeg`:
+  - `vid_2.mp4` (70MB) -> `video/vid_2_opt.mp4` (27.1MB, H.264 `yuv420p` `+faststart`).
+  - `vid_1.mp4` (1.8GB) -> `video/vid_1_opt.mp4` (44.9MB, 720p 30fps H.264 `yuv420p` `+faststart`, giảm 97.5%).
+  - Cập nhật `.gitignore` loại trừ các file video gốc `vid_1.mp4` và `vid_2.mp4` nặng gần 2GB.
+- [ ] 9.2: Thuật toán trình chiếu Video tối ưu (Zero-Lag Lightbox Player) trong `index.html` và `css/components.css`: `preload="metadata"`, `playsinline`, tự động pause BGM khi phát video và khôi phục BGM êm dịu khi đóng video.
+
+#### Checkpoint 9: Sau Phase 9
+- [ ] Cả 2 video đều dưới 35MB, nạp ngay tức thì qua GitHub Pages, video chạy mượt mà không lag giật, quản lý âm thanh chuyển tiếp hoàn hảo.
+
+---
+
+### Phase 10: Hệ Thống 2 Hộp Quà Bí Mật Tuần Tự (Interactive Dual Gift Boxes)
+- [ ] 10.1: Xóa bỏ hoàn toàn link Google Drive trong `js/content.js`, thay bằng cấu trúc nội dung và giới thiệu 2 Hộp Quà Bí Mật.
+- [ ] 10.2: Thiết kế giao diện 2 Hộp Quà Di Sản Sơn Mài Dó Paper (`#gift-box-1` & `#gift-box-2`) ở cuối bức thư: Hộp 1 màu đỏ chu sa nơ vàng kim sẵn sàng mở, Hộp 2 màu hoàng đàn thếp vàng kèm ổ khóa son 🔒.
+- [ ] 10.3: Xây dựng cơ chế Khóa & Mở Khóa Tuần Tự trong `js/secret-letter.js`:
+  - Mở Hộp 1 phát `vid_1_opt.mp4`.
+  - Theo dõi tiến trình xem video 1: khi xem hết ($\ge 95\%$ hoặc `ended`), mở khóa Hộp 2 với hiệu ứng Unlocking Ceremony (bung nơ, chuông ngân `playChimeSFX()`, rung cảm ứng `triggerHaptic`).
+  - Mở Hộp 2 phát `vid_2_opt.mp4`.
+  - Nếu bấm Hộp 2 khi chưa xem xong video 1, Mascot nhắc nhở nhẹ nhàng.
+
+#### Checkpoint 10: Sau Phase 10
+- [ ] Trải nghiệm mở quà tuần tự mượt mà, cảm xúc bất ngờ và sang trọng, không còn liên kết Drive ngoại vi.
+
+---
+
+### Phase 11: Nâng Cấp Hệ Thống Âm Nhạc BGM (Random 70/30 & Phát Nối Bài)
+- [ ] 11.1: Cập nhật thuật toán chọn nhạc ngẫu nhiên trong `js/audio-vfx.js`: `Math.random() < 0.7 ? 1 : 0` (70% `nhac_2.webm` - Mắt Bão, 30% `nhac_1.webm` - MONO Em Xinh).
+- [ ] 11.2: Hoàn thiện cơ chế phát nối bài tiếp theo (`ended` event listener): khi nghe hết bài hiện tại, tự động chuyển sang bài còn lại và hiển thị mascot thông báo giai điệu mới.
+- [ ] 11.3: Bảo đảm tính tương thích với Phonk Mode và nút điều chỉnh âm lượng.
+
+#### Checkpoint 11: Sau Phase 11
+- [ ] Kiểm nghiệm Monte Carlo 1,000 lần xác nhận phân phối 70% `nhac_2` và 30% `nhac_1`; bài hát tự động nối tiếp liền mạch khi kết thúc.
+
+---
+
+### Phase 12: Đảm Bảo Ảnh Polaroid Trọn Vẹn Cây Hoa Nở Rộ & Kiểm Thử Toàn Diện
+- [ ] 12.1: Bảo đảm hàm `renderGardenPolaroidToCanvas` trong `js/garden-stages.js` luôn vẽ trọn vẹn tán hoa trái tim nở rộ rực rỡ, chim hạc, nón lá, áo dài ở Stage 4; hiển thị mầm cây thi vị nếu chụp ở Stage 1-3.
+- [ ] 12.2: Xây dựng kịch bản kiểm thử tự động Node.js `scratch/test_stage2_gifts_audio.js` kiểm tra 100% các tiêu chí logic, cú pháp và bố cục.
+- [ ] 12.3: Kiểm thử Zero PC Regression (100% giao diện Desktop PC giữ nguyên vẻ đẹp Quiet Luxury).
+- [ ] 12.4: Đồng bộ Git 3-Dev: chạy `git fetch --all --prune`, đảm bảo không có xung đột, commit và push nhánh feature sạch sẽ.
+
+#### Checkpoint 12: Nghiệm Thu Toàn Diện
+- [ ] 100% các lỗi trên cả PC và Mobile (5 ảnh thực tế) được khắc phục triệt để.
+- [ ] Đạt 100% bài kiểm tra tự động.
+- [ ] Toàn bộ yêu cầu chính và phụ của người dùng hoàn thành xuất sắc.
