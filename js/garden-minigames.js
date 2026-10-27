@@ -156,6 +156,7 @@
         container.style.display = 'block';
         container.style.opacity = '1';
         container.style.pointerEvents = 'auto';
+        container.style.zIndex = '9999';
         container.innerHTML = '';
 
         document.body.classList.remove('stage-1-active', 'stage-3-active', 'stage-4-active');
@@ -175,9 +176,10 @@
         stage2FailCount = 0;
         stage2StartTime = Date.now();
         if (stage2SkipTimer) clearTimeout(stage2SkipTimer);
+        // Graceful Auto-Skip Fallback: Hiển thị nút bỏ qua sau 8 giây để người dùng không bị kẹt
         stage2SkipTimer = setTimeout(() => {
             showSimonSkipButton();
-        }, 40000);
+        }, 8000);
 
         const skipBtn = document.getElementById('simon-skip-btn');
         if (skipBtn) {
@@ -220,15 +222,15 @@
             (window.matchMedia ? window.matchMedia('(orientation: portrait)').matches : (window.innerHeight > window.innerWidth));
 
         // Bilateral Thumb Zones (2 Trái - 2 Phải):
-        // Nốt 0 & 1 ở phía trái, cách xa Mascot & volume dock >= 65px
-        // Nốt 2 & 3 ở phía phải, thoáng đãng không bị Đàn Mộc Cầm che lấp
-        // Hành lang trung tâm giải phóng hoàn toàn cho mầm cây vươn cành
+        // Nốt 0 & 1 ở phía trái (l: 20%, 32%), cách xa Mascot & volume dock >= 65px
+        // Nốt 2 & 3 ở phía phải (l: 68%, 80%), thoáng đãng an toàn không tràn mép màn hình
+        // Hành lang trung tâm 33%-67% giải phóng hoàn toàn cho mầm cây vươn cành
         const celestialArcSlots = isMobileLandscape
             ? [
-                { l: 18, t: 44 },
-                { l: 28, t: 66 },
-                { l: 72, t: 66 },
-                { l: 82, t: 44 }
+                { l: 20, t: 40 },
+                { l: 32, t: 60 },
+                { l: 68, t: 60 },
+                { l: 80, t: 40 }
             ]
             : (isPortrait
                 ? [
@@ -346,7 +348,7 @@
             node.classList.add('wrong');
             setTimeout(() => node.classList.remove('wrong'), 500);
 
-            if (stage2FailCount >= 5) {
+            if (stage2FailCount >= 2) {
                 showSimonSkipButton();
             }
 

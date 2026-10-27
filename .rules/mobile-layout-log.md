@@ -895,3 +895,62 @@
 - **Kiểm Định**:
   - Kiểm thử trực tiếp qua CDP trong Chrome: Hit-testing `#gift-box-1` đạt `pointer-events: auto`, click mở modal video thành công, modal đóng/mở chuẩn xác.
   - Cú pháp 20 file JS và 4 file CSS: 100% Passed.
+
+---
+
+### 19. Vấn Đề: Khắc Phục Lỗi Font/Cuộn Thư, Chuông Hoa Phase 2 & Mây Nắng Landscape, Tạm Thời Tắt Pass và Thiết Lập Cơ Chế Cứu Hộ Xoay Dọc/Mở Quà 20/10 Trực Tiếp
+- **Triệu chứng & Căn nguyên**:
+  1. *Lỗi không bấm được nút đổi font chữ và thanh cuộn thư không kéo lên được (cả PC lẫn Mobile)*:
+     - Hàm `typeWriter` trong `js/secret-letter.js` thực hiện vòng lặp 75ms với lệnh `textContainer.scrollTop = textContainer.scrollHeight;` liên tục đè lên tương tác cuộn chuột hoặc vuốt ngón tay của người dùng khi muốn kéo lên đọc lại phần thư phía trên.
+     - Nút `#font-toggle-btn` nằm ở đầu văn bản nội dung, khi chữ gõ dài ra thì nút bị đẩy cuộn trôi khỏi màn hình nhìn thấy, người dùng không thể bấm được nếu không cuộn lên.
+  2. *Lỗi phím đàn Simon Phase 2 quá to và tràn màn hình ở mobile landscape*:
+     - Kích thước `.simon-node` trong media query landscape cũ là `78px` kèm `scale(1.18)` và bóng tỏa lớn. Tọa độ nốt 3 tại `l: 82%` bị văng ra khỏi mép phải màn hình.
+     - Vùng hộp Đàn Mộc Cầm (`.plant-harp-strings-wrap`) rộng 220px và thanh nút `.simon-actions-bar` có thể che khuất các nốt chuông hoa nếu không triệt tiêu tương tác nền.
+  3. *Lỗi Mây và Mặt Trời ở Phase 1 & 2 quá nhỏ trên mobile landscape*:
+     - Kích thước SVG bị bóp xuống còn 44px và 40px, đồng thời `.living-atmosphere-hud .shifter-pill-label` bị ẩn (`display: none !important;`), khiến người dùng không biết đây là mây/nắng để chạm tưới nước hay sưởi ấm.
+  4. *Yêu cầu tạm thời vô hiệu hoá tính năng nhập mật mã*:
+     - Giúp người nhận trải nghiệm trực tiếp khu vườn mà không bị chặn lại bởi cổng thời gian hay mật mã.
+  5. *Yêu cầu cơ chế cứu hộ dành riêng cho mobile*:
+     - Cho phép xoay dọc lại linh hoạt khi gặp khó khăn tương tác ở màn hình ngang.
+     - Bảo đảm dù web có xảy ra bất kỳ lỗi minigame nào thì người dùng VẪN ĐỌC ĐƯỢC THIỆP, VẪN LÀM ĐƯỢC TRẮC NGHIỆM HOA, VẪN TẢI ĐƯỢC BƯU THIẾP VÀ VẪN XEM ĐƯỢC CẢ 2 VIDEO.
+- **Công thức chuẩn hóa**:
+  1. **Tối Ưu Typewriter & Thanh Cuộn Thư Thông Minh**:
+     - Trong [js/secret-letter.js](file:///c:/Users/kishikuun/Documents/dieu-bi-mat-epic/js/secret-letter.js):
+       - Tăng tốc độ gõ máy chữ từ 75ms xuống 30ms/ký tự.
+       - Chỉ tự động cuộn xuống nếu vị trí cuộn đang ở gần đáy (`distanceToBottom < 70px`), cho phép người dùng tự do kéo lên đọc lại thư mà không bị giật xuống đáy.
+       - Cho phép chạm/click trực tiếp vào khung `.text-panel` để hiển thị toàn bộ bức thư ngay lập tức.
+       - Lắng nghe sự kiện ủy quyền Capture Phase trên `document` cho `#font-toggle-btn`.
+     - Trong [css/layout.css](file:///c:/Users/kishikuun/Documents/dieu-bi-mat-epic/css/layout.css):
+       - Ghim nút đổi font cố định ở góc trên bên phải khung thư: `position: sticky !important; top: 0 !important; float: right !important; z-index: 120 !important;`.
+       - Tùy biến thanh cuộn vàng nhung 8px sang trọng (`rgba(212, 175, 55, 0.65)`), hỗ trợ `touch-action: pan-y !important; overscroll-behavior-y: contain !important;`.
+  2. **Chuẩn Hóa Phím Đàn Chuông Hoa Phase 2 & Triệt Tiêu Che Khuất**:
+     - Trong [js/garden-minigames.js](file:///c:/Users/kishikuun/Documents/dieu-bi-mat-epic/js/garden-minigames.js):
+       - Căn chỉnh tọa độ `celestialArcSlots` mobile landscape vào vùng an toàn tuyệt đối: Nốt 0: `l: 20%, t: 40%`, Nốt 1: `l: 32%, t: 60%`, Nốt 2: `l: 68%, t: 60%`, Nốt 3: `l: 80%, t: 40%`.
+       - Rút ngắn thời gian hiển thị nút bỏ qua `#simon-skip-btn` từ 40s xuống **8s** hoặc sau **2 lần bấm sai**.
+       - Đặt `#simon-game { z-index: 9999; }`.
+     - Trong [css/components.css](file:///c:/Users/kishikuun/Documents/dieu-bi-mat-epic/css/components.css):
+       - Điều chỉnh `.simon-node` trong landscape về kích thước thanh thoát `54px`, `font-size: 22px`, `z-index: 10000 !important;`.
+       - Ẩn hoàn toàn Đàn Mộc Cầm khi Stage 2 đang chạy: `body.stage-2-active .plant-harp-strings-wrap { display: none !important; pointer-events: none !important; }`.
+     - Trong [css/layout.css](file:///c:/Users/kishikuun/Documents/dieu-bi-mat-epic/css/layout.css):
+       - Khai báo `.simon-actions-bar { pointer-events: none !important; }` để không chặn các phím đàn bên dưới, các nút con có `pointer-events: auto !important;`.
+  3. **Phóng To Mây & Mặt Trời Kèm Nhãn Hướng Dẫn Sắc Nét**:
+     - Trong [css/components.css](file:///c:/Users/kishikuun/Documents/dieu-bi-mat-epic/css/components.css) landscape:
+       - `.cloud-svg`: mở rộng lên `clamp(64px, 12vw, 76px) !important;`.
+       - `.sun-svg`: mở rộng lên `clamp(60px, 11vw, 72px) !important;`.
+       - `.living-atmosphere-hud .shifter-pill-label`: hiển thị lại với `display: inline-flex !important; font-size: 10.5px !important;` kèm huy hiệu hướng dẫn trực quan ("🌧️ Mây Mưa Sương Sớm", "☀️ Nắng Vàng Ban Mai").
+  4. **Tạm Thời Tắt Mật Mã / Khóa Thời Gian**:
+     - Trong [js/wax-seal-ceremony.js](file:///c:/Users/kishikuun/Documents/dieu-bi-mat-epic/js/wax-seal-ceremony.js): Đặt cờ `const DISABLE_TIME_LOCK = true;` ở hàm `getTimeLockState()`, tự động trả về `'UNLOCKED'` và mở cửa tự do. Khi cần tái sử dụng, chỉ việc đổi thành `false`.
+  5. **Cơ Chế Cứu Hộ Đa Chiều Cho Mobile (Portrait Persistence & Emergency Fast-Track)**:
+     - Trong [js/orientation-guard.js](file:///c:/Users/kishikuun/Documents/dieu-bi-mat-epic/js/orientation-guard.js):
+       - Ghi nhớ trạng thái màn hình dọc qua `sessionStorage.getItem('pinned_portrait_mode')`, không bao giờ hiển thị lại bảng nhắc xoay ngang nếu người dùng đã chủ động chọn xem dọc.
+       - Thêm nút `#rotate-portrait-mode-btn` ("📱 Xem ở màn hình dọc") vào `#rotate-device-overlay`.
+       - Thêm nút `#mobile-orientation-toggle-btn` ("📱 Xoay Dọc / 🔄 Xoay Ngang") vào `#top-experiential-dock` (chỉ hiển thị trên mobile).
+       - Xây dựng API cứu hộ khẩn cấp `window.emergencyFastTrackToStage4()`:
+         - Khi người dùng bấm `#emergency-fast-track-btn` (trong overlay) hoặc `#dock-fast-track-btn` (trên top dock), hệ thống lập tức dọn dẹp các phase cũ, chuyển trực tiếp sang Stage 4 (Cây nở hoa trọn vẹn), hiển thị bức thư typewriter, mở khóa đồng thời 2 hộp quà (`video/vid_1.mp4` & `video/vid_2.mp4`), mở modal thiệp Polaroid 3D kèm trắc nghiệm hoa và tính năng tải ảnh bưu thiếp.
+- **Kiểm Định**:
+  - `scratch/test_fixes_comprehensive.js`: 5/5 bài kiểm thử ĐẠT 100% trên viewport mobile landscape $844 \times 390$.
+  - `scratch/test_portrait_mobile.js`: ĐẠT 100% trên viewport mobile portrait $390 \times 844$.
+  - `scratch/test_pc_desktop.js`: ĐẠT 100% trên viewport PC Desktop $1440 \times 900$, xác nhận **Zero PC Regression**.
+  - Kiểm tra cú pháp 20 file JavaScript: 100% OK (`node -c`).
+  - Kiểm tra cân bằng ngoặc nhọn 4 file CSS: 100% OK (`base.css`: 36, `layout.css`: 365, `components.css`: 2007, `zodiac.css`: 80).
+

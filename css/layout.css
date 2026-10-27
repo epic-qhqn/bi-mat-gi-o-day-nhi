@@ -858,6 +858,11 @@ body.sky-night .garden-message {
   gap: 8px;
   flex-wrap: wrap;
   margin-top: 4px;
+  pointer-events: none !important;
+}
+
+.simon-actions-bar > * {
+  pointer-events: auto !important;
 }
 
 .simon-skip-btn {
@@ -1405,6 +1410,9 @@ a:hover {
   border-radius: 24px;
   padding: 28px 34px;
   overflow-y: auto;
+  touch-action: pan-y !important;
+  overscroll-behavior-y: contain !important;
+  -webkit-overflow-scrolling: touch !important;
   opacity: 0;
   transition: opacity 1.5s cubic-bezier(0.4, 0, 0.2, 1), transform 1.5s cubic-bezier(0.4, 0, 0.2, 1);
   z-index: 100;
@@ -1427,16 +1435,26 @@ a:hover {
   pointer-events: auto !important;
 }
 
-/* Custom Scrollbar for Text */
+/* Custom Scrollbar for Text (Thanh kéo lên đọc thư dễ thấy, dễ cuộn) */
 .text-panel::-webkit-scrollbar {
-  width: 6px;
+  width: 8px !important;
+}
+.text-panel::-webkit-scrollbar-track {
+  background: rgba(74, 55, 40, 0.08) !important;
+  border-radius: 99px !important;
 }
 .text-panel::-webkit-scrollbar-thumb {
-  background: rgba(0, 0, 0, 0.1);
-  border-radius: 99px;
+  background: rgba(212, 175, 55, 0.65) !important;
+  border: 1.5px solid rgba(250, 247, 240, 0.8) !important;
+  border-radius: 99px !important;
+  min-height: 44px !important;
+}
+.text-panel::-webkit-scrollbar-thumb:hover {
+  background: rgba(212, 175, 55, 0.95) !important;
 }
 body.sky-night .text-panel::-webkit-scrollbar-thumb {
-  background: rgba(255, 255, 255, 0.2);
+  background: rgba(212, 175, 55, 0.8) !important;
+  border-color: rgba(19, 28, 78, 0.8) !important;
 }
 
 #code {
@@ -1459,39 +1477,50 @@ body.sky-night #code {
   line-height: 1.4;
 }
 
-/* Font Toggle Button in Text Panel - Clean Pill */
+/* Font Toggle Button in Text Panel - Clean Sticky Pill Luôn Nổi Trên Cùng */
 .font-toggle-btn {
-  float: right;
-  background: var(--accent-pill-bg);
-  border: var(--border-width-atelier) solid var(--border-card);
-  border-radius: var(--radius-pill);
-  padding: 5px 14px;
-  font-family: var(--font-ui);
-  font-size: 12px;
-  font-weight: 600;
-  color: var(--text-navy);
-  display: inline-flex;
-  align-items: center;
-  gap: 5px;
-  cursor: pointer;
-  user-select: none;
-  transition: all 0.25s ease;
-  box-shadow: var(--shadow-subtle);
-  margin-bottom: 12px;
-  z-index: 10;
+  position: sticky !important;
+  top: 0 !important;
+  float: right !important;
+  background: var(--accent-pill-bg, rgba(250, 247, 240, 0.95)) !important;
+  border: 1.5px solid var(--border-card, rgba(212, 175, 55, 0.6)) !important;
+  border-radius: var(--radius-pill, 999px) !important;
+  padding: 6px 14px !important;
+  font-family: var(--font-ui, 'Be Vietnam Pro', sans-serif) !important;
+  font-size: 12.5px !important;
+  font-weight: 600 !important;
+  color: var(--text-navy, #131C4E) !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 6px !important;
+  cursor: pointer !important;
+  user-select: none !important;
+  transition: all 0.25s ease !important;
+  box-shadow: 0 4px 14px rgba(19, 28, 78, 0.14) !important;
+  margin-bottom: 12px !important;
+  z-index: 120 !important;
+  visibility: visible !important;
+  pointer-events: auto !important;
+  touch-action: manipulation !important;
+  backdrop-filter: blur(10px) !important;
+  -webkit-backdrop-filter: blur(10px) !important;
+}
+
+.font-toggle-btn * {
+  pointer-events: none !important;
 }
 
 body.sky-night .font-toggle-btn {
-  background: var(--bg-glass-night);
-  border-color: var(--border-night);
-  color: var(--text-light);
+  background: var(--bg-glass-night, rgba(19, 28, 78, 0.9)) !important;
+  border-color: var(--border-night, rgba(212, 175, 55, 0.7)) !important;
+  color: var(--text-light, #FFFDF5) !important;
 }
 
 .font-toggle-btn:hover {
   transform: translateY(-2px);
-  background: #FFFFFF;
-  border-color: var(--text-navy);
-  box-shadow: var(--shadow-subtle);
+  background: #FFFFFF !important;
+  border-color: var(--accent-gold, #D4AF37) !important;
+  box-shadow: 0 6px 20px rgba(212, 175, 55, 0.3) !important;
 }
 
 .font-toggle-btn:active {
@@ -1499,15 +1528,15 @@ body.sky-night .font-toggle-btn {
 }
 
 .font-toggle-btn.active {
-  background: var(--text-navy);
-  border-color: var(--text-navy);
-  color: #FFFFFF;
+  background: var(--text-navy, #131C4E) !important;
+  border-color: var(--accent-gold, #D4AF37) !important;
+  color: #FFFFFF !important;
 }
 
 body.sky-night .font-toggle-btn.active {
-  background: var(--accent-gold);
-  border-color: var(--accent-gold);
-  color: var(--text-navy);
+  background: var(--accent-gold, #D4AF37) !important;
+  border-color: var(--accent-gold, #D4AF37) !important;
+  color: var(--text-navy, #131C4E) !important;
 }
 
 /* Readable Font Typography Overrides (Task 9.3) */

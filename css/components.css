@@ -4983,11 +4983,12 @@ body.sky-night .terrarium-gesture-hint {
   pointer-events: auto;
 }
 
-/* Khi minigame Chuông Hoa đang chạy, làm mờ nhẹ Đàn Mộc Cầm để người chơi tập trung */
+/* Khi minigame Chuông Hoa đang chạy, ẩn hoàn toàn Đàn Mộc Cầm để giải phóng không gian và tránh che khuất phím đàn */
 body.stage-2-active .plant-harp-strings-wrap {
-  opacity: 0.15 !important;
+  display: none !important;
+  opacity: 0 !important;
   pointer-events: none !important;
-  transition: opacity 0.5s ease;
+  visibility: hidden !important;
 }
 
 .harp-corner-vignette {
@@ -8094,17 +8095,21 @@ body.sky-night .found-letter-slot.filled {
   }
 
   .cloud-svg {
-    width: 44px !important;
+    width: clamp(64px, 12vw, 76px) !important;
     height: auto !important;
   }
 
   .sun-svg {
-    width: 40px !important;
+    width: clamp(60px, 11vw, 72px) !important;
     height: auto !important;
   }
 
   .living-atmosphere-hud .shifter-pill-label {
-    display: none !important;
+    display: inline-flex !important;
+    font-size: 10.5px !important;
+    padding: 3px 10px !important;
+    margin-top: 4px !important;
+    box-shadow: 0 2px 10px rgba(19, 28, 78, 0.16) !important;
   }
 
   /* Realtime Guide HUD in Mobile Landscape: Compact Jewel Icon docked to Top-Left Safe Area */
@@ -10019,19 +10024,86 @@ html.is-orientation-blocked body {
   box-shadow: 0 0 6px #D4AF37;
 }
 
-/* Bypass Button: Cho phép tiếp tục nếu điện thoại bị khóa xoay */
-.rotate-bypass-btn {
-  margin-top: 14px;
-  display: inline-flex;
+/* Dual-Orientation & Emergency Fast-Track Actions Group */
+.rotate-actions-group {
+  display: flex;
+  flex-direction: column;
   align-items: center;
   gap: 8px;
-  background: rgba(250, 247, 240, 0.1);
-  border: 1px solid rgba(212, 175, 55, 0.45);
+  width: 100%;
+  margin-top: 14px;
+}
+
+.rotate-mode-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  background: linear-gradient(135deg, rgba(212, 175, 55, 0.25) 0%, rgba(212, 122, 136, 0.25) 100%);
+  border: 1.5px solid #D4AF37;
   border-radius: 999px;
   padding: 8px 18px;
-  color: #FAF7F0;
+  color: #FFFDF5;
   font-family: 'Be Vietnam Pro', system-ui, sans-serif;
   font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.3px;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+  pointer-events: auto;
+  width: 100%;
+  max-width: 250px;
+  box-shadow: 0 4px 14px rgba(212, 175, 55, 0.2);
+}
+
+.rotate-mode-btn:hover {
+  background: linear-gradient(135deg, rgba(212, 175, 55, 0.38) 0%, rgba(212, 122, 136, 0.38) 100%);
+  transform: translateY(-1px);
+}
+
+.emergency-fast-track-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  background: linear-gradient(135deg, rgba(212, 122, 136, 0.28) 0%, rgba(106, 141, 115, 0.22) 100%);
+  border: 1px dashed rgba(212, 175, 55, 0.75);
+  border-radius: 999px;
+  padding: 6px 14px;
+  color: #FAF7F0;
+  font-family: 'Be Vietnam Pro', system-ui, sans-serif;
+  font-size: 11px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+  pointer-events: auto;
+  width: 100%;
+  max-width: 250px;
+}
+
+.emergency-fast-track-btn:hover {
+  background: linear-gradient(135deg, rgba(212, 122, 136, 0.45) 0%, rgba(106, 141, 115, 0.35) 100%);
+  border-color: #D4AF37;
+}
+
+/* Bypass Button: Cho phép tiếp tục nếu điện thoại bị khóa xoay */
+.rotate-bypass-btn {
+  margin-top: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  background: rgba(250, 247, 240, 0.08);
+  border: 1px solid rgba(212, 175, 55, 0.35);
+  border-radius: 999px;
+  padding: 6px 16px;
+  color: #FAF7F0;
+  font-family: 'Be Vietnam Pro', system-ui, sans-serif;
+  font-size: 11.5px;
   font-weight: 500;
   letter-spacing: 0.3px;
   cursor: pointer;
@@ -10039,6 +10111,8 @@ html.is-orientation-blocked body {
   touch-action: manipulation;
   -webkit-tap-highlight-color: transparent;
   pointer-events: auto;
+  width: 100%;
+  max-width: 250px;
 }
 
 .rotate-bypass-btn:hover {
@@ -10055,6 +10129,16 @@ html.is-orientation-blocked body {
   color: #D4AF37;
   font-size: 13px;
   transition: transform 0.2s;
+}
+
+.mobile-only-btn {
+  display: none !important;
+}
+
+@media (max-width: 1024px) or (max-height: 540px) {
+  .mobile-only-btn {
+    display: inline-flex !important;
+  }
 }
 
 .rotate-bypass-btn:hover .bypass-arrow {
@@ -10471,18 +10555,19 @@ body.zen-mode-active .garden-stage-selector {
   }
 
   /* Phase 5: Minigames Adaptation in Landscape */
-  /* Stage 2: Simon Melody Nodes & Replay/Skip Action Controls */
   .simon-node {
-    width: 78px !important;
-    height: 78px !important;
-    font-size: 30px !important;
-    box-shadow: 0 4px 18px rgba(19, 28, 78, 0.22), 0 0 16px var(--note-color, rgba(212, 175, 55, 0.4)) !important;
+    width: 54px !important;
+    height: 54px !important;
+    font-size: 22px !important;
+    z-index: 10000 !important;
+    pointer-events: auto !important;
+    box-shadow: 0 3px 14px rgba(19, 28, 78, 0.22), 0 0 12px var(--note-color, rgba(212, 175, 55, 0.4)) !important;
   }
   .simon-node::after {
-    top: -16px !important;
-    left: -16px !important;
-    right: -16px !important;
-    bottom: -16px !important;
+    top: -12px !important;
+    left: -12px !important;
+    right: -12px !important;
+    bottom: -12px !important;
   }
   .simon-actions-bar {
     gap: 6px !important;

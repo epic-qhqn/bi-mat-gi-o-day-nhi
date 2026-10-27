@@ -19,18 +19,54 @@
     // =========================================================================
     // 1. TYPEWRITER & MAIN LETTER ON CANVAS
     // =========================================================================
+    let currentTypewriterTimer = null;
     const typeWriter = (element) => {
         if (!element) return;
+        if (currentTypewriterTimer) {
+            clearInterval(currentTypewriterTimer);
+            currentTypewriterTimer = null;
+        }
+
         const str = element.innerHTML;
         element.innerHTML = '';
         element.style.display = 'block';
 
         // Glassmorphism background fade in
         const textContainer = document.getElementById("text");
-        if (textContainer) textContainer.classList.add("show");
+        if (textContainer) {
+            textContainer.classList.add("show");
+            textContainer.style.pointerEvents = 'auto';
+        }
 
         let progress = 0;
-        const timer = setInterval(() => {
+        let isTypingFinished = false;
+
+        const completeTypewriter = () => {
+            if (isTypingFinished) return;
+            isTypingFinished = true;
+            if (currentTypewriterTimer) {
+                clearInterval(currentTypewriterTimer);
+                currentTypewriterTimer = null;
+            }
+            element.innerHTML = str;
+            const giftDeck = document.getElementById('secret-gift-boxes-deck');
+            if (giftDeck) {
+                giftDeck.classList.remove('hidden');
+            }
+        };
+
+        // Cho phép bấm vào text container để hoàn tất hiển thị toàn bộ thư ngay lập tức
+        if (textContainer && !textContainer.dataset.fastCompleteBound) {
+            textContainer.dataset.fastCompleteBound = 'true';
+            textContainer.addEventListener('click', (e) => {
+                if (e.target.closest('#font-toggle-btn, #secret-gift-boxes-deck, button, a')) return;
+                if (!isTypingFinished) {
+                    completeTypewriter();
+                }
+            });
+        }
+
+        currentTypewriterTimer = setInterval(() => {
             const current = str.substr(progress, 1);
             if (current === '<') {
                 progress = str.indexOf('>', progress) + 1;
@@ -38,18 +74,19 @@
                 progress++;
             }
             element.innerHTML = str.substring(0, progress) + (progress & 1 ? '_' : '');
+
+            // Chỉ tự động cuộn xuống đáy nếu người dùng đang ở gần đáy (không kéo ngược lên đọc lại)
             if (textContainer) {
-                textContainer.scrollTop = textContainer.scrollHeight;
-            }
-            if (progress >= str.length) {
-                clearInterval(timer);
-                const giftDeck = document.getElementById('secret-gift-boxes-deck');
-                if (giftDeck) {
-                    giftDeck.classList.remove('hidden');
-                    if (textContainer) textContainer.scrollTop = textContainer.scrollHeight;
+                const distanceToBottom = textContainer.scrollHeight - textContainer.scrollTop - textContainer.clientHeight;
+                if (distanceToBottom < 70) {
+                    textContainer.scrollTop = textContainer.scrollHeight;
                 }
             }
-        }, 75);
+
+            if (progress >= str.length) {
+                completeTypewriter();
+            }
+        }, 30);
     };
 
     const loadContentAndAnimateText = async () => {
@@ -170,8 +207,10 @@
         ];
 
         const updateFontUI = (isReadable) => {
+            const textContainer = document.getElementById("text");
             if (isReadable) {
                 document.body.classList.add('readable-font');
+                if (textContainer) textContainer.classList.add('readable-font');
                 const mainBtn = document.getElementById('font-toggle-btn');
                 if (mainBtn) {
                     mainBtn.classList.add('active');
@@ -182,6 +221,7 @@
                 }
             } else {
                 document.body.classList.remove('readable-font');
+                if (textContainer) textContainer.classList.remove('readable-font');
                 const mainBtn = document.getElementById('font-toggle-btn');
                 if (mainBtn) {
                     mainBtn.classList.remove('active');
@@ -201,20 +241,28 @@
             }
         } catch (_) {}
 
-        fontBtns.forEach(btn => {
-            if (!btn) return;
-            btn.addEventListener('click', (e) => {
-                e.stopPropagation();
-                const isCurrentlyReadable = document.body.classList.contains('readable-font');
-                const nextState = !isCurrentlyReadable;
-                updateFontUI(nextState);
-                if (typeof window.triggerHaptic === 'function') window.triggerHaptic('tap');
-                try {
-                    localStorage.setItem('user_font_mode', nextState ? 'readable' : 'handwriting');
-                } catch (_) {}
-                if (typeof window.playKeyTapSFX !== 'undefined') window.playKeyTapSFX();
-            });
-        });
+        let fontToggleBound = false;
+        const bindGlobalFontToggle = () => {
+            if (fontToggleBound) return;
+            fontToggleBound = true;
+            document.addEventListener('click', (e) => {
+                const targetBtn = e.target && e.target.closest('#font-toggle-btn, .font-toggle-btn, #polaroid-font-btn, .polaroid-font-toggle');
+                if (targetBtn) {
+                    if (e.cancelable) e.preventDefault();
+                    e.stopPropagation();
+                    const isCurrentlyReadable = document.body.classList.contains('readable-font');
+                    const nextState = !isCurrentlyReadable;
+                    updateFontUI(nextState);
+                    if (typeof window.triggerHaptic === 'function') window.triggerHaptic('tap');
+                    try {
+                        localStorage.setItem('user_font_mode', nextState ? 'readable' : 'handwriting');
+                    } catch (_) {}
+                    if (typeof window.playKeyTapSFX !== 'undefined') window.playKeyTapSFX();
+                }
+            }, true);
+        };
+        bindGlobalFontToggle();
+        window.toggleReadableFont = updateFontUI;
     };
 
     // =========================================================================

@@ -64,14 +64,18 @@
 ## 4. LIFECYCLE STAGES & STATE COORDINATION
 1. **5-Stage Progression Pipeline**:
    - `Stage 0 (Awakening & Birthday Atelier)`: Name input, Day & Month birth selection $\rightarrow$ Zodiac calculation, wax melting & stamping in `wax-seal-ceremony.js` (adaptive 1-column atelier on vertical mobile $\le 560\text{px}$, 2-column on landscape) to awaken garden.
-   - `Stage 1 (Sprout & Clover)`: Sprout & four-leaf clover emerge in `garden-stages.js`; water & sunbathe.
-   - `Stage 2 (Simon Melody - Chuông Hoa)`: `garden-minigames.js` activates acoustic memory sequence on bilateral thumb zones (left 18%/28%, right 72%/82%) leaving an expansive 44% central corridor for sprout growth; `#simon-skip-btn` fallback after 5 fails or 40s. Living Atmosphere HUD sun shifter remains visible, double-tap or root touch warms roots with 25s auto-fallback.
+     - *Password / Time Lock Gate Status*: Currently disabled via `const DISABLE_TIME_LOCK = true;` inside `getTimeLockState()` in `js/wax-seal-ceremony.js` to allow direct entrance. To re-enable time locking until 25/10 or password protection in the future, set `DISABLE_TIME_LOCK = false;`.
+   - `Stage 1 (Sprout & Clover)`: Sprout & four-leaf clover emerge in `garden-stages.js`; water & sunbathe with prominent Cloud & Sun shifter tokens (`clamp(64px, 12vw, 76px)` with interactive guide labels).
+   - `Stage 2 (Simon Melody - Chuông Hoa)`: `garden-minigames.js` activates acoustic memory sequence on bilateral safe thumb zones (left 20%/32%, right 68%/80%) leaving a 36% central corridor for sprout growth; nodes calibrated to compact `54px` (z-index 10000); `#plant-harp-strings-wrap` hidden via `body.stage-2-active` to prevent masking; `#simon-skip-btn` graceful fallback appears after 8s or 2 fails.
    - `Stage 3 (Zodiac Constellation Linker - Nối Chòm Sao Hoàng Đạo)`: Connect real astronomical stars of user's zodiac sign avoiding 4 exclusion zones (top HUD, central tree, mascot, bottom chimes); catch radius $\ge 48\text{px}$; 2-second grand reveal SVG mythological art demonstration with celestial SFX and mascot cheer; `#constellation-skip-btn` fallback after 5 fails or 40s.
-   - `Stage 4 (Full Blossom & Áo Dài)`: Heart tree blooms (`love.js`), Áo Dài appears, reveals keepsake polaroid (using cached bloomed tree snapshot), 9:16 postcard (with 2-column action grid on mobile) & secret typewriter letter with Sequential Dual Heritage Gift Boxes (`video/vid_1.mp4` & `video/vid_2.mp4` under 50MB, zero Google Drive link).
-2. **Global State Architecture**:
+   - `Stage 4 (Full Blossom & Áo Dài)`: Heart tree blooms (`love.js`), Áo Dài appears, reveals keepsake polaroid (using cached bloomed tree snapshot), 9:16 postcard (with 2-column action grid on mobile) & secret typewriter letter with Sequential Dual Heritage Gift Boxes (`video/vid_1.mp4` & `video/vid_2.mp4` under 50MB, zero Google Drive link). Typewriter letter includes sticky `#font-toggle-btn` and non-blocking scroll allowing users to scroll up freely.
+2. **Mobile Dual-Orientation & Emergency Fast-Track Architecture**:
+   - `Orientation Persistence & Toggle`: Mobile users can switch between portrait and landscape at any time via `#mobile-orientation-toggle-btn` in `#top-experiential-dock` or `#rotate-portrait-mode-btn` in `#rotate-device-overlay`. Pinned portrait mode is persisted via `sessionStorage.getItem('pinned_portrait_mode')`.
+   - `Emergency Fast-Track (`window.emergencyFastTrackToStage4`)`: Tapping `#emergency-fast-track-btn` (on rotate overlay) or `#dock-fast-track-btn` (on top dock) instantly advances to Stage 4, displays the typewriter letter, unlocks both gift boxes (`video/vid_1.mp4` and `video/vid_2.mp4`), and makes the 3D flower quiz and postcard downloader immediately available regardless of device orientation or minigame state.
+3. **Global State Architecture**:
    - Synchronized via `window.gardenState` (`currentStage`, `isWatered`, `isFertilized`, `userName`, `userBirthday`, `zodiacSign`, `gift1Watched`, etc.).
-   - Inter-module communication via window APIs (`window.showMascotSpeech`, `window.cleanupStage`, `window.setPreferredOrientation`, `window.openGiftVideoModal`, `window.unlockGiftBox2`).
-3. **Clean Unmount Invariant**: Every stage transition must call `cleanupStage` to cancel listeners, timers, frames, close video lightbox modals, and clean up temporary DOM elements.
+   - Inter-module communication via window APIs (`window.showMascotSpeech`, `window.cleanupStage`, `window.setPreferredOrientation`, `window.openGiftVideoModal`, `window.unlockGiftBox2`, `window.emergencyFastTrackToStage4`).
+4. **Clean Unmount Invariant**: Every stage transition must call `cleanupStage` to cancel listeners, timers, frames, close video lightbox modals, and clean up temporary DOM elements.
 
 ---
 

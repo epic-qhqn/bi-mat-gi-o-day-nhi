@@ -109,14 +109,56 @@
 
     // Public API: Thay đổi góc nhìn ưu tiên theo kịch bản trải nghiệm
     window.setPreferredOrientation = (targetOrientation = 'landscape', resetBypass = true) => {
+        // Nếu người dùng đã chọn cố định xem ở màn hình dọc thì tôn trọng thiết lập
+        const isPinnedPortrait = sessionStorage.getItem('pinned_portrait_mode') === 'true';
+        if (isPinnedPortrait && targetOrientation === 'landscape') {
+            targetOrientation = 'portrait';
+            resetBypass = false;
+        }
+
         preferredOrientation = targetOrientation;
         root.setAttribute('data-preferred-orientation', targetOrientation);
-        if (resetBypass) {
+        if (resetBypass && !isPinnedPortrait) {
             isBypassedForCurrentScene = false;
             root.classList.remove('orientation-bypassed');
+        } else if (isPinnedPortrait) {
+            isBypassedForCurrentScene = true;
+            root.classList.add('orientation-bypassed');
         }
         checkOrientationState();
+        updateOrientationToggleLabel();
     };
+
+    const updateOrientationToggleLabel = () => {
+        const toggleBtn = document.getElementById('mobile-orientation-toggle-btn');
+        if (!toggleBtn) return;
+        const label = toggleBtn.querySelector('.btn-label');
+        const icon = toggleBtn.querySelector('.btn-icon');
+        const isCurrentlyPortrait = window.innerHeight > window.innerWidth;
+        if (label) {
+            label.textContent = isCurrentlyPortrait ? 'Xoay Ngang' : 'Xoay Dọc';
+        }
+        if (icon) {
+            icon.textContent = isCurrentlyPortrait ? '🔄' : '📱';
+        }
+    };
+
+    // Nút Xem Ở Màn Hình Dọc (Từ modal gợi ý xoay)
+    const portraitModeBtn = document.getElementById('rotate-portrait-mode-btn');
+    if (portraitModeBtn) {
+        portraitModeBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            sessionStorage.setItem('pinned_portrait_mode', 'true');
+            isBypassedForCurrentScene = true;
+            preferredOrientation = 'portrait';
+            root.setAttribute('data-preferred-orientation', 'portrait');
+            root.classList.add('orientation-bypassed');
+            if (typeof window.playKeyTapSFX === 'function') window.playKeyTapSFX();
+            checkOrientationState();
+            updateOrientationToggleLabel();
+        });
+    }
 
     // Nút Bypass: Tiếp tục ở góc nhìn hiện tại
     if (bypassBtn) {
@@ -130,17 +172,153 @@
         });
     }
 
+    // Nút Đổi Chiều Màn Hình trên Top Dock Mobile
+    const mobileOrientationToggleBtn = document.getElementById('mobile-orientation-toggle-btn');
+    if (mobileOrientationToggleBtn) {
+        mobileOrientationToggleBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            const isCurrentlyPortrait = window.innerHeight > window.innerWidth;
+            if (isCurrentlyPortrait) {
+                // Đang dọc -> muốn xoay ngang
+                sessionStorage.removeItem('pinned_portrait_mode');
+                window.setPreferredOrientation('landscape', true);
+            } else {
+                // Đang ngang -> muốn chuyển sang dọc
+                sessionStorage.setItem('pinned_portrait_mode', 'true');
+                window.setPreferredOrientation('portrait', false);
+            }
+            if (typeof window.playKeyTapSFX === 'function') window.playKeyTapSFX();
+            if (typeof window.triggerHaptic === 'function') window.triggerHaptic('tap');
+            updateOrientationToggleLabel();
+        });
+    }
+
+    // =========================================================================
+    // EMERGENCY FAST-TRACK: Mở Thẳng Quà & Thiệp 20/10 Khi Gặp Sự Cố
+    // =========================================================================
+    window.emergencyFastTrackToStage4 = async () => {
+        // 1. Tắt toàn bộ overlay chặn xoay màn hình và unblock touch
+        isBypassedForCurrentScene = true;
+        root.classList.add('orientation-bypassed');
+        root.classList.remove('is-orientation-blocked', 'is-portrait-blocked', 'is-landscape-blocked');
+        if (overlay) overlay.classList.remove('is-active');
+        setInert(false);
+
+        // 2. Ẩn modal chế tác Stage 0 & modal khóa thời gian nếu còn mở
+        const nameModal = document.getElementById('name-modal');
+        if (nameModal) {
+            nameModal.classList.add('hidden');
+            nameModal.style.display = 'none';
+        }
+        const timeLockModal = document.getElementById('time-lock-modal');
+        if (timeLockModal) {
+            timeLockModal.classList.add('hidden');
+            timeLockModal.style.display = 'none';
+        }
+        const waxDesk = document.getElementById('wax-seal-desk');
+        if (waxDesk) {
+            waxDesk.classList.add('hidden');
+            waxDesk.style.display = 'none';
+        }
+
+        // 3. Cập nhật state khu vườn trực tiếp lên Stage 4 (Cây nở hoa & nhận thiệp quà)
+        window.gardenState = window.gardenState || {};
+        window.gardenState.currentStage = 3;
+        window.gardenState.isWatered = true;
+        window.gardenState.isFertilized = true;
+
+        // 4. Dọn dẹp minigames
+        if (typeof window.cleanupStage === 'function') {
+            window.cleanupStage('all');
+        }
+        document.body.classList.remove('stage-0-active', 'stage-1-active', 'stage-2-active', 'stage-3-active');
+        document.body.classList.add('stage-4-active');
+
+        // 5. Kích hoạt cành cây trổ hoa và hiển thị thư
+        if (typeof window.triggerNextStage === 'function') {
+            window.triggerNextStage();
+        }
+        if (typeof window.loadContentAndAnimateText === 'function') {
+            window.loadContentAndAnimateText();
+        }
+
+        // 6. Hiển thị deck hộp quà kép và khởi tạo click delegation
+        const giftDeck = document.getElementById('secret-gift-boxes-deck');
+        if (giftDeck) {
+            giftDeck.classList.remove('hidden');
+            giftDeck.style.display = 'flex';
+            giftDeck.style.visibility = 'visible';
+            giftDeck.style.opacity = '1';
+            giftDeck.style.pointerEvents = 'auto';
+        }
+        if (typeof window.initGiftBoxesDeck === 'function') {
+            window.initGiftBoxesDeck();
+        }
+
+        // Mở khóa hộp quà 2 sẵn sàng
+        if (typeof window.unlockGiftBox2 === 'function') {
+            window.unlockGiftBox2(true);
+        }
+
+        // 7. Hiển thị nút thư bí mật và mở thư
+        if (typeof window.revealSecretLetterButton === 'function') {
+            window.revealSecretLetterButton();
+        }
+        setTimeout(() => {
+            if (typeof window.openSecretLetterModal === 'function') {
+                window.openSecretLetterModal();
+            }
+        }, 600);
+
+        // 8. Hiệu ứng âm thanh & Mascot chúc mừng
+        if (typeof window.playRobotChirpSFX === 'function') window.playRobotChirpSFX();
+        if (typeof window.triggerHaptic === 'function') window.triggerHaptic('success');
+        if (typeof window.showMascotSpeech === 'function') {
+            window.showMascotSpeech("Khu vườn đã nở rộ trọn vẹn! Hãy mở quà và chiêm ngưỡng tấm thiệp 20/10 thân thương nhé! 🌸🎁✨", 5000);
+        }
+    };
+
+    // Gắn sự kiện cho nút khẩn cấp
+    const emergencyBtn = document.getElementById('emergency-fast-track-btn');
+    if (emergencyBtn) {
+        emergencyBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            window.emergencyFastTrackToStage4();
+        });
+    }
+
+    const dockFastTrackBtn = document.getElementById('dock-fast-track-btn');
+    if (dockFastTrackBtn) {
+        dockFastTrackBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            window.emergencyFastTrackToStage4();
+        });
+    }
+
     // Lắng nghe thay đổi kích thước và xoay màn hình
-    window.addEventListener('resize', checkOrientationState);
+    window.addEventListener('resize', () => {
+        checkOrientationState();
+        updateOrientationToggleLabel();
+    });
     window.addEventListener('orientationchange', () => {
-        setTimeout(checkOrientationState, 80);
+        setTimeout(() => {
+            checkOrientationState();
+            updateOrientationToggleLabel();
+        }, 80);
     });
 
     if (document.readyState === 'loading') {
         document.addEventListener('DOMContentLoaded', () => {
-            window.setPreferredOrientation('portrait', false);
+            const isPinnedPortrait = sessionStorage.getItem('pinned_portrait_mode') === 'true';
+            window.setPreferredOrientation(isPinnedPortrait ? 'portrait' : 'portrait', false);
+            updateOrientationToggleLabel();
         });
     } else {
-        window.setPreferredOrientation('portrait', false);
+        const isPinnedPortrait = sessionStorage.getItem('pinned_portrait_mode') === 'true';
+        window.setPreferredOrientation(isPinnedPortrait ? 'portrait' : 'portrait', false);
+        updateOrientationToggleLabel();
     }
 })();
