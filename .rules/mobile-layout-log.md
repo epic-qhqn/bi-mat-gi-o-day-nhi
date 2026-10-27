@@ -746,7 +746,30 @@
      - Gõ đúp (double-tap) khi `currentStage === 2` tự động kích hoạt `triggerRootThermalWarmth(target)` thay vì tưới nước.
      - Chạm trực tiếp vào gốc cây/mầm non (`distToTarget < 140`) khi `currentStage === 2` ngay lập tức kích hoạt sưởi ấm rễ mầm.
      - Giảm ngưỡng vuốt rễ xuống $\ge 0.75\pi$ hoặc vuốt giữ $> 600\text{ms}$ giúp kích hoạt nhẹ nhàng, phản hồi tia lửa ấm áp tức thì.
-  3. **Cơ chế cứu nguy tự động (Graceful Auto-Fallback)**: Trong [js/garden-stages.js](file:///c:/Users/kishikuun/Documents/dieu-bi-mat-epic/js/garden-stages.js), thiết lập `stage2AutoWarmthTimer` 25 giây. Nếu người dùng không thực hiện thao tác nào sau 25s, một làn gió nắng ấm thoảng qua sẽ tự động sưởi ấm mầm cây và chuyển sang Minigame Chòm Sao Stage 3. Timer được hủy ngay lập tức khi người dùng tương tác thành công hoặc dọn dẹp sân khấu.
+---
+
+### 13. Vấn Đề: Đàn Mộc Cầm Biến Mất/Teo Nhỏ & Nốt Chuông Hoa Simon Bị Che Khuất Trên Mobile
+- **Triệu chứng & Căn nguyên**:
+  1. *Đàn Mộc Cầm trên Mobile Portrait*: Biến mất hoàn toàn ở Stage 1 & 2 do quy tắc `body:not(.stage-3-active):not(.stage-4-active) .plant-harp-strings-wrap { display: none !important; }`. Khi hiển thị, do nằm trong `<div id="wrap">` có `transform: scale(0.34)`, theo CSS Transforms Spec, `#wrap` trở thành Containing Block giam cầm đàn, khiến đàn bị thu nhỏ 3 lần (~45px) và bay lệch khỏi màn hình.
+  2. *Đàn Mộc Cầm trên Mobile Landscape*: Cấu hình `--harp-w: 330px` quá khổng lồ, choán 50% chiều ngang màn hình và che lấp nốt chuông hoa Simon 2 & 3.
+  3. *Độ nhạy dây đàn*: Trong `js/botanical-harp.js`, bán kính dung sai `reach` chỉ là 14px (quá nhỏ cho ngón tay trên màn hình cảm ứng điện thoại), khiến người dùng gõ vào dây thường bị trượt.
+  4. *Nốt Simon Melody*: Nốt 0 & 1 ở `14%` quá sát lề trái, bị Mascot avatar (`left: 12px`, rộng 68px) và thanh volume che lấp; bảng hướng dẫn `#garden-ui` chiếm chiều cao lớn che mầm non.
+- **Công thức chuẩn hóa (Phase 8 Solution)**:
+  1. **Tách Đàn Mộc Cầm khỏi ma trận scale của `#wrap`**:
+     - Trong [index.html](file:///c:/Users/kishikuun/Documents/dieu-bi-mat-epic/index.html), chuyển `#plant-harp-strings-wrap` ra ngoài `#wrap`, đặt trực tiếp dưới `#main-container` (cùng cấp với Mascot và HUD).
+     - Trong [css/components.css](file:///c:/Users/kishikuun/Documents/dieu-bi-mat-epic/css/components.css), xóa bỏ quy tắc ẩn đàn `body:not(.stage-3-active):not(.stage-4-active)`; đặt `position: fixed` chuẩn xác.
+     - Khi `body.stage-2-active` (đang chơi Chuông Hoa), áp dụng `opacity: 0.15 !important; pointer-events: none !important;` để làm mờ nhẹ đàn, tránh gây phân tâm hoặc che khuất nốt nhạc.
+  2. **Tối ưu kích thước & Vùng chạm Đàn Mộc Cầm**:
+     - Trên Mobile Portrait: `--harp-w: 160px; right: max(12px, calc(10px + var(--sar, 0px))); bottom: calc(68px + var(--sab, 8px)); transform: none !important;` hiển thị sắc nét, trang nhã trên thảm cỏ.
+     - Trên Mobile Landscape: `--harp-w: 220px; right: max(16px, calc(12px + var(--sar, 0px))); bottom: calc(8px + var(--sab, 0px)); transform: none !important;` nhỏ gọn, cân đối.
+     - Dây đàn `.harp-string-wire` có `::after` mở rộng vùng chạm với `inset: -10px -14px` ($\ge 44\text{px}$).
+     - Trong [js/botanical-harp.js](file:///c:/Users/kishikuun/Documents/dieu-bi-mat-epic/js/botanical-harp.js), tăng `reach` lên 26px và gắn trực tiếp listener `pointerdown` lên từng dây đàn, đảm bảo chạm là kêu 100%.
+  3. **Tái định vị Nốt Chuông Hoa (Bilateral Safe Thumb Zones)**:
+     - Trong [js/garden-minigames.js](file:///c:/Users/kishikuun/Documents/dieu-bi-mat-epic/js/garden-minigames.js):
+       - Landscape: Nốt 0 `(18%, 44%)`, Nốt 1 `(28%, 66%)`, Nốt 2 `(72%, 66%)`, Nốt 3 `(82%, 44%)`. Cách xa Mascot $\ge 65\text{px}$, hành lang trung tâm 44% thông thoáng cho mầm cây.
+       - Portrait: Nốt 0 `(16%, 52%)`, Nốt 1 `(22%, 68%)`, Nốt 2 `(78%, 68%)`, Nốt 3 `(84%, 52%)`. Kích thước $\ge 80\text{px}$, `z-index: 2600`.
+  4. **Thu gọn Bảng Hướng Dẫn `#garden-ui`**:
+     - Trong [css/layout.css](file:///c:/Users/kishikuun/Documents/dieu-bi-mat-epic/css/layout.css), giới hạn `max-height: 52px; padding: 3px 10px;` khi minigame đang chạy trên mobile landscape.
 
 
 

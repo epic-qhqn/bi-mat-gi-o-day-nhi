@@ -4958,14 +4958,14 @@ body.sky-night .terrarium-gesture-hint {
    PHASE 3.3: BOTANICAL MELODIC HARP STRINGS (CÀNH MẦM DÂY ĐÀN HẠC THẢO MỘC)
    ========================================================================== */
 .plant-harp-strings-wrap {
-  position: absolute;
-  right: 32px;
-  bottom: 24px;
+  position: fixed;
+  right: 28px;
+  bottom: 18px;
   left: auto;
   top: auto;
   transform: none;
-  width: 180px;
-  height: 205px;
+  width: var(--harp-w, 290px);
+  height: calc(var(--harp-w, 290px) * 1.2);
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -4981,6 +4981,13 @@ body.sky-night .terrarium-gesture-hint {
 .plant-harp-strings-wrap.visible {
   opacity: 1;
   pointer-events: auto;
+}
+
+/* Khi minigame Chuông Hoa đang chạy, làm mờ nhẹ Đàn Mộc Cầm để người chơi tập trung */
+body.stage-2-active .plant-harp-strings-wrap {
+  opacity: 0.15 !important;
+  pointer-events: none !important;
+  transition: opacity 0.5s ease;
 }
 
 .harp-corner-vignette {
@@ -5065,28 +5072,21 @@ body.sky-night .harp-header-badge {
   transform: translateY(-2px);
 }
 
-@media (max-width: 768px) {
-  /* On mobile portrait, hide botanical harp during early stages (seed & sprout) to prevent clutter */
-  body:not(.stage-3-active):not(.stage-4-active) .plant-harp-strings-wrap {
-    display: none !important;
-    opacity: 0 !important;
-    visibility: hidden !important;
-    pointer-events: none !important;
-  }
+@media (max-width: 768px) and (orientation: portrait) {
   .plant-harp-strings-wrap {
     position: fixed !important;
     left: auto !important;
-    right: calc(12px + var(--sar, 0px)) !important;
-    bottom: calc(64px + var(--sab, 8px)) !important;
+    right: max(12px, calc(10px + var(--sar, 0px))) !important;
+    bottom: calc(68px + var(--sab, 8px)) !important;
     top: auto !important;
-    transform: scale(0.85) !important;
-    transform-origin: bottom right !important;
-    width: 155px !important;
-    height: 140px !important;
+    --harp-w: 160px !important;
+    width: var(--harp-w) !important;
+    height: calc(var(--harp-w) * 1.2) !important;
+    transform: none !important;
     z-index: 1200 !important;
   }
   .harp-string-wire {
-    width: 28px;
+    width: max(32px, calc(38 * var(--u))) !important;
   }
 }
 
@@ -11620,11 +11620,19 @@ body.readable-font .polaroid-back .letter-content {
   position: absolute;
   left: calc(var(--xm) * var(--u));
   top: calc(var(--ym) * var(--u));
-  width: max(26px, calc(34 * var(--u)));
-  height: calc(var(--len) * var(--u) + 20px);
+  width: max(34px, calc(42 * var(--u)));
+  height: calc(var(--len) * var(--u) + 24px);
   translate: -50% -50%;
   padding: 0;
   display: block;
+}
+
+.harp-string-wire::after {
+  content: "";
+  position: absolute;
+  inset: -10px -14px;
+  border-radius: 99px;
+  pointer-events: auto;
 }
 
 /* Dây: nghiêng song song cột đàn, đậm hơn một chút để nổi trên nền trời */
@@ -11679,26 +11687,32 @@ body.readable-font .polaroid-back .letter-content {
 .harp-string-wire[data-string-index="3"] { --xm: 286.3; --ym: 216.5; --len: 143.0; }
 .harp-string-wire[data-string-index="4"] { --xm: 312.9; --ym: 189.1; --len: 91.4;  }
 
-@media (max-width: 768px) {
+@media (max-width: 768px) and (orientation: portrait) {
   .plant-harp-strings-wrap {
-    --harp-w: 210px;
+    --harp-w: 160px !important;
     width: var(--harp-w) !important;
     height: calc(var(--harp-w) * 1.2) !important;
-    transform: scale(0.85) !important;
-    transform-origin: bottom right !important;
+    position: fixed !important;
+    left: auto !important;
+    right: max(12px, calc(10px + var(--sar, 0px))) !important;
+    bottom: calc(68px + var(--sab, 8px)) !important;
+    top: auto !important;
+    transform: none !important;
+    z-index: 1200 !important;
   }
 }
 @media (max-height: 540px) and (orientation: landscape) {
   .plant-harp-strings-wrap {
-    position: absolute !important;
+    position: fixed !important;
     left: auto !important;
-    right: 24px !important;
-    bottom: 18px !important;
+    right: max(16px, calc(12px + var(--sar, 0px))) !important;
+    bottom: calc(8px + var(--sab, 0px)) !important;
     top: auto !important;
-    --harp-w: 330px; /* Di chuyển đàn mộc sang góc phải, kích thước lớn vừa vặn hài hòa */
+    --harp-w: 220px !important; /* Di chuyển đàn mộc sang góc phải, kích thước 220px vừa vặn không đè chuông hoa */
     width: var(--harp-w) !important;
     height: calc(var(--harp-w) * 1.2) !important;
     transform: none !important;
+    z-index: 105 !important;
   }
 }
 
@@ -11873,8 +11887,8 @@ body.readable-font .polaroid-back .letter-content {
 @media (max-height: 540px) and (orientation: landscape) {
   .plant-harp-strings-wrap {
     left: auto !important;
-    right: max(12px, calc(10px + var(--sar, 0px))) !important;
-    bottom: 6px !important;
+    right: max(16px, calc(12px + var(--sar, 0px))) !important;
+    bottom: calc(8px + var(--sab, 0px)) !important;
     transform-origin: bottom right !important;
   }
 }

@@ -26,15 +26,15 @@
 ---
 
 ### Phase 8: Tái Cấu Trúc Toàn Diện Chuông Hoa (Simon Melody) & Chống Va Chạm Linh Vật, Đàn Mộc Cầm
-- [ ] 8.1: Chống va chạm phía Trái trên Mobile Landscape: Tái định vị 2 nốt Simon trái (slot 0: `l: 18%, t: 44%`, slot 1: `l: 28%, t: 66%`), cách xa Linh vật Mascot và thanh volume dock $\ge 65\text{px}$, không bao giờ bị đè lấp.
-- [ ] 8.2: Chống va chạm phía Phải trên Mobile Landscape: Giảm kích thước Đàn Mộc Cầm trên mobile landscape từ `--harp-w: 330px` về `--harp-w: 220px`; khi Minigame Simon đang chạy (`body.stage-2-active`), tạm thời làm mờ hoặc ẩn Đàn Mộc Cầm (`opacity: 0.15; pointer-events: none;`) để giải phóng toàn bộ không gian cho nốt Simon 2 và 3 (`l: 72%, t: 66%` và `l: 82%, t: 44%`).
-- [ ] 8.3: Tối ưu hiển thị Chuông Hoa trên Mobile Portrait & Chế độ Bypass: Định vị 4 nốt Simon ở 2 bên thân mầm cây (`l: 16%, 22%, 78%, 84%`), kích thước $\ge 80\text{px}$ với `hitbox ::after` mở rộng, nâng `z-index: 2600` cao hơn lớp cỏ `#co-hoa` và mầm cây, bảo đảm hiển thị sắc nét và chạm nhạy trên màn hình dọc.
-- [ ] 8.4: Tinh gọn bảng hướng dẫn `#garden-ui` khi `body.stage-2-active` trên landscape $\le 52\text{px}$, padding $4\text{px} \times 12\text{px}$, không che khuất mầm cây.
-- [ ] 8.5: Đại tu toàn diện Đàn Mộc Cầm trên Mobile (Landscape & Portrait): Xóa bỏ quy tắc `display: none !important` trên portrait; xử lý containing block do `transform: scale` của `#wrap`; neo giữ đàn trang nhã ở góc phải dưới thảm cỏ với `--harp-w: 160px` trên portrait và `--harp-w: 220px` trên landscape, đảm bảo 5 dây đàn luôn có điểm chạm $\ge 44\text{px}$ ngân vang du dương.
+- [x] 8.1: Chống va chạm phía Trái trên Mobile Landscape: Tái định vị 2 nốt Simon trái (slot 0: `l: 18%, t: 44%`, slot 1: `l: 28%, t: 66%`), cách xa Linh vật Mascot và thanh volume dock $\ge 65\text{px}$, không bao giờ bị đè lấp.
+- [x] 8.2: Chống va chạm phía Phải trên Mobile Landscape: Giảm kích thước Đàn Mộc Cầm trên mobile landscape từ `--harp-w: 330px` về `--harp-w: 220px`; khi Minigame Simon đang chạy (`body.stage-2-active`), tạm thời làm mờ hoặc ẩn Đàn Mộc Cầm (`opacity: 0.15; pointer-events: none;`) để giải phóng toàn bộ không gian cho nốt Simon 2 và 3 (`l: 72%, t: 66%` và `l: 82%, t: 44%`).
+- [x] 8.3: Tối ưu hiển thị Chuông Hoa trên Mobile Portrait & Chế độ Bypass: Định vị 4 nốt Simon ở 2 bên thân mầm cây (`l: 16%, 22%, 78%, 84%`), kích thước $\ge 80\text{px}$ với `hitbox ::after` mở rộng, nâng `z-index: 2600` cao hơn lớp cỏ `#co-hoa` và mầm cây, bảo đảm hiển thị sắc nét và chạm nhạy trên màn hình dọc.
+- [x] 8.4: Tinh gọn bảng hướng dẫn `#garden-ui` khi `body.stage-2-active` trên landscape $\le 52\text{px}$, padding $4\text{px} \times 12\text{px}$, không che khuất mầm cây.
+- [x] 8.5: Đại tu toàn diện Đàn Mộc Cầm trên Mobile (Landscape & Portrait): Tách đàn ra ngoài `#wrap` đặt trực tiếp dưới `#main-container` để không bị scale co cụm; xóa bỏ quy tắc ẩn đàn trên portrait; neo giữ đàn trang nhã ở góc phải dưới thảm cỏ với `--harp-w: 160px` trên portrait và `--harp-w: 220px` trên landscape; mở rộng vùng chạm dây đàn $\ge 44\text{px}$ và tăng độ nhạy `reach` lên 26px kèm click listener trực tiếp.
 
 #### Checkpoint 8: Sau Phase 8
-- [ ] 4 nốt chuông hoa Simon xuất hiện hoàn toàn ở vùng trống thoáng đãng trên cả điện thoại ngang và dọc, không bị Mascot hay Đàn Mộc Cầm che khuất, ngón cái hai bên chạm cực kỳ thuận tiện.
-- [ ] Đàn Mộc Cầm hiển thị cân đối, vừa vặn, không bao giờ bị biến mất hoàn toàn trên màn hình dọc hay quá to/quá nhỏ trên màn hình ngang.
+- [x] 4 nốt chuông hoa Simon xuất hiện hoàn toàn ở vùng trống thoáng đãng trên cả điện thoại ngang và dọc, không bị Mascot hay Đàn Mộc Cầm che khuất, ngón cái hai bên chạm cực kỳ thuận tiện.
+- [x] Đàn Mộc Cầm hiển thị cân đối, vừa vặn, không bao giờ bị biến mất hoàn toàn trên màn hình dọc hay quá to/quá nhỏ trên màn hình ngang.
 
 ---
 

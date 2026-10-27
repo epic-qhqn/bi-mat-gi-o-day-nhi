@@ -1380,6 +1380,15 @@ a:hover {
     width: clamp(44px, 12vh, 60px) !important;
     height: clamp(44px, 12vh, 60px) !important;
   }
+
+  /* Compact garden-ui during minigames to prevent tree occlusion */
+  body.stage-2-active .garden-ui,
+  body.stage-3-active .garden-ui {
+    max-height: 52px !important;
+    padding: 3px 10px !important;
+    max-width: min(280px, 45vw) !important;
+    top: calc(8px + var(--sat, 4px)) !important;
+  }
 }
 
 /* Text Container (Decoupled from canvas scale for crisp responsive reading) */

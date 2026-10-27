@@ -128,13 +128,13 @@
         const checkAndPluckFromPoint = (x, y) => {
             const segs = cachedSegments.length === harpStringWires.length ? cachedSegments : readSegments();
 
-            // Chọn dây GẦN NHẤT (tính tới đoạn dây nghiêng), trong vùng chạm ~14px mỗi bên.
+            // Chọn dây GẦN NHẤT (tính tới đoạn dây nghiêng), trong vùng chạm dung sai >= 26px
             let hit = -1, best = Infinity;
             for (let i = 0; i < segs.length; i++) {
                 const d = distToSegment(x, y, segs[i]);
                 if (d < best) { best = d; hit = i; }
             }
-            const reach = Math.max(14, harpStringWires[0] ? harpStringWires[0].offsetWidth * 0.5 : 14);
+            const reach = Math.max(26, harpStringWires[0] ? harpStringWires[0].offsetWidth * 0.75 : 26);
             if (best > reach) hit = -1;
 
             if (hit !== -1 && hit !== lastSwipedIndex) {
@@ -142,6 +142,14 @@
                 pluckHarpStringByIndex(hit, x, y);
             }
         };
+
+        // Bổ sung listener trực tiếp trên từng dây đàn để đảm bảo phản hồi 100% khi người dùng chạm
+        harpStringWires.forEach((wire, idx) => {
+            wire.addEventListener('pointerdown', (e) => {
+                e.stopPropagation();
+                pluckHarpStringByIndex(idx, e.clientX, e.clientY);
+            });
+        });
 
         plantHarpWrapEl.addEventListener('pointerdown', (e) => {
             isSwipingHarp = true;

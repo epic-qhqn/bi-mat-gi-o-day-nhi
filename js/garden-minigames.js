@@ -216,25 +216,34 @@
 
         const isMobileLandscape = (typeof window !== 'undefined') &&
             (window.matchMedia ? window.matchMedia('(max-height: 540px) and (orientation: landscape)').matches : (window.innerWidth > window.innerHeight && window.innerHeight <= 540));
+        const isPortrait = (typeof window !== 'undefined') &&
+            (window.matchMedia ? window.matchMedia('(orientation: portrait)').matches : (window.innerHeight > window.innerWidth));
 
         // Bilateral Thumb Zones (2 Trái - 2 Phải):
-        // Nốt 0 (14%, 52%) & Nốt 1 (22%, 70%) ở phía trái
-        // Nốt 2 (78%, 70%) & Nốt 3 (86%, 52%) ở phía phải
-        // Bố cục phân tách hoàn toàn khỏi khung thẻ hướng dẫn ở phía trên (top < 38%),
-        // giải phóng 616px trung tâm cho mầm cây và đảm bảo cách xa bảng thông báo tối thiểu 100px.
+        // Nốt 0 & 1 ở phía trái, cách xa Mascot & volume dock >= 65px
+        // Nốt 2 & 3 ở phía phải, thoáng đãng không bị Đàn Mộc Cầm che lấp
+        // Hành lang trung tâm giải phóng hoàn toàn cho mầm cây vươn cành
         const celestialArcSlots = isMobileLandscape
             ? [
-                { l: 14, t: 52 },
-                { l: 22, t: 70 },
-                { l: 78, t: 70 },
-                { l: 86, t: 52 }
+                { l: 18, t: 44 },
+                { l: 28, t: 66 },
+                { l: 72, t: 66 },
+                { l: 82, t: 44 }
             ]
-            : [
-                { l: 15, t: 54 },
-                { l: 24, t: 70 },
-                { l: 76, t: 70 },
-                { l: 85, t: 54 }
-            ];
+            : (isPortrait
+                ? [
+                    { l: 16, t: 52 },
+                    { l: 22, t: 68 },
+                    { l: 78, t: 68 },
+                    { l: 84, t: 52 }
+                ]
+                : [
+                    { l: 18, t: 48 },
+                    { l: 28, t: 68 },
+                    { l: 72, t: 68 },
+                    { l: 82, t: 48 }
+                ]
+            );
 
         const noteIcons = ['🌸', '🎵', '✨', '🎶'];
         const noteColors = ['#fbb6ce', '#90cdf4', '#fbd38d', '#bbf7d0'];
