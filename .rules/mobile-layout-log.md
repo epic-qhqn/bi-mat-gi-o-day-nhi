@@ -846,3 +846,25 @@
   3. **Kiểm Định Thống Kê Monte Carlo**:
      - Mô phỏng 10,000 lần chọn ngẫu nhiên độc lập: tỷ lệ chọn `nhac_2` đạt $69.84% - 71.11%$, nằm chính xác trong khoảng tin cậy $99.9%$ ($[67%, 73%]$).
 
+---
+
+### 17. Vấn Đề: Bảo Đảm Bắt Trọn Cây Hoa Nở Rộ Khi Chụp Ảnh Polaroid & Kiểm Định Toàn Diện (Phase 12)
+- **Triệu chứng & Căn nguyên**:
+  1. *Nguy cơ ảnh Polaroid chụp vườn bị trống tán hoa*: Ở Stage 4, khi cây hoa trái tim bung nở hoàn tất (`love.js`), hoạt ảnh lắc lư (`jumpAnimate`) liên tục xóa và vẽ lại canvas mỗi frame. Nếu hàm chụp ảnh Polaroid vườn (`renderGardenPolaroidToCanvas`) chỉ đọc trực tiếp từ `#canvas` đúng vào thời điểm frame đang clear hoặc khi người dùng cuộn xem thư, ảnh chụp có nguy cơ bị khuyết tán hoa hoặc chỉ còn lại cành trơ.
+  2. *Đồng bộ đa tầng dữ liệu hình ảnh (Multi-layer Fallback Architecture)*: Cần bảo đảm ảnh Polaroid bắt trọn vẹn tán hoa từ bộ đệm snapshot đã lưu trữ (`window.bloomedTreeImage`, `window.bloomedTreeSnapshotDataUrl`, hoặc `currentGardenSnapshotUrl`), đồng thời tích hợp thiếu nữ Áo Dài nón lá hoa sen, cánh hoa sen rơi lơ lửng, vầng trăng khuyết hoặc mặt trời theo chu kỳ nhật dạ (Dawn, Day, Dusk, Night) và dòng chữ đề tặng tên người thương.
+- **Công thức chuẩn hóa (Phase 12 Solution)**:
+  1. **Động Cơ Chụp Ảnh Vườn Đa Tầng (`renderGardenPolaroidToCanvas`)**:
+     - Trong [js/garden-stages.js](file:///c:/Users/kishikuun/Documents/dieu-bi-mat-epic/js/garden-stages.js):
+       - Tầng 1: Đọc từ `window.bloomedTreeImage` (ảnh snapshot cây hoa bung nở trọn vẹn đã được lưu vào Image object).
+       - Tầng 2: Fallback qua `window.bloomedTreeSnapshotDataUrl` và tự động vẽ lại canvas khi nạp xong.
+       - Tầng 3: Fallback qua `background-image` của `#wrap`.
+       - Tầng 4: Fallback qua `window.currentGardenSnapshotUrl`.
+       - Tầng 5: Đọc trực tiếp từ `#canvas` đang hoạt động.
+     - Ghép lớp mượt mà: Bầu trời nhật dạ -> Sao đêm/Mặt trời tỏa hào quang -> Đồi cỏ xanh -> Tán cây hoa trái tim -> Thiếu nữ Áo Dài nón lá bên hoa sen -> Cánh hoa sen bay 3D -> Khung giấy Dó và dòng thư thư pháp đề tặng.
+     - Phơi bày API công khai `window.renderGardenPolaroidToCanvas` phục vụ kiểm thử và tái sử dụng.
+  2. **Bảo Đảm Zero PC Regression**:
+     - Mọi quy tắc CSS cho mobile landscape đều được cô lập tuyệt đối bên trong `@media (max-height: 540px) and (orientation: landscape)`.
+     - Giao diện PC Desktop ($>= 1025\text{px}$, chiều cao $>= 600\text{px}$) giữ nguyên 100% vẻ đẹp Quiet Luxury nguyên bản.
+  3. **Kiểm Định Toàn Diện Bộ Test Tự Động (`scratch/test_stage2_gifts_audio.js`)**:
+     - 10/10 nhóm tiêu chí từ Phase 7 đến Phase 12 đều đạt kết quả **100% PASSED**.
+

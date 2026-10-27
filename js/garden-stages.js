@@ -1211,6 +1211,8 @@
         }
     };
 
+    window.renderGardenPolaroidToCanvas = renderGardenPolaroidToCanvas;
+
     const setupAll = () => {
         initGardenStageSelector();
         initHeritageStageInteractions();

@@ -75,12 +75,12 @@
 ---
 
 ### Phase 12: Đảm Bảo Ảnh Polaroid Trọn Vẹn Cây Hoa Nở Rộ & Kiểm Thử Toàn Diện
-- [ ] 12.1: Bảo đảm hàm `renderGardenPolaroidToCanvas` trong `js/garden-stages.js` luôn vẽ trọn vẹn tán hoa trái tim nở rộ rực rỡ, chim hạc, nón lá, áo dài ở Stage 4; hiển thị mầm cây thi vị nếu chụp ở Stage 1-3.
-- [ ] 12.2: Xây dựng kịch bản kiểm thử tự động Node.js `scratch/test_stage2_gifts_audio.js` kiểm tra 100% các tiêu chí logic, cú pháp và bố cục.
-- [ ] 12.3: Kiểm thử Zero PC Regression (100% giao diện Desktop PC giữ nguyên vẻ đẹp Quiet Luxury).
-- [ ] 12.4: Đồng bộ Git 3-Dev: chạy `git fetch --all --prune`, đảm bảo không có xung đột, commit và push nhánh feature sạch sẽ.
+- [x] 12.1: Bảo đảm hàm `renderGardenPolaroidToCanvas` trong `js/garden-stages.js` luôn vẽ trọn vẹn tán hoa trái tim nở rộ rực rỡ, chim hạc, nón lá, áo dài ở Stage 4; hiển thị mầm cây thi vị nếu chụp ở Stage 1-3.
+- [x] 12.2: Xây dựng kịch bản kiểm thử tự động Node.js `scratch/test_stage2_gifts_audio.js` kiểm tra 100% các tiêu chí logic, cú pháp và bố cục.
+- [x] 12.3: Kiểm thử Zero PC Regression (100% giao diện Desktop PC giữ nguyên vẻ đẹp Quiet Luxury).
+- [x] 12.4: Đồng bộ Git 3-Dev: chạy `git fetch --all --prune`, đảm bảo không có xung đột, commit và push nhánh feature sạch sẽ.
 
 #### Checkpoint 12: Nghiệm Thu Toàn Diện
-- [ ] 100% các lỗi trên cả PC và Mobile (5 ảnh thực tế) được khắc phục triệt để.
-- [ ] Đạt 100% bài kiểm tra tự động.
-- [ ] Toàn bộ yêu cầu chính và phụ của người dùng hoàn thành xuất sắc.
+- [x] 100% các lỗi trên cả PC và Mobile (5 ảnh thực tế) được khắc phục triệt để.
+- [x] Đạt 100% bài kiểm tra tự động (`test_stage2_gifts_audio.js`).
+- [x] Toàn bộ yêu cầu chính và phụ của người dùng hoàn thành xuất sắc.
