@@ -8080,7 +8080,7 @@ body.sky-night .found-letter-slot.filled {
     box-sizing: border-box !important;
     justify-content: space-between !important;
     pointer-events: none !important;
-    z-index: 95 !important;
+    z-index: 1005 !important;
   }
   .living-atmosphere-hud .atmosphere-shifter-token {
     pointer-events: auto !important;
