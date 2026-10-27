@@ -1223,6 +1223,30 @@
     <!-- Chớp sáng máy ảnh toàn màn hình khi chụp/tải ảnh (Dùng chung cho Bưu Thiếp & Polaroid Vườn) -->
     <div id="camera-flash-overlay" class="camera-flash-overlay"></div>
 
+    <!-- Modal: Trình Chiếu Thước Phim Kỷ Niệm (Phase 9 Zero-Lag Gift Video Lightbox) -->
+    <div id="gift-video-modal" class="modal-overlay hidden" style="z-index: 100010;" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="gift-video-title">
+        <div class="gift-video-dialog lyrical-panel">
+            <button type="button" id="close-gift-video-btn" class="close-gift-video-btn" aria-label="Đóng thước phim">✕</button>
+            <div class="gift-video-header">
+                <span class="gift-video-badge" id="gift-video-badge">✨ THƯỚC PHIM KỶ NIỆM · 20/10 ✨</span>
+                <h3 class="gift-video-title" id="gift-video-title">Món Quà Bí Mật Dành Riêng Bạn</h3>
+                <p class="gift-video-subtitle" id="gift-video-subtitle">Lắng nghe thanh âm và những khoảnh khắc ngọt ngào</p>
+            </div>
+            <div class="gift-video-player-wrap">
+                <div class="gift-video-frame">
+                    <video id="gift-video-player" playsinline webkit-playsinline controls preload="metadata" class="gift-video-element">
+                        <source id="gift-video-src-webm" src="" type="video/webm">
+                        <source id="gift-video-src-mp4" src="" type="video/mp4">
+                        Trình duyệt của bạn không hỗ trợ phát video trực tiếp.
+                    </video>
+                </div>
+            </div>
+            <div class="gift-video-footer">
+                <span class="gift-video-note" id="gift-video-note">💡 Hãy xem hết video để mở khóa Hộp Quà Bí Mật số 2 nhé!</span>
+            </div>
+        </div>
+    </div>
+
     <!-- Modal: Lưu Khoảnh Khắc Vườn Kỷ Niệm (Phase 12 Instant Garden Polaroid Capture) -->
     <div id="garden-polaroid-modal" class="modal-overlay hidden" style="z-index: 100005;">
         <div class="garden-polaroid-dialog lyrical-panel">

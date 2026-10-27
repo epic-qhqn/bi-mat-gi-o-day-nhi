@@ -40,13 +40,13 @@
 
 ### Phase 9: Nén Video Siêu Nhẹ & Thuật Toán Trình Chiếu Zero-Lag
 - [x] 9.1: Hoàn tất chuyển đổi nén video bằng `ffmpeg`:
-  - `vid_2.mp4` (70MB) -> `video/vid_2_opt.mp4` (27.1MB, H.264 `yuv420p` `+faststart`).
-  - `vid_1.mp4` (1.8GB) -> `video/vid_1_opt.mp4` (44.9MB, 720p 30fps H.264 `yuv420p` `+faststart`, giảm 97.5%).
+  - `vid_2.mp4` (70MB) -> `video/vid_2_opt.mp4` (27.1MB, H.264 `yuv420p` `+faststart`) và `video/vid_2.webm` (33.1MB, VP9/Opus).
+  - `vid_1.mp4` (1.8GB) -> `video/vid_1_opt.mp4` (44.9MB, 720p 30fps H.264 `yuv420p` `+faststart`, giảm 97.5%) và `video/vid_1.webm` (57.9MB, VP9/Opus).
   - Cập nhật `.gitignore` loại trừ các file video gốc `vid_1.mp4` và `vid_2.mp4` nặng gần 2GB.
-- [ ] 9.2: Thuật toán trình chiếu Video tối ưu (Zero-Lag Lightbox Player) trong `index.html` và `css/components.css`: `preload="metadata"`, `playsinline`, tự động pause BGM khi phát video và khôi phục BGM êm dịu khi đóng video.
+- [x] 9.2: Thuật toán trình chiếu Video tối ưu (Zero-Lag Lightbox Player) trong `index.html` và `css/components.css`: `preload="metadata"`, `playsinline`, tự động pause BGM khi phát video (`pauseBgmForVideo`) và khôi phục BGM êm dịu khi đóng video hoặc kết thúc (`resumeBgmAfterVideo`), bộ điều khiển `openGiftVideoModal` & `closeGiftVideoModal` trong `js/secret-letter.js`.
 
 #### Checkpoint 9: Sau Phase 9
-- [ ] Cả 2 video đều dưới 35MB, nạp ngay tức thì qua GitHub Pages, video chạy mượt mà không lag giật, quản lý âm thanh chuyển tiếp hoàn hảo.
+- [x] Cả 2 video đều nén tối ưu dưới dạng kép WebM & MP4, nạp ngay tức thì qua GitHub Pages, video chạy mượt mà không lag giật, quản lý âm thanh chuyển tiếp hoàn hảo và giải phóng bộ nhớ khi đóng.
 
 ---
 

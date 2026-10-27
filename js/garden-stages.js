@@ -165,6 +165,7 @@
             if (typeof window.hideBoardingPassButton === 'function') window.hideBoardingPassButton();
             if (typeof window.closeSecretLetterModal === 'function') window.closeSecretLetterModal();
             if (typeof window.closeBoardingPassModal === 'function') window.closeBoardingPassModal();
+            if (typeof window.closeGiftVideoModal === 'function') window.closeGiftVideoModal();
             const waxDrawer = document.getElementById('wax-ritual-drawer');
             if (waxDrawer) waxDrawer.classList.add('hidden');
 

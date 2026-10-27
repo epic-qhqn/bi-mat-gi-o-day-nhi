@@ -1037,6 +1037,182 @@
 
         setupFontToggle();
         initFlowerQuiz();
+        initGiftVideoModal();
+    };
+
+    // =========================================================================
+    // 6. PHASE 9: ZERO-LAG GIFT VIDEO LIGHTBOX PLAYER
+    // =========================================================================
+    const initGiftVideoModal = () => {
+        const modal = document.getElementById('gift-video-modal');
+        const closeBtn = document.getElementById('close-gift-video-btn');
+
+        // Khôi phục trạng thái đã xem quà 1 từ sessionStorage
+        window.gardenState = window.gardenState || {};
+        try {
+            if (sessionStorage.getItem('gift1Watched') === 'true') {
+                window.gardenState.gift1Watched = true;
+                if (typeof window.unlockGiftBox2 === 'function') {
+                    window.unlockGiftBox2(true);
+                }
+            }
+        } catch (e) {
+            console.log("SessionStorage access error:", e);
+        }
+
+        if (closeBtn) {
+            closeBtn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                closeGiftVideoModal();
+            });
+        }
+
+        if (modal) {
+            modal.addEventListener('click', (e) => {
+                if (e.target === modal) {
+                    closeGiftVideoModal();
+                }
+            });
+        }
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                const m = document.getElementById('gift-video-modal');
+                if (m && !m.classList.contains('hidden')) {
+                    closeGiftVideoModal();
+                }
+            }
+        });
+    };
+
+    const handleGift1Completed = () => {
+        window.gardenState = window.gardenState || {};
+        if (window.gardenState.gift1Watched) return;
+        window.gardenState.gift1Watched = true;
+        try {
+            sessionStorage.setItem('gift1Watched', 'true');
+        } catch (e) {}
+
+        const noteEl = document.getElementById('gift-video-note');
+        if (noteEl) {
+            noteEl.textContent = '🎉 Tuyệt vời! Bạn đã mở khóa Hộp Quà số 2!';
+        }
+
+        if (typeof window.unlockGiftBox2 === 'function') {
+            window.unlockGiftBox2(false);
+        }
+    };
+
+    const openGiftVideoModal = (giftIndex = 1) => {
+        const modal = document.getElementById('gift-video-modal');
+        const player = document.getElementById('gift-video-player');
+        const srcWebm = document.getElementById('gift-video-src-webm');
+        const srcMp4 = document.getElementById('gift-video-src-mp4');
+        const badgeEl = document.getElementById('gift-video-badge');
+        const titleEl = document.getElementById('gift-video-title');
+        const subtitleEl = document.getElementById('gift-video-subtitle');
+        const noteEl = document.getElementById('gift-video-note');
+
+        if (!modal || !player) return;
+
+        window.gardenState = window.gardenState || {};
+        const isBox1 = (giftIndex === 1);
+        const videoData = isBox1 ? {
+            webm: './video/vid_1.webm',
+            mp4: './video/vid_1_opt.mp4',
+            badge: '✨ THƯỚC PHIM KỶ NIỆM · MÓN QUÀ SỐ 1 ✨',
+            title: 'Kỷ Niệm Rực Rỡ & Nụ Cười Bạn',
+            subtitle: 'Lắng nghe thanh âm và những khoảnh khắc ngọt ngào',
+            note: window.gardenState.gift1Watched 
+                ? '✨ Bạn đã xem xong món quà này. Có thể mở Hộp Quà số 2 bất cứ lúc nào!' 
+                : '💡 Hãy xem hết video để mở khóa Hộp Quà Bí Mật số 2 nhé!'
+        } : {
+            webm: './video/vid_2.webm',
+            mp4: './video/vid_2_opt.mp4',
+            badge: '✨ ĐIỀU KỲ DIỆU TIẾP NỐI · MÓN QUÀ SỐ 2 ✨',
+            title: 'Gửi Trao Vạn Lời Chúc Yêu Thương',
+            subtitle: 'Món quà son sắc dành tặng riêng cho bạn ngày 20/10',
+            note: '🌟 Chúc bạn một ngày tràn ngập niềm vui và hạnh phúc!'
+        };
+
+        if (badgeEl) badgeEl.textContent = videoData.badge;
+        if (titleEl) titleEl.textContent = videoData.title;
+        if (subtitleEl) subtitleEl.textContent = videoData.subtitle;
+        if (noteEl) noteEl.textContent = videoData.note;
+
+        // Reset and set sources
+        player.pause();
+        if (srcWebm) srcWebm.src = videoData.webm;
+        if (srcMp4) srcMp4.src = videoData.mp4;
+
+        player.load();
+        player.currentTime = 0;
+
+        // Auto pause BGM on video play
+        player.onplay = () => {
+            if (typeof window.pauseBgmForVideo === 'function') {
+                window.pauseBgmForVideo();
+            }
+        };
+
+        // Track 95% completion for Box 1
+        player.ontimeupdate = () => {
+            if (isBox1 && player.duration > 0 && (player.currentTime / player.duration >= 0.95)) {
+                handleGift1Completed();
+            }
+        };
+
+        // Resume BGM and unlock on end
+        player.onended = () => {
+            if (isBox1) {
+                handleGift1Completed();
+            }
+            if (typeof window.resumeBgmAfterVideo === 'function') {
+                window.resumeBgmAfterVideo();
+            }
+        };
+
+        modal.classList.remove('hidden');
+        modal.setAttribute('aria-hidden', 'false');
+
+        const playPromise = player.play();
+        if (playPromise !== undefined) {
+            playPromise.catch(e => {
+                console.log("Video autoplay blocked, waiting for manual play:", e);
+            });
+        }
+
+        if (typeof window.triggerHaptic === 'function') window.triggerHaptic('medium');
+        if (typeof window.playMatchStrikeSFX === 'function') window.playMatchStrikeSFX();
+    };
+
+    const closeGiftVideoModal = () => {
+        const modal = document.getElementById('gift-video-modal');
+        const player = document.getElementById('gift-video-player');
+        const srcWebm = document.getElementById('gift-video-src-webm');
+        const srcMp4 = document.getElementById('gift-video-src-mp4');
+
+        if (!modal) return;
+
+        if (player) {
+            player.pause();
+            player.onplay = null;
+            player.ontimeupdate = null;
+            player.onended = null;
+            if (srcWebm) srcWebm.removeAttribute('src');
+            if (srcMp4) srcMp4.removeAttribute('src');
+            player.removeAttribute('src');
+            player.load();
+        }
+
+        modal.classList.add('hidden');
+        modal.setAttribute('aria-hidden', 'true');
+
+        if (typeof window.resumeBgmAfterVideo === 'function') {
+            window.resumeBgmAfterVideo();
+        }
+
+        if (typeof window.triggerHaptic === 'function') window.triggerHaptic('light');
     };
 
     // Public API
@@ -1049,6 +1225,9 @@
     window.loadContentAndAnimateText = loadContentAndAnimateText;
     window.initSecretLetter = initSecretLetter;
     window.restartFlowerQuiz = () => { if (quizRoot) restartQuiz(); };
+    window.openGiftVideoModal = openGiftVideoModal;
+    window.closeGiftVideoModal = closeGiftVideoModal;
+    window.handleGift1Completed = handleGift1Completed;
 
     if (document.readyState === 'loading') {
         document.addEventListener('DOMContentLoaded', initSecretLetter);

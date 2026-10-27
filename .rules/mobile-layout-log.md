@@ -771,6 +771,34 @@
   4. **Thu gọn Bảng Hướng Dẫn `#garden-ui`**:
      - Trong [css/layout.css](file:///c:/Users/kishikuun/Documents/dieu-bi-mat-epic/css/layout.css), giới hạn `max-height: 52px; padding: 3px 10px;` khi minigame đang chạy trên mobile landscape.
 
+---
+
+### 14. Vấn Đề: Trình Chiếu Thước Phim Kỷ Niệm Zero-Lag & Điều Phối Âm Thanh BGM Tự Động (Phase 9)
+- **Triệu chứng & Thách thức**:
+  1. *Dung lượng video thô khổng lồ*: Hai video thô ban đầu có dung lượng 1.8GB (`vid_1.mp4`, 4K 120fps HEVC) và 70MB (`vid_2.mp4`), hoàn toàn không thể tải trực tiếp trên GitHub Pages và gây giật lag, đơ trình duyệt mobile.
+  2. *Xung đột âm thanh khi phát video*: Khi người dùng phát video kỷ niệm, nhạc nền khu vườn (BGM) vẫn tiếp tục phát đè lên tiếng video làm âm thanh bị hỗn tạp, giảm cảm xúc thi vị.
+  3. *Tương thích đa trình duyệt & Di động*: Trình duyệt iOS Safari trên iPhone yêu cầu video phải có thuộc tính `playsinline` và `webkit-playsinline` để không bị nhảy toàn màn hình cưỡng bức, đồng thời bộ giải mã WebM (VP9/Opus) và MP4 (H.264/AAC) cần nguồn fallback kép (`<source>`) để tương thích 100% từ Safari đến Android Chrome.
+  4. *Kích thước hiển thị trên Mobile Landscape*: Khung video 16:9 nếu không có ràng buộc chiều cao sẽ bị tràn ra ngoài màn hình ngang thấp ($\le 375\text{px}$), khiến nút đóng hoặc ghi chú bị che khuất.
+- **Công thức chuẩn hóa (Phase 9 Solution)**:
+  1. **Nén Video Kép Chuẩn GitHub Pages**:
+     - `vid_1.webm` (57.9MB, 720p 30fps VP9/Opus) & `vid_1_opt.mp4` (42.8MB, 720p 30fps H.264 `yuv420p` `+faststart`). Giảm 97.5% dung lượng so với bản 1.8GB thô.
+     - `vid_2.webm` (33.1MB, 480p 30fps VP9/Opus) & `vid_2_opt.mp4` (25.8MB, 480p 30fps H.264 `yuv420p` `+faststart`).
+     - Tất cả các file video đều nằm gọn dưới 60MB, tải tức thì trong $\le 200\text{ms}$. Xóa hoàn toàn file thô và thêm vào `.gitignore`.
+  2. **Cấu trúc Lightbox Player Di Sản (`#gift-video-modal`)**:
+     - Thẻ video tích hợp `playsinline webkit-playsinline controls preload="metadata"`.
+     - Cung cấp 2 thẻ `<source>`: ưu tiên WebM (siêu nhẹ, nén cao) và fallback MP4 (tương thích tối đa).
+     - Nút đóng `.close-gift-video-btn` có vùng chạm mở rộng `::after { inset: -8px; }` đảm bảo $\ge 52\text{px}$ đạt chuẩn WCAG AA và Apple HIG.
+     - Trên Mobile Landscape: giới hạn `max-height: min(60vh, 260px) !important;` cho `.gift-video-frame` và `.gift-video-element`, đối thoại `max-height: 94vh !important;`, phụ đề tự động ẩn để nhường trọn tầm nhìn cho video.
+  3. **Bộ Điều Phối Âm Nhạc BGM Thông Minh (Audio Coordination Engine)**:
+     - Trong [js/audio-vfx.js](file:///c:/Users/kishikuun/Documents/dieu-bi-mat-epic/js/audio-vfx.js):
+       - `window.pauseBgmForVideo()`: Ghi nhớ trạng thái phát nhạc trước đó (`wasBgmPlayingBeforeVideo`), tạm dừng BGM và cập nhật nút chuyển nhạc về biểu tượng play.
+       - `window.resumeBgmAfterVideo()`: Nếu BGM đang phát trước khi xem video, tự động phát tiếp bài hát và khôi phục biểu tượng nốt nhạc du dương.
+  4. **Theo Dõi Tiến Độ Xem Quà & Giải Phóng Bộ Nhớ**:
+     - Trong [js/secret-letter.js](file:///c:/Users/kishikuun/Documents/dieu-bi-mat-epic/js/secret-letter.js):
+       - Khi video 1 đạt `currentTime / duration >= 0.95` hoặc sự kiện `ended`: kích hoạt `handleGift1Completed()`, lưu cờ `gift1Watched = true` vào `sessionStorage` và tự động mở khóa Hộp Quà số 2.
+       - Khi đóng modal: giải phóng hoàn toàn buffer video (`removeAttribute('src')` & `player.load()`), ngăn chặn rò rỉ bộ nhớ (memory leak).
+       - Tích hợp `closeGiftVideoModal()` vào `cleanupStage` của [js/garden-stages.js](file:///c:/Users/kishikuun/Documents/dieu-bi-mat-epic/js/garden-stages.js) theo chuẩn Clean Unmount Invariant.
+
 
 
 

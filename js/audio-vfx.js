@@ -1386,6 +1386,38 @@ const initBgMusic = () => {
             }
         }
     };
+
+    // Video Lightbox BGM Coordination (Phase 9)
+    let wasBgmPlayingBeforeVideo = false;
+    let preVideoBgmVolume = 0.20;
+
+    window.pauseBgmForVideo = () => {
+        if (!audio) return;
+        wasBgmPlayingBeforeVideo = !audio.paused;
+        preVideoBgmVolume = audio.volume || window.originalAudioVolume || 0.20;
+        if (wasBgmPlayingBeforeVideo) {
+            audio.pause();
+            if (musicToggleBtn) {
+                musicToggleBtn.classList.remove('playing');
+                if (musicIconPath && playPath) musicIconPath.setAttribute("d", playPath);
+            }
+        }
+    };
+
+    window.resumeBgmAfterVideo = () => {
+        if (!audio) return;
+        if (wasBgmPlayingBeforeVideo) {
+            audio.volume = preVideoBgmVolume;
+            audio.play().then(() => {
+                if (musicToggleBtn) {
+                    musicToggleBtn.classList.add('playing');
+                    if (isPhonkActive) musicToggleBtn.classList.add('phonk-active');
+                    if (musicIconPath && pausePath) musicIconPath.setAttribute("d", pausePath);
+                }
+            }).catch(e => console.log("Resume BGM after video error:", e));
+            wasBgmPlayingBeforeVideo = false;
+        }
+    };
 };
 
 if (document.readyState === "loading") {
