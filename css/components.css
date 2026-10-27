@@ -12116,10 +12116,12 @@ body.sky-night .gift-video-note {
   gap: 12px;
   width: 100%;
   animation: giftFadeIn 0.6s ease forwards;
+  pointer-events: auto !important;
 }
 
 .secret-gift-boxes-deck.hidden {
   display: none !important;
+  pointer-events: none !important;
 }
 
 @keyframes giftFadeIn {
@@ -12138,6 +12140,7 @@ body.sky-night .gift-video-note {
   align-items: center;
   justify-content: center;
   gap: 8px;
+  pointer-events: auto !important;
 }
 
 .gift-boxes-title {
@@ -12167,6 +12170,7 @@ body.sky-night .gift-boxes-title {
   grid-template-columns: 1fr 1fr;
   gap: 12px;
   width: 100%;
+  pointer-events: auto !important;
 }
 
 .heritage-gift-box {
@@ -12182,6 +12186,11 @@ body.sky-night .gift-boxes-title {
   overflow: hidden;
   min-height: 54px;
   touch-action: manipulation;
+  pointer-events: auto !important;
+}
+
+.heritage-gift-box * {
+  pointer-events: none;
 }
 
 .heritage-gift-box::after {

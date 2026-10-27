@@ -461,6 +461,7 @@
     const wrap = document.getElementById('wrap');
     if (!wrap) return;
 
+    const insets = getSafeAreaInsets();
     const baseWidth = 1100;
     const baseHeight = 680;
 

@@ -868,3 +868,30 @@
   3. **Kiểm Định Toàn Diện Bộ Test Tự Động (`scratch/test_stage2_gifts_audio.js`)**:
      - 10/10 nhóm tiêu chí từ Phase 7 đến Phase 12 đều đạt kết quả **100% PASSED**.
 
+---
+
+### 18. Vấn Đề: Sửa Lỗi Không Bấm Được Vào Hộp Quà Video & Tối Ưu Bố Cục/Tỷ Lệ Ảnh Polaroid Xuất Ra
+- **Triệu chứng & Căn nguyên**:
+  1. *Lỗi hộp quà không bấm được (cả PC lẫn Mobile)*:
+     - Container cha `#main-container` mang `pointer-events: none; z-index: 2`. Khi sang Stage 4, `.text-panel.show` và `.secret-gift-boxes-deck` không khai báo `pointer-events: auto;`, dẫn đến việc các hộp quà `#gift-box-1` và `#gift-box-2` thừa kế `pointer-events: none`. Khi người dùng click, sự kiện xuyên thấu qua hộp quà và rơi xuống `#terrarium-touch-surface`.
+     - Trong `js/secret-letter.js`, hàm `openGiftVideoModal` nạp source qua `srcMp4.src = videoData.mp4` mà không gán trực tiếp `player.src = videoData.mp4; player.load()`, khiến một số trình duyệt (đặc biệt là Safari iOS và WebKit) không tự nạp video hoặc gây ngoại lệ khi gọi `player.currentTime = 0;`.
+  2. *Lỗi ảnh Polaroid xuất ra bị lỗi tỷ lệ và bố cục*:
+     - Trong Stage 4, hàm `moveAnimate` của `love.js` / `main.js` dịch chuyển cây hoa trái tim từ giữa sang góc phải (`x = 500..1110` trên canvas gốc 1100x680).
+     - Khi `renderGardenPolaroidToCanvas` lấy toàn bộ canvas 1100x680 vẽ vào khung ảnh vuông 960x960, phần trống 480px bên trái bị ép dẹp lại, đẩy cây hoa lệch hẳn sang phải và méo mó tỷ lệ.
+     - Code cũ vẽ đè `treeCanvas` lần 2 khiến đường viền mặt đất ngang của `foot.draw()` cắt ngang qua người thiếu nữ Áo Dài.
+     - Vầng trăng khuyết góc trên bên phải bị tán cây che lấp.
+- **Công thức chuẩn hóa**:
+  1. **Triệt Tiêu Thừa Kế Pointer Events & Sự Kiện Capture Phase**:
+     - Thêm `pointer-events: auto !important;` cho `.text-panel.show`, `.secret-gift-boxes-deck` và `.heritage-gift-box`.
+     - Thêm `.heritage-gift-box * { pointer-events: none; }` để click luôn trúng chính xác thẻ nút container.
+     - Thêm cơ chế lắng nghe ủy quyền sự kiện Capture Phase trên `document` cho `#gift-box-1` và `#gift-box-2`.
+     - Trong `openGiftVideoModal`, gỡ bỏ class `hidden` ngay lập tức, gán trực tiếp `player.src = videoData.mp4`, bọc `try/catch` an toàn khi reset thời lượng video.
+  2. **Chuẩn Hóa Tỷ Lệ Vàng & Tái Cấu Trúc Khung Hình Polaroid Kỷ Niệm**:
+     - Cắt chính xác vùng cây hoa trái tim: `sx: 480, sy: 0, sw: 620, sh: 680` loại bỏ khoảng trống thừa bên trái.
+     - Định vị theo tỷ lệ vàng trong khung ảnh: `dx: px + 170, dy: py + 25, dw: 780, dh: 860`.
+     - Chuyển vầng trăng khuyết / mặt trời sang góc trên bên trái (`px + 140, py + 120`) với hào quang dịu mắt, hoàn toàn tách biệt với tán cây.
+     - Tạo 2 tầng đồi cỏ lượn sóng mềm mại dưới chân.
+     - Đặt thiếu nữ Áo Dài đứng duyên dáng trên đồi cỏ bên trái cây với quầng sáng hoa sen lan tỏa, loại bỏ triệt để nét cắt ngang của đường đất cũ.
+- **Kiểm Định**:
+  - Kiểm thử trực tiếp qua CDP trong Chrome: Hit-testing `#gift-box-1` đạt `pointer-events: auto`, click mở modal video thành công, modal đóng/mở chuẩn xác.
+  - Cú pháp 20 file JS và 4 file CSS: 100% Passed.

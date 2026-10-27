@@ -811,10 +811,13 @@
         ctx.strokeStyle = 'rgba(212, 175, 55, 0.45)';
         ctx.lineWidth = 2;
         ctx.strokeRect(18, 18, w - 36, h - 36);
+        ctx.strokeStyle = 'rgba(212, 175, 55, 0.2)';
+        ctx.lineWidth = 1;
+        ctx.strokeRect(24, 24, w - 48, h - 48);
 
-        // 2. Photo Viewport (960 x 960 at x: 60, y: 70)
+        // 2. Photo Viewport (960 x 960 at x: 60, y: 60)
         const px = 60;
-        const py = 70;
+        const py = 60;
         const pw = 960;
         const ph = 960;
 
@@ -826,77 +829,110 @@
         // Sky background gradient according to current diurnal cycle
         const skyGrad = ctx.createLinearGradient(px, py, px, py + ph);
         if (document.body.classList.contains('sky-dawn')) {
-            skyGrad.addColorStop(0, '#FF9E80');
-            skyGrad.addColorStop(0.5, '#FFD3B6');
+            skyGrad.addColorStop(0, '#FF8A65');
+            skyGrad.addColorStop(0.45, '#FFCCBC');
             skyGrad.addColorStop(1, '#FAF7F0');
         } else if (document.body.classList.contains('sky-dusk')) {
-            skyGrad.addColorStop(0, '#E76F51');
-            skyGrad.addColorStop(0.5, '#F4A261');
-            skyGrad.addColorStop(1, '#FFE8D6');
+            skyGrad.addColorStop(0, '#D84315');
+            skyGrad.addColorStop(0.45, '#F48FB1');
+            skyGrad.addColorStop(1, '#FFE082');
         } else if (document.body.classList.contains('sky-night')) {
-            skyGrad.addColorStop(0, '#0B132B');
-            skyGrad.addColorStop(0.6, '#1C2541');
-            skyGrad.addColorStop(1, '#3A506B');
+            skyGrad.addColorStop(0, '#090F22');
+            skyGrad.addColorStop(0.55, '#15203D');
+            skyGrad.addColorStop(1, '#263859');
         } else {
-            // Default Day
-            skyGrad.addColorStop(0, '#74B9FF');
-            skyGrad.addColorStop(0.6, '#A1C4FD');
+            skyGrad.addColorStop(0, '#64B5F6');
+            skyGrad.addColorStop(0.5, '#BBDEFB');
             skyGrad.addColorStop(1, '#FAF7F0');
         }
         ctx.fillStyle = skyGrad;
         ctx.fillRect(px, py, pw, ph);
 
-        // Night stars or Sun
+        // Celestial Bodies & Stars
         if (document.body.classList.contains('sky-night')) {
+            // Stars in upper sky
             ctx.fillStyle = '#FFFFFF';
-            for (let i = 0; i < 45; i++) {
+            for (let i = 0; i < 48; i++) {
                 const sx = px + (Math.sin(i * 12.3) * 0.5 + 0.5) * pw;
-                const sy = py + (Math.cos(i * 8.7) * 0.5 + 0.5) * (ph * 0.7);
-                const sr = (i % 3 === 0) ? 2.5 : 1.2;
-                ctx.globalAlpha = 0.4 + (i % 5) * 0.12;
+                const sy = py + (Math.cos(i * 8.7) * 0.5 + 0.5) * (ph * 0.65);
+                const sr = (i % 4 === 0) ? 2.6 : ((i % 2 === 0) ? 1.6 : 1.0);
+                ctx.globalAlpha = 0.35 + (i % 6) * 0.11;
                 ctx.beginPath();
                 ctx.arc(sx, sy, sr, 0, Math.PI * 2);
                 ctx.fill();
             }
-            // Crescent moon
-            ctx.globalAlpha = 0.9;
+
+            // Crescent Moon positioned at top-left (px + 140, py + 120) to avoid tree occlusion
+            const mx = px + 140;
+            const my = py + 120;
+            ctx.globalAlpha = 1.0;
+            
+            // Moon glow
+            const moonGlow = ctx.createRadialGradient(mx, my, 20, mx, my, 85);
+            moonGlow.addColorStop(0, 'rgba(255, 249, 219, 0.45)');
+            moonGlow.addColorStop(0.5, 'rgba(255, 245, 180, 0.15)');
+            moonGlow.addColorStop(1, 'rgba(255, 245, 180, 0)');
+            ctx.fillStyle = moonGlow;
+            ctx.beginPath();
+            ctx.arc(mx, my, 85, 0, Math.PI * 2);
+            ctx.fill();
+
+            // Moon body
             ctx.fillStyle = '#FFF9DB';
             ctx.beginPath();
-            ctx.arc(px + 780, py + 180, 48, 0, Math.PI * 2);
+            ctx.arc(mx, my, 40, 0, Math.PI * 2);
             ctx.fill();
-            ctx.fillStyle = '#0B132B';
+
+            // Moon shadow cutout (creates delicate crescent)
+            ctx.fillStyle = '#090F22';
             ctx.beginPath();
-            ctx.arc(px + 798, py + 172, 44, 0, Math.PI * 2);
+            ctx.arc(mx + 15, my - 6, 36, 0, Math.PI * 2);
             ctx.fill();
         } else {
-            // Sun with radiant aura
-            const sunHalo = ctx.createRadialGradient(px + 780, py + 180, 10, px + 780, py + 180, 120);
-            sunHalo.addColorStop(0, 'rgba(255, 238, 140, 0.9)');
-            sunHalo.addColorStop(0.5, 'rgba(245, 206, 86, 0.4)');
+            // Radiant Sun at top-left
+            const sx = px + 140;
+            const sy = py + 120;
+            const sunHalo = ctx.createRadialGradient(sx, sy, 15, sx, sy, 110);
+            sunHalo.addColorStop(0, 'rgba(255, 238, 140, 0.85)');
+            sunHalo.addColorStop(0.6, 'rgba(245, 206, 86, 0.3)');
             sunHalo.addColorStop(1, 'rgba(245, 206, 86, 0)');
             ctx.fillStyle = sunHalo;
             ctx.beginPath();
-            ctx.arc(px + 780, py + 180, 120, 0, Math.PI * 2);
+            ctx.arc(sx, sy, 110, 0, Math.PI * 2);
             ctx.fill();
 
             ctx.fillStyle = '#F5CE56';
             ctx.beginPath();
-            ctx.arc(px + 780, py + 180, 36, 0, Math.PI * 2);
+            ctx.arc(sx, sy, 34, 0, Math.PI * 2);
             ctx.fill();
         }
         ctx.globalAlpha = 1.0;
 
-        // Ground hillock base
-        const groundGrad = ctx.createLinearGradient(px, py + ph - 160, px, py + ph);
-        groundGrad.addColorStop(0, 'rgba(106, 141, 115, 0.25)');
-        groundGrad.addColorStop(1, '#5C7A63');
-        ctx.fillStyle = groundGrad;
+        // 3. Grassy Meadow Hillock at bottom of photo
+        // Background hillock
+        const hillGrad1 = ctx.createLinearGradient(px, py + ph - 160, px, py + ph);
+        hillGrad1.addColorStop(0, '#3A5A40');
+        hillGrad1.addColorStop(1, '#273C2C');
+        ctx.fillStyle = hillGrad1;
         ctx.beginPath();
         ctx.moveTo(px, py + ph);
-        ctx.quadraticCurveTo(px + pw * 0.5, py + ph - 140, px + pw, py + ph);
+        ctx.quadraticCurveTo(px + pw * 0.4, py + ph - 130, px + pw, py + ph - 60);
+        ctx.lineTo(px + pw, py + ph);
+        ctx.closePath();
         ctx.fill();
 
-        // 3. Heart Tree snapshot (Guaranteed capture engine: Never blank even when jumpAnimate clears canvas)
+        // Foreground rich meadow
+        const hillGrad2 = ctx.createLinearGradient(px, py + ph - 110, px, py + ph);
+        hillGrad2.addColorStop(0, '#588157');
+        hillGrad2.addColorStop(1, '#344E41');
+        ctx.fillStyle = hillGrad2;
+        ctx.beginPath();
+        ctx.moveTo(px, py + ph);
+        ctx.quadraticCurveTo(px + pw * 0.6, py + ph - 100, px + pw, py + ph);
+        ctx.closePath();
+        ctx.fill();
+
+        // 4. Heart-Blooming Tree snapshot (Golden-Ratio Centering & Zero Duplication)
         let treeSource = null;
         if (window.bloomedTreeImage && window.bloomedTreeImage.complete && window.bloomedTreeImage.naturalWidth > 0) {
             treeSource = window.bloomedTreeImage;
@@ -916,7 +952,6 @@
         }
 
         if (!treeSource) {
-            // Fallback 1: Check background-image of wrap (parent of canvas)
             const wrapEl = document.getElementById('wrap');
             const bgStyle = (wrapEl && wrapEl.style.backgroundImage) || (wrapEl && wrapEl.style.background) || '';
             const match = bgStyle.match(/url\(['"]?(data:image\/[^'"]+)['"]?\)/);
@@ -944,21 +979,33 @@
             }
         }
 
-        const treeCanvas = document.getElementById('canvas');
-        if (treeSource) {
-            const srcW = treeSource.naturalWidth || treeSource.width || 1100;
-            const srcH = treeSource.naturalHeight || treeSource.height || 680;
-            ctx.drawImage(treeSource, 0, 0, srcW, srcH, px - 30, py + 80, pw + 60, 820);
-        } else if (treeCanvas && treeCanvas.width > 0) {
-            ctx.drawImage(treeCanvas, 0, 0, treeCanvas.width, treeCanvas.height, px - 30, py + 80, pw + 60, 820);
+        const fallbackCanvas = document.getElementById('canvas');
+        const activeTreeSource = treeSource || fallbackCanvas;
+
+        if (activeTreeSource) {
+            const srcW = activeTreeSource.naturalWidth || activeTreeSource.width || 1100;
+            const srcH = activeTreeSource.naturalHeight || activeTreeSource.height || 680;
+            const isStage4 = (window.gardenState && window.gardenState.currentStage >= 4) || (srcW >= 1000);
+
+            if (isStage4 && srcW >= 1000) {
+                // Crop only the heart tree region (sx: 480 to 1100, eliminating empty left half)
+                // Draw into photo with golden ratio placement (dx: px + 170, dy: py + 25)
+                const sx = 480;
+                const sy = 0;
+                const sw = Math.min(620, srcW - 480);
+                const sh = srcH;
+                ctx.drawImage(activeTreeSource, sx, sy, sw, sh, px + 170, py + 25, 780, 860);
+            } else {
+                // Centered sprout / young tree for stages 1-3
+                const sx = Math.max(0, (srcW - 600) / 2);
+                const sy = Math.max(0, srcH - 520);
+                const sw = Math.min(600, srcW);
+                const sh = Math.min(520, srcH);
+                ctx.drawImage(activeTreeSource, sx, sy, sw, sh, px + 180, py + 220, 600, 520);
+            }
         }
 
-        // Composite active falling petals from live canvas if treeSource is already rendered
-        if (treeSource && treeCanvas && treeCanvas.width > 0) {
-            ctx.drawImage(treeCanvas, 0, 0, treeCanvas.width, treeCanvas.height, px - 30, py + 80, pw + 60, 820);
-        }
-
-        // 4. Áo Dài Maiden figure (if stage >= 3 and asset available)
+        // 5. Áo Dài Maiden figure (Graceful placement on meadow, left of tree trunk)
         const domAoDai = document.querySelector('.ao-dai-figure-img');
         const aoDaiImg = (window.aoDaiVietImg && window.aoDaiVietImg.complete && window.aoDaiVietImg.naturalWidth > 0)
             ? window.aoDaiVietImg
@@ -966,23 +1013,39 @@
 
         if (window.gardenState && window.gardenState.currentStage >= 3 && aoDaiImg) {
             ctx.save();
-            ctx.shadowColor = 'rgba(74, 55, 40, 0.25)';
-            ctx.shadowBlur = 16;
-            ctx.drawImage(aoDaiImg, px + 80, py + ph - 380, 240, 360);
+            const ax = px + 75;
+            const ay = py + ph - 410;
+            const aw = 270;
+            const ah = 400;
+
+            // Soft lotus mist aura around maiden
+            const aura = ctx.createRadialGradient(ax + aw * 0.45, ay + ah * 0.5, 20, ax + aw * 0.45, ay + ah * 0.5, 170);
+            aura.addColorStop(0, 'rgba(250, 247, 240, 0.45)');
+            aura.addColorStop(0.5, 'rgba(212, 122, 136, 0.16)');
+            aura.addColorStop(1, 'rgba(212, 122, 136, 0)');
+            ctx.fillStyle = aura;
+            ctx.beginPath();
+            ctx.arc(ax + aw * 0.45, ay + ah * 0.5, 170, 0, Math.PI * 2);
+            ctx.fill();
+
+            ctx.shadowColor = 'rgba(10, 15, 29, 0.35)';
+            ctx.shadowBlur = 14;
+            ctx.shadowOffsetY = 4;
+            ctx.drawImage(aoDaiImg, ax, ay, aw, ah);
             ctx.restore();
         }
 
-        // 5. Falling Lotus Petals in Photo
-        const petalColors = ['#E28490', '#D47A88', '#F7C5CC'];
-        for (let i = 0; i < 16; i++) {
+        // 6. Floating Lotus Petals in Photo Frame
+        const petalColors = ['#E28490', '#D47A88', '#F7C5CC', '#FFB7C5'];
+        for (let i = 0; i < 18; i++) {
             const petX = px + (Math.sin(i * 37.1) * 0.5 + 0.5) * pw;
-            const petY = py + (Math.cos(i * 19.3) * 0.5 + 0.5) * ph;
-            const petRot = (i * 45) * Math.PI / 180;
+            const petY = py + (Math.cos(i * 19.3) * 0.5 + 0.5) * (ph * 0.9);
+            const petRot = (i * 40) * Math.PI / 180;
             ctx.save();
             ctx.translate(petX, petY);
             ctx.rotate(petRot);
             ctx.fillStyle = petalColors[i % petalColors.length];
-            ctx.globalAlpha = 0.75;
+            ctx.globalAlpha = 0.72;
             ctx.beginPath();
             ctx.moveTo(0, -9);
             ctx.quadraticCurveTo(6, -2, 0, 9);
@@ -994,38 +1057,38 @@
 
         ctx.restore(); // End photo clip
 
-        // Inset border around photo window
-        ctx.strokeStyle = 'rgba(74, 55, 40, 0.15)';
+        // Photo frame border
+        ctx.strokeStyle = 'rgba(74, 55, 40, 0.16)';
         ctx.lineWidth = 2;
         ctx.strokeRect(px, py, pw, ph);
 
-        // 6. Bottom Margin Typography & Keepsake Dedication
+        // 7. Bottom Margin Typography & Keepsake Dedication
         // Poetic Title
         ctx.font = 'italic 34px "Dancing Script", cursive, serif';
         ctx.fillStyle = '#4A3728';
-        ctx.fillText('Khu vườn bí mật · Nơi ước nguyện nở hoa ♡', px + 10, 1105);
+        ctx.fillText('Khu vườn bí mật · Nơi ước nguyện nở hoa ♡', px + 10, 1095);
 
         // Recipient Dedication
         const recipientName = window.currentUserName && window.currentUserName.trim()
             ? window.currentUserName.trim().toUpperCase()
             : 'NGƯỜI THƯƠNG';
-        ctx.font = 'bold 22px "Be Vietnam Pro", sans-serif';
+        ctx.font = 'bold 23px "Be Vietnam Pro", sans-serif';
         ctx.fillStyle = '#8C2D39';
-        ctx.fillText('DÀNH TẶNG: ' + recipientName, px + 10, 1152);
+        ctx.fillText('DÀNH TẶNG: ' + recipientName, px + 10, 1144);
 
         // Poetic Blessing
         ctx.font = '15px "Be Vietnam Pro", sans-serif';
         ctx.fillStyle = '#6B5E55';
-        ctx.fillText('Chúc bạn một ngày 20/10 vạn sự an yên, dịu dàng và rực rỡ như hoa.', px + 10, 1190);
+        ctx.fillText('Chúc bạn một ngày 20/10 vạn sự an yên, dịu dàng và rực rỡ như hoa.', px + 10, 1182);
 
         // Postal Mark bottom left
         ctx.font = '600 13px "Be Vietnam Pro", sans-serif';
         ctx.fillStyle = 'rgba(126, 88, 53, 0.75)';
-        ctx.fillText('20.10.2026 · VIETNAMESE HERITAGE EDITION', px + 10, 1250);
+        ctx.fillText('20.10.2026 · VIETNAMESE HERITAGE EDITION', px + 10, 1242);
 
         // Cinnabar Red Seal Stamp (Bottom-Right corner)
-        const scx = w - 150;
-        const scy = 1175;
+        const scx = w - 145;
+        const scy = 1170;
         const sr = 48;
 
         ctx.save();
@@ -1048,11 +1111,11 @@
         ctx.textAlign = 'center';
         ctx.fillText('★ 20/10/2026 ★', 0, -22);
 
-        ctx.font = 'bold 15px "Be Vietnam Pro", sans-serif';
-        ctx.fillText('NÉT AN YÊN', 0, 2);
+        ctx.font = 'bold 14px "Be Vietnam Pro", sans-serif';
+        ctx.fillText('NÉT AN YÊN', 0, 1);
 
-        ctx.font = 'bold 10.5px "Be Vietnam Pro", sans-serif';
-        ctx.fillText('VIỆT NAM', 0, 24);
+        ctx.font = 'bold 10px "Be Vietnam Pro", sans-serif';
+        ctx.fillText('VIỆT NAM', 0, 21);
 
         ctx.restore();
     };

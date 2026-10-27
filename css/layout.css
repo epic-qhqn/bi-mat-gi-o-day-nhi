@@ -297,6 +297,8 @@ body.stage-3-active .garden-ui .terrarium-gesture-hint,
 body.stage-3-active #terrarium-gesture-hint,
 body.stage-2-active #living-atmosphere-hud,
 body.stage-2-active .living-atmosphere-hud,
+body.stage-3-active #living-atmosphere-hud,
+body.stage-3-active .living-atmosphere-hud,
 body.stage-4-active #living-atmosphere-hud,
 body.stage-4-active .living-atmosphere-hud {
   display: none !important;
@@ -1422,6 +1424,7 @@ a:hover {
   opacity: 1;
   visibility: visible !important;
   transform: translateY(-50%) translateY(0);
+  pointer-events: auto !important;
 }
 
 /* Custom Scrollbar for Text */

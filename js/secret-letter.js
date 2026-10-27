@@ -1176,12 +1176,20 @@
         if (subtitleEl) subtitleEl.textContent = videoData.subtitle;
         if (noteEl) noteEl.textContent = videoData.note;
 
-        // Reset and set sources
-        player.pause();
-        if (srcMp4) srcMp4.src = videoData.mp4;
+        // Reveal modal immediately so user sees response
+        modal.classList.remove('hidden');
+        modal.setAttribute('aria-hidden', 'false');
 
-        player.load();
-        player.currentTime = 0;
+        // Reset and set sources
+        try {
+            player.pause();
+            if (srcMp4) srcMp4.src = videoData.mp4;
+            player.src = videoData.mp4; // Direct src for bulletproof cross-browser playback
+            player.load();
+            player.currentTime = 0;
+        } catch (e) {
+            console.log("Video source load exception handled:", e);
+        }
 
         // Auto pause BGM on video play
         player.onplay = () => {
@@ -1207,13 +1215,10 @@
             }
         };
 
-        modal.classList.remove('hidden');
-        modal.setAttribute('aria-hidden', 'false');
-
         const playPromise = player.play();
         if (playPromise !== undefined) {
             playPromise.catch(e => {
-                console.log("Video autoplay blocked, waiting for manual play:", e);
+                console.log("Video autoplay waiting for manual play:", e);
             });
         }
 
@@ -1235,7 +1240,7 @@
             player.onended = null;
             if (srcMp4) srcMp4.removeAttribute('src');
             player.removeAttribute('src');
-            player.load();
+            try { player.load(); } catch (_) {}
         }
 
         modal.classList.add('hidden');
@@ -1248,6 +1253,7 @@
         if (typeof window.triggerHaptic === 'function') window.triggerHaptic('light');
     };
 
+    let giftBoxesInitialized = false;
     const initGiftBoxesDeck = () => {
         const giftBox1 = document.getElementById('gift-box-1');
         const giftBox2 = document.getElementById('gift-box-2');
@@ -1255,19 +1261,26 @@
         const polaroidBtn2 = document.getElementById('polaroid-gift-btn-2');
 
         const handleBox1 = (e) => {
-            if (e) e.stopPropagation();
+            if (e) {
+                if (e.cancelable) e.preventDefault();
+                e.stopPropagation();
+            }
             openGiftVideoModal(1);
         };
 
         const handleBox2 = (e) => {
-            if (e) e.stopPropagation();
+            if (e) {
+                if (e.cancelable) e.preventDefault();
+                e.stopPropagation();
+            }
             window.gardenState = window.gardenState || {};
             if (!window.gardenState.gift1Watched) {
-                if (giftBox2) {
-                    giftBox2.classList.remove('shake-locked');
-                    void giftBox2.offsetWidth;
-                    giftBox2.classList.add('shake-locked');
-                    setTimeout(() => { if (giftBox2) giftBox2.classList.remove('shake-locked'); }, 500);
+                const targetBox = document.getElementById('gift-box-2');
+                if (targetBox) {
+                    targetBox.classList.remove('shake-locked');
+                    void targetBox.offsetWidth;
+                    targetBox.classList.add('shake-locked');
+                    setTimeout(() => { if (targetBox) targetBox.classList.remove('shake-locked'); }, 500);
                 }
                 if (typeof window.triggerHaptic === 'function') window.triggerHaptic('medium');
                 if (typeof window.showMascotSpeech === 'function') {
@@ -1283,6 +1296,23 @@
 
         if (giftBox2) giftBox2.addEventListener('click', handleBox2);
         if (polaroidBtn2) polaroidBtn2.addEventListener('click', handleBox2);
+
+        // Global Event Delegation so clicks always work even if DOM updates
+        if (!giftBoxesInitialized) {
+            giftBoxesInitialized = true;
+            document.addEventListener('click', (e) => {
+                const target1 = e.target && e.target.closest('#gift-box-1, #polaroid-gift-btn-1');
+                if (target1) {
+                    handleBox1(e);
+                    return;
+                }
+                const target2 = e.target && e.target.closest('#gift-box-2, #polaroid-gift-btn-2');
+                if (target2) {
+                    handleBox2(e);
+                    return;
+                }
+            }, true); // Capture phase to prevent any swallowing
+        }
 
         // Check if already watched in previous session
         try {
