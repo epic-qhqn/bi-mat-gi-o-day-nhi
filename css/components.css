@@ -12506,4 +12506,158 @@ body.sky-night .gift-boxes-title {
   }
 }
 
+/* =========================================================================
+   CONDITIONAL MOBILE STRUGGLE HELPER
+   Appears only on repeated device rotations or prolonged phase stuck timer
+   ========================================================================= */
+.mobile-struggle-helper {
+  position: fixed;
+  bottom: 24px;
+  right: 20px;
+  z-index: 100050;
+  max-width: 340px;
+  width: calc(100vw - 40px);
+  pointer-events: auto;
+  transition: opacity 0.35s ease, transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+  animation: helper-slide-up 0.4s ease-out;
+}
+
+.mobile-struggle-helper.hidden {
+  display: none !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
+}
+
+@keyframes helper-slide-up {
+  from {
+    opacity: 0;
+    transform: translateY(18px) scale(0.96);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.struggle-helper-card {
+  position: relative;
+  background: rgba(250, 247, 240, 0.96);
+  border: 1.5px solid rgba(212, 175, 55, 0.5);
+  border-radius: 14px;
+  padding: 14px 16px;
+  box-shadow: 0 10px 30px rgba(74, 55, 40, 0.22), 0 0 0 1px rgba(255, 255, 255, 0.8) inset;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  font-family: 'Be Vietnam Pro', sans-serif;
+  box-sizing: border-box;
+}
+
+.struggle-helper-close {
+  position: absolute;
+  top: 8px;
+  right: 10px;
+  background: none;
+  border: none;
+  font-size: 15px;
+  color: #8C7B70;
+  cursor: pointer;
+  padding: 4px 6px;
+  line-height: 1;
+  border-radius: 6px;
+  transition: color 0.2s, background 0.2s;
+}
+
+.struggle-helper-close:hover {
+  color: #4A3728;
+  background: rgba(74, 55, 40, 0.08);
+}
+
+.struggle-helper-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 6px;
+}
+
+.struggle-helper-icon {
+  font-size: 18px;
+}
+
+.struggle-helper-title {
+  font-size: 13.5px;
+  font-weight: 700;
+  color: #4A3728;
+}
+
+.struggle-helper-desc {
+  font-size: 12px;
+  line-height: 1.45;
+  color: #6B5E55;
+  margin: 0 0 12px 0;
+}
+
+.struggle-helper-actions {
+  display: flex;
+  gap: 8px;
+}
+
+.struggle-act-btn {
+  flex: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 8px 10px;
+  font-size: 12px;
+  font-weight: 600;
+  border-radius: 8px;
+  border: 1px solid transparent;
+  cursor: pointer;
+  transition: transform 0.15s ease, background 0.2s ease, box-shadow 0.2s ease;
+  min-height: 38px;
+}
+
+.struggle-act-btn.portrait-act {
+  background: #FFFFFF;
+  color: #4A3728;
+  border-color: rgba(212, 175, 55, 0.45);
+}
+
+.struggle-act-btn.portrait-act:hover {
+  background: #FAF7F0;
+  transform: translateY(-1px);
+}
+
+.struggle-act-btn.gift-act {
+  background: linear-gradient(135deg, #8C2D39, #B83B4A);
+  color: #FAF7F0;
+  box-shadow: 0 2px 8px rgba(140, 45, 57, 0.35);
+}
+
+.struggle-act-btn.gift-act:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(140, 45, 57, 0.45);
+}
+
+@media (max-height: 540px) and (orientation: landscape) {
+  .mobile-struggle-helper {
+    bottom: 12px;
+    right: 12px;
+    max-width: 320px;
+  }
+  .struggle-helper-card {
+    padding: 10px 12px;
+  }
+  .struggle-helper-desc {
+    margin-bottom: 8px;
+    font-size: 11.5px;
+  }
+  .struggle-act-btn {
+    padding: 6px 8px;
+    min-height: 34px;
+    font-size: 11px;
+  }
+}
+
+
 

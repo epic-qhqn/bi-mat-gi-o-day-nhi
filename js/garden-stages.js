@@ -431,6 +431,19 @@
             if (typeof window.revealSecretLetterButton === 'function') window.revealSecretLetterButton();
             if (typeof window.revealBoardingPassButton === 'function') window.revealBoardingPassButton();
 
+            // Ensure tree canvas is fully bloomed
+            if (typeof window.getOrGenerateBloomedTreeCanvas === 'function') {
+                const bCanvas = window.getOrGenerateBloomedTreeCanvas();
+                const mainCanvas = document.getElementById('canvas');
+                if (mainCanvas && bCanvas) {
+                    const mCtx = mainCanvas.getContext('2d');
+                    if (mCtx) {
+                        mCtx.clearRect(0, 0, mainCanvas.width, mainCanvas.height);
+                        mCtx.drawImage(bCanvas, 0, 0);
+                    }
+                }
+            }
+
             const cloverEl = document.getElementById('sprout-lucky-clover');
             if (cloverEl) {
                 cloverEl.classList.remove('visible');
@@ -544,6 +557,9 @@
         document.body.classList.remove('stage-1-active', 'stage-2-active', 'stage-3-active', 'stage-4-active');
         document.body.classList.add('stage-' + activeStageNum + '-active');
         syncGardenStageSelector(activeStageNum);
+        if (typeof window.resetStageStuckTimer === 'function') {
+            window.resetStageStuckTimer();
+        }
         if (typeof window.notifyStageHint === 'function') {
             window.notifyStageHint(window.gardenState.currentStage);
         }
@@ -933,61 +949,49 @@
         ctx.fill();
 
         // 4. Heart-Blooming Tree snapshot (Golden-Ratio Centering & Zero Duplication)
-        let treeSource = null;
-        if (window.bloomedTreeImage && window.bloomedTreeImage.complete && window.bloomedTreeImage.naturalWidth > 0) {
-            treeSource = window.bloomedTreeImage;
-        } else if (window.bloomedTreeSnapshotDataUrl) {
-            const tempImg = new Image();
-            tempImg.src = window.bloomedTreeSnapshotDataUrl;
-            if (tempImg.complete && tempImg.naturalWidth > 0) {
-                treeSource = tempImg;
-                window.bloomedTreeImage = tempImg;
-            } else {
-                tempImg.onload = () => {
-                    window.bloomedTreeImage = tempImg;
-                    const pCanvas = document.getElementById('garden-polaroid-canvas');
-                    if (pCanvas) renderGardenPolaroidToCanvas(pCanvas);
-                };
-            }
-        }
+        const isStage4Active = (window.gardenState && window.gardenState.currentStage >= 3) ||
+                               document.body.classList.contains('stage-4-active');
 
-        if (!treeSource) {
-            const wrapEl = document.getElementById('wrap');
-            const bgStyle = (wrapEl && wrapEl.style.backgroundImage) || (wrapEl && wrapEl.style.background) || '';
-            const match = bgStyle.match(/url\(['"]?(data:image\/[^'"]+)['"]?\)/);
-            if (match && match[1]) {
-                const bgImg = new Image();
-                bgImg.src = match[1];
-                if (bgImg.complete && bgImg.naturalWidth > 0) {
-                    treeSource = bgImg;
-                    window.bloomedTreeImage = bgImg;
-                } else {
-                    bgImg.onload = () => {
-                        window.bloomedTreeImage = bgImg;
-                        const pCanvas = document.getElementById('garden-polaroid-canvas');
-                        if (pCanvas) renderGardenPolaroidToCanvas(pCanvas);
-                    };
+        let activeTreeSource = null;
+
+        if (isStage4Active) {
+            // Prioritize offscreen bloomed canvas or generate synchronously in ~10ms
+            if (window.bloomedTreeCanvas && window.bloomedTreeCanvas.width > 0) {
+                activeTreeSource = window.bloomedTreeCanvas;
+            } else if (typeof window.getOrGenerateBloomedTreeCanvas === 'function') {
+                activeTreeSource = window.getOrGenerateBloomedTreeCanvas();
+            } else if (window.bloomedTreeImage && window.bloomedTreeImage.complete && window.bloomedTreeImage.naturalWidth > 0) {
+                activeTreeSource = window.bloomedTreeImage;
+            } else if (window.bloomedTreeSnapshotDataUrl) {
+                const snapImg = new Image();
+                snapImg.src = window.bloomedTreeSnapshotDataUrl;
+                if (snapImg.complete && snapImg.naturalWidth > 0) {
+                    activeTreeSource = snapImg;
                 }
             }
         }
 
-        if (!treeSource && window.currentGardenSnapshotUrl) {
-            const snapImg = new Image();
-            snapImg.src = window.currentGardenSnapshotUrl;
-            if (snapImg.complete && snapImg.naturalWidth > 0) {
-                treeSource = snapImg;
+        if (!activeTreeSource) {
+            if (window.bloomedTreeImage && window.bloomedTreeImage.complete && window.bloomedTreeImage.naturalWidth > 0) {
+                activeTreeSource = window.bloomedTreeImage;
+            } else if (window.currentGardenSnapshotUrl) {
+                const snapImg = new Image();
+                snapImg.src = window.currentGardenSnapshotUrl;
+                if (snapImg.complete && snapImg.naturalWidth > 0) {
+                    activeTreeSource = snapImg;
+                }
             }
         }
 
-        const fallbackCanvas = document.getElementById('canvas');
-        const activeTreeSource = treeSource || fallbackCanvas;
+        if (!activeTreeSource) {
+            activeTreeSource = document.getElementById('canvas');
+        }
 
         if (activeTreeSource) {
-            const srcW = activeTreeSource.naturalWidth || activeTreeSource.width || 1100;
-            const srcH = activeTreeSource.naturalHeight || activeTreeSource.height || 680;
-            const isStage4 = (window.gardenState && window.gardenState.currentStage >= 4) || (srcW >= 1000);
+            const srcW = activeTreeSource.width || activeTreeSource.naturalWidth || 1100;
+            const srcH = activeTreeSource.height || activeTreeSource.naturalHeight || 680;
 
-            if (isStage4 && srcW >= 1000) {
+            if (isStage4Active || srcW >= 1000) {
                 // Crop only the heart tree region (sx: 480 to 1100, eliminating empty left half)
                 // Draw into photo with golden ratio placement (dx: px + 170, dy: py + 25)
                 const sx = 480;
@@ -1137,6 +1141,13 @@
             setTimeout(() => flash.classList.remove('active'), 320);
         }
 
+        // Ensure bloomed tree canvas is ready synchronously if in Stage 4
+        const isStage4 = (window.gardenState && window.gardenState.currentStage >= 3) ||
+                         document.body.classList.contains('stage-4-active');
+        if (isStage4 && typeof window.getOrGenerateBloomedTreeCanvas === 'function') {
+            window.getOrGenerateBloomedTreeCanvas();
+        }
+
         const polaroidCanvas = document.getElementById('garden-polaroid-canvas');
         if (polaroidCanvas) {
             renderGardenPolaroidToCanvas(polaroidCanvas);
@@ -1189,6 +1200,9 @@
 
                 if (typeof window.playChimeSFX === 'function') window.playChimeSFX();
                 if (typeof window.triggerHaptic === 'function') window.triggerHaptic('success');
+
+                // Guarantee canvas is freshly painted with latest name and bloomed tree
+                renderGardenPolaroidToCanvas(canvas);
 
                 const nameSlug = (window.currentUserName && window.currentUserName.trim())
                     ? window.currentUserName.trim().toLowerCase().replace(/[^a-z0-9]/g, '-')

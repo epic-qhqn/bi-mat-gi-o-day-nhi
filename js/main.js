@@ -70,6 +70,60 @@
   window.gardenTree = tree;
 
   // =========================================================================
+  // SYNCHRONOUS HEART-TREE GENERATOR (100% RELIABLE FOR POLAROID & EXPORTS)
+  // =========================================================================
+  const getOrGenerateBloomedTreeCanvas = () => {
+    if (window.bloomedTreeCanvas && window.bloomedTreeCanvas.width > 0) {
+      return window.bloomedTreeCanvas;
+    }
+
+    try {
+      const offCanvas = document.createElement('canvas');
+      offCanvas.width = width;
+      offCanvas.height = height;
+
+      const offOpts = {
+        seed: { x: width / 2 - 20, color: "rgb(190, 26, 37)", scale: 2 },
+        branch: opts.branch,
+        bloom: { num: 700, width: 1080, height: 650 },
+        footer: { width: 1200, height: 5, speed: 10 }
+      };
+
+      const syncTree = new Tree(offCanvas, width, height, offOpts);
+      while (syncTree.canGrow()) {
+        syncTree.grow();
+      }
+      do {
+        syncTree.flower(50);
+      } while (syncTree.canFlower() || (syncTree.bloomsCache && syncTree.bloomsCache.length > 0));
+
+      syncTree.snapshot("p1", 240, 0, 610, 680);
+      const offCtx = offCanvas.getContext('2d');
+      offCtx.clearRect(0, 0, width, height);
+      const rec = syncTree.record["p1"];
+      if (rec && rec.image) {
+        offCtx.putImageData(rec.image, 500, 0);
+      }
+
+      window.bloomedTreeCanvas = offCanvas;
+      try {
+        const snapUrl = offCanvas.toDataURL("image/png");
+        window.bloomedTreeSnapshotDataUrl = snapUrl;
+        window.currentGardenSnapshotUrl = snapUrl;
+        const bImg = new Image();
+        bImg.src = snapUrl;
+        window.bloomedTreeImage = bImg;
+      } catch (_) {}
+
+      return offCanvas;
+    } catch (err) {
+      console.error("Lỗi tạo cây hoa đồng bộ:", err);
+      return canvas;
+    }
+  };
+  window.getOrGenerateBloomedTreeCanvas = getOrGenerateBloomedTreeCanvas;
+
+  // =========================================================================
   // STAGE TRANSITION RESOLVER
   // =========================================================================
   let stagePromiseResolve = null;
@@ -148,6 +202,16 @@
     const snapshotDataUrl = tree.toDataURL("image/png");
     window.bloomedTreeSnapshotDataUrl = snapshotDataUrl;
     window.currentGardenSnapshotUrl = snapshotDataUrl;
+    
+    // Create dedicated offscreen canvas snapshot (100% resilient against clearRect)
+    try {
+      const snapCanvas = document.createElement('canvas');
+      snapCanvas.width = width;
+      snapCanvas.height = height;
+      snapCanvas.getContext('2d').drawImage(canvas, 0, 0);
+      window.bloomedTreeCanvas = snapCanvas;
+    } catch (_) {}
+
     const bloomedImg = new Image();
     bloomedImg.src = snapshotDataUrl;
     window.bloomedTreeImage = bloomedImg;

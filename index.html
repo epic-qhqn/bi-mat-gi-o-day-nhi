@@ -40,16 +40,6 @@
 
     <!-- Phase 12: Top Experiential Dock (Zen Mode Toggle & Instant Garden Polaroid Capture) -->
     <div id="top-experiential-dock" class="top-experiential-dock" aria-label="Thao tác trải nghiệm khu vườn">
-        <button type="button" id="mobile-orientation-toggle-btn" class="experiential-btn mobile-only-btn" title="Chuyển chế độ xoay dọc / ngang" aria-label="Đổi hướng màn hình">
-            <span class="btn-halo" aria-hidden="true"></span>
-            <span class="btn-icon">📱</span>
-            <span class="btn-label">Xoay Dọc</span>
-        </button>
-        <button type="button" id="dock-fast-track-btn" class="experiential-btn mobile-only-btn" title="Mở thẳng quà &amp; thiệp 20/10" aria-label="Mở thẳng quà và thiệp">
-            <span class="btn-halo" aria-hidden="true"></span>
-            <span class="btn-icon">🎁</span>
-            <span class="btn-label">Mở Quà</span>
-        </button>
         <button type="button" id="zen-mode-toggle-btn" class="experiential-btn zen-btn" title="Chế Độ Tĩnh Lặng (Ẩn toàn bộ giao diện để ngắm cảnh)" aria-label="Chế độ tĩnh lặng">
             <span class="btn-halo" aria-hidden="true"></span>
             <span class="btn-icon">🌕</span>
@@ -61,6 +51,26 @@
             <span class="btn-label">Lưu Khoảnh Khắc</span>
         </button>
     </div>
+
+    <!-- Conditional Mobile Helper (Only triggered on repeated screen rotations or phase timeout) -->
+    <aside id="mobile-struggle-helper" class="mobile-struggle-helper hidden" role="region" aria-label="Hỗ trợ thao tác khu vườn" aria-live="polite">
+        <div class="struggle-helper-card">
+            <button type="button" id="struggle-helper-close-btn" class="struggle-helper-close" aria-label="Đóng bảng hỗ trợ">✕</button>
+            <div class="struggle-helper-header">
+                <span class="struggle-helper-icon">🏮</span>
+                <span class="struggle-helper-title">Bạn có gặp trở ngại khi thao tác?</span>
+            </div>
+            <p class="struggle-helper-desc">Bạn có thể chọn chế độ xem dọc để thoải mái hơn, hoặc mở thẳng món quà 20/10 bất cứ lúc nào ✨</p>
+            <div class="struggle-helper-actions">
+                <button type="button" id="struggle-helper-portrait-btn" class="struggle-act-btn portrait-act">
+                    <span>📱 Xem Giao Diện Dọc</span>
+                </button>
+                <button type="button" id="struggle-helper-fast-track-btn" class="struggle-act-btn gift-act">
+                    <span>🎁 Mở Thẳng Quà 20/10</span>
+                </button>
+            </div>
+        </div>
+    </aside>
 
     <!-- Zen Mode Floating Return Hint -->
     <div id="zen-mode-return-hint" class="zen-mode-return-hint hidden" aria-hidden="true">

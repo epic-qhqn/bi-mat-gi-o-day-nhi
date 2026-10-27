@@ -239,6 +239,20 @@
         if (typeof window.triggerNextStage === 'function') {
             window.triggerNextStage();
         }
+
+        // Ensure bloomed tree canvas is generated immediately
+        if (typeof window.getOrGenerateBloomedTreeCanvas === 'function') {
+            const bCanvas = window.getOrGenerateBloomedTreeCanvas();
+            const mainCanvas = document.getElementById('canvas');
+            if (mainCanvas && bCanvas) {
+                const mCtx = mainCanvas.getContext('2d');
+                if (mCtx) {
+                    mCtx.clearRect(0, 0, mainCanvas.width, mainCanvas.height);
+                    mCtx.drawImage(bCanvas, 0, 0);
+                }
+            }
+        }
+
         if (typeof window.loadContentAndAnimateText === 'function') {
             window.loadContentAndAnimateText();
         }
@@ -279,7 +293,7 @@
         }
     };
 
-    // Gắn sự kiện cho nút khẩn cấp
+    // Gắn sự kiện cho nút khẩn cấp trong overlay
     const emergencyBtn = document.getElementById('emergency-fast-track-btn');
     if (emergencyBtn) {
         emergencyBtn.addEventListener('click', (e) => {
@@ -289,24 +303,103 @@
         });
     }
 
-    const dockFastTrackBtn = document.getElementById('dock-fast-track-btn');
-    if (dockFastTrackBtn) {
-        dockFastTrackBtn.addEventListener('click', (e) => {
-            e.preventDefault();
+    // =========================================================================
+    // CONDITIONAL MOBILE STRUGGLE HELPER (TRIGGERED ONLY ON NEED)
+    // 1. Repeated screen flipping back & forth (>= 3 flips in 12s)
+    // 2. Prolonged phase stuck timer (> 45s without progression)
+    // =========================================================================
+    const struggleHelper = document.getElementById('mobile-struggle-helper');
+    const helperPortraitBtn = document.getElementById('struggle-helper-portrait-btn');
+    const helperFastTrackBtn = document.getElementById('struggle-helper-fast-track-btn');
+    const helperCloseBtn = document.getElementById('struggle-helper-close-btn');
+
+    let hasDismissedStruggleHelper = false;
+    let rotationTimestamps = [];
+    let stageStuckTimer = null;
+    let lastOrientationIsPortrait = window.innerHeight > window.innerWidth;
+
+    const showStruggleHelper = (reason = '') => {
+        if (hasDismissedStruggleHelper) return;
+        if (window.gardenState && window.gardenState.currentStage >= 3) return;
+        const isMobile = window.matchMedia('(max-width: 820px), (max-height: 540px)').matches || ('ontouchstart' in window);
+        if (!isMobile) return;
+        if (!struggleHelper) return;
+
+        struggleHelper.classList.remove('hidden');
+        if (typeof window.showMascotSpeech === 'function') {
+            window.showMascotSpeech("Bạn có thấy khó thao tác không? Mình có hỗ trợ xoay dọc hoặc mở thẳng quà nè! 🏮🌸", 5000);
+        }
+        if (typeof window.playRobotChirpSFX === 'function') window.playRobotChirpSFX();
+    };
+    window.showStruggleHelper = showStruggleHelper;
+
+    const hideStruggleHelper = () => {
+        if (struggleHelper) struggleHelper.classList.add('hidden');
+        hasDismissedStruggleHelper = true;
+    };
+
+    if (helperCloseBtn) {
+        helperCloseBtn.addEventListener('click', (e) => {
             e.stopPropagation();
-            window.emergencyFastTrackToStage4();
+            hideStruggleHelper();
         });
     }
+
+    if (helperPortraitBtn) {
+        helperPortraitBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            sessionStorage.setItem('pinned_portrait_mode', 'true');
+            if (typeof window.setPreferredOrientation === 'function') {
+                window.setPreferredOrientation('portrait');
+            }
+            hideStruggleHelper();
+        });
+    }
+
+    if (helperFastTrackBtn) {
+        helperFastTrackBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            if (typeof window.emergencyFastTrackToStage4 === 'function') {
+                window.emergencyFastTrackToStage4();
+            }
+            hideStruggleHelper();
+        });
+    }
+
+    const resetStageStuckTimer = () => {
+        if (stageStuckTimer) clearTimeout(stageStuckTimer);
+        hasDismissedStruggleHelper = false;
+        if (struggleHelper) struggleHelper.classList.add('hidden');
+        if (window.gardenState && window.gardenState.currentStage >= 3) return;
+
+        stageStuckTimer = setTimeout(() => {
+            showStruggleHelper('timeout');
+        }, 45000);
+    };
+    window.resetStageStuckTimer = resetStageStuckTimer;
+
+    const checkRapidRotation = () => {
+        const isPortraitNow = window.innerHeight > window.innerWidth;
+        if (isPortraitNow !== lastOrientationIsPortrait) {
+            lastOrientationIsPortrait = isPortraitNow;
+            const now = Date.now();
+            rotationTimestamps.push(now);
+            rotationTimestamps = rotationTimestamps.filter(t => now - t < 12000);
+            if (rotationTimestamps.length >= 3) {
+                showStruggleHelper('rapid-rotation');
+            }
+        }
+    };
 
     // Lắng nghe thay đổi kích thước và xoay màn hình
     window.addEventListener('resize', () => {
         checkOrientationState();
-        updateOrientationToggleLabel();
+        checkRapidRotation();
     });
     window.addEventListener('orientationchange', () => {
         setTimeout(() => {
             checkOrientationState();
-            updateOrientationToggleLabel();
+            checkRapidRotation();
         }, 80);
     });
 
@@ -314,11 +407,11 @@
         document.addEventListener('DOMContentLoaded', () => {
             const isPinnedPortrait = sessionStorage.getItem('pinned_portrait_mode') === 'true';
             window.setPreferredOrientation(isPinnedPortrait ? 'portrait' : 'portrait', false);
-            updateOrientationToggleLabel();
+            resetStageStuckTimer();
         });
     } else {
         const isPinnedPortrait = sessionStorage.getItem('pinned_portrait_mode') === 'true';
         window.setPreferredOrientation(isPinnedPortrait ? 'portrait' : 'portrait', false);
-        updateOrientationToggleLabel();
+        resetStageStuckTimer();
     }
 })();
