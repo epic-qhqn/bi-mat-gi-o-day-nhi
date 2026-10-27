@@ -12104,3 +12104,312 @@ body.sky-night .gift-video-note {
   }
 }
 
+/* ==========================================================================
+   PHASE 10: INTERACTIVE DUAL HERITAGE GIFT BOXES (.secret-gift-boxes-deck)
+   ========================================================================== */
+.secret-gift-boxes-deck {
+  margin-top: 18px;
+  padding-top: 14px;
+  border-top: 1px dashed rgba(212, 175, 55, 0.45);
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  width: 100%;
+  animation: giftFadeIn 0.6s ease forwards;
+}
+
+.secret-gift-boxes-deck.hidden {
+  display: none !important;
+}
+
+@keyframes giftFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.gift-boxes-header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.gift-boxes-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 15px;
+  font-weight: 700;
+  color: #B45309;
+  letter-spacing: 0.5px;
+}
+
+body.sky-night .gift-boxes-title {
+  color: #FCD34D;
+}
+
+.gift-boxes-sparkle {
+  font-size: 14px;
+  animation: giftSparkle 2s ease-in-out infinite;
+}
+
+@keyframes giftSparkle {
+  0%, 100% { transform: scale(1) rotate(0deg); }
+  50% { transform: scale(1.15) rotate(10deg); }
+}
+
+.gift-boxes-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  width: 100%;
+}
+
+.heritage-gift-box {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 14px;
+  border-radius: 14px;
+  cursor: pointer;
+  transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.25s ease, border-color 0.25s ease;
+  user-select: none;
+  position: relative;
+  overflow: hidden;
+  min-height: 54px;
+  touch-action: manipulation;
+}
+
+.heritage-gift-box::after {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: linear-gradient(60deg, transparent 30%, rgba(255, 255, 255, 0.15) 50%, transparent 70%);
+  transform: rotate(25deg);
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.heritage-gift-box:hover::after {
+  opacity: 1;
+  animation: giftShimmer 1.8s infinite;
+}
+
+@keyframes giftShimmer {
+  0% { transform: translate(-100%, -100%) rotate(25deg); }
+  100% { transform: translate(100%, 100%) rotate(25deg); }
+}
+
+.heritage-gift-box:hover {
+  transform: translateY(-2px) scale(1.02);
+}
+
+.heritage-gift-box:active {
+  transform: scale(0.98);
+}
+
+/* Hộp Quà 1: Sơn Mài Đỏ Chu Sa */
+.gift-box-lacquer {
+  background: linear-gradient(135deg, rgba(139, 30, 47, 0.94) 0%, rgba(184, 41, 57, 0.96) 100%);
+  border: 1.5px solid rgba(245, 206, 86, 0.7);
+  box-shadow: 0 6px 18px rgba(139, 30, 47, 0.28), 0 0 12px rgba(245, 206, 86, 0.2);
+  color: #FFF5F5;
+}
+
+/* Hộp Quà 2: Hoàng Đàn Thếp Vàng */
+.gift-box-gold.is-locked {
+  background: linear-gradient(135deg, rgba(62, 47, 36, 0.90) 0%, rgba(85, 65, 50, 0.94) 100%);
+  border: 1.5px solid rgba(212, 175, 55, 0.4);
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.25);
+  color: #E2D9D0;
+  opacity: 0.92;
+}
+
+.gift-box-gold.is-unlocked {
+  background: linear-gradient(135deg, rgba(180, 130, 40, 0.95) 0%, rgba(212, 175, 55, 0.98) 100%);
+  border: 1.5px solid rgba(255, 235, 160, 0.85);
+  box-shadow: 0 6px 22px rgba(212, 175, 55, 0.4), 0 0 16px rgba(245, 206, 86, 0.35);
+  color: #FFFFFF;
+  animation: giftUnlockPulse 1s ease-out;
+}
+
+@keyframes giftUnlockPulse {
+  0% { transform: scale(0.94); box-shadow: 0 0 0 rgba(212, 175, 55, 0.8); }
+  50% { transform: scale(1.06); box-shadow: 0 0 30px rgba(212, 175, 55, 0.9); }
+  100% { transform: scale(1); box-shadow: 0 6px 22px rgba(212, 175, 55, 0.4); }
+}
+
+.heritage-gift-box.shake-locked {
+  animation: giftShakeLocked 0.45s ease-in-out;
+}
+
+@keyframes giftShakeLocked {
+  0%, 100% { transform: translateX(0); }
+  20%, 60% { transform: translateX(-6px); }
+  40%, 80% { transform: translateX(6px); }
+}
+
+.gift-box-visual {
+  position: relative;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.gift-box-icon {
+  font-size: 26px;
+  line-height: 1;
+}
+
+.gift-box-ribbon-bow {
+  position: absolute;
+  top: -4px;
+  right: -4px;
+  font-size: 13px;
+}
+
+.gift-box-sparkle-aura {
+  position: absolute;
+  bottom: -2px;
+  left: -2px;
+  font-size: 10px;
+  color: #FDE047;
+}
+
+.gift-box-info {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+  text-align: left;
+}
+
+.gift-box-tag {
+  font-family: 'Be Vietnam Pro', sans-serif;
+  font-size: 9.5px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.85);
+}
+
+.gift-box-name {
+  font-family: 'Playfair Display', serif;
+  font-size: 14.5px;
+  font-weight: 700;
+  margin: 0;
+  line-height: 1.25;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.gift-box-status {
+  font-family: 'Be Vietnam Pro', sans-serif;
+  font-size: 11px;
+  font-weight: 500;
+  opacity: 0.9;
+}
+
+.status-ready {
+  color: #FEF08A;
+}
+
+.status-locked {
+  color: #D1D5DB;
+}
+
+/* Phím tắt mở quà trên mặt sau thẻ Polaroid */
+.polaroid-gift-shortcuts {
+  display: flex;
+  gap: 8px;
+  justify-content: center;
+  margin: 8px 0;
+  width: 100%;
+}
+
+.polaroid-gift-pill {
+  padding: 6px 14px;
+  border-radius: 20px;
+  font-size: 11.5px;
+  font-weight: 600;
+  font-family: 'Be Vietnam Pro', sans-serif;
+  cursor: pointer;
+  border: 1px solid rgba(212, 175, 55, 0.5);
+  background: rgba(250, 247, 240, 0.95);
+  color: #4A3728;
+  touch-action: manipulation;
+  transition: transform 0.2s ease, background 0.2s ease;
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: 1;
+}
+
+.polaroid-gift-pill:hover {
+  transform: translateY(-1px);
+  background: #FFFFFF;
+}
+
+.polaroid-gift-pill.is-locked {
+  background: rgba(235, 230, 222, 0.8);
+  color: #8C7B70;
+  border-color: rgba(180, 160, 140, 0.4);
+}
+
+/* Responsive Mobile Rules */
+@media (max-width: 560px) {
+  .gift-boxes-grid {
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+  .heritage-gift-box {
+    padding: 10px 12px;
+    min-height: 50px;
+  }
+}
+
+@media (max-height: 540px) and (orientation: landscape) {
+  .secret-gift-boxes-deck {
+    margin-top: 8px !important;
+    padding-top: 6px !important;
+    gap: 6px !important;
+  }
+  .gift-boxes-title {
+    font-size: 13px !important;
+  }
+  .gift-boxes-grid {
+    gap: 8px !important;
+  }
+  .heritage-gift-box {
+    padding: 6px 10px !important;
+    min-height: 44px !important;
+  }
+  .gift-box-visual {
+    width: 32px !important;
+    height: 32px !important;
+  }
+  .gift-box-icon {
+    font-size: 20px !important;
+  }
+  .gift-box-name {
+    font-size: 12.5px !important;
+  }
+  .gift-box-status {
+    font-size: 10px !important;
+  }
+}
+
+

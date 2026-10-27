@@ -43,6 +43,11 @@
             }
             if (progress >= str.length) {
                 clearInterval(timer);
+                const giftDeck = document.getElementById('secret-gift-boxes-deck');
+                if (giftDeck) {
+                    giftDeck.classList.remove('hidden');
+                    if (textContainer) textContainer.scrollTop = textContainer.scrollHeight;
+                }
             }
         }, 75);
     };
@@ -1038,10 +1043,11 @@
         setupFontToggle();
         initFlowerQuiz();
         initGiftVideoModal();
+        initGiftBoxesDeck();
     };
 
     // =========================================================================
-    // 6. PHASE 9: ZERO-LAG GIFT VIDEO LIGHTBOX PLAYER
+    // 6. PHASE 9 & 10: ZERO-LAG GIFT VIDEO LIGHTBOX & DUAL HERITAGE GIFT BOXES
     // =========================================================================
     const initGiftVideoModal = () => {
         const modal = document.getElementById('gift-video-modal');
@@ -1052,9 +1058,7 @@
         try {
             if (sessionStorage.getItem('gift1Watched') === 'true') {
                 window.gardenState.gift1Watched = true;
-                if (typeof window.unlockGiftBox2 === 'function') {
-                    window.unlockGiftBox2(true);
-                }
+                unlockGiftBox2(true);
             }
         } catch (e) {
             console.log("SessionStorage access error:", e);
@@ -1085,6 +1089,43 @@
         });
     };
 
+    const unlockGiftBox2 = (isSilent = false) => {
+        window.gardenState = window.gardenState || {};
+        window.gardenState.gift1Watched = true;
+        try {
+            sessionStorage.setItem('gift1Watched', 'true');
+        } catch (e) {}
+
+        const giftBox2 = document.getElementById('gift-box-2');
+        const icon2 = document.getElementById('gift-box-2-icon');
+        const status2 = document.getElementById('gift-box-2-status');
+        const polaroidBtn2 = document.getElementById('polaroid-gift-btn-2');
+
+        if (giftBox2) {
+            giftBox2.classList.remove('is-locked');
+            giftBox2.classList.add('is-unlocked');
+            giftBox2.setAttribute('aria-label', 'Mở Hộp Quà Bí Mật Số 2: Điều Kỳ Diệu Tiếp Nối');
+            if (icon2) icon2.textContent = '🪷';
+            if (status2) {
+                status2.textContent = 'Chạm để mở ngay ✨';
+                status2.className = 'gift-box-status status-ready';
+            }
+        }
+
+        if (polaroidBtn2) {
+            polaroidBtn2.classList.remove('is-locked');
+            polaroidBtn2.textContent = '🪷 Mở Hộp Quà 2';
+        }
+
+        if (!isSilent) {
+            if (typeof window.playChimeSFX === 'function') window.playChimeSFX();
+            if (typeof window.triggerHaptic === 'function') window.triggerHaptic('success');
+            if (typeof window.showMascotSpeech === 'function') {
+                window.showMascotSpeech("Aww tuyệt vời quá! Hộp Quà số 2 đã mở khóa rồi nè bạn ơi! 🪷✨", 4500);
+            }
+        }
+    };
+
     const handleGift1Completed = () => {
         window.gardenState = window.gardenState || {};
         if (window.gardenState.gift1Watched) return;
@@ -1098,15 +1139,12 @@
             noteEl.textContent = '🎉 Tuyệt vời! Bạn đã mở khóa Hộp Quà số 2!';
         }
 
-        if (typeof window.unlockGiftBox2 === 'function') {
-            window.unlockGiftBox2(false);
-        }
+        unlockGiftBox2(false);
     };
 
     const openGiftVideoModal = (giftIndex = 1) => {
         const modal = document.getElementById('gift-video-modal');
         const player = document.getElementById('gift-video-player');
-        const srcWebm = document.getElementById('gift-video-src-webm');
         const srcMp4 = document.getElementById('gift-video-src-mp4');
         const badgeEl = document.getElementById('gift-video-badge');
         const titleEl = document.getElementById('gift-video-title');
@@ -1118,8 +1156,7 @@
         window.gardenState = window.gardenState || {};
         const isBox1 = (giftIndex === 1);
         const videoData = isBox1 ? {
-            webm: './video/vid_1.webm',
-            mp4: './video/vid_1_opt.mp4',
+            mp4: './video/vid_1.mp4',
             badge: '✨ THƯỚC PHIM KỶ NIỆM · MÓN QUÀ SỐ 1 ✨',
             title: 'Kỷ Niệm Rực Rỡ & Nụ Cười Bạn',
             subtitle: 'Lắng nghe thanh âm và những khoảnh khắc ngọt ngào',
@@ -1127,8 +1164,7 @@
                 ? '✨ Bạn đã xem xong món quà này. Có thể mở Hộp Quà số 2 bất cứ lúc nào!' 
                 : '💡 Hãy xem hết video để mở khóa Hộp Quà Bí Mật số 2 nhé!'
         } : {
-            webm: './video/vid_2.webm',
-            mp4: './video/vid_2_opt.mp4',
+            mp4: './video/vid_2.mp4',
             badge: '✨ ĐIỀU KỲ DIỆU TIẾP NỐI · MÓN QUÀ SỐ 2 ✨',
             title: 'Gửi Trao Vạn Lời Chúc Yêu Thương',
             subtitle: 'Món quà son sắc dành tặng riêng cho bạn ngày 20/10',
@@ -1142,7 +1178,6 @@
 
         // Reset and set sources
         player.pause();
-        if (srcWebm) srcWebm.src = videoData.webm;
         if (srcMp4) srcMp4.src = videoData.mp4;
 
         player.load();
@@ -1189,7 +1224,6 @@
     const closeGiftVideoModal = () => {
         const modal = document.getElementById('gift-video-modal');
         const player = document.getElementById('gift-video-player');
-        const srcWebm = document.getElementById('gift-video-src-webm');
         const srcMp4 = document.getElementById('gift-video-src-mp4');
 
         if (!modal) return;
@@ -1199,7 +1233,6 @@
             player.onplay = null;
             player.ontimeupdate = null;
             player.onended = null;
-            if (srcWebm) srcWebm.removeAttribute('src');
             if (srcMp4) srcMp4.removeAttribute('src');
             player.removeAttribute('src');
             player.load();
@@ -1215,6 +1248,50 @@
         if (typeof window.triggerHaptic === 'function') window.triggerHaptic('light');
     };
 
+    const initGiftBoxesDeck = () => {
+        const giftBox1 = document.getElementById('gift-box-1');
+        const giftBox2 = document.getElementById('gift-box-2');
+        const polaroidBtn1 = document.getElementById('polaroid-gift-btn-1');
+        const polaroidBtn2 = document.getElementById('polaroid-gift-btn-2');
+
+        const handleBox1 = (e) => {
+            if (e) e.stopPropagation();
+            openGiftVideoModal(1);
+        };
+
+        const handleBox2 = (e) => {
+            if (e) e.stopPropagation();
+            window.gardenState = window.gardenState || {};
+            if (!window.gardenState.gift1Watched) {
+                if (giftBox2) {
+                    giftBox2.classList.remove('shake-locked');
+                    void giftBox2.offsetWidth;
+                    giftBox2.classList.add('shake-locked');
+                    setTimeout(() => { if (giftBox2) giftBox2.classList.remove('shake-locked'); }, 500);
+                }
+                if (typeof window.triggerHaptic === 'function') window.triggerHaptic('medium');
+                if (typeof window.showMascotSpeech === 'function') {
+                    window.showMascotSpeech("Bạn ơi, hãy xem trọn vẹn món quà thứ nhất trước nhé! 🎁💖", 4000);
+                }
+            } else {
+                openGiftVideoModal(2);
+            }
+        };
+
+        if (giftBox1) giftBox1.addEventListener('click', handleBox1);
+        if (polaroidBtn1) polaroidBtn1.addEventListener('click', handleBox1);
+
+        if (giftBox2) giftBox2.addEventListener('click', handleBox2);
+        if (polaroidBtn2) polaroidBtn2.addEventListener('click', handleBox2);
+
+        // Check if already watched in previous session
+        try {
+            if (sessionStorage.getItem('gift1Watched') === 'true') {
+                unlockGiftBox2(true);
+            }
+        } catch (e) {}
+    };
+
     // Public API
     window.openSecretLetterModal = openSecretLetterModal;
     window.closeSecretLetterModal = closeSecretLetterModal;
@@ -1228,6 +1305,8 @@
     window.openGiftVideoModal = openGiftVideoModal;
     window.closeGiftVideoModal = closeGiftVideoModal;
     window.handleGift1Completed = handleGift1Completed;
+    window.unlockGiftBox2 = unlockGiftBox2;
+    window.initGiftBoxesDeck = initGiftBoxesDeck;
 
     if (document.readyState === 'loading') {
         document.addEventListener('DOMContentLoaded', initSecretLetter);

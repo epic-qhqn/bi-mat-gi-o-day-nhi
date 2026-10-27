@@ -1128,6 +1128,43 @@
             <div id="code" style="display: none;">
                 <!-- Nội dung sẽ được nhúng vào đây -->
             </div>
+            <!-- Phase 10: Hai Hộp Quà Di Sản Sơn Mài & Hoàng Kim Tuần Tự -->
+            <div id="secret-gift-boxes-deck" class="secret-gift-boxes-deck hidden">
+                <div class="gift-boxes-header">
+                    <span class="gift-boxes-sparkle">🎁</span>
+                    <span class="gift-boxes-title">Món Quà Bí Mật Dành Riêng Bạn</span>
+                    <span class="gift-boxes-sparkle">✨</span>
+                </div>
+                <div class="gift-boxes-grid">
+                    <!-- Hộp Quà 1: Sơn Mài Đỏ Chu Sa (Sẵn sàng mở) -->
+                    <div id="gift-box-1" class="heritage-gift-box gift-box-lacquer is-unlocked" role="button" tabindex="0" aria-label="Mở Hộp Quà Bí Mật Số 1: Kỷ Niệm Rực Rỡ">
+                        <div class="gift-box-visual">
+                            <div class="gift-box-ribbon-bow">🎀</div>
+                            <div class="gift-box-icon">🎁</div>
+                            <div class="gift-box-sparkle-aura">✦</div>
+                        </div>
+                        <div class="gift-box-info">
+                            <span class="gift-box-tag">MÓN QUÀ SỐ 1</span>
+                            <h4 class="gift-box-name">Kỷ Niệm Rực Rỡ</h4>
+                            <span class="gift-box-status status-ready">Chạm để mở ngay ✨</span>
+                        </div>
+                    </div>
+
+                    <!-- Hộp Quà 2: Hoàng Đàn Thếp Vàng (Ban đầu có khóa son 🔒) -->
+                    <div id="gift-box-2" class="heritage-gift-box gift-box-gold is-locked" role="button" tabindex="0" aria-label="Hộp Quà Bí Mật Số 2: Điều Kỳ Diệu Tiếp Nối (Khóa)">
+                        <div class="gift-box-visual">
+                            <div class="gift-box-ribbon-bow">✨</div>
+                            <div class="gift-box-icon" id="gift-box-2-icon">🔒</div>
+                            <div class="gift-box-sparkle-aura" id="gift-box-2-aura">✦</div>
+                        </div>
+                        <div class="gift-box-info">
+                            <span class="gift-box-tag">MÓN QUÀ SỐ 2</span>
+                            <h4 class="gift-box-name">Điều Kỳ Diệu Tiếp Nối</h4>
+                            <span class="gift-box-status status-locked" id="gift-box-2-status">Xem hết quà 1 để mở khóa 🔒</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
     
@@ -1177,6 +1214,10 @@
                         <span class="footer-clover-leaf">🍀</span>
                         <span class="footer-blessing">Gửi trao ngàn may mắn & bình an đến bạn</span>
                         <span class="footer-clover-leaf">🪷</span>
+                    </div>
+                    <div class="polaroid-gift-shortcuts" id="polaroid-gift-shortcuts">
+                        <button type="button" class="polaroid-gift-pill" id="polaroid-gift-btn-1">🎁 Mở Hộp Quà 1</button>
+                        <button type="button" class="polaroid-gift-pill is-locked" id="polaroid-gift-btn-2">🔒 Hộp Quà 2</button>
                     </div>
                     <button class="polaroid-shuffle-btn" id="polaroid-shuffle-btn" title="Đọc một lời chúc khác từ các bạn nam">Đổi lời chúc khác 🎲</button>
                     <button class="polaroid-shuffle-btn" id="polaroid-quiz-return-btn" type="button">🌸 Làm trắc nghiệm bông hoa</button>
@@ -1235,7 +1276,6 @@
             <div class="gift-video-player-wrap">
                 <div class="gift-video-frame">
                     <video id="gift-video-player" playsinline webkit-playsinline controls preload="metadata" class="gift-video-element">
-                        <source id="gift-video-src-webm" src="" type="video/webm">
                         <source id="gift-video-src-mp4" src="" type="video/mp4">
                         Trình duyệt của bạn không hỗ trợ phát video trực tiếp.
                     </video>

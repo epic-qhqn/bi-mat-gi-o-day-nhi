@@ -799,9 +799,26 @@
        - Khi đóng modal: giải phóng hoàn toàn buffer video (`removeAttribute('src')` & `player.load()`), ngăn chặn rò rỉ bộ nhớ (memory leak).
        - Tích hợp `closeGiftVideoModal()` vào `cleanupStage` của [js/garden-stages.js](file:///c:/Users/kishikuun/Documents/dieu-bi-mat-epic/js/garden-stages.js) theo chuẩn Clean Unmount Invariant.
 
+---
 
-
-
-
-
+### 15. Vấn Đề: Hệ Thống 2 Hộp Quà Bí Mật Tuần Tự & Khử Bỏ Hoàn Toàn Liên Kết Ngoài (Phase 10)
+- **Triệu chứng & Căn nguyên**:
+  1. *Link Google Drive bên ngoài gây đứt gãy trải nghiệm*: Trong `js/content.js`, bức thư chúc mừng 20/10 trước đây sử dụng đường link `https://drive.google.com/drive/folders/...` buộc người dùng rời khỏi ứng dụng, mở tab ngoài làm gián đoạn dòng cảm xúc, mất đi trải nghiệm tĩnh thuần túy (Pure Static Web) và không tối ưu cho thiết bị di động.
+  2. *Thiếu trải nghiệm mở quà tương tác (Unboxing Ceremony)*: Người dùng không có cảm giác hồi hộp, khám phá lần lượt từng món quà được gói ghém bằng tình cảm của tập thể.
+  3. *Tối ưu định dạng video*: Bản nén WebM VP9 mặc dù nén tốt trên một số phân cảnh nhưng dung lượng tổng thể (60.7MB và 34.7MB) lại nặng hơn bản nén H.264 MP4 `+faststart` (44.9MB và 27.1MB). Để tối đa hóa tốc độ tải và đảm bảo 100% video dưới 50MB, hệ thống chuyển sang sử dụng độc quyền 2 file MP4 tối ưu mang tên chuẩn `video/vid_1.mp4` và `video/vid_2.mp4`.
+- **Công thức chuẩn hóa (Phase 10 Solution)**:
+  1. **Khử bỏ 100% Link Ngoài Trong Mã Nguồn**:
+     - Trong [js/content.js](file:///c:/Users/kishikuun/Documents/dieu-bi-mat-epic/js/content.js), xóa bỏ vĩnh viễn liên kết Google Drive, thay thế bằng lời dẫn thơ mộng giới thiệu 2 chiếc Hộp Quà Bí Mật Di Sản.
+  2. **Giao Diện 2 Hộp Quà Sơn Mài & Hoàng Kim (`#secret-gift-boxes-deck`)**:
+     - **Hộp Quà 1 (Kỷ Niệm Rực Rỡ)**: Vỏ sơn mài đỏ chu sa (`.gift-box-lacquer`, gradient `#8B1E2F` -> `#B82939`), nơ lụa vàng kim đung đưa, particle lấp lánh `✦`, viền kim loại thếp vàng, trạng thái sẵn sàng mở (`is-unlocked`, nhãn *"Chạm để mở ngay ✨"*).
+     - **Hộp Quà 2 (Điều Kỳ Diệu Tiếp Nối)**: Vỏ gỗ hoàng đàn thếp vàng (`.gift-box-gold`), ban đầu mang ổ khóa son 🔒 (`is-locked`, nhãn *"Xem hết quà 1 để mở khóa 🔒"*).
+     - Bổ sung phím tắt mở quà `.polaroid-gift-shortcuts` trên mặt sau thiệp Polaroid (`#polaroid-letter-pane`) giúp người dùng mở quà thuận tiện từ bất kỳ góc nhìn nào.
+     - Đạt chuẩn Touch Target >= 50-54px trên cả PC, mobile dọc và mobile landscape; hiệu ứng ánh kim lướt qua (`@keyframes giftShimmer`) khi hover.
+  3. **Động Cơ Mở Khóa Tuần Tự (Sequential Unlocking Engine)**:
+     - Trong [js/secret-letter.js](file:///c:/Users/kishikuun/Documents/dieu-bi-mat-epic/js/secret-letter.js):
+       - Bấm Hộp Quà 1: Mở Lightbox phát `video/vid_1.mp4`.
+       - Khi video 1 đạt >= 95% thời lượng hoặc kết thúc: kích hoạt `unlockGiftBox2()`, lưu cờ `gift1Watched = true` vào `sessionStorage` để ghi nhớ phiên xem.
+       - Hiệu ứng Mở Khóa Hoàng Triều: Ổ khóa biến thành đóa sen vàng bung nở 🪷 (`@keyframes giftUnlockPulse`), âm thanh chuông ngân `playChimeSFX()`, rung xúc giác chúc mừng `triggerHaptic('success')`, nhãn chuyển sang *"Chạm để mở ngay ✨"*, Mascot hào hứng reo vang.
+       - Bấm Hộp Quà 2 khi chưa xem xong Quà 1: Hộp rung lắc nhẹ (`@keyframes giftShakeLocked`), rung phản hồi `triggerHaptic('medium')`, Mascot xuất hiện nhẹ nhàng nhắc nhở: *"Bạn ơi, hãy xem trọn vẹn món quà thứ nhất trước nhé! 🎁💖"*.
+       - Bấm Hộp Quà 2 khi đã mở khóa: Mở Lightbox phát `video/vid_2.mp4`.
 

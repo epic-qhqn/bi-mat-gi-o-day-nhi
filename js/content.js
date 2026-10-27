@@ -7,7 +7,8 @@ Nhân dịp ngày Phụ nữ Việt Nam 20/10, chúng mình cũng có một lờ
 Mong rằng các bạn nữ sẽ ngày càng xinh đẹp, tự tin, có thật nhiều sức khỏe, học thật giỏi và sẽ luôn làm được nhiều điều mình thích nè (❁´◡\`❁)
 
 Ngoài ra cũng không thể quên gửi một lời cảm ơn thật to lớn đến các bạn nữ vì đã luôn đồng hành và cùng chúng mình tạo ra những kỷ niệm thật đẹp nha!
-[Mở món quà bí mật và ấm áp dành riêng cho bạn tại đây nhé! 🎁](https://drive.google.com/drive/folders/1fILtFYl7tkBWg5vCPuzsZf9s9cpOf1NL?usp=drive_link)
+
+Chúng mình có chuẩn bị 2 món quà bí mật chứa đầy kỷ niệm và những lời chúc yêu thương dành riêng cho bạn ở ngay bên dưới. Hãy chạm vào từng chiếc hộp để khám phá nhé! 🎁✨
 `;
 
 // Danh sách phong phú các lá thư gửi gắm từ các thành viên nam trong công ty / CLB

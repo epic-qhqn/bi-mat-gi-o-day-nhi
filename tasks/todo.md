@@ -51,16 +51,16 @@
 ---
 
 ### Phase 10: Hệ Thống 2 Hộp Quà Bí Mật Tuần Tự (Interactive Dual Gift Boxes)
-- [ ] 10.1: Xóa bỏ hoàn toàn link Google Drive trong `js/content.js`, thay bằng cấu trúc nội dung và giới thiệu 2 Hộp Quà Bí Mật.
-- [ ] 10.2: Thiết kế giao diện 2 Hộp Quà Di Sản Sơn Mài Dó Paper (`#gift-box-1` & `#gift-box-2`) ở cuối bức thư: Hộp 1 màu đỏ chu sa nơ vàng kim sẵn sàng mở, Hộp 2 màu hoàng đàn thếp vàng kèm ổ khóa son 🔒.
-- [ ] 10.3: Xây dựng cơ chế Khóa & Mở Khóa Tuần Tự trong `js/secret-letter.js`:
-  - Mở Hộp 1 phát `vid_1_opt.mp4`.
-  - Theo dõi tiến trình xem video 1: khi xem hết ($\ge 95\%$ hoặc `ended`), mở khóa Hộp 2 với hiệu ứng Unlocking Ceremony (bung nơ, chuông ngân `playChimeSFX()`, rung cảm ứng `triggerHaptic`).
-  - Mở Hộp 2 phát `vid_2_opt.mp4`.
-  - Nếu bấm Hộp 2 khi chưa xem xong video 1, Mascot nhắc nhở nhẹ nhàng.
+- [x] 10.1: Xóa bỏ hoàn toàn link Google Drive trong `js/content.js`, thay bằng cấu trúc nội dung và giới thiệu 2 Hộp Quà Bí Mật.
+- [x] 10.2: Thiết kế giao diện 2 Hộp Quà Di Sản Sơn Mài Dó Paper (`#gift-box-1` & `#gift-box-2`) ở cuối bức thư và phím tắt `.polaroid-gift-shortcuts` trên thiệp: Hộp 1 màu đỏ chu sa nơ vàng kim sẵn sàng mở, Hộp 2 màu hoàng đàn thếp vàng kèm ổ khóa son 🔒.
+- [x] 10.3: Xây dựng cơ chế Khóa & Mở Khóa Tuần Tự trong `js/secret-letter.js`:
+  - Mở Hộp 1 phát `video/vid_1.mp4`.
+  - Theo dõi tiến trình xem video 1: khi xem hết ($\ge 95\%$ hoặc `ended`), mở khóa Hộp 2 với hiệu ứng Unlocking Ceremony (sen vàng bung nở 🪷, chuông ngân `playChimeSFX()`, rung cảm ứng `triggerHaptic('success')`).
+  - Mở Hộp 2 phát `video/vid_2.mp4`.
+  - Nếu bấm Hộp 2 khi chưa xem xong video 1, Mascot nhắc nhở nhẹ nhàng và hộp quà rung lắc cảnh báo (`giftShakeLocked`).
 
 #### Checkpoint 10: Sau Phase 10
-- [ ] Trải nghiệm mở quà tuần tự mượt mà, cảm xúc bất ngờ và sang trọng, không còn liên kết Drive ngoại vi.
+- [x] Trải nghiệm mở quà tuần tự mượt mà, cảm xúc bất ngờ và sang trọng, không còn liên kết Drive ngoại vi.
 
 ---
 
