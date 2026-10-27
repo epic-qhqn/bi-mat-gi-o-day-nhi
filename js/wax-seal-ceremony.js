@@ -172,6 +172,15 @@
     // 1. TIME LOCK GATEWAY
     // =========================================================================
     const getTimeLockState = () => {
+        // =====================================================================
+        // TẠM THỜI VÔ HIỆU HÓA HOÀN TOÀN TÍNH NĂNG NHẬP PASS / TIME-LOCK
+        // (Theo yêu cầu: người dùng vào thẳng thiệp dập tên & ngày sinh Stage 0)
+        // Để tái kích hoạt: đổi DISABLE_TIME_LOCK = false hoặc xóa dòng return bên dưới.
+        // Ghi chú chi tiết xem tại AGENTS.md mục ARCHITECTURAL INVARIANTS & GATEWAY.
+        // =====================================================================
+        const DISABLE_TIME_LOCK = true;
+        if (DISABLE_TIME_LOCK) return 'UNLOCKED';
+
         const params = new URLSearchParams(window.location.search);
         if (params.get('relock') === '1') {
             sessionStorage.removeItem('epic_gate_unlocked');
@@ -1658,6 +1667,7 @@
     };
 
     // Public API
+    window.getTimeLockState = getTimeLockState;
     window.initWaxSealCeremony = initWaxSealCeremony;
     window.completePuzzle = completePuzzle;
     window.startGardenAwakeningTransition = startGardenAwakeningTransition;
