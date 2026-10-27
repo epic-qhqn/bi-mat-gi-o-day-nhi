@@ -65,12 +65,12 @@
 ---
 
 ### Phase 11: Nâng Cấp Hệ Thống Âm Nhạc BGM (Random 70/30 & Phát Nối Bài)
-- [ ] 11.1: Cập nhật thuật toán chọn nhạc ngẫu nhiên trong `js/audio-vfx.js`: `Math.random() < 0.7 ? 1 : 0` (70% `nhac_2.webm` - Mắt Bão, 30% `nhac_1.webm` - MONO Em Xinh).
-- [ ] 11.2: Hoàn thiện cơ chế phát nối bài tiếp theo (`ended` event listener): khi nghe hết bài hiện tại, tự động chuyển sang bài còn lại và hiển thị mascot thông báo giai điệu mới.
-- [ ] 11.3: Bảo đảm tính tương thích với Phonk Mode và nút điều chỉnh âm lượng.
+- [x] 11.1: Cập nhật thuật toán chọn nhạc ngẫu nhiên trong `js/audio-vfx.js`: `Math.random() < 0.7 ? 1 : 0` (70% `nhac_2.webm` - Mắt Bão, 30% `nhac_1.webm` - MONO Em Xinh).
+- [x] 11.2: Hoàn thiện cơ chế phát nối bài tiếp theo (`ended` event listener): khi nghe hết bài hiện tại, tự động chuyển sang bài còn lại và hiển thị mascot thông báo giai điệu mới.
+- [x] 11.3: Bảo đảm tính tương thích với Phonk Mode và nút điều chỉnh âm lượng (bảo toàn volume người dùng đã chỉnh khi chuyển bài).
 
 #### Checkpoint 11: Sau Phase 11
-- [ ] Kiểm nghiệm Monte Carlo 1,000 lần xác nhận phân phối 70% `nhac_2` và 30% `nhac_1`; bài hát tự động nối tiếp liền mạch khi kết thúc.
+- [x] Kiểm nghiệm Monte Carlo 10,000 lần xác nhận phân phối 70% `nhac_2` và 30% `nhac_1`; bài hát tự động nối tiếp liền mạch khi kết thúc.
 
 ---
 

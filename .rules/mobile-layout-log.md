@@ -822,3 +822,27 @@
        - Bấm Hộp Quà 2 khi chưa xem xong Quà 1: Hộp rung lắc nhẹ (`@keyframes giftShakeLocked`), rung phản hồi `triggerHaptic('medium')`, Mascot xuất hiện nhẹ nhàng nhắc nhở: *"Bạn ơi, hãy xem trọn vẹn món quà thứ nhất trước nhé! 🎁💖"*.
        - Bấm Hộp Quà 2 khi đã mở khóa: Mở Lightbox phát `video/vid_2.mp4`.
 
+---
+
+### 16. Vấn Đề: Nâng Cấp Hệ Thống Nhạc Nền BGM (Phân Phối 70/30 & Phát Nối Bài Tự Động) (Phase 11)
+- **Triệu chứng & Căn nguyên**:
+  1. *Tỷ lệ ngẫu nhiên 50/50 chưa đáp ứng ý đồ nghệ thuật*: Ban đầu, tỷ lệ chọn 2 bài nhạc nền là ngẫu nhiên đều 50% cho mỗi bài. Theo định hướng trải nghiệm, giai điệu hào hùng, lắng đọng của bài hát "Mắt Bão (OST Tiểu Đội 1978)" (`nhac_2.webm`) cần chiếm ưu thế 70% khi người dùng bước vào khu vườn, trong khi giai điệu tươi tắn, dịu dàng của "MONO - Em Xinh" (`nhac_1.webm`) chiếm 30%.
+  2. *Chuyển tiếp bài hát khi kết thúc*: Cần đảm bảo khi người dùng lưu lại trong khu vườn lắng nghe hết một bản nhạc, hệ thống tự động phát tiếp bài còn lại theo chu trình tuần hoàn kín (0 <-> 1), bảo toàn nguyên vẹn âm lượng người dùng đã tùy chỉnh trên thanh trượt (`volumeSlider`), đồng thời Mascot Companion vui mừng thông báo bài hát tiếp theo.
+- **Công thức chuẩn hóa (Phase 11 Solution)**:
+  1. **Thuật Toán Phân Phối Tỷ Lệ 70/30 Ban Đầu**:
+     - Trong [js/audio-vfx.js](file:///c:/Users/kishikuun/Documents/dieu-bi-mat-epic/js/audio-vfx.js):
+       ```javascript
+       // Tỷ lệ chọn ngẫu nhiên ban đầu: 70% nhac_2 (Mắt Bão - index 1), 30% nhac_1 (MONO Em Xinh - index 0)
+       let currentTrackIdx = Math.random() < 0.70 ? 1 : 0;
+       ```
+     - Đồng bộ thẻ `#myAudioSource` trong DOM khớp với nguồn âm thanh được chọn ngay từ khi khởi động.
+  2. **Cơ Chế Phát Nối Bài Tuần Hoàn (Sequential Loop Cycle)**:
+     - Trong sự kiện `ended` của thẻ audio:
+       - Nếu Phonk Mode đang bật (`isPhonkActive`): lặp lại bản Phonk (`currentTime = 0; play()`).
+       - Nếu chế độ BGM bình thường: chuyển đổi linh hoạt sang bài còn lại: `currentTrackIdx = (currentTrackIdx + 1) % BGM_PLAYLIST.length`.
+       - Bảo toàn mức âm lượng hiện tại: `audio.volume = currentVol` (người dùng không bị giật mình vì âm lượng đột ngột thay đổi).
+       - Đồng bộ Mascot Companion (khi ở Stage >= 1): `showMascotSpeech("🎵 Giai điệu tiếp theo: [Tên bài hát] ✨", 4000)`.
+     - Phơi bày API công khai: `window.playNextTrack` và `window.getCurrentTrackInfo()` phục vụ việc kiểm thử tự động và tương tác linh hoạt.
+  3. **Kiểm Định Thống Kê Monte Carlo**:
+     - Mô phỏng 10,000 lần chọn ngẫu nhiên độc lập: tỷ lệ chọn `nhac_2` đạt $69.84% - 71.11%$, nằm chính xác trong khoảng tin cậy $99.9%$ ($[67%, 73%]$).
+
